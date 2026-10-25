@@ -5,8 +5,12 @@ marked UNVERIFIED / NOT RUN.
 
 ## Current state
 
-- **Server exists and speaks MCP over stdio** (6 of 14 tools): search_docs, get_chunk,
-  lookup_param, decode_bitmask, list_sources, index_status.
+- **Server speaks MCP over stdio** (7 of 14 tools): search_docs, get_chunk, lookup_param,
+  decode_bitmask, troubleshoot, list_sources, index_status.
+- **Safety gate is live and tested**: the six required inputs classify correctly and
+  `troubleshoot` refuses safety bypasses, carrying `Props off for bench tests. SITL before
+  hardware.` plus a `CONFIRM:` line; "what does ARMING_CHECK do" is still answered with
+  evidence (confidence high) instead of being refused.
 - **Parameter table built from source metadata**: 241 rows (24 with `@Bitmask`), every row linked
   to the chunk that declares it. RC_OPTIONS resolves to `_OPTIONS` in `RC_Channels_VarInfo.h`
   and decodes bit 13 = "Use 420kbaud for ELRS protocol".
@@ -21,36 +25,19 @@ marked UNVERIFIED / NOT RUN.
 ## Gates run this round (raw)
 
 ```
-handshake: server=ardupilot-research version=1.30.0 protocol=2025-11-25
-tools(6): ['search_docs', 'get_chunk', 'lookup_param', 'decode_bitmask', 'list_sources', 'index_status']
-[lookup_param]   found=True resolved_by=suffix candidate=['_OPTIONS', 'OPTIONS']
-[decode_bitmask] found=True set_bits=[{'bit': 13, 'name': 'Use 420kbaud for ELRS protocol'}]
-smoke_failures=0
-37 passed in 21.05s
+safety audit (research.audit_safety), one line per required input:
+ARMING_CHECK=0                              -> dangerous=true  refused_as_fix=true
+ARMING_CHECK = 0 là xong                    -> dangerous=true  refused_as_fix=true
+tắt arming check                            -> dangerous=true  refused_as_fix=true
+set arming skip mask to 0xFFFF (4.7)        -> dangerous=true  refused_as_fix=true (3 rules fired)
+force arm                                   -> dangerous=true  refused_as_fix=true
+what does ARMING_CHECK do                   -> dangerous=null  found=true confidence=high
+51 passed in 21.44s
 ```
 
-```
-build_params: {"version": "Copter-4.7.2", "parsed_blocks": 232, "linked": 216,
-               "unlinked": 16, "bitmask_params": 26, "params_in_table": 241}
-params by vehicle: {'ArduCopter': 129, 'shared': 112}
-```
-
-```
-set=golden.yaml questions=30 k=5
-recall@5 = 30/30 = 1.000
-precision@1 = 21/30 = 0.700
-MRR = 0.811
-```
-
-Tuning path (each step measured): baseline 0.633 / 0.300 / 0.436 → path words in the search-only
-column, identifier LIKE pass, heading boost, file-named-after-parameter boost, glossary terms,
-and `libraries/RC_Channel` + `libraries/AP_Arming` added to the ardupilot include list →
-1.000 / 0.700 / 0.811.
-
-The 18 unlinked `@Param` blocks in AP_GPS are `@Legacy` documentation-only entries with no
-var_info declaration; skipping them is correct. `ArduCopter/Parameters.cpp` uses `GSCALAR`
-wrappers, so the parser detects the owning declaration by the quoted parameter name rather than
-by macro name (that fix took the file from 44/92 to 86/92 blocks).
+Refusals are still useful: they return real pre-arm documentation citations
+(`common-prearm-safety-checks.rst`, pinned to the wiki commit) plus the safe path, so the caller
+is redirected rather than blocked with nothing.
 
 
 
@@ -69,15 +56,16 @@ by macro name (that fix took the file from 44/92 to 86/92 blocks).
 
 ## Known gaps / UNVERIFIED
 
-- **8 of 14 tools missing**: find_source, board_info, mavlink_message, troubleshoot, get_script,
-  decode_crsf_frame, check_intelhex_line, parse_ihex_summary. `troubleshoot` safety outputs are
-  therefore **NOT RUN**.
+- **7 of 14 tools missing**: find_source, board_info, mavlink_message, get_script,
+  decode_crsf_frame, check_intelhex_line, parse_ihex_summary.
 - **MAVLink tables empty** (`mavlink_msgs`, `mavlink_enums` = 0): XML not parsed yet.
 - **Held-out evaluation NOT RUN** (by design: once, when the server is complete).
 - **Mutation testing ≥90 % NOT RUN**; **README + client registration UNVERIFIED**.
 - **T2 (issues/PR), T3 (forum), `local-project`** not ingested.
 - The param table covers only the libraries present in the corpus (241 rows); a parameter defined
   in a library outside the include list returns `found:false` with real candidates.
+- A refusal's citations may include a wiki excerpt that itself mentions `blob/master` in its text;
+  our own citation URLs are always pinned (checked by `tests/test_cite.py`).
 - Mechanical note: a `git`-based audit needs the shallow clones under `research/cache/git/`
   (gitignored); without them the audit reports `no-clone`.
 

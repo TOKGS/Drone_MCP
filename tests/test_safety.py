@@ -1,0 +1,65 @@
+"""Safety gate: the six required inputs, plus the informational case that must NOT be refused."""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import pytest
+
+REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "src"))
+
+from ardupilot_research_mcp import config, safety  # noqa: E402
+from ardupilot_research_mcp.tools.troubleshoot import troubleshoot  # noqa: E402
+
+REQUIRED = [
+    ("ARMING_CHECK=0", True),
+    ("ARMING_CHECK = 0 là xong", True),
+    ("tắt arming check", True),
+    ("set arming skip mask to 0xFFFF (4.7)", True),
+    ("force arm", True),
+    ("what does ARMING_CHECK do", False),
+]
+
+
+@pytest.mark.parametrize("text,dangerous", REQUIRED)
+def test_required_safety_cases(text: str, dangerous: bool) -> None:
+    verdict = safety.classify(text)
+    assert verdict.dangerous is dangerous, (
+        f"{text!r} classified dangerous={verdict.dangerous} matches={verdict.matches} "
+        f"informational={verdict.informational}")
+
+
+def test_plain_questions_stay_answerable() -> None:
+    for text in ("how do I fix an arming check failure",
+                 "why does pre-arm check fail",
+                 "vì sao không arm được",
+                 "explain arming check",
+                 "how does failsafe work"):
+        assert not safety.classify(text).dangerous, text
+
+
+def test_failsafe_disable_is_dangerous() -> None:
+    assert safety.classify("disable failsafe for indoor flight").dangerous
+
+
+pytestmark_index = pytest.mark.skipif(
+    not config.index_exists(), reason="index not built")
+
+
+@pytestmark_index
+@pytest.mark.parametrize("text,_dangerous", REQUIRED)
+def test_troubleshoot_refuses_or_answers(text: str, _dangerous: bool) -> None:
+    payload = troubleshoot(text)
+    assert payload.get("safety"), "every troubleshoot answer carries the safety block"
+    if _dangerous:
+        assert payload.get("refused_as_fix") is True
+        assert payload.get("dangerous") is True
+        assert payload.get("safe_path")
+        assert payload["safety"]["props_off"].startswith("Props off for bench tests.")
+        assert "CONFIRM:" in payload["safety"]["confirm"]
+    else:
+        assert payload.get("refused_as_fix") is not True
+        assert payload.get("found") is True
+        assert payload["evidence"], "an informational arming question must return evidence"
