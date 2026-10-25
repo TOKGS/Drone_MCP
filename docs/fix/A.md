@@ -321,5 +321,104 @@ precision@1 = 22/30 = 0.733
 MRR = 0.837
 ```
 
+## A-2. Giá trị default (lỗi 2)
+
+### Bước (1) test đang fail
+
+```
+PS> python -m pytest tests/test_param_defaults.py -q
+E               sqlite3.OperationalError: no such column: default_resolved
+FAILED tests/test_param_defaults.py::test_reported_defaults_are_the_pinned_release_values
+FAILED tests/test_param_defaults.py::test_unresolvable_default_keeps_the_raw_text_and_returns_no_number
+FAILED tests/test_param_defaults.py::test_every_resolved_default_is_a_number_behind_a_raw_text
+3 failed in 0.37s
+```
+
+### Bước (2)(3) — sửa nguyên nhân gốc, chạy lại
+
+Đo trước khi sửa: **0** dòng `// @Default:` trong toàn bộ corpus tại pin —
+`(Select-String -Path data\corpus\ardupilot\*\*.cpp,data\corpus\ardupilot\*\*.h -Pattern '^\s*//\s*@Default' | Measure-Object).Count` → `0`
+(cả khi chỉ quét `libraries/`). Vì vậy default **không** đến từ metadata `@Default:` mà từ
+**đối số của khai báo sở hữu khối** (`GSCALAR`, `AP_GROUPINFO`, `AP_GROUPINFO_FLAGS`, ...), đúng như
+`docs/blackbox/REPORT.md` §2.2(a) dẫn nguồn (`ArduCopter/Parameters.cpp:129`,
+`RC_Channels_VarInfo.h:97`, `AP_Arming.cpp:199-201`, ...).
+
+Sửa:
+* `research/build_params.py`: `declaration_default()` lấy đối số default của khai báo trong 15 dòng
+  kế tiếp (`*_FLAGS` lấy đối số áp cuối); `default_raw` lưu **nguyên văn**.
+  `resolve_default()` chỉ trả số khi chắc chắn: literal (số nguyên/hex/thập phân, hậu tố U/UL/F),
+  biểu thức chỉ gồm số với `<<`, `|`, `&`, `+`, `-`, `*` (đánh giá bằng AST, không `eval`), một tên
+  có **đúng một** định nghĩa trong các header đã lập chỉ mục (`#define NAME value` hoặc entry enum
+  `NAME = value`, bỏ comment `//`), cho phép bóc cast `(type)` / `type(...)` và scope `A::B::NAME`.
+  Không quy được → `default_value NULL`, `default_resolved 0`, vẫn giữ `default_raw`.
+* `db.py`: cột `default_raw TEXT`, `default_value REAL`, `default_resolved INTEGER NOT NULL`
+  (bảng được `db.reset_params()` tạo lại từ schema, không ALTER tay).
+* `lookup_param` trả `default_raw`, `default`, `default_resolved`.
+
+```
+PS> python -m research.build_params --unresolved docs/fix/A-unresolved.txt
+{"blocks": 2770, "stored_blocks": 2119, "rows": 5318, "unresolved_blocks": 509,
+ "unlinked_blocks": 142, "params_in_table": 5089,
+ "with_default_raw": 4703, "default_resolved": 3003, "default_unresolved": 1700,
+ "version": "Copter-4.7.2"}
+
+PS> python -m pytest tests/test_param_defaults.py -q
+...                                                                      [100%]
+3 passed in 0.39s
+```
+
+Số: **4703/5089** dòng có `default_raw`; **3003** quy được số; **1700** không quy được (kèm
+`default_raw` nguyên văn).
+
+10 tham số tự chọn đối chiếu trực tiếp bằng `git -C research/cache/git/ardupilot show HEAD:<path>`
+(output đầy đủ `docs/fix/A-defaults-check.txt`):
+
+```
+RC_PROTOCOLS   default_raw='1'                         default=1.0    resolved=1
+               source: AP_GROUPINFO("_PROTOCOLS", 34, RC_CHANNELS_SUBCLASS, _protocols, 1),
+THR_DZ         default_raw='THR_DZ_DEFAULT'            default=100.0  resolved=1
+               source: GSCALAR(throttle_deadzone,  "THR_DZ",    THR_DZ_DEFAULT),
+FLTMODE1       default_raw='(uint8_t)FLIGHT_MODE_1'    default=None   resolved=0
+FENCE_ENABLE   default_raw='0'                         default=0.0    resolved=1
+BATT_MONITOR   default_raw='int8_t(AP_BattMonitor::Type::NONE)'  default=None  resolved=0
+SERIAL1_BAUD   default_raw='DEFAULT_SERIAL1_BAUD'      default=None   resolved=0
+MOT_SPIN_ARM   default_raw='AP_MOTORS_SPIN_ARM_DEFAULT' default=0.1   resolved=1
+WP_SPD         default_raw='WP_SPD_DEFAULT'            default=None   resolved=0
+RTL_ALT_M      default_raw='RTL_ALT_M_DEFAULT'         default=15.0   resolved=1
+SYSID_THISMAV  MISSING  (tên không có trong bảng Copter tại pin)
+```
+
+Ví dụ 10 lý do KHÔNG quy được (giữ `default_raw`, `default` null): `(uint8_t)FLIGHT_MODE_1` (macro
+trỏ tới `MODE_STABILIZE` có nhiều định nghĩa theo xe), `int8_t(AP_BattMonitor::Type::NONE)` (functional
+cast của enum không nằm trong dạng được phép), `DEFAULT_SERIAL1_BAUD` / `WP_SPD_DEFAULT` (định nghĩa
+khác nhau theo board/xe), `DEFAULT_LOG_BITMASK` (macro nhiều dòng, dòng `#define` chỉ còn `\`),
+`AP_MOTORS_SPIN_ARM_DEFAULT` là số nên quy được — còn `HAL_*`, `_DEFAULT` trỏ `config.h` nhiều biến
+thể, tên macro không có trong header đã lập chỉ mục, biểu thức chứa tên khác, và default là biểu
+thức C++ (`AP_PARAM_FLAG_*`, gọi hàm) — tất cả để null.
+
+### Ba cổng bước (4) cho A-2
+
+```
+PS> python -m pytest -q
+1 failed, 90 passed in 24.81s
+FAILED tests/test_query.py::test_out_of_corpus_question_is_not_answered   # known limitation A-3, scope C
+
+PS> python scripts/fidelity_scan.py
+TOTAL                          86262         0
+fidelity: PASS
+
+PS> python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
+recall@5 = 30/30 = 1.000
+precision@1 = 22/30 = 0.733
+MRR = 0.837
+
+PS> python scripts/check_param_citations.py
+params checked: 5089
+citation violations: 0
+
+PS> (Get-Item data\index.sqlite).Length/1MB
+183.47265625
+```
+
 
 

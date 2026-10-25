@@ -7,7 +7,7 @@ the vehicle parameter table names a group (`// @Group: BATT`) and the files it p
 prefix (`// @Group: _` in AP_BattMonitor.cpp turns FS_LOW_ACT into BATT_FS_LOW_ACT). This module
 walks that chain the same way the pinned release's own generator does
 (Tools/autotest/param_metadata/param_parse.py). A block no chain reaches keeps its declared
-suffix with `prefix_resolved=0` — nothing is guessed.
+suffix with `prefix_resolved=0` â€” nothing is guessed.
 
 Each row also links to the chunk that holds its `@Param:` line, so `lookup_param` can cite it.
 
@@ -19,6 +19,7 @@ Zero network: reads the extracted corpus and the existing chunk index.
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import posixpath
 import re
@@ -49,6 +50,65 @@ TEXT_KEYS = {
     "RebootRequired": "reboot_required",
 }
 BITMASK_SPLIT = re.compile(r",\s*(?=\d+\s*:)")
+DECL = re.compile(r"^\s*(AP_GROUPINFO_FLAGS|AP_GROUPINFO|AP_SUBGROUPINFO|GSCALAR_FLAGS|GSCALAR"
+                  r"|GGROUPINFO)\s*\(")
+DEFINE = re.compile(r"^\s*#\s*define\s+([A-Za-z_]\w*)\s+(\S.*?)\s*$")
+ENUM_ENTRY = re.compile(r"^\s*([A-Z][A-Z0-9_]*)\s*=\s*([^,{}]+?)\s*,?\s*$")
+NUMERIC = re.compile(r"^[+-]?(?:0[xX][0-9a-fA-F]+|\d+\.\d*|\.\d+|\d+)[uUlLfF]*$")
+IDENTIFIER = re.compile(r"^[A-Za-z_]\w*$")
+EXPR_CHARS = re.compile(r"^[0-9a-fA-FxX()|&<>+*/\- \t.]+$")
+
+
+def split_macro_args(text: str, start: int) -> list[str]:
+    """Top-level comma split of one macro call, starting at the '(' index."""
+    depth = 0
+    args: list[str] = []
+    current: list[str] = []
+    in_string = False
+    for char in text[start:]:
+        if in_string:
+            current.append(char)
+            if char == '"':
+                in_string = False
+            continue
+        if char == '"':
+            in_string = True
+            current.append(char)
+        elif char in "([{":
+            depth += 1
+            if depth > 1:
+                current.append(char)
+        elif char in ")]}":
+            depth -= 1
+            if depth == 0:
+                args.append("".join(current).strip())
+                return args
+            current.append(char)
+        elif char == "," and depth == 1:
+            args.append("".join(current).strip())
+            current = []
+        else:
+            current.append(char)
+    return args
+
+
+def declaration_default(lines: list[str], index: int) -> str | None:
+    """The value argument of the declaration that owns the block, if it is close by."""
+    for look in range(index, min(index + 15, len(lines))):
+        line = lines[look]
+        match = DECL.match(line)
+        if not match:
+            stripped = line.strip()
+            if stripped and not stripped.startswith("//") and not stripped.startswith("#"):
+                return None
+            continue
+        args = split_macro_args(line, line.index("("))
+        if not args:
+            return None
+        # AP_GROUPINFO_FLAGS(..., default, flags): the default is not the last argument.
+        return args[-2] if match.group(1).endswith("_FLAGS") and len(args) > 1 else args[-1]
+    return None
+
 
 
 def parse_bitmask(raw: str) -> list[dict[str, object]]:
@@ -103,9 +163,93 @@ def parse_blocks(text: str) -> list[dict]:
                 record[field] = (value.lower() in ("1", "true", "yes")
                                  if field == "reboot_required" else value)
             index += 1
-        record.update({"line_start": start + 1, "line_end": last + 1})
+        record.update({"line_start": start + 1, "line_end": last + 1,
+                       "default_raw": declaration_default(lines, index)})
         params.append(record)
     return params
+
+
+def default_index(root: Path) -> dict[str, set[str]]:
+    """`#define NAME value` and `NAME = value` enum entries from the indexed headers."""
+    known: dict[str, set[str]] = {}
+    for path in root.rglob("*"):
+        if path.suffix.lower() not in (".h", ".hpp"):
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for line in text.splitlines():
+            match = DEFINE.match(line)
+            if match and not match.group(2).startswith(("(", "/*")):
+                known.setdefault(match.group(1), set()).add(match.group(2).split("//")[0].strip())
+                continue
+            match = ENUM_ENTRY.match(line.split("//")[0].rstrip())
+            if match and match.group(2).strip() and not match.group(2).strip().startswith("{"):
+                known.setdefault(match.group(1), set()).add(match.group(2).strip())
+    return known
+
+
+def _number(expr: str) -> int | float | None:
+    if not NUMERIC.match(expr):
+        return None
+    if re.fullmatch(r"0[xX][0-9a-fA-F]+[uUlL]*", expr):
+        return int(re.sub(r"[uUlL]+$", "", expr), 16)
+    text = re.sub(r"[uUlLfF]+$", "", expr)
+    if "." in text:
+        return float(text)
+    return int(text, 0)
+
+
+def resolve_default(raw: str | None, known: dict[str, set[str]], depth: int = 0):
+    """A number only when the source is unambiguous: literals, `<<`/`|` expressions over
+    numbers, or one name with exactly one definition in the indexed headers. Else None."""
+    if raw is None or depth > 4:
+        return None
+    expr = raw.strip().strip("()").strip() if raw.strip().startswith("(") else raw.strip()
+    expr = re.sub(r"^\([A-Za-z_][\w\s:*]*\)\s*", "", expr).strip()   # C++ cast, e.g. (uint32_t)
+    if "::" in expr:
+        expr = expr.rsplit("::", 1)[-1].strip()
+    number = _number(expr)
+    if number is not None:
+        return number
+    if IDENTIFIER.match(expr):
+        values = known.get(expr)
+        if values is None or len(values) != 1:
+            return None
+        return resolve_default(next(iter(values)), known, depth + 1)
+    tokens = re.sub(r"\b(\d+)[uUlL]+\b", r"\1", expr)
+    if not EXPR_CHARS.match(tokens):
+        return None
+    try:
+        node = ast.parse(tokens, mode="eval").body
+    except SyntaxError:
+        return None
+    return _eval_operators(node)
+
+
+def _eval_operators(node) -> int | float | None:
+    if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+        return node.value
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+        operand = _eval_operators(node.operand)
+        if operand is None:
+            return None
+        return -operand if isinstance(node.op, ast.USub) else operand
+    if isinstance(node, ast.BinOp) and isinstance(node.op, (ast.BitOr, ast.BitAnd, ast.LShift,
+                                                           ast.Add, ast.Sub, ast.Mult)):
+        left, right = _eval_operators(node.left), _eval_operators(node.right)
+        if left is None or right is None:
+            return None
+        if isinstance(node.op, ast.BitOr):
+            return int(left) | int(right)
+        if isinstance(node.op, ast.BitAnd):
+            return int(left) & int(right)
+        if isinstance(node.op, ast.LShift):
+            return int(left) << int(right)
+        if isinstance(node.op, ast.Add):
+            return left + right
+        if isinstance(node.op, ast.Sub):
+            return left - right
+        return left * right
+    return None
 
 
 def parse_groups(text: str) -> list[dict]:
@@ -210,15 +354,19 @@ def link_chunk(con, record: dict, path: str):
         ("ardupilot", path, record["line_start"], record["line_start"])).fetchone()
 
 
-def upsert(con, block: dict, names: list[dict], chunk, version: str, path: str) -> int:
+def upsert(con, block: dict, names: list[dict], chunk, version: str, path: str,
+           known: dict[str, set[str]]) -> int:
     """One row per full name the chain gives the block (a file can be reached N times)."""
     if chunk is None or not names:
         return 0
     raw = block["name_raw"]
+    default_raw = block.get("default_raw")
+    default_value = resolve_default(default_raw, known)
+    default_resolved = 1 if default_value is not None else 0
     rows = [(
         raw, raw.lstrip("_"), resolved["name"], resolved["prefix"], resolved["origin"],
         block.get("display_name"), block.get("description"), vehicle_of(path), version,
-        block.get("units"), block.get("range"),
+        block.get("units"), block.get("range"), default_raw, default_value, default_resolved,
         json.dumps(block["bitmask"], ensure_ascii=False) if block.get("bitmask") else None,
         1 if block.get("reboot_required") is True else None,
         block.get("user_level"), "ardupilot", path,
@@ -227,8 +375,9 @@ def upsert(con, block: dict, names: list[dict], chunk, version: str, path: str) 
     con.executemany(
         "INSERT OR REPLACE INTO params (name_raw, name_suffix, param_name, prefix,"
         " prefix_origin, display_name, description, vehicle, version,"
-        " units, range, bitmask, reboot_required, user_level, source_id, path, line_start,"
-        " line_end, cite_hash) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", rows)
+        " units, range, default_raw, default_value, default_resolved, bitmask,"
+        " reboot_required, user_level, source_id, path, line_start,"
+        " line_end, cite_hash) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", rows)
     return len(rows)
 
 
@@ -270,6 +419,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     db.reset_params(con)
+    known = default_index(root)
     totals = {"blocks": len(records), "stored_blocks": 0, "rows": 0,
               "unresolved_blocks": len(unresolved), "unlinked_blocks": 0}
     with con:
@@ -282,8 +432,15 @@ def main(argv: list[str] | None = None) -> int:
                 totals["unlinked_blocks"] += 1
                 continue
             totals["stored_blocks"] += 1
-            totals["rows"] += upsert(con, block, names, chunk, version, path)
+            totals["rows"] += upsert(con, block, names, chunk, version, path, known)
     totals["params_in_table"] = con.execute("SELECT COUNT(*) FROM params").fetchone()[0]
+    totals["with_default_raw"] = con.execute(
+        "SELECT COUNT(*) FROM params WHERE default_raw IS NOT NULL").fetchone()[0]
+    totals["default_resolved"] = con.execute(
+        "SELECT COUNT(*) FROM params WHERE default_resolved = 1").fetchone()[0]
+    totals["default_unresolved"] = con.execute(
+        "SELECT COUNT(*) FROM params WHERE default_raw IS NOT NULL"
+        " AND default_resolved = 0").fetchone()[0]
     totals["version"] = version
     print(json.dumps(totals, indent=2))
     return 0
