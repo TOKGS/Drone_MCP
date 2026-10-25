@@ -4,19 +4,19 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 
 ## Bước hiện tại
 
-- Bước 3/8 XONG (môi trường đã dựng) — đang CHỜ lead người dùng trả lời "ok" để spawn A–D.
-- Commit nền: `7fe0382` (master), working tree **bẩn**: `docs/FIX_SPEC.md`, `docs/FIX_BRIEFS.md`
-  untracked (do người dùng đưa) + `docs/fix/STATE.md` (file này). Chưa commit — chờ "ok".
+- Bước 4/8 XONG: đã spawn A, B, C, D (song song) lúc 19:2x. E sẽ spawn sau khi một nhánh xong.
+- Commit nền: `8690dfb` "docs: freeze FIX_SPEC/FIX_BRIEFS and start fix/STATE.md" trên `master`; tree CLEAN.
+- Task board: `task-1`=A, `task-2`=B, `task-3`=C, `task-4`=D (sub tự claim).
 
 ## Bảng nhánh
 
 | nhánh | sub đã spawn? | trạng thái | commit cuối | đã merge? | ghi chú |
 |---|---|---|---|---|---|
-| A (lỗi 3→1→2) | chưa | chưa bắt đầu | — | chưa | worktree `D:\Skill_tulan\wt-A`, cần rebuild index |
-| B (lỗi 4) | chưa | chưa bắt đầu | — | chưa | worktree `D:\Skill_tulan\wt-B` |
-| C (lỗi 5+7) | chưa | chưa bắt đầu | — | chưa | worktree `D:\Skill_tulan\wt-C` |
-| D (lỗi 6) | chưa | chưa bắt đầu | — | chưa | worktree `D:\Skill_tulan\wt-D` |
-| E (lỗi 8) | chưa | chưa bắt đầu | — | chưa | worktree `D:\Skill_tulan\wt-E`, spawn sau khi một nhánh xong |
+| A (lỗi 3→1→2) | **rồi** (`fix-a`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-A`, cần rebuild index |
+| B (lỗi 4) | **rồi** (`fix-b`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-B` |
+| C (lỗi 5+7) | **rồi** (`fix-c`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-C` |
+| D (lỗi 6) | **rồi** (`fix-d`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-D` |
+| E (lỗi 8) | chưa | chờ (spawn sau khi một nhánh xong) | — | chưa | worktree `D:\Skill_tulan\wt-E` |
 | verify (độc lập) | chưa | chưa bắt đầu | — | — | chỉ spawn sau khi merge hết |
 
 ## Môi trường đã dựng (bước 3)
