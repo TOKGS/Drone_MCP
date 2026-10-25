@@ -1,5 +1,13 @@
 # HANDOFF
 
+> **Status: this file is the handoff of an earlier round. The v0.1.0 fix round (2026-10-25) supersedes
+> its numbers.** Current, verified state: 7 356 documents · **86 262 chunks** · **5 089 parameters**
+> (4 703 with `default_raw`, 3 003 resolved) · index **182 MB** · **133 tests passing** · fidelity
+> 86 262/0 · blackbox run2 **92/108 with 0 regressions** (run1: 80/108). The 8 blackbox defects, the
+> decisions taken, and the per-defect raw logs are in **`docs/FIX_REPORT.md`** + `docs/fix/`; the
+> user-facing documentation is **`README.md`**. Everything below is kept as history of how the build
+> got here, not as the current measurement.
+
 Read this first in every new round. Everything below is raw output I ran, or explicitly
 marked UNVERIFIED / NOT RUN.
 
