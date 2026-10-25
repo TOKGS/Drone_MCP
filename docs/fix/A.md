@@ -273,4 +273,53 @@ FAILED tests/test_param_citation_integrity.py::test_every_row_cites_its_own_para
 3 failed in 0.72s
 ```
 
+### Bước (2)(3) — sửa nguyên nhân gốc, chạy lại
+
+Sửa:
+1. `cite.build_param_citation()`: excerpt bắt đầu từ **dòng `@Param:` của chính tham số** (vẫn là
+   lát cắt nguyên văn của chunk nên `verify_quote` giữ nguyên nghĩa), thay vì 600 ký tự đầu chunk.
+   Dòng được tìm **theo nội dung** trong text của chunk, không cộng trừ số dòng: chunker
+   `_slice()` strip các dòng trống đầu/cuối (`text = "\n".join(...).strip("\n")`) nên dòng thứ N
+   của text không luôn là dòng `line_start + N` của file.
+2. `research/build_params.link_chunk()`: neo vào chunk **chứa dòng `@Param:`** (chunk hẹp nhất),
+   thay vì chunk bao khối metadata.
+3. `lookup_param._row_out` và `decode_bitmask` dùng `build_param_citation`.
+
+```
+PS> python -m research.build_params --unresolved docs/fix/A-unresolved.txt
+{"blocks": 2770, "stored_blocks": 2119, "rows": 5318, "unresolved_blocks": 509,
+ "unlinked_blocks": 142, "params_in_table": 5089, "version": "Copter-4.7.2"}
+
+PS> python scripts/check_param_citations.py
+params checked: 5089
+citation violations: 0
+```
+(trước sửa: 3891 vi phạm — file `docs/fix/A-citations-before.txt`; sau sửa: 0 — `A-citations-after.txt`)
+
+Test đã pass:
+
+```
+PS> python -m pytest tests/test_param_citation_integrity.py -q
+...                                                                      [100%]
+3 passed in 1.59s
+```
+
+Ba cổng của bước (4):
+
+```
+PS> python -m pytest -q
+1 failed, 87 passed in 26.04s
+FAILED tests/test_query.py::test_out_of_corpus_question_is_not_answered   # known limitation A-3, scope C
+
+PS> python scripts/fidelity_scan.py
+TOTAL                          86262         0
+fidelity: PASS
+
+PS> python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
+recall@5 = 30/30 = 1.000
+precision@1 = 22/30 = 0.733
+MRR = 0.837
+```
+
+
 

@@ -40,7 +40,7 @@ def decode_bitmask(con: sqlite3.Connection, param: str, value: str | int | None 
     Pass `value` as a decimal/hex string ("0x2000"), an integer, or a comma-separated list of
     bit names as they appear in the source (e.g. "Use 420kbaud for ELRS protocol"). Requires an
     exact parameter match with a @Bitmask definition; otherwise found:false plus real candidates.
-    The returned citation is the source block that defines the bits â€” no bit is ever invented.
+    The returned citation is the source block that defines the bits Ã¢â‚¬â€ no bit is ever invented.
     """
     row, candidates = _find_param(con, param, vehicle, version)
     if row is None:
@@ -53,7 +53,8 @@ def decode_bitmask(con: sqlite3.Connection, param: str, value: str | int | None 
 
     bits = json.loads(row["bitmask"])
     by_name = {entry["name"].strip().lower(): entry["bit"] for entry in bits}
-    citation = cite.build_citation(con, cite.make_cite_id(row["source_id"], row["cite_hash"]))
+    citation = cite.build_param_citation(
+        con, cite.make_cite_id(row["source_id"], row["cite_hash"]), row["line_start"], row["name_raw"])
     payload = {
         "found": True,
         "param": row["param_name"],

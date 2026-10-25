@@ -198,15 +198,16 @@ def vehicle_of(rel_path: str) -> str:
 
 
 def link_chunk(con, record: dict, path: str):
-    # Prefer the chunk that fully contains the metadata block; a block that straddles a
-    # hard-cap split still links to the chunk holding its first line, so it keeps a citation.
+    """The tightest chunk that contains the block's own `@Param:` line.
+
+    `lookup_param` slices its excerpt from that line (cite.build_param_citation), so the anchor
+    must be the parameter's first line, not merely any overlapping chunk.
+    """
     return con.execute(
         "SELECT c.cite_hash FROM chunks c JOIN documents d ON d.id = c.document_id"
-        " WHERE d.source_id = ? AND d.path = ?"
-        "   AND c.line_start <= ? AND c.line_end >= ?"
-        " ORDER BY (c.line_start > ?) ASC, c.line_start LIMIT 1",
-        ("ardupilot", path, record["line_end"], record["line_start"],
-         record["line_start"])).fetchone()
+        " WHERE d.source_id = ? AND d.path = ? AND c.line_start <= ? AND c.line_end >= ?"
+        " ORDER BY (c.line_end - c.line_start) ASC LIMIT 1",
+        ("ardupilot", path, record["line_start"], record["line_start"])).fetchone()
 
 
 def upsert(con, block: dict, names: list[dict], chunk, version: str, path: str) -> int:

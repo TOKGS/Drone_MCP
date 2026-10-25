@@ -65,7 +65,8 @@ def renamed_hint(con: sqlite3.Connection, query: str, vehicle: str) -> dict | No
 
 def _row_out(con: sqlite3.Connection, row: sqlite3.Row, *, resolved_by: str) -> dict:
     payload = {
-        "citation": cite.build_citation(con, cite.make_cite_id(row["source_id"], row["cite_hash"])),
+        "citation": cite.build_param_citation(
+            con, cite.make_cite_id(row["source_id"], row["cite_hash"]), row["line_start"], row["name_raw"]),
         "name": row["param_name"],
         "name_raw": row["name_raw"],
         "name_suffix": row["name_suffix"],
@@ -93,7 +94,7 @@ def lookup_param(con: sqlite3.Connection, name_or_pattern: str, vehicle: str = "
 
     Matching order: the resolved full name (group prefix + declared suffix), the declared
     suffix, prefix, then substring. `vehicle` also accepts rows shared by all vehicles.
-    Returns found:false plus real candidates when nothing matches — it never invents a name,
+    Returns found:false plus real candidates when nothing matches â€” it never invents a name,
     a default, a range or a bit number, and for a name the release notes record as replaced it
     returns the note's own `renamed_hint`. Each entry carries a cite_id you can open with
     get_chunk. Use decode_bitmask for the bits of a bitmask parameter.

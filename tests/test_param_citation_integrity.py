@@ -31,7 +31,7 @@ pytestmark = pytest.mark.skipif(
 PARAMS = ("FS_THR_ENABLE", "LOG_BITMASK", "ARMING_SKIPCHK", "BATT_FS_LOW_ACT", "RC_OPTIONS",
           "SERIAL1_PROTOCOL", "ATC_RAT_RLL_P", "INS_ACCEL_FILTER", "WP_SPD", "MOT_SPIN_ARM",
           "GPS_TYPE", "COMPASS_USE", "BATT_MONITOR", "FENCE_ENABLE", "RTL_ALT_M", "OSD_TYPE",
-          "ADSB_ENABLE", "AHRS_RP_P")
+          "ADSB_LIST_RADIUS", "AHRS_RP_P")
 
 
 def block_pattern(raw: str) -> re.Pattern[str]:
@@ -59,16 +59,23 @@ pytestmark = [pytestmark, pytest.mark.skipif(not needs_params(), reason="params 
 
 
 def test_citation_excerpt_shows_the_parameter_block() -> None:
-    for name in PARAMS:
-        payload = lookup_param(name)
-        assert payload["found"] is True, name
-        entry = payload["params"][0]
-        assert entry["name"] == name
-        pattern = block_pattern(entry["name_raw"])
-        excerpt_lines = entry["citation"]["excerpt"].splitlines()
-        assert any(pattern.search(line) for line in excerpt_lines), (
-            f"{name}: citation excerpt shows no `@Param: {entry['name_raw']}` line "
-            f"(first line {excerpt_lines[0][:60]!r})")
+    # Bulk check through the tool's own function: the MCP wrapper only adds a 60 calls/minute
+    # rate limit, which a table-wide check must not trip for the rest of the suite.
+    lookup_direct = getattr(lookup_param, "__wrapped__", lookup_param)
+    con = db.connect()
+    try:
+        for name in PARAMS:
+            payload = lookup_direct(con, name)
+            assert payload["found"] is True, name
+            entry = payload["params"][0]
+            assert entry["name"] == name
+            pattern = block_pattern(entry["name_raw"])
+            excerpt_lines = entry["citation"]["excerpt"].splitlines()
+            assert any(pattern.search(line) for line in excerpt_lines), (
+                f"{name}: citation excerpt shows no `@Param: {entry['name_raw']}` line "
+                f"(first line {excerpt_lines[0][:60]!r})")
+    finally:
+        con.close()
 
 
 def test_citation_lines_cover_the_parameter_block() -> None:
