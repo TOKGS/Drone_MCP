@@ -10,7 +10,7 @@ exact line range + verbatim excerpt, or says `found:false`.
 
 ```
 $ python -m ardupilot_research_mcp.server          # stdio MCP server, 14 tools
-$ python -m pytest -q                              # 133 passed
+$ python -m pytest -q                              # 134 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP` · package: `ardupilot-research-mcp` v0.1.0 · Python ≥ 3.10
@@ -444,7 +444,7 @@ env = { PYTHONPATH = 'D:\Skill_tulan\ardupilot-research-mcp\src', ARM_DATA_DIR =
 ```powershell
 cd D:\Skill_tulan\ardupilot-research-mcp
 $env:PYTHONPATH = "src"
-python -m pytest -q                                   # 133 passed
+python -m pytest -q                                   # 134 passed
 python scripts\smoke_stdio.py                         # real MCP handshake + tool calls (run outside a sandbox)
 ```
 
@@ -459,7 +459,7 @@ python-on-PATH, `PYTHONPATH`, cwd, env and the `cmd /c` wrapper on Windows.
 ## 13. Tests and gates
 
 ```powershell
-python -m pytest -q                                     # 133 passed
+python -m pytest -q                                     # 134 passed
 python scripts\check_traceability.py                    # requirement → test → result, failing=0
 python scripts\fidelity_scan.py                         # 86 262 chunks, 0 mismatch, PASS
 python scripts\check_param_citations.py                 # 5 089 params, 0 citation violations
@@ -474,7 +474,7 @@ Last measured on the merged tree (`master`, index rebuilt from scratch):
 
 | Gate | Result |
 |---|---|
-| `pytest -q` | **133 passed**, 0 failed, 0 skipped |
+| `pytest -q` | **134 passed**, 0 failed, 0 skipped |
 | `fidelity_scan.py` | **86 262 chunks, 0 mismatch — PASS** |
 | `check_param_citations.py` | **5 089 checked, 0 violations** |
 | `check_traceability.py` | 22 requirements, **failing=0** |
@@ -487,6 +487,10 @@ Last measured on the merged tree (`master`, index rebuilt from scratch):
 
 `tests/conftest.py` resets the in-process rate guard between tests (the guard itself still enforces
 60 calls/min in production).
+
+Both `data/index.sqlite` and `data/corpus` are gitignored, so a fresh clone adapts instead of
+failing: with the index only, the one test that compares citations against source files **skips**
+(`133 passed, 1 skipped`); with the corpus extracted too, everything runs (`134 passed`).
 
 ---
 
@@ -658,7 +662,7 @@ repo ships the recipe, not gigabytes of upstream source.
 
 **v0.1.0 — first complete pass, 2026-10-25.**
 
-- 14 tools over stdio, read-only, offline; 133 tests; 86 262 chunks with 0 fidelity mismatches.
+- 14 tools over stdio, read-only, offline; 134 tests; 86 262 chunks with 0 fidelity mismatches.
 - Parameter table rebuilt from the pinned `@Param`/`@Group`/`@Default` metadata:
   **230 → 5 089 parameters**, citation-to-own-block violations **3 891 → 0**, defaults
   **0 → 4 703 raw / 3 003 resolved**.
