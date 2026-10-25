@@ -14,6 +14,7 @@ $ python -m pytest -q                              # 134 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP` · package: `ardupilot-research-mcp` v0.1.0 · Python ≥ 3.10
+🇻🇳 **Bản tiếng Việt đầy đủ: [`README.vi.md`](README.vi.md)**
 
 > **Tiếng Việt, ngắn gọn:** đây là MCP server chạy nội bộ, chỉ đọc, trả lời câu hỏi kỹ thuật
 > ArduPilot kèm trích dẫn kiểm chứng được (`cite_id`, URL ghim SHA/tag, đúng số dòng, excerpt ≤ 600
