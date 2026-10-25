@@ -94,6 +94,32 @@ async def main() -> int:
                   f"set_bits={bits_payload.get('set_bits')}")
             if getattr(bits, "isError", False) or not bits_payload.get("found"):
                 failures += 1
+
+            sys.path.insert(0, str(SRC))
+            from ardupilot_research_mcp.decoders import crsf as crsf_decoder
+            body = bytes([0x14]) + bytes(range(10))
+            frame = bytes([0xC8, len(body) + 1]) + body + bytes([crsf_decoder.crc8_dvb_s2(body)])
+            decoded = await session.call_tool("decode_crsf_frame", {"hex": frame.hex()})
+            decoded_payload = json.loads(text_of(decoded))
+            if isinstance(decoded_payload.get("result"), dict):
+                decoded_payload = decoded_payload["result"]
+            print(f"[decode_crsf_frame] found={decoded_payload.get('found')} "
+                  f"crc_ok={decoded_payload.get('all_crc_valid')} "
+                  f"type={decoded_payload['frames'][0].get('type_name')}")
+            if getattr(decoded, "isError", False) or not decoded_payload.get("all_crc_valid"):
+                failures += 1
+
+            source = await session.call_tool("find_source",
+                                             {"symbol_or_file": "AP_RCProtocol_CRSF.cpp",
+                                              "repo": "ardupilot"})
+            source_payload = json.loads(text_of(source))
+            if isinstance(source_payload.get("result"), dict):
+                source_payload = source_payload["result"]
+            first = (source_payload.get("hits") or [{}])[0]
+            print(f"[find_source] found={source_payload.get('found')} "
+                  f"path={first.get('path')} lines={first.get('lines')}")
+            if getattr(source, "isError", False) or not source_payload.get("found"):
+                failures += 1
     print(f"\nsmoke_failures={failures}")
     return 1 if failures else 0
 

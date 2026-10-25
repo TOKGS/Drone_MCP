@@ -39,3 +39,25 @@ def guarded(fn: Callable[..., dict]) -> Callable[..., dict]:
 
     wrapper.__signature__ = public  # type: ignore[attr-defined]
     return wrapper
+
+
+def guarded_pure(fn: Callable[..., dict]) -> Callable[..., dict]:
+    """Wrap a computational tool that does not need the index (pure decoder/validator).
+
+    Still rate-limited and output-capped; the public signature keeps the tool's own arguments.
+    """
+
+    signature = inspect.signature(fn)
+    public = signature.replace(parameters=list(signature.parameters.values())[1:])
+
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs) -> dict:
+        GUARD.check()
+        try:
+            payload = fn(None, *args, **kwargs)
+        except (KeyError, ValueError) as exc:
+            return {"found": False, "error": str(exc)}
+        return GUARD.cap(payload)
+
+    wrapper.__signature__ = public  # type: ignore[attr-defined]
+    return wrapper

@@ -5,8 +5,13 @@ marked UNVERIFIED / NOT RUN.
 
 ## Current state
 
-- **Server speaks MCP over stdio** (7 of 14 tools): search_docs, get_chunk, lookup_param,
-  decode_bitmask, troubleshoot, list_sources, index_status.
+- **Server speaks MCP over stdio** (11 of 14 tools): search_docs, get_chunk, lookup_param,
+  decode_bitmask, find_source, troubleshoot, decode_crsf_frame, check_intelhex_line,
+  parse_ihex_summary, list_sources, index_status.
+- **Decoders are corpus-derived, not recalled**: CRC8 poly 0xD5 (`crsf_protocol.h` L9), CRC
+  coverage "Type and Payload, not sync/length" (`crsf.md` L188), 0x16 = 16 × 11-bit channels in
+  22 bytes with `(ticks-992)*5/8+1500` (`crsf.md` L521-527). Intel HEX checksum is the two's
+  complement of the summed bytes; record types 00/01/02/03/04/05.
 - **Safety gate is live and tested**: the six required inputs classify correctly and
   `troubleshoot` refuses safety bypasses, carrying `Props off for bench tests. SITL before
   hardware.` plus a `CONFIRM:` line; "what does ARMING_CHECK do" is still answered with
@@ -25,19 +30,25 @@ marked UNVERIFIED / NOT RUN.
 ## Gates run this round (raw)
 
 ```
-safety audit (research.audit_safety), one line per required input:
-ARMING_CHECK=0                              -> dangerous=true  refused_as_fix=true
-ARMING_CHECK = 0 là xong                    -> dangerous=true  refused_as_fix=true
-tắt arming check                            -> dangerous=true  refused_as_fix=true
-set arming skip mask to 0xFFFF (4.7)        -> dangerous=true  refused_as_fix=true (3 rules fired)
-force arm                                   -> dangerous=true  refused_as_fix=true
-what does ARMING_CHECK do                   -> dangerous=null  found=true confidence=high
-51 passed in 21.44s
+handshake: server=ardupilot-research version=1.30.0 protocol=2025-11-25
+tools(11): ['search_docs','get_chunk','lookup_param','decode_bitmask','find_source',
+            'troubleshoot','decode_crsf_frame','check_intelhex_line','parse_ihex_summary',
+            'list_sources','index_status']
+[decode_crsf_frame] found=True crc_ok=True type=Link statistics
+[find_source]       found=True path=libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp lines=[1, 19]
+smoke_failures=0
+58 passed in 21.99s
 ```
 
-Refusals are still useful: they return real pre-arm documentation citations
-(`common-prearm-safety-checks.rst`, pinned to the wiki commit) plus the safe path, so the caller
-is redirected rather than blocked with nothing.
+Decoder vectors come from the corpus itself: `crc8(b"\x01") == 0xD5` matches the spec's CRC
+table (`0x00, 0xD5, 0x7F, 0xAA …`), a frame built with that CRC parses as CRC-valid and one
+corrupted byte is reported invalid, 11-bit channel pack/unpack round-trips, and the canonical
+Intel HEX data record `:10010000…0140` validates while a one-nibble edit does not.
+
+Three defects fixed: `paths.py` used a relative import beyond the package; decoder tools were
+wrongly gated on an existing index (they are pure computation, now `guarded_pure`); and the
+governor's `FileLock` raised `PermissionError` when a concurrent Windows process unlinked the lock
+file mid-open — it now retries exactly like "busy" (this was a real multi-process flake).
 
 
 
@@ -56,8 +67,7 @@ is redirected rather than blocked with nothing.
 
 ## Known gaps / UNVERIFIED
 
-- **7 of 14 tools missing**: find_source, board_info, mavlink_message, get_script,
-  decode_crsf_frame, check_intelhex_line, parse_ihex_summary.
+- **3 of 14 tools missing**: board_info, mavlink_message, get_script.
 - **MAVLink tables empty** (`mavlink_msgs`, `mavlink_enums` = 0): XML not parsed yet.
 - **Held-out evaluation NOT RUN** (by design: once, when the server is complete).
 - **Mutation testing ≥90 % NOT RUN**; **README + client registration UNVERIFIED**.

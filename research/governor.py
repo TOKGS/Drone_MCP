@@ -174,6 +174,12 @@ class FileLock:
                 self._fd = os.open(self.path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
                 os.write(self._fd, str(os.getpid()).encode())
                 return self
+            except PermissionError:
+                # Windows reports ACCESS_DENIED while the holder is unlinking the lock file;
+                # treat it exactly like "busy" instead of failing the whole call.
+                if time.time() > deadline:
+                    raise TimeoutError(f"could not acquire {self.path}")
+                time.sleep(0.02)
             except FileExistsError:
                 try:
                     age = time.time() - self.path.stat().st_mtime
@@ -182,6 +188,8 @@ class FileLock:
                         continue
                 except FileNotFoundError:
                     continue
+                except PermissionError:
+                    pass
                 if time.time() > deadline:
                     raise TimeoutError(f"could not acquire {self.path}")
                 time.sleep(0.02)

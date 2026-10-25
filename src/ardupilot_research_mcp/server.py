@@ -16,7 +16,8 @@ except Exception as exc:  # pragma: no cover - surfaced at install time
     raise SystemExit(f"mcp SDK missing or incompatible (pinned mcp==1.30.0): {exc}")
 
 from . import __version__
-from .tools import (decode_bitmask, get_chunk, index_status, list_sources, lookup_param,
+from .tools import (check_intelhex_line, decode_bitmask, decode_crsf_frame, find_source,
+                    get_chunk, index_status, list_sources, lookup_param, parse_ihex_summary,
                     search_docs, troubleshoot)
 
 READ_ONLY = ToolAnnotations(readOnlyHint=True, idempotentHint=True, openWorldHint=False)
@@ -36,7 +37,10 @@ mcp = FastMCP(
 
 for _tool in (search_docs.search_docs, get_chunk.get_chunk,
               lookup_param.lookup_param, decode_bitmask.decode_bitmask,
-              troubleshoot.troubleshoot,
+              find_source.find_source, troubleshoot.troubleshoot,
+              decode_crsf_frame.decode_crsf_frame,
+              check_intelhex_line.check_intelhex_line,
+              parse_ihex_summary.parse_ihex_summary,
               list_sources.list_sources, index_status.index_status):
     mcp.add_tool(_tool, annotations=READ_ONLY)
 
