@@ -1,0 +1,17 @@
+F..                                                                      [100%]
+================================== FAILURES ===================================
+________________ test_query_without_a_corpus_anchor_is_refused ________________
+
+con = <sqlite3.Connection object at 0x0000019A2AF80400>
+
+    def test_query_without_a_corpus_anchor_is_refused(con) -> None:
+        for text in NO_ANCHOR_QUERIES:
+            payload = query.search(con, text, limit=5)
+>           assert payload["found"] is False, (text, [item["path"] for item in payload["results"]])
+E           AssertionError: ('how do I bake sourdough bread', ['libraries/AP_Scripting/applets/arming-checks.lua', 'libraries/AP_SmartRTL/AP_SmartRTL.cpp'])
+E           assert True is False
+
+tests\test_query.py:297: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_query.py::test_query_without_a_corpus_anchor_is_refused - A...
+1 failed, 2 passed, 22 deselected in 3.48s

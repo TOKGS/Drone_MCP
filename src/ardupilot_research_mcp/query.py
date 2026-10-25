@@ -25,6 +25,15 @@ WEAK_MATCH_NOTE = "khớp yếu, có thể ngoài kho"
 # (G08/G19); off-corpus questions share no content token with their top-3 chunks (0.00). 0.25
 # flags only queries whose words are absent from what came back. See docs/fix/C.md.
 WEAK_MATCH_THRESHOLD = 0.25
+# A query is answerable only when the corpus really uses its words. An anchor is a content word
+# that appears in ANCHOR_MIN_DOCS documents, or a code symbol (snake_case) present at all: a word
+# living in one incidental comment ("bread crumbs" in AP_SmartRTL) or in one applet is not one.
+ANCHOR_MIN_DOCS = 3
+ANCHOR_WEAK_WEIGHT = 0.25
+ANCHOR_MIN_WEIGHT = 1.0
+ANCHOR_MIN_RATIO = 0.5
+NO_ANCHOR_NOTE = ("query has no anchor in the indexed corpus: its content words are not part of "
+                  "the index vocabulary -> out of scope; nothing was invented")
 SCOPE_SOURCES = {
     "docs": ["ardupilot_wiki", "expresslrs_docs"],
     "dev": ["ardupilot_wiki"],
@@ -39,6 +48,11 @@ SCOPE_SOURCES = {
     "forum": [],
 }
 TIER_ORDER = {"T1": 0, "T2": 1, "T3": 2}
+# Simulator-only code models the vehicle, it is not evidence of how the vehicle behaves. Rank it
+# below operational code and documentation instead of letting a model win a real question; the
+# gap to the next result is typically 4-5 bm25 points (G22 ELRS, buzzer).
+SIMULATOR_PATH_PREFIX = "libraries/SITL/"
+SIMULATOR_PENALTY = 5.0
 # Query words that carry no retrieval signal: without this, "how do I bake bread" matched
 # half the corpus and an out-of-corpus question wrongly returned found:true.
 STOPWORDS = {
@@ -175,6 +189,34 @@ def _version_labels(con: sqlite3.Connection) -> list[str]:
     return [row[0] for row in rows if row[0]]
 
 
+def _document_frequency(con: sqlite3.Connection, token: str,
+                        cap: int = ANCHOR_MIN_DOCS) -> int:
+    """Number of documents containing the token, capped at `cap` so FTS can stop early."""
+    sql = ("SELECT COUNT(*) FROM (SELECT DISTINCT d.id FROM chunks_fts f"
+           " JOIN chunks c ON c.rowid = f.rowid JOIN documents d ON d.id = c.document_id"
+           " WHERE chunks_fts MATCH ? LIMIT ?)")
+    try:
+        return con.execute(sql, (f'"{token.replace(chr(34), "")}"', cap)).fetchone()[0]
+    except sqlite3.OperationalError:
+        return 0
+
+
+def _corpus_anchor(con: sqlite3.Connection, query: str,
+                   applied: list[str]) -> tuple[float, float]:
+    """Anchor weight and the share of the query's content words it covers."""
+    content = sorted(_content_tokens(query, applied))
+    if not content:
+        return 0.0, 0.0
+    weight = 0.0
+    for token in content:
+        found = _document_frequency(con, token)
+        if found >= ANCHOR_MIN_DOCS or (found and "_" in token):
+            weight += 1.0
+        elif found:
+            weight += ANCHOR_WEAK_WEIGHT
+    return weight, weight / len(content)
+
+
 def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
            version: str | None = None, tier_max: str = "T1", limit: int = 8) -> dict:
     expanded, applied = expand_query(query)
@@ -190,6 +232,17 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         return {"found": False, "query": query, "results": [], "candidates": [],
                 "note": f"scope {scope!r} has no indexed source yet"}
     max_tier = TIER_ORDER.get(tier_max, 0)
+
+    if scope != "local":  # the local overlay is deliberately small, it needs no corpus vocabulary
+        weight, support = _corpus_anchor(con, query, applied)
+        if weight < ANCHOR_MIN_WEIGHT or support < ANCHOR_MIN_RATIO:
+            return {"found": False, "query": query,
+                    "query_expanded": expanded if applied else None, "expansions": applied,
+                    "scope": scope, "version_filter": version, "results": [],
+                    "candidates": [],
+                    "scope_notes": scope_notes(query, [], labels=_version_labels(con),
+                                               applied=applied),
+                    "confidence": "low", "note": NO_ANCHOR_NOTE}
 
     sql = (
         "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
@@ -252,6 +305,8 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         # words scattered through prose, so reward the chunk whose own heading carries every token.
         if path_tokens and heading_hits == len(path_tokens):
             score -= 5.0
+        if row["path"].startswith(SIMULATOR_PATH_PREFIX):
+            score += SIMULATOR_PENALTY
         scored.append((score, row))
     scored.sort(key=lambda item: item[0])
 
