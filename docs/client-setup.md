@@ -184,3 +184,75 @@ $env:ARM_REPO_ROOT=(Get-Location).Path
 (`docs/fix/E.md` §3c), nên chạy từ worktree vẫn dùng index bản gốc. Muốn dùng index riêng của worktree thì
 đăng ký lại (2.2) từ trong worktree, hoặc sửa ba giá trị `env` trong `.mcp.json`. Tôi **không** sửa file
 `.mcp.json` tracked đó (ngoài phạm vi nhánh `fix/E`).
+
+---
+
+## 6. ĐÃ KIỂM CHỨNG TRÊN MÁY NÀY — 2026-10-25 (lead chạy ngoài sandbox)
+
+Cả ba phép đo dưới đây chạy trong terminal **không** bị confinement, Claude Code `2.1.308`,
+Python 3.11.9, `mcp` 1.30.0.
+
+### 6.1 Server lên được trong client thật — `status: connected`, 14 tool được expose
+
+```powershell
+cd D:\Skill_tulan\client-verify      # thư mục bất kỳ, chứa mcp.json
+claude -p "Call the tool lookup_param with name_or_pattern=RC_OPTIONS and tell me only the numeric default value." `
+  --mcp-config .\mcp.json --strict-mcp-config --output-format stream-json --verbose
+```
+
+Dòng `system/init` (nguyên văn, cắt phần `tools` cho gọn):
+
+```json
+{"type":"system","subtype":"init", ...
+ "tools":[…,"mcp__ardupilot-research__board_info","mcp__ardupilot-research__check_intelhex_line",
+  "mcp__ardupilot-research__decode_bitmask","mcp__ardupilot-research__decode_crsf_frame",
+  "mcp__ardupilot-research__find_source","mcp__ardupilot-research__get_chunk",
+  "mcp__ardupilot-research__get_script","mcp__ardupilot-research__index_status",
+  "mcp__ardupilot-research__list_sources","mcp__ardupilot-research__lookup_param",
+  "mcp__ardupilot-research__mavlink_message","mcp__ardupilot-research__parse_ihex_summary",
+  "mcp__ardupilot-research__search_docs","mcp__ardupilot-research__troubleshoot"],
+ "mcp_servers":[{"name":"ardupilot-research","status":"connected","source":"dynamic"}], …
+ "apiKeySource":"none"}
+```
+
+Kết luận: **server khởi động đúng, client đọc được 14 tool** (`mcp__ardupilot-research__*`).
+Lượt model thì dừng vì `"Not logged in · Please run /login"` (`error: authentication_failed`) — đó là
+**đăng nhập của client**, không phải lỗi server. Vì vậy một *tool call do model phát ra* vẫn chưa có
+bằng chứng; muốn có thì phải `/login` rồi hỏi lại.
+
+### 6.2 Vì sao run1 báo `failed`: scope đăng ký, không phải server
+
+```powershell
+cd D:\Skill_tulan\ardupilot-research-mcp
+claude -p "hi" --output-format stream-json --verbose     # dùng .mcp.json project-scope
+# → "mcp_servers":[{"name":"ardupilot-research","status":"pending","source":"project"}], 0 tool mcp__*
+```
+
+```powershell
+claude mcp list
+# ardupilot-research-test: python -m ardupilot_research_mcp.server - √ Connected     ← user scope
+# ardupilot-research:      python -m ardupilot_research_mcp.server - ⏸ Pending approval (run `claude` to approve)
+```
+
+`enableAllProjectMcpServers: true` trong `.claude/settings.json` **và** `.claude/settings.local.json`
+đều **không** đổi được trạng thái này trên `2.1.308` (vẫn `pending`, 0 tool).
+Tức: một `.mcp.json` project-scope cần **một lần duyệt tương tác** (chạy `claude` rồi approve) — khi
+phiên headless không có bước đó, server **không được spawn**, và client chỉ báo một trạng thái không
+kèm lý do. Đây là đúng lớp lỗi mà blackbox run1 ghi (`status: failed`) và không phải khiếm khuyết của
+server.
+
+### 6.3 Cách đăng ký đã chứng minh chạy được (không cần duyệt tay)
+
+```powershell
+# cách 1 — user scope: Connected ngay, kiểm bằng `claude mcp list`
+claude mcp add --scope user ardupilot-research `
+  --env PYTHONPATH=D:\Skill_tulan\ardupilot-research-mcp\src `
+  --env ARM_REPO_ROOT=D:\Skill_tulan\ardupilot-research-mcp `
+  --env ARM_DATA_DIR=D:\Skill_tulan\ardupilot-research-mcp\data `
+  -- python -m ardupilot_research_mcp.server
+
+# cách 2 — project scope: mở `claude` trong repo và approve lần đầu, hoặc truyền tường minh
+claude -p "<câu hỏi>" --mcp-config .\.mcp.json --strict-mcp-config
+```
+
+Nếu vẫn `failed` sau khi đã approve: xem §4 (python trên PATH, `PYTHONPATH`, cwd, env, `cmd /c`).

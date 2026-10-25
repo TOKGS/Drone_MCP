@@ -371,21 +371,32 @@ python -m ardupilot_research_mcp.server      # stdio; needs PYTHONPATH=<repo>/sr
 
 Replace `D:\Skill_tulan\ardupilot-research-mcp` with your checkout path in every snippet.
 
-> **Status of these registrations: the config shapes are transcribed from each project's own
-> documentation, but none was launched in a real client session in this environment — a sandbox
-> blocked stdio pipes (`PermissionError: [WinError 5]` at process spawn). Treat "working" as
-> UNVERIFIED until you see a tool call succeed.** `docs/client-setup.md` has the step-by-step
-> PowerShell checklist to prove it locally.
+> **What is actually verified (2026-10-25, Claude Code `2.1.308`, outside any sandbox):** the server
+> **starts and connects** in a real Claude Code session and the client lists **all 14 tools**
+> (`mcp__ardupilot-research__*`) — raw init JSON in `docs/client-setup.md` §6.
+> `claude mcp add --scope user …` reports `√ Connected` immediately.
+> A **model-initiated tool call** is still unproven: the session ends at
+> `"Not logged in · Please run /login"` (client auth, not the server).
+> **OpenCode and Codex were never launched — UNVERIFIED.** Project-scope `.mcp.json` needs one
+> interactive approval; headless `-p` runs show it as `pending` (0 tools) — that, not the server, is
+> what run1 recorded as `status: failed`. Pass `--mcp-config <file> --strict-mcp-config` or register
+> at user scope to avoid the approval step.
 
 ### Claude Code
 
 ```powershell
-claude mcp add --scope project ardupilot-research `
+# user scope — verified here: `claude mcp list` reports √ Connected, non-interactive
+claude mcp add --scope user ardupilot-research `
   --env PYTHONPATH=D:\Skill_tulan\ardupilot-research-mcp\src `
   --env ARM_REPO_ROOT=D:\Skill_tulan\ardupilot-research-mcp `
   --env ARM_DATA_DIR=D:\Skill_tulan\ardupilot-research-mcp\data `
   -- python -m ardupilot_research_mcp.server
-claude mcp list                     # expect: ardupilot-research  connected
+claude mcp list                     # expect: ardupilot-research … √ Connected
+
+# project scope — writes .mcp.json, but needs ONE interactive approval
+claude mcp add --scope project ardupilot-research …            # then run `claude` and approve
+# or skip approval entirely by passing the file explicitly:
+claude -p "<question>" --mcp-config .\.mcp.json --strict-mcp-config
 ```
 
 The generated project file (`.mcp.json`) looks like:
@@ -454,6 +465,17 @@ A correct answer cites `libraries/RC_Channel/RC_Channels_VarInfo.h`, lines 92–
 `AP_Arming`. If the client reports the server as `failed`, `docs/client-setup.md` §4 walks through
 python-on-PATH, `PYTHONPATH`, cwd, env and the `cmd /c` wrapper on Windows.
 
+Proof that the wiring is right, without spending a model turn (measured here):
+
+```powershell
+claude mcp list
+# ardupilot-research: python -m ardupilot_research_mcp.server - √ Connected
+claude -p "hi" --mcp-config .\.mcp.json --strict-mcp-config --output-format stream-json --verbose 2>&1 |
+  Select-Object -First 1
+# …"mcp_servers":[{"name":"ardupilot-research","status":"connected"}],
+#  "tools":[… "mcp__ardupilot-research__lookup_param" … 14 of them]
+```
+
 ---
 
 ## 13. Tests and gates
@@ -484,6 +506,7 @@ Last measured on the merged tree (`master`, index rebuilt from scratch):
 | held-out v3 (blind, frozen) | recall@5 **0.933**, P@1 **0.833**, MRR **0.868** |
 | mutation score | **0.917** (11/12 applicable mutants killed; 3 stale mutants, 1 survivor documented) |
 | blackbox run2 (108 frozen cases) | **92 pass / 16 fail**, 0 regressions vs run1 (80 pass) |
+| verify-script determinism | 5 scripts × 2 runs → **byte-identical output** (`docs/blackbox/run2/determinism.md`) |
 
 `tests/conftest.py` resets the in-process rate guard between tests (the guard itself still enforces
 60 calls/min in production).
@@ -521,6 +544,9 @@ frozen cases were run **once** more into `docs/blackbox/run2/`:
   wrong** (typo'd hex, non-existent parameter name, expectations that name a `source_id` as if it
   were a path).
 - Detailed 108-row comparison + raw output: `docs/blackbox/run2/comparison.md`.
+- **Determinism of the scoring pass**: the 5 verifier scripts were run twice on the same raw
+  run2 — byte-identical output, same exit codes (`docs/blackbox/run2/determinism.md`). So the
+  92/16 verdict does not depend on run order or timing.
 
 ### Mutation testing
 
@@ -613,11 +639,18 @@ repo ships the recipe, not gigabytes of upstream source.
 
 ## 18. Known limitations and unverified claims
 
-**Unverified here (do not treat as working):**
+**Verified for real (Claude Code 2.1.308, outside the sandbox):** the server connects, the client
+lists all 14 tools, and `claude mcp list` reports `√ Connected` for a user-scope registration. Raw
+init JSON and both registration vectors: `docs/client-setup.md` §6.
 
-- **Client registration** in a real OpenCode / Claude Code / Codex session — config shapes only.
-  A sandbox blocked process spawn with pipes, so the failure could not be reproduced end-to-end.
-- **Codex stdio key names** — its config reference redirects to a login page; nothing guessed.
+**Still unverified (do not treat as working):**
+
+- **A model-initiated tool call** — the headless session stops at
+  `"Not logged in · Please run /login"` (`error: authentication_failed`), which is client auth, not
+  the server. Run `/login`, then ask the RC_OPTIONS question above.
+- **OpenCode** never launched; its config shape is transcribed from its own docs.
+- **Codex** — not installed here, and its stdio key names are unconfirmed (its reference redirects
+  to a login page). Nothing was guessed.
 
 **Known limitations (by design or out of scope):**
 
@@ -673,9 +706,12 @@ repo ships the recipe, not gigabytes of upstream source.
   out-of-corpus questions return `found:false`; simulator-code ranking penalty.
 - `decode_crsf_frame`: `frames_found`, `all_crc_valid:null` on zero frames, `truncated_tail_bytes`,
   C-style truncating µs (`tick 172 → 988`).
-- Independent blackbox re-run over the frozen 108 cases: **92 pass, 0 regressions**.
+- Independent blackbox re-run over the frozen 108 cases: **92 pass, 0 regressions**; the scoring
+  pass is **deterministic** (5 scripts × 2 runs, byte-identical).
+- **Client wiring proven** in a real Claude Code session: server `connected`, 14 tools listed,
+  `claude mcp list` → `√ Connected` (user scope). The headless model turn stops at client login.
 - Full defect ledger, decisions and costs: **`docs/FIX_REPORT.md`**; per-defect logs in `docs/fix/`.
 
 Open work that would move the needle next: rank the 4 remaining retrieval cases without
-question-specific tuning, resolve more macro defaults, ingest T2/T3 evidence, and prove one real
-client session end-to-end.
+question-specific tuning, resolve more macro defaults, ingest T2/T3 evidence, and finish one
+logged-in client session so a model-issued tool call is on record.

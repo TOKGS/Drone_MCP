@@ -18,7 +18,7 @@ Không có ngưỡng nào bị hạ, không test đóng băng nào bị sửa, k
 | 5 | Glossary khớp chuỗi con ("bitcoin"→"bit") + không có cờ ngoài phạm vi | **FIXED** | `bc5ef17` | `c0088c6` | `docs/fix/C.md`, `C-5-prefix.txt`, run2 `D1/D2/D4` |
 | 6 | `decode_crsf_frame`: µs lệch 1, `all_crc_valid:true` khi 0 frame | **FIXED** | `fdf38e4` | `fb981a1` | `docs/fix/D.md`, run2 `A3/A4_*` |
 | 7 | Thiếu `maxLength`/validate + rò lỗi SQL thô (`LIKE or GLOB pattern too complex`) | **FIXED** | `8a570e7` | `22b9fa8` | `docs/fix/C.md`, `C-7-prefix.txt`, run2 `F_MB` |
-| 8 | Client báo `status: failed` không nêu lý do | **UNKNOWN** (chỉ chẩn đoán, không sửa được trong sandbox) | — | `ea2992f`, `511c4bb` (docs) | `docs/fix/E.md`, `docs/client-setup.md`, `.mcp.json.example` |
+| 8 | Client báo `status: failed` không nêu lý do | **PARTIAL** — nguyên nhân đã xác định và đo được; server chứng minh lên được trong client thật; tool call do model vẫn chưa có (client chưa `/login`) | — | `ea2992f`, `511c4bb` (docs) + mục (g) | `docs/fix/E.md`, `docs/client-setup.md` §6, `.mcp.json.example` |
 
 Hồi quy do nhánh A gây ra (corpus mở rộng) được xử lý ở nhánh F, giao lại đúng chủ sở hữu `query.py`:
 `bc0efc5` (test-fail) → `5857835`, `9d07c28` (test-fail) → `7b8b314`; report `docs/fix/F.md`.
@@ -165,3 +165,63 @@ Harness không công bố token/chi phí từng sub trong phiên này → **toke
 
 Số liệu thô khác: 110 lần gọi tool trong run2 (một phiên stdio, 0 transport error, ~64 s);
 không có lần gọi Exa/Firecrawl/web_search nào trong toàn bộ quá trình sửa.
+
+---
+
+## (g) Bổ sung sau khi người dùng yêu cầu: kiểm chứng client thật + tính tất định
+
+Hai khoảng trống được nêu trong báo cáo trước đã được đo lại (ngoài sandbox, Claude Code `2.1.308`,
+Python 3.11.9, `mcp` 1.30.0). Không có ngưỡng nào bị đổi.
+
+### (g.1) Client thật — server lên được, 14 tool được expose
+
+```powershell
+cd D:\Skill_tulan\client-verify
+claude -p "Call the tool lookup_param (RC_OPTIONS) and tell me only the numeric default." `
+  --mcp-config .\mcp.json --strict-mcp-config --output-format stream-json --verbose
+```
+
+Dòng `system/init` (nguyên văn, rút gọn phần tools):
+
+```
+"mcp_servers":[{"name":"ardupilot-research","status":"connected","source":"dynamic"}]
+"tools":[ … "mcp__ardupilot-research__lookup_param", … tổng 14 tool mcp__ardupilot-research__* ]
+"apiKeySource":"none"
+```
+
+Lượt model kết thúc bằng `{"error":"authentication_failed","result":"Not logged in · Please run /login"}`
+— lỗi **đăng nhập của client**, không liên quan server. Vì vậy: kết nối + liệt kê tool = **đã chứng
+minh**; tool call do model = **vẫn chưa có bằng chứng** (UNVERIFIED).
+
+### (g.2) Vì sao run1 ghi `status: failed` — scope đăng ký, không phải server
+
+```powershell
+cd <repo>; claude -p "hi" --output-format stream-json --verbose | Select-Object -First 1
+# → "mcp_servers":[{"name":"ardupilot-research","status":"pending","source":"project"}], 0 tool mcp__*
+
+claude mcp list
+# ardupilot-research-test: … - √ Connected        (đăng ký --scope user)
+# ardupilot-research:      … - ⏸ Pending approval  (project scope, chưa duyệt)
+```
+
+`enableAllProjectMcpServers: true` trong `.claude/settings.json` **và** `.claude/settings.local.json`
+đều không đổi trạng thái `pending` trên `2.1.308` (đã đo cả hai, 0 tool). Kết luận: `.mcp.json`
+project-scope phải được **duyệt một lần bằng TUI**; phiên headless không duyệt thì server **không được
+spawn** và client chỉ báo trạng thái không kèm lý do — đúng lớp lỗi run1 ghi, không phải khiếm khuyết
+của server. Cách chạy được, không cần duyệt tay: `--scope user`, hoặc
+`--mcp-config <file> --strict-mcp-config`.
+
+### (g.3) Tính tất định của khâu chấm run2
+
+5 script chấm điểm chạy **hai lần** trên cùng raw run2 (`D:\Skill_tulan\bb-run2`):
+
+| script | exit lần 1 | exit lần 2 | SHA-256 output lần 1 | lần 2 | kết luận |
+|---|---|---|---|---|---|
+| `verify_a_run2.py` | 0 | 0 | `FFA190EC2230FF83…` | `FFA190EC2230FF83…` | IDENTICAL |
+| `verify_b.py` | 0 | 0 | `20C7FB5AF47B5D73…` | `20C7FB5AF47B5D73…` | IDENTICAL |
+| `verify_cd.py` | 0 | 0 | `77399B0D22C0C690…` | `77399B0D22C0C690…` | IDENTICAL |
+| `verify_e.py` | 0 | 0 | `289643AE92E8D5DB…` | `289643AE92E8D5DB…` | IDENTICAL |
+| `verify_fg.py` | 0 | 0 | `83ACB46D90AA6BC5…` | `83ACB46D90AA6BC5…` | IDENTICAL |
+
+Chi tiết + lệnh tái lập: `docs/blackbox/run2/determinism.md`. Giới hạn: đây là tất định của **khâu
+chấm**, không phải của lần chạy server (run2 vẫn chỉ chạy đúng một lần theo luật).

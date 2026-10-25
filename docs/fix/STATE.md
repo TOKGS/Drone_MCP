@@ -68,3 +68,16 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 - Báo cáo tổng: `docs/FIX_REPORT.md`. Không có ngưỡng nào bị hạ; `tests/golden.yaml`,
   `tests/heldout_*.yaml`, `tests/blackbox_cases.md`, `docs/blackbox/raw/` không bị sửa.
 
+## Bổ sung sau khi push lần 1 (yêu cầu của người dùng)
+
+- **Client thật**: Claude Code `2.1.308` ngoài sandbox → `status:"connected"`,
+  14 tool `mcp__ardupilot-research__*`, `claude mcp list` = `√ Connected` (user scope). Lượt model
+  dừng ở `Not logged in` (lỗi đăng nhập client). Nguyên nhân run1 báo `failed`: `.mcp.json`
+  project-scope ở trạng thái `pending` (cần duyệt TUI); `enableAllProjectMcpServers` không cứu được
+  trên bản này. Ghi ở `docs/FIX_REPORT.md` (g) + `docs/client-setup.md` §6.
+- **Tất định**: 5 script chấm run2 chạy 2 lần → byte-identical (5/5), exit 0 cả hai lần;
+  `docs/blackbox/run2/determinism.md`.
+- **Test mới cần cho clone sạch**: `tests/test_param_citation_integrity.py` skip khi thiếu
+  `data/corpus` (nhánh `fix/G`, merge `6f2399b`) → clone chỉ có index: `133 passed, 1 skipped`.
+
+
