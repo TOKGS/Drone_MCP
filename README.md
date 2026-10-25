@@ -20,6 +20,25 @@ Repo: `github.com/TOKGS/Drone_MCP` · package: `ardupilot-research-mcp` v0.1.0 �
 > ký tự khớp nguyên văn nguồn). Không có mạng lúc trả lời, không điều khiển drone, không bao giờ
 > khuyên tắt kiểm tra an toàn. Cài đặt + dựng index + đăng ký client: xem **Quick start**.
 
+> ### TL;DR — this is a **local** MCP server, not a hosted service
+>
+> Nothing is deployed anywhere: **no URL, no port, no HTTP, no API key, no daemon, no Docker, no
+> database server**. Your MCP client spawns `python -m ardupilot_research_mcp.server` as a child
+> process on your machine and speaks MCP over **stdio**. The only data it reads at answer time is the
+> SQLite file `data/index.sqlite`. The network is used **once**, to build that index.
+>
+> | Step | Command | What it needs |
+> |---|---|---|
+> | 1 · install (seconds) | `pip install -e .` | Python ≥ 3.10; installs `mcp==1.30.0` + `pyyaml` |
+> | 2 · build index (~5 min, once) | §3.2: `fetch tags` → `fetch download` → `ingest --all --rebuild-index` → `build_params` → `build_mavlink` | network + **≈ 3 GB free disk** (corpus 115 MB, index 182 MB, download cache 2.7 GB) |
+> | 3 · register in a client | §12, e.g. `claude mcp add --scope user ardupilot-research …` | nothing |
+> | 4 · prove it works | `claude mcp list` → `√ Connected`, or `python -m pytest -q` → `134 passed` | nothing |
+> | 5 · use it | ask *"Look up RC_OPTIONS and tell me which bit enables ELRS 420kbaud"* | nothing — **offline** |
+>
+> Portable: the server only needs `data/index.sqlite`; copy it to another machine (with the same
+> checkout) and the answering side works with no network at all. Windows and Linux/WSL both work;
+> the only OS-specific notes are in [§17](#17-troubleshooting).
+
 ---
 
 ## Contents
@@ -89,6 +108,15 @@ fallback to "probably true" when the corpus has no answer.
 
 ### 3.1 Install
 
+Prerequisites (that is the whole list):
+
+- **Python ≥ 3.10** (`python -V`; the project is tested on 3.11.9) with `pip`.
+- **≈ 3 GB free disk** for the build: corpus 115 MB + `data/index.sqlite` 182 MB + the pinned
+  download cache 2.7 GB (`research/cache/`, gitignored, deletable after a successful build — the
+  answering side then needs only the index).
+- **Network once**, for the build only. Nothing to install globally: no server, no daemon, no
+  database engine, no API key — MCP goes over stdio to a child process.
+
 ```powershell
 git clone https://github.com/TOKGS/Drone_MCP.git ardupilot-research-mcp
 cd ardupilot-research-mcp
@@ -104,6 +132,13 @@ python3 -m venv .venv && . .venv/bin/activate && pip install -e .
 Dependencies are only `mcp==1.30.0` and `pyyaml` (plus `pytest` for the dev extra). The MCP SDK is
 pinned because the tool schema surface was verified against exactly that version
 (`docs/research-notes.md`).
+
+The server itself is one command — it is a **stdio** process, so it prints nothing to the terminal
+and waits for MCP messages (that is what a client is for):
+
+```powershell
+python -m ardupilot_research_mcp.server       # Ctrl+C to stop; never listens on a port
+```
 
 ### 3.2 Build the index (the only networked phase)
 
