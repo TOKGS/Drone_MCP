@@ -16,10 +16,10 @@ marked UNVERIFIED / NOT RUN.
 - `docs/research-notes.md` records what was verified, how, and the four things that were wrong
   first.
 - **Held-out measured twice: both FAIL the 0.8 target.**
-  v1 frozen set (burned): recall@5 0.367 / P@1 0.267 / MRR 0.298 — `docs/eval-heldout.md`.
-  v2 blind mechanical set (agent never saw the questions): 0.500, then 0.533 after one general
-  heading-phrase improvement; P@1 0.333 / MRR 0.408 — `docs/eval-heldout-v2.md`.
-  Tunable golden set on the same build: 1.000 / 0.700 / 0.811.
+  v1 frozen set (burned): recall@5 0.467 / P@1 0.267 / MRR 0.337 — `docs/eval-heldout.md`.
+  v2 blind mechanical set (agent never saw the questions): **0.733** / P@1 0.400 / MRR 0.513 after
+  four measured improvements — `docs/eval-heldout-v2.md`.
+  Tunable golden set on the same build: **1.000 / 0.767 / 0.865**.
   Root causes recorded: v1 expectations were partly wrong; v2 is a heading→file benchmark whose
   targets are ambiguous because identical headings recur in several files.
 - **Tables:** 63 808 chunks · 214 params (26 with @Bitmask) · **397 MAVLink messages + 2367 enum
