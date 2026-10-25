@@ -27,12 +27,36 @@ One SQLite file, `data/index.sqlite`:
 
 - `sources` — id, repo, ref (tag/SHA), tier, license, retrieved_at, manifest_sha256
 - `documents` — id, source_id, path, sha256, lang, bytes
-- `chunks` — id, document_id, ord, text, heading_path, anchor, line_start, line_end, sha256
-- `chunks_fts` — FTS5 external-content index over `chunks.text` (+ heading path), BM25 ranking
+- `chunks` — id, document_id, ord, text (verbatim, cited), **distilled** (search-only),
+  heading_path, anchor, line_start, line_end, sha256, cite_hash
+- `chunks_fts` — FTS5 external-content index over `chunks.distilled` + heading path, BM25
 - `params` — vehicle, version, name, unit, range, default, reboot_required, values, bitmask, chunk_id
 - `mavlink_msgs`, `mavlink_enums` — id/name/fields/enum entries with `chunk_id`
 
 BM25 alone must be sufficient; embeddings are an optional extra table, never required.
+
+## Distillation (search quality without breaking fidelity)
+
+The wiki is reStructuredText full of `:ref:` roles, `.. image::`, `toctree` directives and
+GPL/copyright headers. Those tokens hurt BM25 and never help a human.
+
+Two columns, one rule:
+
+- `chunks.text` stays **byte-verbatim** — it is what citations quote and what the
+  `git show <sha>:<path>` audit compares against. Never modified.
+- `chunks.distilled` is the search-only form: leading licence headers blanked, RST roles
+  unwrapped, directives and images dropped, HTML/Markdown markup stripped, whitespace collapsed.
+  It is only ever read by `chunks_fts`.
+
+Measured effect on the wiki: `mean(len(distilled) / len(text)) = 0.696` — about 30 % of the
+retrieved text is markup noise that no longer competes in ranking, while citations remain exact.
+
+## Serving is fully local
+
+`get_chunk` reads neighbouring chunks from the index instead of the corpus directory, so after
+ingest the server needs **only** `data/index.sqlite`: `tests/test_distil.py` builds an index,
+deletes the corpus tree, and still answers. No network import exists outside `ingest/`
+(`tests/test_offline.py`).
 
 ## Citation contract
 

@@ -5,55 +5,43 @@ marked UNVERIFIED / NOT RUN.
 
 ## Current state
 
-- **Corpus: complete for v1.** 7 sources pinned, cloned at their pinned refs, extracted,
-  ingested, and audited against Git blobs (see gate 1).
-- **Index:** `data/index.sqlite` — 63 652 chunks, 4 927 documents, 7 sources.
-- **cite_id is content-addressed** now: `ardupilot#fa0de4fb47c0c141` (16 hex of
-  `sha256(source|path|lines|sha256(text))`), stable across re-ingest, independent of row ids.
-- **Server: does not exist yet.** 0 of 14 tools implemented, so no MCP handshake has run.
-- **Quota:** firecrawl 0 · exa 0 · web_search 0 · github 30 calls · codeload 7 calls.
-  Still zero search quota spent.
+- **Server exists and speaks MCP over stdio** (4 of 14 tools). Handshake verified with a real
+  client: `server=ardupilot-research version=1.30.0 protocol=2025-11-25`.
+- **Corpus:** 7 sources pinned → 4 927 documents → 63 652 chunks → `data/index.sqlite` (111.8 MB).
+- **Distillation:** `chunks.distilled` feeds FTS only (wiki markup ratio 0.696); `chunks.text`
+  stays verbatim for citations.
+- **Serving is fully local:** the index alone answers; corpus files are not read at serve time.
+- **Quota:** firecrawl 0 · exa 0 · web_search 0 · github 30 · codeload 7. Zero search quota spent.
 
 ## Gates run this round (raw)
 
 ```
-1) chunk/line fidelity vs real Git objects
-source              chunks  mismatch  note
-ardupilot            28453         0  ok
-ardupilot_wiki       26580         0  ok
-crsf_spec              157         0  ok
-edgetx                 770         0  ok
-expresslrs            3716         0  ok
-expresslrs_docs       3341         0  ok
-mavlink                635         0  ok
-total chunks = 63652, total mismatch = 0
+handshake: server=ardupilot-research version=1.30.0 protocol=2025-11-25
+tools(4): ['search_docs', 'get_chunk', 'list_sources', 'index_status']
+[search_docs] found=true  cite_id=ardupilot#fdfff6f8575eb291  path=libraries/AP_Math/crc.cpp L77-L103
+[get_chunk]   cite_id ok, context expanded to L51-L135
+smoke_failures=0
 ```
 
 ```
-2) clones at pinned refs (git rev-parse HEAD)
-ardupilot        cloned  head=fb773567896014da  pin_match=True     (Copter-4.7.2)
-ardupilot_wiki   cloned  head=828de1f225dace34  pin_match=True
-mavlink          cloned  head=eec8824212c1fe8c  pin_match=True
-expresslrs       exists  head=a9d4a9cb5b5687c4
-expresslrs_docs  cloned  head=5ed656b6ebc7a38b  pin_match=True
-crsf_spec        cloned  head=a73f7dc5386e5b87  pin_match=True
-edgetx           cloned  head=0ebe2e98b2085e22  pin_match=True     (v2.12.5)
+31 passed in 21.16s        ($ python -m pytest -q)
 ```
 
 ```
-3) tests
-27 passed in 21.37s        ($ python -m pytest -q)   exit=0
+distil effect: wiki chunks=26580  mean(distilled/text)=0.696
+Vietnamese: "mất tín hiệu tay cầm" -> expansions ['mất tín hiệu -> rc loss/failsafe/link quality',
+            'tay cầm -> transmitter/radio/rc']  top hit: copter/source/docs/radio-failsafe.rst
+out-of-corpus: "how do I bake sourdough bread" -> found:False, results 0
 ```
 
 ```
-4) invoice of one real citation (not a mock)
-{"cite_id": "ardupilot#fa0de4fb47c0c141", "source_id": "ardupilot",
- "repo": "ArduPilot/ardupilot", "ref": "Copter-4.7.2", "channel": "stable",
- "unreleased": false, "version": "Copter-4.7.2",
- "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L1-L19",
- "lines": [1, 19], "tier": "T1", "license": "GPL-3.0", "untrusted": true}
-excerpt_len=600 verify_quote=True
+fidelity (unchanged after distillation): 63652 chunks, total mismatch = 0
 ```
+
+Bugs found and fixed this round: tool parameter `query` shadowed the `query` module;
+`sqlite3.Connection` in a tool signature broke SDK schema generation (public signature now drops
+it); out-of-corpus questions matched stopwords and wrongly returned `found:true` (stopword filter).
+
 
 ## Verified
 

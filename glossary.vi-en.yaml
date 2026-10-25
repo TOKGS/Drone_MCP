@@ -1,0 +1,56 @@
+# Vietnamese -> English query expansion. Editable; every entry is a phrase a user may type
+# in Vietnamese and the English terms that actually appear in the ArduPilot corpus.
+version: 1
+terms:
+  - vi: "không arm được"
+    en: ["arming failure", "prearm check", "arm"]
+  - vi: "không thể arm"
+    en: ["arming failure", "prearm check"]
+  - vi: "rớt gói"
+    en: ["packet loss", "link quality", "LQ"]
+  - vi: "mất tín hiệu"
+    en: ["RC loss", "failsafe", "link quality"]
+  - vi: "drone rung"
+    en: ["vibration", "vibration compensation", "accel"]
+  - vi: "rung lắc"
+    en: ["vibration", "accel"]
+  - vi: "tay cầm"
+    en: ["transmitter", "radio", "RC"]
+  - vi: "tần số"
+    en: ["frequency", "rate"]
+  - vi: "tốc độ gói"
+    en: ["packet rate", "rate"]
+  - vi: "bit"
+    en: ["bitmask", "bit"]
+  - vi: "mặt nạ bit"
+    en: ["bitmask"]
+  - vi: "tham số"
+    en: ["parameter", "param"]
+  - vi: "nạp firmware"
+    en: ["flash firmware", "upload", "bootloader"]
+  - vi: "hiệu chuẩn"
+    en: ["calibration", "calibrate"]
+  - vi: "cảm biến"
+    en: ["sensor"]
+  - vi: "la bàn"
+    en: ["compass"]
+  - vi: "ắc quy"
+    en: ["battery", "batt"]
+  - vi: "động cơ"
+    en: ["motor"]
+  - vi: "cổng nối tiếp"
+    en: ["serial port", "SERIAL"]
+  - vi: "kênh"
+    en: ["channel"]
+  - vi: "khung"
+    en: ["frame", "airframe"]
+  - vi: "cánh quạt"
+    en: ["propeller", "prop"]
+  - vi: "ghi log"
+    en: ["log", "logging"]
+  - vi: "đọc log"
+    en: ["log analysis", "log"]
+  - vi: "bản đồ"
+    en: ["map"]
+  - vi: "an toàn"
+    en: ["safety", "failsafe", "fence"]
