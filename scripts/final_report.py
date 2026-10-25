@@ -622,6 +622,16 @@ for item in found:
         "URL and is marked `pinned: false`.",
         "- Mutation uses a hand-picked set of 15 semantic mutants over 6 modules, not per-line "
         "mutation of the whole codebase.",
+        "- **No numeric threshold was relaxed.** recall@5 >= 0.80, 100 % fidelity, mutation >= 0.90 "
+        "and found:false are reported against the numbers in the goal statement; every miss is "
+        "shown as FAIL rather than redefined.",
+        "- **Deviation from the requested reporting protocol:** `docs/targets.yaml` does not exist in "
+        "this repository or its history, so the acceptance targets and the expected safety-table "
+        "results could not be read from a pre-committed file. They come from the goal statement and "
+        "the safety behaviour is reported as observed, not as pre-registered. `docs/checkpoints/"
+        "prev.json` is also absent, so the before/after table has no baseline (see section 4).",
+        "- The repository contains no LICENSE file and no requirements.txt, so the bundle ships "
+        "`pyproject.toml` (which pins the single runtime dependency) and no licence text.",
         "",
     ]
 
