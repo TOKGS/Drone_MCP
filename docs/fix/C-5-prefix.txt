@@ -1,0 +1,110 @@
+F.FFFFFF                                                                 [100%]
+================================== FAILURES ===================================
+______________ test_glossary_does_not_match_a_fragment_of_a_word ______________
+
+con = <sqlite3.Connection object at 0x0000024D8DC1D990>
+
+    def test_glossary_does_not_match_a_fragment_of_a_word(con) -> None:
+        for text in GLOSSARY_MUST_NOT_FIRE:
+            payload = query.search(con, text, limit=3)
+>           assert payload["expansions"] == [], (text, payload["expansions"])
+E           AssertionError: ('giá bitcoin hôm nay', ['bit -> bitmask/bit'])
+E           assert ['bit -> bitmask/bit'] == []
+E             
+E             Left contains one more item: 'bit -> bitmask/bit'
+E             Use -v to get more diff
+
+tests\test_query.py:97: AssertionError
+_________________ test_foreign_product_names_get_a_scope_note _________________
+
+con = <sqlite3.Connection object at 0x0000024D8DBF1210>
+
+    def test_foreign_product_names_get_a_scope_note(con) -> None:
+        for text, name in FOREIGN_PRODUCTS:
+            payload = query.search(con, text, limit=3)
+            joined = " ".join(payload.get("scope_notes") or [])
+>           assert f"không có {name}" in joined, (text, payload.get("scope_notes"))
+E           AssertionError: ('cách chỉnh EKF2 trên PX4', None)
+E           assert 'không có PX4' in ''
+
+tests\test_query.py:142: AssertionError
+___________ test_unknown_version_is_flagged_with_the_pinned_labels ____________
+
+con = <sqlite3.Connection object at 0x0000024D8DC1FF10>
+
+    def test_unknown_version_is_flagged_with_the_pinned_labels(con) -> None:
+        labels = [row["version_label"] or row["ref"] for row in
+                  con.execute("SELECT ref, version_label FROM sources")]
+        for text, number in [("tính năng của 5.2", "5.2"),
+                             ("ArduPilot 9.9.9 release notes", "9.9.9")]:
+            payload = query.search(con, text, limit=3)
+            joined = " ".join(payload.get("scope_notes") or [])
+>           assert number in joined, (text, payload.get("scope_notes"))
+E           AssertionError: ('tính năng của 5.2', None)
+E           assert '5.2' in ''
+
+tests\test_query.py:153: AssertionError
+_____________________ test_pinned_version_is_not_flagged ______________________
+
+con = <sqlite3.Connection object at 0x0000024D8DC1DC60>
+
+    def test_pinned_version_is_not_flagged(con) -> None:
+        label = con.execute("SELECT version_label FROM sources WHERE id = 'ardupilot'").fetchone()[0]
+        number = re.search(r"\d+\.\d+(?:\.\d+)?", label).group(0)
+        payload = query.search(con, f"arming check with firmware {number}", limit=3)
+>       assert payload["scope_notes"] == [], (number, payload["scope_notes"])
+               ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'scope_notes'
+
+tests\test_query.py:162: KeyError
+_________________ test_unrelated_topics_get_a_weak_match_note _________________
+
+con = <sqlite3.Connection object at 0x0000024D8DC1DF30>
+
+    def test_unrelated_topics_get_a_weak_match_note(con) -> None:
+        for text in UNRELATED_TOPICS:
+            payload = query.search(con, text, limit=3)
+>           assert "khớp yếu, có thể ngoài kho" in (payload.get("scope_notes") or []), (
+                text, payload.get("scope_notes"))
+E           AssertionError: ('giá ethereum hôm nay', None)
+E           assert 'khớp yếu, có thể ngoài kho' in ((None or []))
+E            +  where None = <built-in method get of dict object at 0x0000024D8DC3B400>('scope_notes')
+E            +    where <built-in method get of dict object at 0x0000024D8DC3B400> = {'found': True, 'query': 'giá ethereum hôm nay', 'query_expanded': None, 'expansions': [], ...}.get
+
+tests\test_query.py:168: AssertionError
+___________________ test_in_scope_questions_are_not_flagged ___________________
+
+con = <sqlite3.Connection object at 0x0000024D8DC1EF20>
+
+    def test_in_scope_questions_are_not_flagged(con) -> None:
+        for text in IN_SCOPE_QUESTIONS:
+            payload = query.search(con, text, limit=5)
+            assert payload["found"] is True, text
+>           assert payload["scope_notes"] == [], (text, payload["scope_notes"])
+                   ^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'scope_notes'
+
+tests\test_query.py:177: KeyError
+___________________ test_golden_questions_get_no_scope_note ___________________
+
+con = <sqlite3.Connection object at 0x0000024D8DC1E3E0>
+
+    def test_golden_questions_get_no_scope_note(con) -> None:
+        golden = yaml.safe_load((REPO / "tests" / "golden.yaml").read_text(encoding="utf-8"))
+        for question in golden["questions"]:
+            payload = query.search(con, question["q"], scope=question.get("scope", "all"), limit=5)
+>           assert payload["scope_notes"] == [], (question["id"], question["q"],
+                   ^^^^^^^^^^^^^^^^^^^^^^
+                                                 payload["scope_notes"])
+E           KeyError: 'scope_notes'
+
+tests\test_query.py:185: KeyError
+=========================== short test summary info ===========================
+FAILED tests/test_query.py::test_glossary_does_not_match_a_fragment_of_a_word
+FAILED tests/test_query.py::test_foreign_product_names_get_a_scope_note - Ass...
+FAILED tests/test_query.py::test_unknown_version_is_flagged_with_the_pinned_labels
+FAILED tests/test_query.py::test_pinned_version_is_not_flagged - KeyError: 's...
+FAILED tests/test_query.py::test_unrelated_topics_get_a_weak_match_note - Ass...
+FAILED tests/test_query.py::test_in_scope_questions_are_not_flagged - KeyErro...
+FAILED tests/test_query.py::test_golden_questions_get_no_scope_note - KeyErro...
+7 failed, 1 passed, 4 deselected in 0.92s

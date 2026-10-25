@@ -12,6 +12,19 @@ from . import cite, config, textsanitize
 
 IDENTIFIER = re.compile(r"^[A-Z][A-Z0-9_]{2,}$")
 WORD = re.compile(r"[A-Za-z][A-Za-z0-9_]*")
+# Glossary matching and the result-coverage check work on whole Unicode word tokens.
+TOKEN = re.compile(r"\w+", re.UNICODE)
+ASCII_WORD = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
+# A release number typed in a query ("5.2", "X.Y.Z"). The trailing lookahead keeps unit
+# suffixes out ("3.3V", "2.4GHz" are hardware facts, not release numbers).
+VERSION = re.compile(r"(?<![\w.])(\d+\.\d+(?:\.\d+)?)(?!\w)")
+OUT_OF_SCOPE_NOTE = ("kho chỉ có tài liệu ArduPilot Copter đã ghim, ExpressLRS, EdgeTX, CRSF, "
+                     "MAVLink; không có {name}")
+WEAK_MATCH_NOTE = "khớp yếu, có thể ngoài kho"
+# Measured on tests/golden.yaml: the lowest full-text coverage of an in-corpus question is 0.33
+# (G08/G19); off-corpus questions share no content token with their top-3 chunks (0.00). 0.25
+# flags only queries whose words are absent from what came back. See docs/fix/C.md.
+WEAK_MATCH_THRESHOLD = 0.25
 SCOPE_SOURCES = {
     "docs": ["ardupilot_wiki", "expresslrs_docs"],
     "dev": ["ardupilot_wiki"],
@@ -50,14 +63,37 @@ def load_glossary() -> dict[str, list[str]]:
     return terms
 
 
+def load_scope() -> dict:
+    """Out-of-scope product names from scope.yaml (data, never hardcoded in this module)."""
+    path = config.repo_root() / "scope.yaml"
+    if not path.exists():
+        return {"out_of_scope_names": []}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []]}
+
+
+def _word_tokens(text: str) -> list[str]:
+    return [match.group(0).lower() for match in TOKEN.finditer(text)]
+
+
+def _contains_phrase(tokens: list[str], phrase: list[str]) -> bool:
+    size = len(phrase)
+    return size > 0 and any(tokens[i:i + size] == phrase
+                            for i in range(len(tokens) - size + 1))
+
+
 def expand_query(query: str, glossary: dict[str, list[str]] | None = None) -> tuple[str, list[str]]:
-    """Return (expanded query, applied expansions). Vietnamese phrases become English terms."""
+    r"""Return (expanded query, applied expansions). Vietnamese phrases become English terms.
+
+    Matching is per whole `\w+` token, never a word fragment: the key "bit" must not fire inside
+    "bitcoin", while a multi-word key fires on a run of consecutive tokens ("mặt nạ bit").
+    """
     glossary = load_glossary() if glossary is None else glossary
+    words = _word_tokens(query)
     expanded = query
     applied: list[str] = []
-    lowered = query.lower()
     for vi, english in glossary.items():
-        if vi in lowered:
+        if _contains_phrase(words, _word_tokens(vi)):
             expanded += " " + " ".join(english)
             applied.append(f"{vi} -> {'/'.join(english)}")
     return expanded, applied
@@ -73,13 +109,79 @@ def _fts_query(tokens: list[str]) -> str:
     return " OR ".join(f'"{token}"' for token in safe)
 
 
+def _content_tokens(query: str, applied: list[str]) -> set[str]:
+    """Words the retriever can actually match: ASCII words of the query plus glossary terms.
+
+    Vietnamese words with diacritics cannot appear in an English corpus, so counting them would
+    mark every in-corpus Vietnamese question as a weak match.
+    """
+    tokens = {word.lower() for word in TOKEN.findall(query)
+              if ASCII_WORD.match(word) and word.lower() not in STOPWORDS}
+    for expansion in applied:
+        for term in expansion.split("->", 1)[-1].split("/"):
+            term = term.strip().lower()
+            if ASCII_WORD.match(term) and term not in STOPWORDS:
+                tokens.add(term)
+    return tokens
+
+
+def _top3_text(con: sqlite3.Connection | None, results: list[dict]) -> str:
+    parts: list[str] = []
+    for item in results[:3]:
+        parts.extend((item.get("path") or "", item.get("heading_path") or ""))
+        text = cite.chunk_text(con, item["cite_id"]) if con is not None else None
+        parts.append(text if text is not None else (item.get("excerpt") or ""))
+    return " ".join(parts).lower()
+
+
+def _match_ratio(con: sqlite3.Connection | None, query: str, results: list[dict],
+                 applied: list[str]) -> float:
+    tokens = _content_tokens(query, applied)
+    if not tokens or not results:
+        return 0.0
+    text = _top3_text(con, results)
+    hits = sum(1 for token in tokens
+               if re.search(rf"(?<!\w){re.escape(token)}(?!\w)", text))
+    return hits / len(tokens)
+
+
+def scope_notes(query: str, results: list[dict], labels: list[str] | None = None,
+                applied: list[str] | None = None,
+                con: sqlite3.Connection | None = None) -> list[str]:
+    """Ways the pinned corpus does not cover the query; empty when it plausibly does.
+
+    labels are the pinned version labels read from the `sources` table: a release number in the
+    query that matches none of them is reported, so the answer never pretends the pin has it.
+    """
+    notes: list[str] = []
+    for name in load_scope()["out_of_scope_names"]:
+        if re.search(rf"(?<!\w){re.escape(name)}(?!\w)", query, re.IGNORECASE):
+            notes.append(OUT_OF_SCOPE_NOTE.format(name=name))
+    if labels:
+        unknown = [number for number in VERSION.findall(query)
+                   if not any(number in label for label in labels)]
+        if unknown:
+            notes.append(f"phiên bản {', '.join(unknown)} không có trong kho; "
+                         f"các phiên bản đang ghim: {', '.join(labels)}")
+    if applied is None:
+        applied = expand_query(query)[1]
+    if results and _match_ratio(con, query, results, applied) < WEAK_MATCH_THRESHOLD:
+        notes.append(WEAK_MATCH_NOTE)
+    return notes
+
+
+def _version_labels(con: sqlite3.Connection) -> list[str]:
+    rows = con.execute("SELECT COALESCE(version_label, ref) FROM sources ORDER BY id").fetchall()
+    return [row[0] for row in rows if row[0]]
+
+
 def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
            version: str | None = None, tier_max: str = "T1", limit: int = 8) -> dict:
     expanded, applied = expand_query(query)
     tokens = _tokens(expanded)
     if not tokens:
         return {"found": False, "query": query, "results": [], "candidates": [],
-                "note": "query has no searchable tokens"}
+                "scope_notes": [], "confidence": "low", "note": "query has no searchable tokens"}
 
     allowed_sources = SCOPE_SOURCES.get(scope)
     if scope == "local":
@@ -169,6 +271,7 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         if len(results) >= limit:
             break
 
+    notes = scope_notes(query, results, labels=_version_labels(con), applied=applied, con=con)
     return {
         "found": bool(results),
         "query": query,
@@ -178,6 +281,8 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         "version_filter": version,
         "results": results,
         "candidates": [r["cite_id"] for r in results[:5]],
+        "scope_notes": notes,
+        "confidence": "low" if notes or not results else "high",
         "note": None if results else "no chunk matched; nothing was invented",
     }
 
