@@ -61,30 +61,6 @@ CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(
     tokenize='unicode61 remove_diacritics 2'
 );
 
-CREATE TABLE IF NOT EXISTS params (
-    id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    name_raw        TEXT NOT NULL,
-    name_suffix     TEXT NOT NULL,
-    display_name    TEXT,
-    description     TEXT,
-    vehicle         TEXT NOT NULL,
-    version         TEXT NOT NULL,
-    units           TEXT,
-    range           TEXT,
-    default_value   TEXT,
-    enum_values     TEXT,
-    bitmask         TEXT,
-    reboot_required INTEGER,
-    user_level      TEXT,
-    source_id       TEXT,
-    path            TEXT,
-    line_start      INTEGER,
-    line_end        INTEGER,
-    cite_hash       TEXT,
-    UNIQUE (name_raw, vehicle, version)
-);
-CREATE INDEX IF NOT EXISTS params_suffix ON params(name_suffix);
-
 CREATE TABLE IF NOT EXISTS mavlink_msgs (
     msgid       INTEGER NOT NULL,
     name        TEXT NOT NULL,
@@ -114,6 +90,41 @@ CREATE TABLE IF NOT EXISTS build_state (
 );
 """
 
+# The params table is owned by `research.build_params`, which rebuilds it from the corpus on every
+# run: a parameter's identity is `<prefix><suffix>`, a value the source never spells out in one
+# place, so the table is derived data and is recreated rather than migrated.
+PARAMS_SCHEMA = """
+CREATE TABLE IF NOT EXISTS params (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    name_raw        TEXT NOT NULL,
+    name_suffix     TEXT NOT NULL,
+    param_name      TEXT NOT NULL,
+    prefix          TEXT,
+    prefix_origin   TEXT,
+    display_name    TEXT,
+    description     TEXT,
+    vehicle         TEXT NOT NULL,
+    version         TEXT NOT NULL,
+    units           TEXT,
+    range           TEXT,
+    default_raw     TEXT,
+    default_value   REAL,
+    default_resolved INTEGER NOT NULL DEFAULT 0,
+    enum_values     TEXT,
+    bitmask         TEXT,
+    reboot_required INTEGER,
+    user_level      TEXT,
+    source_id       TEXT,
+    path            TEXT,
+    line_start      INTEGER,
+    line_end        INTEGER,
+    cite_hash       TEXT,
+    UNIQUE (param_name, vehicle, version)
+);
+CREATE INDEX IF NOT EXISTS params_name ON params(param_name);
+CREATE INDEX IF NOT EXISTS params_suffix ON params(name_suffix);
+"""
+
 
 def connect(path: Path | None = None) -> sqlite3.Connection:
     target = Path(path) if path else config.index_path()
@@ -127,7 +138,13 @@ def connect(path: Path | None = None) -> sqlite3.Connection:
 def init(path: Path | None = None) -> sqlite3.Connection:
     con = connect(path)
     con.executescript(SCHEMA)
+    con.executescript(PARAMS_SCHEMA)
     return con
+
+
+def reset_params(con: sqlite3.Connection) -> None:
+    con.execute("DROP TABLE IF EXISTS params")
+    con.executescript(PARAMS_SCHEMA)
 
 
 def rebuild_fts(con: sqlite3.Connection) -> None:

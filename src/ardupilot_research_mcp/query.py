@@ -325,7 +325,7 @@ def list_sources(con: sqlite3.Connection) -> dict:
 def index_status(con: sqlite3.Connection) -> dict:
     counts = {
         table: con.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
-        for table in ("sources", "documents", "chunks")
+        for table in ("sources", "documents", "chunks", "params")
     }
     ingested = con.execute("SELECT MAX(ingested_at) FROM sources").fetchone()[0]
     path: Path = config.index_path()
