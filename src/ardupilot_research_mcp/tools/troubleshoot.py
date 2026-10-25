@@ -14,24 +14,29 @@ MAX_EVIDENCE = 6
 def troubleshoot(con: sqlite3.Connection, symptom: str, context: str | None = None) -> dict:
     """Triage an ArduPilot symptom using only the indexed corpus, with explicit safety rules.
 
-    Returns the source-backed evidence for the symptom (each item a citation with cite_id) plus
-    the mandatory bench-test safety block. It never invents a fix: the steps live in the cited
-    documents, and hardware procedures always carry "Props off for bench tests. SITL before
-    hardware." Requests that use a safety bypass as the fix (ARMING_CHECK=0, ARMSKIPCHK, force
-    arm, disabled failsafe/fence) are refused and redirected to the real cause. Questions about
-    what such a parameter *does* are answered normally.
+    Returns the source-backed evidence for the symptom (each item a citation with cite_id). It
+    never invents a fix: the steps live in the cited documents. Requests that use a safety bypass
+    as the fix (disabling/masking an arming, pre-arm, failsafe or fence check, force arm, or
+    zeroing a safety parameter - Vietnamese or English) are refused, and the refusal cites why
+    the check exists, never the disabling step. Questions about what such a parameter does are
+    answered normally. The bench-test props-off line is attached when the gate fires or the answer
+    describes a hardware procedure, not to pure informational answers.
     """
     text = (symptom or "").strip()
     if not text:
-        return {"found": False, "error": "empty symptom", "safety": safety.safety_block()}
+        return {"found": False, "error": "empty symptom",
+                "safety": safety.safety_block(include_props_off=False)}
 
     verdict = safety.classify(text)
     dangerous_context = safety.classify(context or "") if context else None
     if verdict.dangerous or (dangerous_context and dangerous_context.dangerous):
         effective = verdict if verdict.dangerous else dangerous_context
         refusal = safety.refusal_payload(effective, lang="vi")
-        refusal["citations"] = retrieval.search(
-            con, "pre-arm check failure arming check", scope="docs", limit=3)["results"]
+        # Cite why the check exists, never the disabling recipe: the gate must not hand back
+        # the very step it refuses.
+        refusal["citations"] = safety.safe_citations(
+            retrieval.search(con, "pre-arm safety check purpose warning",
+                             scope="docs", limit=8)["results"])
         return refusal
 
     searches = [retrieval.search(con, text, scope="docs", limit=MAX_EVIDENCE),
@@ -52,12 +57,14 @@ def troubleshoot(con: sqlite3.Connection, symptom: str, context: str | None = No
     return {
         "found": bool(evidence),
         "symptom": text,
+        "safety_branch": verdict.branch,
         "language": "vi" if any(word in text.lower() for word in ("không", "lỗi", "bị", "tại sao"))
                     else "en",
         "confidence": confidence,
         "evidence": evidence,
         "citations": [item["cite_id"] for item in evidence],
-        "safety": safety.safety_block("<the procedure you apply>", "<your board>"),
+        "safety": safety.safety_block("<the procedure you apply>", "<your board>",
+                                      include_props_off=safety.hardware_procedure(text)),
         "symptom_evidence_only": False,
         "note": ("Evidence is ordered by retrieval score, not by a diagnostic script: read the "
                  "cited lines before acting. Nothing in this corpus is a forum post, so every "

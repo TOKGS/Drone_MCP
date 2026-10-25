@@ -1,0 +1,210 @@
+# Safety gate rules, data-driven. safety.py folds every phrase with the same normalisation it
+# applies to the request (lowercase, diacritics stripped, punctuation -> token boundary), so a
+# phrase here may be written naturally in Vietnamese or English.
+#
+# Decision rule (safety.classify): a request is a bypass when
+#   (disable_verb AND safety_object) OR (safety_object AND value_pattern)
+# A question mark or "làm sao"/"how do" phrasing does not rescue it: the intent is still to
+# silence a check. safety_object + info_marker with no disable verb is INFORMATIONAL.
+
+version: 1
+
+# Verbs/expressions that mean "remove the protection".
+disable_verbs:
+  # Vietnamese (with or without diacritics - folding makes them identical)
+  - "tắt"
+  - "tắt hẳn"
+  - "tắt báo"
+  - "tắt hết"
+  - "vô hiệu hóa"
+  - "vô hiệu"
+  - "bỏ qua"
+  - "bỏ báo"
+  - "bỏ hẳn"
+  - "gỡ bỏ"
+  - "loại bỏ"
+  - "xóa bỏ"
+  - "ngăn"
+  - "ngăn chặn"
+  - "ép"
+  - "cưỡng chế"
+  - "cưỡng"
+  - "ghi đè"
+  - "cho qua"
+  - "lách"
+  - "che giấu"
+  - "che lấp"
+  - "bằng mọi giá"
+  - "bất chấp"
+  - "không muốn"
+  - "không cho"
+  - "không để"
+  - "cho khỏi báo"
+  - "khỏi báo"
+  - "khỏi bị báo"
+  - "ngừng báo"
+  - "hết báo"
+  - "làm ngơ"
+  - "mặc kệ"
+  - "điều chỉnh cho qua"
+  # English
+  - "disable"
+  - "disabled"
+  - "turn off"
+  - "switch off"
+  - "deactivate"
+  - "ignore"
+  - "bypass"
+  - "override"
+  - "force"
+  - "skip"
+  - "suppress"
+  - "mask"
+  - "silence"
+  - "neuter"
+  - "blind"
+  - "fake"
+  - "fake out"
+  - "trick"
+  - "cheat"
+  - "work around"
+  - "get around"
+  - "get rid of"
+  - "zero out"
+
+# Named protections. A request that targets one of these is safety-adjacent.
+safety_objects:
+  - "arm"
+  - "arming"
+  - "arming check"
+  - "arming checks"
+  - "pre arm"
+  - "prearm"
+  - "pre arm check"
+  - "prearm check"
+  - "preflight"
+  - "preflight check"
+  - "safety check"
+  - "kiểm tra"
+  - "kiểm tra an toàn"
+  - "kiểm tra trước"
+  - "failsafe"
+  - "fail safe"
+  - "battery failsafe"
+  - "geofence"
+  - "geo fence"
+  - "hàng rào địa lý"
+  - "hàng rào"
+  - "fence"
+  - "rtl"
+  - "return to home"
+  - "về nhà"
+  - "mất sóng"
+  - "mất tín hiệu"
+  - "mất liên kết"
+  - "radio loss"
+  - "signal loss"
+  - "link loss"
+  - "ekf"
+  - "la bàn"
+  - "compass"
+  - "gyro"
+  - "gia tốc"
+  - "accelerometer"
+  - "calib"
+  - "calibration"
+  - "hiệu chuẩn"
+  - "căn chỉnh"
+  - "esc"
+  - "pin"
+  - "cảnh báo pin"
+  - "cảnh báo"
+  - "battery"
+  - "động cơ"
+  - "motor"
+  - "motors"
+  - "safety switch"
+  - "arming switch"
+
+# Parameter names that carry safety limits. Matched as regex on the folded, underscore-preserving
+# text so FS_THR_ENABLE stays one token (and ARMING_SKIPCHK does not match the verb "skip").
+safety_params:
+  - '\barming_(check|options|skipchk)\b'
+  - '\bfs_(thr|gcs|long|short|options|ekf|batt)[a-z_]*\b'
+  - '\bbatt_(fs|low|crit|capacity)[a-z_]*\b'
+  - '\bfence_[a-z_]*\b'
+  - '\bgeofence[a-z_]*\b'
+  - '\brtl_[a-z_]*\b'
+  - '\bbrd_(safety|safetyenable)[a-z_]*\b'
+  - '\bekf[0-9]?_[a-z0-9_]*\b'
+  - '\b(ins|compass)_(gyro|accel|use|cal|motor|dev|orient|learn)[a-z0-9_]*\b'
+  - '\bmot_[a-z_]*\b'
+  - '\bsafety_?switch\b'
+
+# A value that zeroes/neuters a limit, next to (or as) a safety parameter. Regexes run on the
+# folded text with punctuation kept, so "ARMING_CHECK = 0", "về 0" and "0xFFFF" all count.
+value_patterns:
+  - '(?:=|:)\s*(?:0|0x0+|0xffff)(?![.0-9a-z_])'
+  - '(?:=|:)\s*(?:off|disabled|none|false)(?![0-9a-z_])'
+  - '\b(?:ve|bang|thanh|to|set to|zero out|zero)\s+(?:0|0xffff)(?![.0-9a-z_])'
+  - '\b0xffff\b'
+  - '\b(?:skip|mask|skipchk|skip_mask|skip mask)\b[^.\n]{0,20}\b(?:0xffff|all)\b'
+
+# Question/diagnosis phrasing. Only meaningful when no disable verb fired.
+info_markers:
+  - "là gì"
+  - "nghĩa là"
+  - "ý nghĩa"
+  - "giải thích"
+  - "hoạt động"
+  - "nguyên lý"
+  - "dùng để"
+  - "tác dụng"
+  - "tại sao"
+  - "vì sao"
+  - "làm sao"
+  - "làm thế nào"
+  - "nguyên nhân"
+  - "do đâu"
+  - "gồm những"
+  - "khác nhau"
+  - "what"
+  - "why"
+  - "how"
+  - "meaning"
+  - "explain"
+  - "purpose"
+  - "difference"
+
+# Bench/hardware procedure markers: only these (or a refusal) may carry the props-off line.
+hardware_markers:
+  - "bench"
+  - "motor test"
+  - "motor bench test"
+  - "run motor"
+  - "run the motor"
+  - "spin motor"
+  - "chạy motor"
+  - "chạy động cơ"
+  - "thử động cơ"
+  - "tether"
+  - "solder"
+  - "hàn"
+  - "flash firmware"
+  - "nạp firmware"
+  - "props on"
+  - "lắp cánh"
+  - "gắn cánh"
+  - "calibrate esc"
+  - "esc calibration"
+  # shortcut: a bench/hardware act is matched by vocabulary, not by parsing the whole answer;
+  # upgrade to a step classifier only if a real hardware step is ever missed.
+  - "bench test"
+
+# Citations that must never be shown with a refusal: they quote the disabling recipe.
+dangerous_excerpt:
+  - 'will\s+disable[^.]{0,60}entirely'
+  - 'can be (partially or completely )?disabled by setting'
+  - 'set(?:ting)?\s+(?:the\s+)?[a-z_]+\s+(?:parameter\s+)?to\s+(?:0|0xffff|something other than 0)'
+  - 'skips? the checks that'
+  - 'completely disable[^.]{0,40}(?:checks|failsafe|fence)'
