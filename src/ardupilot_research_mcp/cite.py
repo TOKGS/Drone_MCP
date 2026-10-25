@@ -67,8 +67,10 @@ def build_citation(con: sqlite3.Connection, cite_id: str, *, excerpt_chars: int 
         raise KeyError(f"unknown cite_id {cite_id}")
     excerpt = row["text"][:excerpt_chars]
     # Channel rule: a tag pin is a released build ("stable"); a raw commit pin is a moving
-    # snapshot of master, so it is marked unreleased per the version constraint.
-    channel = "stable" if row["ref_kind"] == "tag" else "snapshot"
+    # snapshot of master, so it is marked unreleased per the version constraint. Local project
+    # files have no upstream at all: no URL is invented, and they are labelled as local.
+    local = row["ref_kind"] == "local"
+    channel = "local" if local else ("stable" if row["ref_kind"] == "tag" else "snapshot")
     return {
         "cite_id": make_cite_id(row["source_id"], row["cite_hash"]),
         "source_id": row["source_id"],
@@ -76,8 +78,10 @@ def build_citation(con: sqlite3.Connection, cite_id: str, *, excerpt_chars: int 
         "ref": row["ref"],
         "channel": channel,
         "unreleased": channel != "stable",
+        "pinned": not local,
         "title": row["path"].rsplit("/", 1)[-1],
-        "url": permalink(row["repo"], row["ref"], row["path"], row["line_start"], row["line_end"]),
+        "url": None if local else permalink(row["repo"], row["ref"], row["path"],
+                                            row["line_start"], row["line_end"]),
         "path": row["path"],
         "lines": [row["line_start"], row["line_end"]],
         "version": row["version_label"],

@@ -9,6 +9,10 @@ marked UNVERIFIED / NOT RUN.
   lookup_param, decode_bitmask, find_source, board_info, mavlink_message, troubleshoot,
   get_script, decode_crsf_frame, check_intelhex_line, parse_ihex_summary, list_sources,
   index_status. 4 original example scripts ship in `examples/`, each with real cite_ids.
+- **`local-project` implemented** (constraint 2): files under `data/local/local-project/` ingest
+  with no network and no pin; their citation carries `url: null`, `channel: "local"`,
+  `pinned: false`, and `scope="local"` is the only scope that can see them, so they cannot touch a
+  recall number. `tests/test_local.py` pins both properties.
 - **README written** with install, ingest (PowerShell + WSL), registration for OpenCode /
   Claude Code / Codex, quota workflow, pin updates, troubleshooting and the honest status table.
   OpenCode and Claude Code shapes are transcribed from those projects' own repo docs; Codex's

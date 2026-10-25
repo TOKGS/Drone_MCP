@@ -19,6 +19,9 @@ SCOPE_SOURCES = {
     "code": ["ardupilot", "expresslrs", "edgetx", "crsf_spec"],
     "protocol": ["crsf_spec", "expresslrs", "expresslrs_docs", "mavlink"],
     "mavlink": ["mavlink"],
+    # The user's own board files are queried on purpose, never mixed into corpus scopes: they are
+    # unpinned and must not affect any recall number measured on pinned sources.
+    "local": ["local-project"],
     "issues": [],
     "forum": [],
 }
@@ -79,6 +82,8 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
                 "note": "query has no searchable tokens"}
 
     allowed_sources = SCOPE_SOURCES.get(scope)
+    if scope == "local":
+        tier_max = "T3"   # the user's own files carry tier T3; they are not corpus evidence
     if allowed_sources is not None and not allowed_sources:
         return {"found": False, "query": query, "results": [], "candidates": [],
                 "note": f"scope {scope!r} has no indexed source yet"}

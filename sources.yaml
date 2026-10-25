@@ -163,3 +163,16 @@ sources:
     include:
       - "*.md"
       - "tools/**"
+
+  # The user's own board files. Unpinned, no upstream URL, and never mixed into a corpus scope:
+  # `scope: local` queries it on purpose, and it is excluded from every recall measurement.
+  - id: local-project
+    repo: local
+    ref: local
+    ref_kind: local
+    tier: T3
+    license: user-owned
+    version_label: "local board files (unpinned)"
+    note: "Your own hwdef/param/board files from data/local; never fetched, never cited to a URL."
+    include:
+      - "**/*"

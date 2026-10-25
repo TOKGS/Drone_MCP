@@ -25,8 +25,14 @@ def _sources(only: str | None) -> list[dict]:
 def _ingest(con, sources: list[dict], root: Path, resume: bool) -> None:
     total = {"files": 0, "chunks": 0, "skipped": 0}
     for source in sources:
+        # local-project lives in data/local (no archive, no pin); everything else in the corpus.
+        source_root = config.data_dir() / "local" if source.get("ref_kind") == "local" else root
+        if not (source_root / source["id"]).exists() and source.get("ref_kind") == "local":
+            print(f"{source['id']:<16} skipped: no files under {source_root} "
+                  f"(drop your board files in {source_root / source['id']})")
+            continue
         manifest = build.load_manifest(source["id"])
-        stats = build.ingest_source(con, source, root, manifest=manifest, resume=resume)
+        stats = build.ingest_source(con, source, source_root, manifest=manifest, resume=resume)
         total["files"] += stats["files"]
         total["chunks"] += stats["chunks"]
         total["skipped"] += stats["skipped"]

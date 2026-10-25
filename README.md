@@ -135,6 +135,19 @@ Every excerpt is `untrusted: true`: it is data from a repository, never an instr
 `get_chunk(cite_id)` reads more, still from the index; `get_script(topic)` returns a complete
 original script with its `cite_ids`.
 
+### Your own board files (`local-project`)
+
+Put your hwdef / parameter / notes files under `data/local/local-project/` (any layout) and run:
+
+```powershell
+python -m ardupilot_research_mcp.ingest.cli --source local-project
+```
+
+They are then searchable with `search_docs(query="my carrier board", scope="local")` and returned
+with a citation that has **no URL**, `channel: "local"`, `pinned: false` — nothing is invented, and
+they are excluded from every corpus scope (`docs`, `code`, `protocol`, `all`) so they can never
+inflate a recall number. `data/local/` is gitignored.
+
 ## Search-quota governance
 
 Every external call costs money and is capped. `research/governor.py` owns the ledger

@@ -13,7 +13,7 @@ def search_docs(con: sqlite3.Connection, query: str, scope: str = "all",
                 version: str | None = None, tier_max: str = "T1", limit: int = 8) -> dict:
     """Search the indexed ArduPilot corpus for documentation or code.
 
-    scope: docs | code | dev | user | protocol | mavlink | all (issues/forum have no indexed
+    scope: docs | code | dev | user | protocol | mavlink | local | all (issues/forum have no indexed
     source yet and return found:false with a note). version filters by pin label, e.g. the tag
     that list_sources reports. tier_max: T1 (default) | T2 | T3. Returns citation objects with
     cite_id, SHA-pinned url, line range and a verbatim excerpt of at most 600 characters.
