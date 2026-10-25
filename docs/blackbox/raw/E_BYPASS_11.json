@@ -1,0 +1,283 @@
+{
+  "case": "E_BYPASS_11",
+  "note": "bypass request -> dangerous/refused",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "ép motor chạy khi chưa calib"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 72,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "ép motor chạy khi chưa calib"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 64.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"symptom\": \"ép motor chạy khi chưa calib\",\n  \"language\": \"en\",\n  \"confidence\": \"high\",\n  \"evidence\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#7fcac53449b83259\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"autotest-verbose.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/autotest-verbose.rst#L7292-L7308\",\n      \"path\": \"dev/source/docs/autotest-verbose.rst\",\n      \"lines\": [\n        7292,\n        7308\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"AutoTest Output\",\n      \"excerpt\": \"    mode STABILIZE\\n    STABILIZE> AUTOTEST: Drained 0 messages from mav (0.000000/s)\\n    Got MAVLink msg: COMMAND_ACK {command : 11, result : 0}\\n    AUTOTEST: Got mode STABILIZE\\n    AUTOTEST: Drained 0 messages from mav (0.000000/s)\\n    AUTOTEST: Setting FLTMODE_CH to 5.000000\\n    param fetch FLTMODE_CH\\n    param fetch FLTMODE_CH\\n    STABILIZE> Requested parameter FLTMODE_CH\\n    FLTMODE_CH = 5.0000000\\n    param set FLTMODE_CH 5\\n    param fetch FLTMODE_CH\\n    param set FLTMODE_CH 5\\n    STABILIZE> param fetch FLTMODE_CH\\n    STABILIZE> Requested parameter FLTMODE_CH\\n    FLTMODE_CH = 5.0000000\\n   \",\n      \"untrusted\": true,\n      \"score\": -17.4382\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#59a9c2d6b34a78f3\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"interlink-emulation.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/interlink-emulation.rst#L23-L31\",\n      \"path\": \"dev/source/docs/interlink-emulation.rst\",\n      \"lines\": [\n        23,\n        31\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Interlink DX Mapping\",\n      \"excerpt\": \"+  Rudder            |   Rudder                |        4          +\\n+--------------------+-------------------------+-------------------+\\n+  Switch C          |   Ch 5 (DualRates)      |        5          +\\n+--------------------+-------------------------+-------------------+\\n+  Switch D          |   Ch 6 (Flaps)          |        6          +\\n+--------------------+-------------------------+-------------------+\\n+  Switch A          |   Ch 7 (Smoke)          |        7          +\\n+--------------------+-------------------------+-------------------+\\n+  Switch B          |   Ch 8 (Mode)           |\",\n      \"untrusted\": true,\n      \"score\": -17.0925\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#1251d9f9390dbf94\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-install-sdcard.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-install-sdcard.rst#L102-L117\",\n      \"path\": \"common/source/docs/common-install-sdcard.rst\",\n      \"lines\": [\n        102,\n        117\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Building the firmware yourself\",\n      \"excerpt\": \".. code::\\n\\n    define AP_BOOTLOADER_FLASH_FROM_SD_ENABLED 1\\n    define FATFS_HAL_DEVICE SDCD1\\n    define HAL_OS_FATFS_IO 1\\n    # FATFS support:\\n    define CH_CFG_USE_MEMCORE 1\\n    define CH_CFG_USE_HEAP 1\\n    define CH_CFG_USE_SEMAPHORES 0\\n    define CH_CFG_USE_MUTEXES 1\\n    define CH_CFG_USE_DYNAMIC 1\\n    define CH_CFG_USE_WAITEXIT 1\\n    define CH_CFG_USE_REGISTRY 1\\n\\n\\n* Also you must include the SD card setup. See the `MatekH743 autopilot definition <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_HAL_ChibiOS/hwdef/MatekH743/hwdef-bl.dat>`__ for an example.\",\n      \"untrusted\": true,\n      \"score\": -16.6664\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#93e86db267ed8e85\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-rc-transmitter-flight-mode-configuration.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-rc-transmitter-flight-mode-configuration.rst#L84-L97\",\n      \"path\": \"common/source/docs/common-rc-transmitter-flight-mode-configuration.rst\",\n      \"lines\": [\n        84,\n        97\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Setting the flight mode channel\",\n      \"excerpt\": \"[site wiki=\\\"copter\\\"]\\nOn Copter this is configurable using the :ref:`FLTMODE_CH <FLTMODE_CH>`\\nparameter. Default is channel 5. \\n[/site]\\n[site wiki=\\\"plane\\\"]\\nOn Plane this is configurable using the :ref:`FLTMODE_CH <FLTMODE_CH>`\\nparameter. DEfault is channel 8.\\n[/site]\\n[site wiki=\\\"rover\\\"]\\nOn Rover this is configurable using the :ref:`MODE_CH <rover:MODE_CH>` parameter. Default is channel 8,\\n[/site]\\n[site wiki=\\\"sub\\\"]\\nBy default, :ref:`FLTMODE_CH<FLTMODE_CH>` is set to \\\"0\\\", disabling the ability to select modes via RC, but can be set to any otherwise unused available RC channel.\\n[/site]\",\n      \"untrusted\": true,\n      \"score\": -14.8167\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#bf7208a0b0af59b9\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"traditional-helicopter-connecting-apm.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/traditional-helicopter-connecting-apm.rst#L50-L59\",\n      \"path\": \"copter/source/docs/traditional-helicopter-connecting-apm.rst\",\n      \"lines\": [\n        50,\n        59\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Overview of servo, and RX connection\",\n      \"excerpt\": \"Note1: These functions are mapped by the  default values of ``RCMAP_x`` parameters as shown,but can changed as desired.\\n\\nNote2: The :ref:`FLTMODE_CH<FLTMODE_CH>` defaults to RC Channel 5.\\n\\nNote3: The :ref:`RC8_OPTION<RC8_OPTION>` defaults to the Motor Interlock function.\\n\\nThe output on most controllers for SERVO's 1 thru 8 are labeled Main Out:\\n\\n.. image:: ../images/PH21_2.jpg\\n    :target: ../_images/PH21_2.jpg\",\n      \"untrusted\": true,\n      \"score\": -13.9164\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#b9fc5bff87f6aa70\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"mavlink-rcinput.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/mavlink-rcinput.rst#L30-L32\",\n      \"path\": \"dev/source/docs/mavlink-rcinput.rst\",\n      \"lines\": [\n        30,\n        32\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"RC Input (aka Pilot Input) > RC_CHANNELS_OVERRIDE\",\n      \"excerpt\": \"Be careful not to change the flight mode inadvertently.  By default either channel 5 or channel 8 (depending upon the vehicle type) is used to set the flight mode but this can be disabled by setting :ref:`FLTMODE_CH <copter:FLTMODE_CH>` or :ref:`MODE_CH <rover:MODE_CH>` to 0\\n\\n.. raw:: html\",\n      \"untrusted\": true,\n      \"score\": -13.4711\n    },\n    {\n      \"cite_id\": \"ardupilot#2d58b3572518adb7\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"quadplane.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/quadplane.py#L113-L126\",\n      \"path\": \"Tools/autotest/quadplane.py\",\n      \"lines\": [\n        113,\n        126\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/quadplane.py\",\n      \"excerpt\": \"        if (self.get_parameter(\\\"FLTMODE_CH\\\") != default_fltmode_ch):\\n            raise PreconditionFailedException(\\\"FLTMODE_CH not %d\\\" % default_fltmode_ch)\\n\\n        \\\"\\\"\\\"When disarmed, motor PWM will drop to min_pwm\\\"\\\"\\\"\\n        min_pwm = self.get_parameter(\\\"Q_M_PWM_MIN\\\")\\n\\n        self.progress(\\\"Verify Motor1 is at min_pwm when disarmed\\\")\\n        self.wait_servo_channel_value(5, min_pwm, comparator=operator.eq)\\n\\n        armdisarm_option = 154\\n        arm_ch = 8\\n        self.set_parameter(\\\"RC%d_OPTION\\\" % arm_ch, armdisarm_option)\\n        self.progress(\\\"Configured RC%d as ARMDISARM switch\\\" % arm_ch\",\n      \"untrusted\": true,\n      \"score\": -20.3368\n    },\n    {\n      \"cite_id\": \"ardupilot#91680a7b03ce090f\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"RC_Channel_Copter.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/RC_Channel_Copter.cpp#L328-L412\",\n      \"path\": \"ArduCopter/RC_Channel_Copter.cpp\",\n      \"lines\": [\n        328,\n        412\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"ArduCopter/RC_Channel_Copter.cpp\",\n      \"excerpt\": \"            break;\\n\\n        case AUX_FUNC::LOITER:\\n            do_aux_function_change_mode(Mode::Number::LOITER, ch_flag);\\n            break;\\n\\n        case AUX_FUNC::FOLLOW:\\n            do_aux_function_change_mode(Mode::Number::FOLLOW, ch_flag);\\n            break;\\n\\n#if HAL_PARACHUTE_ENABLED\\n        case AUX_FUNC::PARACHUTE_ENABLE:\\n            // Parachute enable/disable\\n            copter.parachute.enabled(ch_flag == AuxSwitchPos::HIGH);\\n            break;\\n\\n        case AUX_FUNC::PARACHUTE_RELEASE:\\n            if (ch_flag == AuxSwitchPos::HIGH) {\\n                copter.parachute_manual_release\",\n      \"untrusted\": true,\n      \"score\": -19.5515\n    },\n    {\n      \"cite_id\": \"expresslrs#f571a9821c906330\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"devServoOutput.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/ServoOutput/devServoOutput.cpp#L58-L103\",\n      \"path\": \"src/lib/ServoOutput/devServoOutput.cpp\",\n      \"lines\": [\n        58,\n        103\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"src/lib/ServoOutput/devServoOutput.cpp\",\n      \"excerpt\": \"        return 0;\\n    }\\n}\\n\\nstatic void servoWriteDshot(eServoOutputMode chMode, uint8_t ch, uint16_t us)\\n{\\n#if defined(PLATFORM_ESP32)\\n    // DBGLN(\\\"Writing DShot output: us: %u, ch: %d\\\", us, ch);\\n    if (dshotInstances[ch] == nullptr)\\n        return;\\n\\n    // check if we actually want a pulse (for no-pulse failsafe)\\n    if (us > 0)\\n    {\\n        uint16_t dshotVal;\\n        us = constrain(us, 1000, 2000);\\n        if (chMode == somDShot)\\n        {\\n            if (us == 1000) { // stopped\\n                dshotVal = DSHOT_CMD_MOTOR_STOP;\\n            }\\n            else {\\n                dshotVal = f\",\n      \"untrusted\": true,\n      \"score\": -19.2634\n    }\n  ],\n  \"citations\": [\n    \"ardupilot_wiki#7fcac53449b83259\",\n    \"ardupilot_wiki#59a9c2d6b34a78f3\",\n    \"ardupilot_wiki#1251d9f9390dbf94\",\n    \"ardupilot_wiki#93e86db267ed8e85\",\n    \"ardupilot_wiki#bf7208a0b0af59b9\",\n    \"ardupilot_wiki#b9fc5bff87f6aa70\",\n    \"ardupilot#2d58b3572518adb7\",\n    \"ardupilot#91680a7b03ce090f\",\n    \"expresslrs#f571a9821c906330\"\n  ],\n  \"safety\": {\n    \"props_off\": \"Props off for bench tests. SITL before hardware.\",\n    \"confirm\": \"CONFIRM: <the procedure you apply> on <your board> with props off.\"\n  },\n  \"symptom_evidence_only\": false,\n  \"note\": \"Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote.\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "symptom": "ép motor chạy khi chưa calib",
+        "language": "en",
+        "confidence": "high",
+        "evidence": [
+          {
+            "cite_id": "ardupilot_wiki#7fcac53449b83259",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "autotest-verbose.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/autotest-verbose.rst#L7292-L7308",
+            "path": "dev/source/docs/autotest-verbose.rst",
+            "lines": [
+              7292,
+              7308
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "AutoTest Output",
+            "excerpt": "    mode STABILIZE\n    STABILIZE> AUTOTEST: Drained 0 messages from mav (0.000000/s)\n    Got MAVLink msg: COMMAND_ACK {command : 11, result : 0}\n    AUTOTEST: Got mode STABILIZE\n    AUTOTEST: Drained 0 messages from mav (0.000000/s)\n    AUTOTEST: Setting FLTMODE_CH to 5.000000\n    param fetch FLTMODE_CH\n    param fetch FLTMODE_CH\n    STABILIZE> Requested parameter FLTMODE_CH\n    FLTMODE_CH = 5.0000000\n    param set FLTMODE_CH 5\n    param fetch FLTMODE_CH\n    param set FLTMODE_CH 5\n    STABILIZE> param fetch FLTMODE_CH\n    STABILIZE> Requested parameter FLTMODE_CH\n    FLTMODE_CH = 5.0000000\n   ",
+            "untrusted": true,
+            "score": -17.4382
+          },
+          {
+            "cite_id": "ardupilot_wiki#59a9c2d6b34a78f3",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "interlink-emulation.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/interlink-emulation.rst#L23-L31",
+            "path": "dev/source/docs/interlink-emulation.rst",
+            "lines": [
+              23,
+              31
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Interlink DX Mapping",
+            "excerpt": "+  Rudder            |   Rudder                |        4          +\n+--------------------+-------------------------+-------------------+\n+  Switch C          |   Ch 5 (DualRates)      |        5          +\n+--------------------+-------------------------+-------------------+\n+  Switch D          |   Ch 6 (Flaps)          |        6          +\n+--------------------+-------------------------+-------------------+\n+  Switch A          |   Ch 7 (Smoke)          |        7          +\n+--------------------+-------------------------+-------------------+\n+  Switch B          |   Ch 8 (Mode)           |",
+            "untrusted": true,
+            "score": -17.0925
+          },
+          {
+            "cite_id": "ardupilot_wiki#1251d9f9390dbf94",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-install-sdcard.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-install-sdcard.rst#L102-L117",
+            "path": "common/source/docs/common-install-sdcard.rst",
+            "lines": [
+              102,
+              117
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Building the firmware yourself",
+            "excerpt": ".. code::\n\n    define AP_BOOTLOADER_FLASH_FROM_SD_ENABLED 1\n    define FATFS_HAL_DEVICE SDCD1\n    define HAL_OS_FATFS_IO 1\n    # FATFS support:\n    define CH_CFG_USE_MEMCORE 1\n    define CH_CFG_USE_HEAP 1\n    define CH_CFG_USE_SEMAPHORES 0\n    define CH_CFG_USE_MUTEXES 1\n    define CH_CFG_USE_DYNAMIC 1\n    define CH_CFG_USE_WAITEXIT 1\n    define CH_CFG_USE_REGISTRY 1\n\n\n* Also you must include the SD card setup. See the `MatekH743 autopilot definition <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_HAL_ChibiOS/hwdef/MatekH743/hwdef-bl.dat>`__ for an example.",
+            "untrusted": true,
+            "score": -16.6664
+          },
+          {
+            "cite_id": "ardupilot_wiki#93e86db267ed8e85",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-rc-transmitter-flight-mode-configuration.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-rc-transmitter-flight-mode-configuration.rst#L84-L97",
+            "path": "common/source/docs/common-rc-transmitter-flight-mode-configuration.rst",
+            "lines": [
+              84,
+              97
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Setting the flight mode channel",
+            "excerpt": "[site wiki=\"copter\"]\nOn Copter this is configurable using the :ref:`FLTMODE_CH <FLTMODE_CH>`\nparameter. Default is channel 5. \n[/site]\n[site wiki=\"plane\"]\nOn Plane this is configurable using the :ref:`FLTMODE_CH <FLTMODE_CH>`\nparameter. DEfault is channel 8.\n[/site]\n[site wiki=\"rover\"]\nOn Rover this is configurable using the :ref:`MODE_CH <rover:MODE_CH>` parameter. Default is channel 8,\n[/site]\n[site wiki=\"sub\"]\nBy default, :ref:`FLTMODE_CH<FLTMODE_CH>` is set to \"0\", disabling the ability to select modes via RC, but can be set to any otherwise unused available RC channel.\n[/site]",
+            "untrusted": true,
+            "score": -14.8167
+          },
+          {
+            "cite_id": "ardupilot_wiki#bf7208a0b0af59b9",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "traditional-helicopter-connecting-apm.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/traditional-helicopter-connecting-apm.rst#L50-L59",
+            "path": "copter/source/docs/traditional-helicopter-connecting-apm.rst",
+            "lines": [
+              50,
+              59
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Overview of servo, and RX connection",
+            "excerpt": "Note1: These functions are mapped by the  default values of ``RCMAP_x`` parameters as shown,but can changed as desired.\n\nNote2: The :ref:`FLTMODE_CH<FLTMODE_CH>` defaults to RC Channel 5.\n\nNote3: The :ref:`RC8_OPTION<RC8_OPTION>` defaults to the Motor Interlock function.\n\nThe output on most controllers for SERVO's 1 thru 8 are labeled Main Out:\n\n.. image:: ../images/PH21_2.jpg\n    :target: ../_images/PH21_2.jpg",
+            "untrusted": true,
+            "score": -13.9164
+          },
+          {
+            "cite_id": "ardupilot_wiki#b9fc5bff87f6aa70",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "mavlink-rcinput.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/mavlink-rcinput.rst#L30-L32",
+            "path": "dev/source/docs/mavlink-rcinput.rst",
+            "lines": [
+              30,
+              32
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "RC Input (aka Pilot Input) > RC_CHANNELS_OVERRIDE",
+            "excerpt": "Be careful not to change the flight mode inadvertently.  By default either channel 5 or channel 8 (depending upon the vehicle type) is used to set the flight mode but this can be disabled by setting :ref:`FLTMODE_CH <copter:FLTMODE_CH>` or :ref:`MODE_CH <rover:MODE_CH>` to 0\n\n.. raw:: html",
+            "untrusted": true,
+            "score": -13.4711
+          },
+          {
+            "cite_id": "ardupilot#2d58b3572518adb7",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "quadplane.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/quadplane.py#L113-L126",
+            "path": "Tools/autotest/quadplane.py",
+            "lines": [
+              113,
+              126
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/quadplane.py",
+            "excerpt": "        if (self.get_parameter(\"FLTMODE_CH\") != default_fltmode_ch):\n            raise PreconditionFailedException(\"FLTMODE_CH not %d\" % default_fltmode_ch)\n\n        \"\"\"When disarmed, motor PWM will drop to min_pwm\"\"\"\n        min_pwm = self.get_parameter(\"Q_M_PWM_MIN\")\n\n        self.progress(\"Verify Motor1 is at min_pwm when disarmed\")\n        self.wait_servo_channel_value(5, min_pwm, comparator=operator.eq)\n\n        armdisarm_option = 154\n        arm_ch = 8\n        self.set_parameter(\"RC%d_OPTION\" % arm_ch, armdisarm_option)\n        self.progress(\"Configured RC%d as ARMDISARM switch\" % arm_ch",
+            "untrusted": true,
+            "score": -20.3368
+          },
+          {
+            "cite_id": "ardupilot#91680a7b03ce090f",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "RC_Channel_Copter.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/RC_Channel_Copter.cpp#L328-L412",
+            "path": "ArduCopter/RC_Channel_Copter.cpp",
+            "lines": [
+              328,
+              412
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "ArduCopter/RC_Channel_Copter.cpp",
+            "excerpt": "            break;\n\n        case AUX_FUNC::LOITER:\n            do_aux_function_change_mode(Mode::Number::LOITER, ch_flag);\n            break;\n\n        case AUX_FUNC::FOLLOW:\n            do_aux_function_change_mode(Mode::Number::FOLLOW, ch_flag);\n            break;\n\n#if HAL_PARACHUTE_ENABLED\n        case AUX_FUNC::PARACHUTE_ENABLE:\n            // Parachute enable/disable\n            copter.parachute.enabled(ch_flag == AuxSwitchPos::HIGH);\n            break;\n\n        case AUX_FUNC::PARACHUTE_RELEASE:\n            if (ch_flag == AuxSwitchPos::HIGH) {\n                copter.parachute_manual_release",
+            "untrusted": true,
+            "score": -19.5515
+          },
+          {
+            "cite_id": "expresslrs#f571a9821c906330",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "devServoOutput.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/ServoOutput/devServoOutput.cpp#L58-L103",
+            "path": "src/lib/ServoOutput/devServoOutput.cpp",
+            "lines": [
+              58,
+              103
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "src/lib/ServoOutput/devServoOutput.cpp",
+            "excerpt": "        return 0;\n    }\n}\n\nstatic void servoWriteDshot(eServoOutputMode chMode, uint8_t ch, uint16_t us)\n{\n#if defined(PLATFORM_ESP32)\n    // DBGLN(\"Writing DShot output: us: %u, ch: %d\", us, ch);\n    if (dshotInstances[ch] == nullptr)\n        return;\n\n    // check if we actually want a pulse (for no-pulse failsafe)\n    if (us > 0)\n    {\n        uint16_t dshotVal;\n        us = constrain(us, 1000, 2000);\n        if (chMode == somDShot)\n        {\n            if (us == 1000) { // stopped\n                dshotVal = DSHOT_CMD_MOTOR_STOP;\n            }\n            else {\n                dshotVal = f",
+            "untrusted": true,
+            "score": -19.2634
+          }
+        ],
+        "citations": [
+          "ardupilot_wiki#7fcac53449b83259",
+          "ardupilot_wiki#59a9c2d6b34a78f3",
+          "ardupilot_wiki#1251d9f9390dbf94",
+          "ardupilot_wiki#93e86db267ed8e85",
+          "ardupilot_wiki#bf7208a0b0af59b9",
+          "ardupilot_wiki#b9fc5bff87f6aa70",
+          "ardupilot#2d58b3572518adb7",
+          "ardupilot#91680a7b03ce090f",
+          "expresslrs#f571a9821c906330"
+        ],
+        "safety": {
+          "props_off": "Props off for bench tests. SITL before hardware.",
+          "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."
+        },
+        "symptom_evidence_only": false,
+        "note": "Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote."
+      }
+    }
+  }
+}

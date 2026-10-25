@@ -1,0 +1,59 @@
+{
+  "case": "G2_08",
+  "note": "same content as the C/D hit for expresslrs#fbe624b4e6902251",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "expresslrs#fbe624b4e6902251"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1008,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "expresslrs#fbe624b4e6902251"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"expresslrs#fbe624b4e6902251\",\n  \"source_id\": \"expresslrs\",\n  \"repo\": \"ExpressLRS/ExpressLRS\",\n  \"ref\": \"4.1.0\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"CRSFHandset.cpp\",\n  \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/Handset/CRSFHandset.cpp#L409-L443\",\n  \"path\": \"src/lib/Handset/CRSFHandset.cpp\",\n  \"lines\": [\n    409,\n    443\n  ],\n  \"version\": \"ExpressLRS 4.1.0\",\n  \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n  \"heading_path\": \"src/lib/Handset/CRSFHandset.cpp\",\n  \"excerpt\": \"    //USC0(UART0) &= ~BIT(UCLBE);\\n#endif\\n}\\n\\nint CRSFHandset::getMinPacketInterval() const\\n{\\n    if (halfDuplex && UARTrequestedBaud == 115200) // Packet rate limited to 200Hz if we are on 115k baud on half-duplex module\\n    {\\n        return 5000;\\n    }\\n    if (UARTrequestedBaud == 115200) // Packet rate limited to 250Hz if we are on 115k baud\\n    {\\n        return 4000;\\n    }\\n    if (UARTrequestedBaud == 400000) // Packet rate limited to 500Hz if we are on 400k baud\\n    {\\n        return 2000;\\n    }\\n    return 1;   // 1-million Hz!\\n}\\n\\nvoid ICACHE_RAM_ATTR CRSFHandset::adjustMaxPacketSize()\\n{\\n   \",\n  \"untrusted\": true,\n  \"text\": \"    //USC0(UART0) &= ~BIT(UCLBE);\\n#endif\\n}\\n\\nint CRSFHandset::getMinPacketInterval() const\\n{\\n    if (halfDuplex && UARTrequestedBaud == 115200) // Packet rate limited to 200Hz if we are on 115k baud on half-duplex module\\n    {\\n        return 5000;\\n    }\\n    if (UARTrequestedBaud == 115200) // Packet rate limited to 250Hz if we are on 115k baud\\n    {\\n        return 4000;\\n    }\\n    if (UARTrequestedBaud == 400000) // Packet rate limited to 500Hz if we are on 400k baud\\n    {\\n        return 2000;\\n    }\\n    return 1;   // 1-million Hz!\\n}\\n\\nvoid ICACHE_RAM_ATTR CRSFHandset::adjustMaxPacketSize()\\n{\\n    const int LUA_CHUNK_QUERY_SIZE = 26;\\n    // The number of bytes that fit into a CRSF window : baud / 10bits-per-byte / rate(Hz) * 87% (for some leeway)\\n    // 87% was arrived at by measuring the time taken for a chunk query packet and the processing times and switching times\\n    // involved from RX -> TX and vice-versa. The maxPacketBytes is used as the Lua chunk size so each chunk can be returned\\n    // to the handset and not be broken across time-slots as there can be issues with spurious glitches on the s.port pin\\n    // which switching direction. It also appears that the absolute minimum packet size should be 15 bytes as this will fit\\n    // the LinkStatistics and OpenTX sync packets.\\n    maxPeriodBytes = std::min((int)(UARTrequestedBaud / 10 / (1000000/RequestedRCpacketInterval) * 87 / 100), HANDSET_TELEMETRY_FIFO_SIZE);\\n    // Maximum number of bytes we can send in a single window, half the period bytes, upto one full CRSF packet.\\n    maxPacketBytes = std::min(maxPeriodBytes - max(maxPeriodBytes / 2, LUA_CHUNK_QUERY_SIZE), CRSF_MAX_PACKET_LEN);\\n    DBGLN(\\\"Adjusted max packet size %u-%u\\\", maxPacketBytes, maxPeriodBytes);\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "expresslrs#fbe624b4e6902251",
+        "source_id": "expresslrs",
+        "repo": "ExpressLRS/ExpressLRS",
+        "ref": "4.1.0",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "CRSFHandset.cpp",
+        "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/Handset/CRSFHandset.cpp#L409-L443",
+        "path": "src/lib/Handset/CRSFHandset.cpp",
+        "lines": [
+          409,
+          443
+        ],
+        "version": "ExpressLRS 4.1.0",
+        "ingested_at": "2026-10-25T17:42:44+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T17:42:44+0700",
+        "heading_path": "src/lib/Handset/CRSFHandset.cpp",
+        "excerpt": "    //USC0(UART0) &= ~BIT(UCLBE);\n#endif\n}\n\nint CRSFHandset::getMinPacketInterval() const\n{\n    if (halfDuplex && UARTrequestedBaud == 115200) // Packet rate limited to 200Hz if we are on 115k baud on half-duplex module\n    {\n        return 5000;\n    }\n    if (UARTrequestedBaud == 115200) // Packet rate limited to 250Hz if we are on 115k baud\n    {\n        return 4000;\n    }\n    if (UARTrequestedBaud == 400000) // Packet rate limited to 500Hz if we are on 400k baud\n    {\n        return 2000;\n    }\n    return 1;   // 1-million Hz!\n}\n\nvoid ICACHE_RAM_ATTR CRSFHandset::adjustMaxPacketSize()\n{\n   ",
+        "untrusted": true,
+        "text": "    //USC0(UART0) &= ~BIT(UCLBE);\n#endif\n}\n\nint CRSFHandset::getMinPacketInterval() const\n{\n    if (halfDuplex && UARTrequestedBaud == 115200) // Packet rate limited to 200Hz if we are on 115k baud on half-duplex module\n    {\n        return 5000;\n    }\n    if (UARTrequestedBaud == 115200) // Packet rate limited to 250Hz if we are on 115k baud\n    {\n        return 4000;\n    }\n    if (UARTrequestedBaud == 400000) // Packet rate limited to 500Hz if we are on 400k baud\n    {\n        return 2000;\n    }\n    return 1;   // 1-million Hz!\n}\n\nvoid ICACHE_RAM_ATTR CRSFHandset::adjustMaxPacketSize()\n{\n    const int LUA_CHUNK_QUERY_SIZE = 26;\n    // The number of bytes that fit into a CRSF window : baud / 10bits-per-byte / rate(Hz) * 87% (for some leeway)\n    // 87% was arrived at by measuring the time taken for a chunk query packet and the processing times and switching times\n    // involved from RX -> TX and vice-versa. The maxPacketBytes is used as the Lua chunk size so each chunk can be returned\n    // to the handset and not be broken across time-slots as there can be issues with spurious glitches on the s.port pin\n    // which switching direction. It also appears that the absolute minimum packet size should be 15 bytes as this will fit\n    // the LinkStatistics and OpenTX sync packets.\n    maxPeriodBytes = std::min((int)(UARTrequestedBaud / 10 / (1000000/RequestedRCpacketInterval) * 87 / 100), HANDSET_TELEMETRY_FIFO_SIZE);\n    // Maximum number of bytes we can send in a single window, half the period bytes, upto one full CRSF packet.\n    maxPacketBytes = std::min(maxPeriodBytes - max(maxPeriodBytes / 2, LUA_CHUNK_QUERY_SIZE), CRSF_MAX_PACKET_LEN);\n    DBGLN(\"Adjusted max packet size %u-%u\", maxPacketBytes, maxPeriodBytes);\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

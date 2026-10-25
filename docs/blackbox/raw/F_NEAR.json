@@ -1,0 +1,177 @@
+{
+  "case": "F_NEAR",
+  "note": "no crash, <10s",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "NEAR("
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 79,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "NEAR("
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 56.5,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"NEAR(\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot#d110ccd20f0951c7\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_math.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_math.cpp#L548-L568\",\n      \"path\": \"libraries/AP_Math/tests/test_math.cpp\",\n      \"lines\": [\n        548,\n        568\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_Math/tests/test_math.cpp\",\n      \"excerpt\": \"    EXPECT_NEAR(0,    wrap_2PI(-M_2PI), accuracy);\\n    EXPECT_NEAR(1,    wrap_2PI(1.0), accuracy);\\n}\\n\\nTEST(MathTest, ASin)\\n{\\n    const float accuracy = 1.0e-5;\\n    EXPECT_NEAR(0.0f, safe_asin(0.0f), accuracy);\\n    EXPECT_NEAR(0.9033391107665127f, safe_asin(M_PI_2 * 0.5f), accuracy);\\n    EXPECT_NEAR(M_PI_2, safe_asin(M_PI_2 ), accuracy);\\n    EXPECT_NEAR(M_PI_2, safe_asin(M_PI), accuracy);\\n    EXPECT_NEAR(M_PI_2, safe_asin(M_2PI), accuracy);\\n    EXPECT_NEAR(-M_PI_2, safe_asin(-M_PI_2), accuracy);\\n    EXPECT_NEAR(-M_PI_2, safe_asin(-M_PI), accuracy);\\n    EXPECT_NEAR(-0.9033391107665127f, safe_asi\",\n      \"untrusted\": true,\n      \"score\": -17.8532\n    },\n    {\n      \"cite_id\": \"ardupilot#dce3eed44e3915f3\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_math_double.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_math_double.cpp#L170-L194\",\n      \"path\": \"libraries/AP_Math/tests/test_math_double.cpp\",\n      \"lines\": [\n        170,\n        194\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_Math/tests/test_math_double.cpp\",\n      \"excerpt\": \"    EXPECT_EQ(0.0,     wrap_360(static_cast<double>(7200.0)));\\n    EXPECT_EQ(260.0,     wrap_360(static_cast<double>(-100.0)));\\n}\\n\\nTEST(MathWrapTest, AnglePIDouble)\\n{\\n    const double accuracy = 1.0e-5;\\n\\n    EXPECT_NEAR(M_PI,    wrap_PI((double)M_PI),      accuracy);\\n    EXPECT_NEAR(0.0,     wrap_PI((double)M_2PI),     accuracy);\\n    EXPECT_NEAR(0,       wrap_PI((double)M_PI * 10.0), accuracy);\\n    EXPECT_NEAR(-2.1415925025939941,    wrap_PI((double)M_PI+1.0),      accuracy);\\n}\\n\\nTEST(MathWrapTest, Angle2PIDouble)\\n{\\n    const double accuracy = 1.0e-5;\\n\\n    EXPECT_NEAR(M_PI, wrap_2PI((double)M_P\",\n      \"untrusted\": true,\n      \"score\": -17.3625\n    },\n    {\n      \"cite_id\": \"ardupilot#d18e96d5da2fc2bc\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_matrix3.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_matrix3.cpp#L15-L37\",\n      \"path\": \"libraries/AP_Math/tests/test_matrix3.cpp\",\n      \"lines\": [\n        15,\n        37\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_Math/tests/test_matrix3.cpp\",\n      \"excerpt\": \" * with this program.  If not, see <http://www.gnu.org/licenses/>.\\n */\\n\\n#include \\\"math_test.h\\\"\\n\\nconst AP_HAL::HAL& hal = AP_HAL::get_HAL();\\n\\n// given we are in the Math library, you're epected to know what\\n// you're doing when directly comparing floats:\\n#pragma GCC diagnostic push\\n#pragma GCC diagnostic ignored \\\"-Wfloat-equal\\\"\\n\\n#define AP_EXPECT_IDENTITY_MATRIX(m_) {\\\\\\n    EXPECT_NEAR(1.0f, m_.a.x, 1.0e-6); \\\\\\n    EXPECT_NEAR(0.0f, m_.a.y, 1.0e-6); \\\\\\n    EXPECT_NEAR(0.0f, m_.a.z, 1.0e-6); \\\\\\n    EXPECT_NEAR(0.0f, m_.b.x, 1.0e-6); \\\\\\n    EXPECT_NEAR(1.0f, m_.b.y, 1.0e-6); \\\\\\n    EXPECT_NEAR(0.0f, m_\",\n      \"untrusted\": true,\n      \"score\": -17.1663\n    },\n    {\n      \"cite_id\": \"expresslrs_docs#a4d46105ca586362\",\n      \"source_id\": \"expresslrs_docs\",\n      \"repo\": \"ExpressLRS/Docs\",\n      \"ref\": \"5ed656b6ebc7a38b6012297cf40fe5bc87232bed\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"jumper-aion.md\",\n      \"url\": \"https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/quick-start/receivers/jumper-aion.md#L33-L35\",\n      \"path\": \"docs/quick-start/receivers/jumper-aion.md\",\n      \"lines\": [\n        33,\n        35\n      ],\n      \"version\": \"ELRS Docs@5ed656b (2026-10-12)\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"Wiring up your receiver\",\n      \"excerpt\": \"!!! Note \\\"Take Note\\\" \\n    The Jumper Aion Mini has its antenna near the center, beside the boot button.\\n    The Jumper Aion Nano has its antenna near the edge, with another chip beside it.\",\n      \"untrusted\": true,\n      \"score\": -9.8377\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#c479142bda2daa45\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-ads-b-receiver.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-ads-b-receiver.rst#L120-L124\",\n      \"path\": \"common/source/docs/common-ads-b-receiver.rst\",\n      \"lines\": [\n        120,\n        124\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Enabling Manned Vehicle Avoidance\",\n      \"excerpt\": \"-  :ref:`AVD_ENABLE <AVD_ENABLE>`: set to \\\"1\\\" to enable ADS-B based avoidance (param refresh may be necessary after setting this)\\n-  :ref:`AVD_F_DIST_XY <AVD_F_DIST_XY>`: the horizontal distance in meters that should be considered a near-miss\\n-  :ref:`AVD_F_DIST_Z <AVD_F_DIST_Z>`: the vertical distance in meters above or below the vehicle that should be considered a near-miss\\n-  :ref:`AVD_F_TIME <AVD_F_TIME>`: how many seconds in advance of a projected near-miss (based on the vehicle's current position and velocity) the vehicle should begin the ``AVD_F_ACTION``.\\n-  :ref:`AVD_F_ACTION <AVD_F_AC\",\n      \"untrusted\": true,\n      \"score\": -9.7198\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot#d110ccd20f0951c7\",\n    \"ardupilot#dce3eed44e3915f3\",\n    \"ardupilot#d18e96d5da2fc2bc\",\n    \"ardupilot#db22bba699139ca4\",\n    \"ardupilot#52f4ded3e4006b5c\"\n  ],\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "NEAR(",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot#d110ccd20f0951c7",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_math.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_math.cpp#L548-L568",
+            "path": "libraries/AP_Math/tests/test_math.cpp",
+            "lines": [
+              548,
+              568
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_Math/tests/test_math.cpp",
+            "excerpt": "    EXPECT_NEAR(0,    wrap_2PI(-M_2PI), accuracy);\n    EXPECT_NEAR(1,    wrap_2PI(1.0), accuracy);\n}\n\nTEST(MathTest, ASin)\n{\n    const float accuracy = 1.0e-5;\n    EXPECT_NEAR(0.0f, safe_asin(0.0f), accuracy);\n    EXPECT_NEAR(0.9033391107665127f, safe_asin(M_PI_2 * 0.5f), accuracy);\n    EXPECT_NEAR(M_PI_2, safe_asin(M_PI_2 ), accuracy);\n    EXPECT_NEAR(M_PI_2, safe_asin(M_PI), accuracy);\n    EXPECT_NEAR(M_PI_2, safe_asin(M_2PI), accuracy);\n    EXPECT_NEAR(-M_PI_2, safe_asin(-M_PI_2), accuracy);\n    EXPECT_NEAR(-M_PI_2, safe_asin(-M_PI), accuracy);\n    EXPECT_NEAR(-0.9033391107665127f, safe_asi",
+            "untrusted": true,
+            "score": -17.8532
+          },
+          {
+            "cite_id": "ardupilot#dce3eed44e3915f3",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_math_double.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_math_double.cpp#L170-L194",
+            "path": "libraries/AP_Math/tests/test_math_double.cpp",
+            "lines": [
+              170,
+              194
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_Math/tests/test_math_double.cpp",
+            "excerpt": "    EXPECT_EQ(0.0,     wrap_360(static_cast<double>(7200.0)));\n    EXPECT_EQ(260.0,     wrap_360(static_cast<double>(-100.0)));\n}\n\nTEST(MathWrapTest, AnglePIDouble)\n{\n    const double accuracy = 1.0e-5;\n\n    EXPECT_NEAR(M_PI,    wrap_PI((double)M_PI),      accuracy);\n    EXPECT_NEAR(0.0,     wrap_PI((double)M_2PI),     accuracy);\n    EXPECT_NEAR(0,       wrap_PI((double)M_PI * 10.0), accuracy);\n    EXPECT_NEAR(-2.1415925025939941,    wrap_PI((double)M_PI+1.0),      accuracy);\n}\n\nTEST(MathWrapTest, Angle2PIDouble)\n{\n    const double accuracy = 1.0e-5;\n\n    EXPECT_NEAR(M_PI, wrap_2PI((double)M_P",
+            "untrusted": true,
+            "score": -17.3625
+          },
+          {
+            "cite_id": "ardupilot#d18e96d5da2fc2bc",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_matrix3.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_matrix3.cpp#L15-L37",
+            "path": "libraries/AP_Math/tests/test_matrix3.cpp",
+            "lines": [
+              15,
+              37
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_Math/tests/test_matrix3.cpp",
+            "excerpt": " * with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\n#include \"math_test.h\"\n\nconst AP_HAL::HAL& hal = AP_HAL::get_HAL();\n\n// given we are in the Math library, you're epected to know what\n// you're doing when directly comparing floats:\n#pragma GCC diagnostic push\n#pragma GCC diagnostic ignored \"-Wfloat-equal\"\n\n#define AP_EXPECT_IDENTITY_MATRIX(m_) {\\\n    EXPECT_NEAR(1.0f, m_.a.x, 1.0e-6); \\\n    EXPECT_NEAR(0.0f, m_.a.y, 1.0e-6); \\\n    EXPECT_NEAR(0.0f, m_.a.z, 1.0e-6); \\\n    EXPECT_NEAR(0.0f, m_.b.x, 1.0e-6); \\\n    EXPECT_NEAR(1.0f, m_.b.y, 1.0e-6); \\\n    EXPECT_NEAR(0.0f, m_",
+            "untrusted": true,
+            "score": -17.1663
+          },
+          {
+            "cite_id": "expresslrs_docs#a4d46105ca586362",
+            "source_id": "expresslrs_docs",
+            "repo": "ExpressLRS/Docs",
+            "ref": "5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "jumper-aion.md",
+            "url": "https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/quick-start/receivers/jumper-aion.md#L33-L35",
+            "path": "docs/quick-start/receivers/jumper-aion.md",
+            "lines": [
+              33,
+              35
+            ],
+            "version": "ELRS Docs@5ed656b (2026-10-12)",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "Wiring up your receiver",
+            "excerpt": "!!! Note \"Take Note\" \n    The Jumper Aion Mini has its antenna near the center, beside the boot button.\n    The Jumper Aion Nano has its antenna near the edge, with another chip beside it.",
+            "untrusted": true,
+            "score": -9.8377
+          },
+          {
+            "cite_id": "ardupilot_wiki#c479142bda2daa45",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-ads-b-receiver.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-ads-b-receiver.rst#L120-L124",
+            "path": "common/source/docs/common-ads-b-receiver.rst",
+            "lines": [
+              120,
+              124
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Enabling Manned Vehicle Avoidance",
+            "excerpt": "-  :ref:`AVD_ENABLE <AVD_ENABLE>`: set to \"1\" to enable ADS-B based avoidance (param refresh may be necessary after setting this)\n-  :ref:`AVD_F_DIST_XY <AVD_F_DIST_XY>`: the horizontal distance in meters that should be considered a near-miss\n-  :ref:`AVD_F_DIST_Z <AVD_F_DIST_Z>`: the vertical distance in meters above or below the vehicle that should be considered a near-miss\n-  :ref:`AVD_F_TIME <AVD_F_TIME>`: how many seconds in advance of a projected near-miss (based on the vehicle's current position and velocity) the vehicle should begin the ``AVD_F_ACTION``.\n-  :ref:`AVD_F_ACTION <AVD_F_AC",
+            "untrusted": true,
+            "score": -9.7198
+          }
+        ],
+        "candidates": [
+          "ardupilot#d110ccd20f0951c7",
+          "ardupilot#dce3eed44e3915f3",
+          "ardupilot#d18e96d5da2fc2bc",
+          "ardupilot#db22bba699139ca4",
+          "ardupilot#52f4ded3e4006b5c"
+        ],
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

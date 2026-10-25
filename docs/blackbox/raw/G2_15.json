@@ -1,0 +1,59 @@
+{
+  "case": "G2_15",
+  "note": "same content as the C/D hit for edgetx#d3d997571493b805",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "edgetx#d3d997571493b805"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1015,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "edgetx#d3d997571493b805"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.6,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"edgetx#d3d997571493b805\",\n  \"source_id\": \"edgetx\",\n  \"repo\": \"EdgeTX/edgetx\",\n  \"ref\": \"v2.12.5\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"crsf_measure.cpp\",\n  \"url\": \"https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.cpp#L260-L372\",\n  \"path\": \"radio/src/targets/hrs/v15/crsf_measure.cpp\",\n  \"lines\": [\n    260,\n    372\n  ],\n  \"version\": \"EdgeTX 2.12.5\",\n  \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-2.0\",\n  \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n  \"heading_path\": \"radio/src/targets/hrs/v15/crsf_measure.cpp\",\n  \"excerpt\": \"    const uint32_t dt = nowUs - g_lastFrameUs;\\n    if (dt >= 2000U && dt <= 50000U) {\\n      g_framePeriodUs = dt;\\n    }\\n  }\\n  g_lastFrameUs = nowUs;\\n  g_lastFrame10ms = get_tmr10ms();\\n  g_haveSignal = true;\\n  {\\n    uint16_t raw[8];\\n    for (uint8_t i = 0; i < 8; ++i) raw[i] = g_chRaw[i];\\n    v15MeasureTrainerFeedPushBusRaw(raw, 8);\\n  }\\n\\n  if (!g_configLocked) {\\n    g_configLocked = true;\\n    g_baudUi = BAUD_CANDIDATES[g_tryBaudIdx];\\n    g_polarityUi = (g_tryPolarity == ETX_Pol_Inverted) ? CRSF_MEASURE_POL_INVERTED\\n                                                       : CRSF_MEASURE_POL_NORMAL\",\n  \"untrusted\": true,\n  \"text\": \"    const uint32_t dt = nowUs - g_lastFrameUs;\\n    if (dt >= 2000U && dt <= 50000U) {\\n      g_framePeriodUs = dt;\\n    }\\n  }\\n  g_lastFrameUs = nowUs;\\n  g_lastFrame10ms = get_tmr10ms();\\n  g_haveSignal = true;\\n  {\\n    uint16_t raw[8];\\n    for (uint8_t i = 0; i < 8; ++i) raw[i] = g_chRaw[i];\\n    v15MeasureTrainerFeedPushBusRaw(raw, 8);\\n  }\\n\\n  if (!g_configLocked) {\\n    g_configLocked = true;\\n    g_baudUi = BAUD_CANDIDATES[g_tryBaudIdx];\\n    g_polarityUi = (g_tryPolarity == ETX_Pol_Inverted) ? CRSF_MEASURE_POL_INVERTED\\n                                                       : CRSF_MEASURE_POL_NORMAL;\\n  }\\n}\\n\\nvoid consumeParseBuffer()\\n{\\n  while (g_parseLen >= 3) {\\n    if (!isSyncByte(g_parseBuf[0])) {\\n      memmove(g_parseBuf, g_parseBuf + 1, --g_parseLen);\\n      continue;\\n    }\\n\\n    const uint8_t len = g_parseBuf[1];\\n    if (len < 2 || len > 60) {\\n      memmove(g_parseBuf, g_parseBuf + 1, --g_parseLen);\\n      continue;\\n    }\\n\\n    const uint8_t total = (uint8_t)(len + 2);\\n    if (g_parseLen < total) return;\\n\\n    const uint8_t type = g_parseBuf[2];\\n    const uint8_t crc = g_parseBuf[total - 1];\\n    const bool crcOk = (crc8(&g_parseBuf[2], (uint32_t)(len - 1)) == crc);\\n\\n    if (type == CHANNELS_ID && len >= CRSF_CHANNELS_LEN && crcOk) {\\n      publishChannels(&g_parseBuf[3]);\\n      // Snapshot frame head for UI scope (truncated is fine)\\n      uint8_t n = total;\\n      if (n > CRSF_MEASURE_WAVE_BYTES) n = CRSF_MEASURE_WAVE_BYTES;\\n      memcpy(g_waveBytes, g_parseBuf, n);\\n      g_waveLen = n;\\n      g_waveSeq++;\\n    }\\n\\n    // Consume one frame (or drop sync on bad CRC/type and resync)\\n    if (crcOk) {\\n      const uint8_t remain = (uint8_t)(g_parseLen - total);\\n      memmove(g_parseBuf, g_parseBuf + total, remain);\\n      g_parseLen = remain;\\n    } else {\\n      memmove(g_parseBuf, g_parseBuf + 1, --g_parseLen);\\n    }\\n  }\\n}\\n\\nvoid onCrsfIdle(void*)\\n{\\n  if (!g_active || g_overcurrentFault || !g_powerOn || !g_uartCtx) return;\\n  if (!STM32SerialDriver.getByte) return;\\n\\n  uint8_t b = 0;\\n  while (STM32SerialDriver.getByte(g_uartCtx, &b) > 0) {\\n    if (g_parseLen < CRSF_PARSE_MAX) {\\n      g_parseBuf[g_parseLen++] = b;\\n    } else {\\n      // Overflow: keep last half for resync\\n      memmove(g_parseBuf, g_parseBuf + (CRSF_PARSE_MAX / 2), CRSF_PARSE_MAX / 2);\\n      g_parseLen = CRSF_PARSE_MAX / 2;\\n      g_parseBuf[g_parseLen++] = b;\\n    }\\n  }\\n\\n  consumeParseBuffer();\\n}\\n\\nvoid stopUart()\\n{\\n  if (g_uartCtx) {\\n    STM32SerialDriver.deinit(g_uartCtx);\\n    g_uartCtx = nullptr;\\n  }\\n  g_parseLen = 0;\\n}\\n\\nbool startUart(uint32_t baudrate, uint8_t polarity)\\n{\\n  stopUart();\\n\\n  etx_serial_init params = {\\n      .baudrate = baudrate,\\n      .encoding = ETX_Encoding_8N1,\\n      .direction = ETX_Dir_RX,\\n      .polarity = polarity,\\n  };\\n\\n  g_uartCtx = STM32SerialDriver.init(REF_STM32_SERIAL_PORT(CrsfMeas), &params);\\n  if (!g_uartCtx) return false;\\n\\n  if (STM32SerialDriver.setIdleCb) {\\n    STM32SerialDriver.setIdleCb(g_uartCtx, onCrsfIdle, nullptr);\\n  }\\n  return true;\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "edgetx#d3d997571493b805",
+        "source_id": "edgetx",
+        "repo": "EdgeTX/edgetx",
+        "ref": "v2.12.5",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "crsf_measure.cpp",
+        "url": "https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.cpp#L260-L372",
+        "path": "radio/src/targets/hrs/v15/crsf_measure.cpp",
+        "lines": [
+          260,
+          372
+        ],
+        "version": "EdgeTX 2.12.5",
+        "ingested_at": "2026-10-25T17:42:44+0700",
+        "tier": "T1",
+        "license": "GPL-2.0",
+        "retrieved_at": "2026-10-25T17:42:44+0700",
+        "heading_path": "radio/src/targets/hrs/v15/crsf_measure.cpp",
+        "excerpt": "    const uint32_t dt = nowUs - g_lastFrameUs;\n    if (dt >= 2000U && dt <= 50000U) {\n      g_framePeriodUs = dt;\n    }\n  }\n  g_lastFrameUs = nowUs;\n  g_lastFrame10ms = get_tmr10ms();\n  g_haveSignal = true;\n  {\n    uint16_t raw[8];\n    for (uint8_t i = 0; i < 8; ++i) raw[i] = g_chRaw[i];\n    v15MeasureTrainerFeedPushBusRaw(raw, 8);\n  }\n\n  if (!g_configLocked) {\n    g_configLocked = true;\n    g_baudUi = BAUD_CANDIDATES[g_tryBaudIdx];\n    g_polarityUi = (g_tryPolarity == ETX_Pol_Inverted) ? CRSF_MEASURE_POL_INVERTED\n                                                       : CRSF_MEASURE_POL_NORMAL",
+        "untrusted": true,
+        "text": "    const uint32_t dt = nowUs - g_lastFrameUs;\n    if (dt >= 2000U && dt <= 50000U) {\n      g_framePeriodUs = dt;\n    }\n  }\n  g_lastFrameUs = nowUs;\n  g_lastFrame10ms = get_tmr10ms();\n  g_haveSignal = true;\n  {\n    uint16_t raw[8];\n    for (uint8_t i = 0; i < 8; ++i) raw[i] = g_chRaw[i];\n    v15MeasureTrainerFeedPushBusRaw(raw, 8);\n  }\n\n  if (!g_configLocked) {\n    g_configLocked = true;\n    g_baudUi = BAUD_CANDIDATES[g_tryBaudIdx];\n    g_polarityUi = (g_tryPolarity == ETX_Pol_Inverted) ? CRSF_MEASURE_POL_INVERTED\n                                                       : CRSF_MEASURE_POL_NORMAL;\n  }\n}\n\nvoid consumeParseBuffer()\n{\n  while (g_parseLen >= 3) {\n    if (!isSyncByte(g_parseBuf[0])) {\n      memmove(g_parseBuf, g_parseBuf + 1, --g_parseLen);\n      continue;\n    }\n\n    const uint8_t len = g_parseBuf[1];\n    if (len < 2 || len > 60) {\n      memmove(g_parseBuf, g_parseBuf + 1, --g_parseLen);\n      continue;\n    }\n\n    const uint8_t total = (uint8_t)(len + 2);\n    if (g_parseLen < total) return;\n\n    const uint8_t type = g_parseBuf[2];\n    const uint8_t crc = g_parseBuf[total - 1];\n    const bool crcOk = (crc8(&g_parseBuf[2], (uint32_t)(len - 1)) == crc);\n\n    if (type == CHANNELS_ID && len >= CRSF_CHANNELS_LEN && crcOk) {\n      publishChannels(&g_parseBuf[3]);\n      // Snapshot frame head for UI scope (truncated is fine)\n      uint8_t n = total;\n      if (n > CRSF_MEASURE_WAVE_BYTES) n = CRSF_MEASURE_WAVE_BYTES;\n      memcpy(g_waveBytes, g_parseBuf, n);\n      g_waveLen = n;\n      g_waveSeq++;\n    }\n\n    // Consume one frame (or drop sync on bad CRC/type and resync)\n    if (crcOk) {\n      const uint8_t remain = (uint8_t)(g_parseLen - total);\n      memmove(g_parseBuf, g_parseBuf + total, remain);\n      g_parseLen = remain;\n    } else {\n      memmove(g_parseBuf, g_parseBuf + 1, --g_parseLen);\n    }\n  }\n}\n\nvoid onCrsfIdle(void*)\n{\n  if (!g_active || g_overcurrentFault || !g_powerOn || !g_uartCtx) return;\n  if (!STM32SerialDriver.getByte) return;\n\n  uint8_t b = 0;\n  while (STM32SerialDriver.getByte(g_uartCtx, &b) > 0) {\n    if (g_parseLen < CRSF_PARSE_MAX) {\n      g_parseBuf[g_parseLen++] = b;\n    } else {\n      // Overflow: keep last half for resync\n      memmove(g_parseBuf, g_parseBuf + (CRSF_PARSE_MAX / 2), CRSF_PARSE_MAX / 2);\n      g_parseLen = CRSF_PARSE_MAX / 2;\n      g_parseBuf[g_parseLen++] = b;\n    }\n  }\n\n  consumeParseBuffer();\n}\n\nvoid stopUart()\n{\n  if (g_uartCtx) {\n    STM32SerialDriver.deinit(g_uartCtx);\n    g_uartCtx = nullptr;\n  }\n  g_parseLen = 0;\n}\n\nbool startUart(uint32_t baudrate, uint8_t polarity)\n{\n  stopUart();\n\n  etx_serial_init params = {\n      .baudrate = baudrate,\n      .encoding = ETX_Encoding_8N1,\n      .direction = ETX_Dir_RX,\n      .polarity = polarity,\n  };\n\n  g_uartCtx = STM32SerialDriver.init(REF_STM32_SERIAL_PORT(CrsfMeas), &params);\n  if (!g_uartCtx) return false;\n\n  if (STM32SerialDriver.setIdleCb) {\n    STM32SerialDriver.setIdleCb(g_uartCtx, onCrsfIdle, nullptr);\n  }\n  return true;\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

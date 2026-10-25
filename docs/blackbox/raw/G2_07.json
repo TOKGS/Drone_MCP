@@ -1,0 +1,59 @@
+{
+  "case": "G2_07",
+  "note": "same content as the C/D hit for ardupilot_wiki#c2593dacde94604e",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot_wiki#c2593dacde94604e"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1007,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot_wiki#c2593dacde94604e"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot_wiki#c2593dacde94604e\",\n  \"source_id\": \"ardupilot_wiki\",\n  \"repo\": \"ArduPilot/ardupilot_wiki\",\n  \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n  \"channel\": \"snapshot\",\n  \"unreleased\": true,\n  \"pinned\": true,\n  \"title\": \"common-crsf-telemetry.rst\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-crsf-telemetry.rst#L11-L19\",\n  \"path\": \"common/source/docs/common-crsf-telemetry.rst\",\n  \"lines\": [\n    11,\n    19\n  ],\n  \"version\": \"wiki@828de1f (2026-10-24)\",\n  \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"CC-BY-SA-3.0\",\n  \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n  \"heading_path\": \"TBS Crossfire Telemetry\",\n  \"excerpt\": \"OpenTx will discover the native CRSF Telemetry sensors (but a limited number, use passthru option below for more displayed information using Yaapu Telemetry script), which then can be displayed on `OpenTX <https://www.open-tx.org/>`_ telemetry screens or repeated from the CRSF TX module's WIFI to MAVLink Ground Control Stations:\\n\\n.. image:: ../../../images/crossfire-telemetry-meaning.jpg\\n\\nThese values can be displayed on OpenTX transmitters in several ways:\\n\\n- Using the built-in telemetry screens:\\n\\n.. image:: ../../../images/x9d-telem-screen.jpg\",\n  \"untrusted\": true,\n  \"text\": \"OpenTx will discover the native CRSF Telemetry sensors (but a limited number, use passthru option below for more displayed information using Yaapu Telemetry script), which then can be displayed on `OpenTX <https://www.open-tx.org/>`_ telemetry screens or repeated from the CRSF TX module's WIFI to MAVLink Ground Control Stations:\\n\\n.. image:: ../../../images/crossfire-telemetry-meaning.jpg\\n\\nThese values can be displayed on OpenTX transmitters in several ways:\\n\\n- Using the built-in telemetry screens:\\n\\n.. image:: ../../../images/x9d-telem-screen.jpg\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot_wiki#c2593dacde94604e",
+        "source_id": "ardupilot_wiki",
+        "repo": "ArduPilot/ardupilot_wiki",
+        "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+        "channel": "snapshot",
+        "unreleased": true,
+        "pinned": true,
+        "title": "common-crsf-telemetry.rst",
+        "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-crsf-telemetry.rst#L11-L19",
+        "path": "common/source/docs/common-crsf-telemetry.rst",
+        "lines": [
+          11,
+          19
+        ],
+        "version": "wiki@828de1f (2026-10-24)",
+        "ingested_at": "2026-10-25T17:42:43+0700",
+        "tier": "T1",
+        "license": "CC-BY-SA-3.0",
+        "retrieved_at": "2026-10-25T17:42:43+0700",
+        "heading_path": "TBS Crossfire Telemetry",
+        "excerpt": "OpenTx will discover the native CRSF Telemetry sensors (but a limited number, use passthru option below for more displayed information using Yaapu Telemetry script), which then can be displayed on `OpenTX <https://www.open-tx.org/>`_ telemetry screens or repeated from the CRSF TX module's WIFI to MAVLink Ground Control Stations:\n\n.. image:: ../../../images/crossfire-telemetry-meaning.jpg\n\nThese values can be displayed on OpenTX transmitters in several ways:\n\n- Using the built-in telemetry screens:\n\n.. image:: ../../../images/x9d-telem-screen.jpg",
+        "untrusted": true,
+        "text": "OpenTx will discover the native CRSF Telemetry sensors (but a limited number, use passthru option below for more displayed information using Yaapu Telemetry script), which then can be displayed on `OpenTX <https://www.open-tx.org/>`_ telemetry screens or repeated from the CRSF TX module's WIFI to MAVLink Ground Control Stations:\n\n.. image:: ../../../images/crossfire-telemetry-meaning.jpg\n\nThese values can be displayed on OpenTX transmitters in several ways:\n\n- Using the built-in telemetry screens:\n\n.. image:: ../../../images/x9d-telem-screen.jpg",
+        "served_from": "index"
+      }
+    }
+  }
+}

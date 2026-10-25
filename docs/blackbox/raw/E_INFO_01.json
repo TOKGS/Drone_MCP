@@ -1,0 +1,283 @@
+{
+  "case": "E_INFO_01",
+  "note": "informational question -> NOT blocked",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "ARMING_CHECK làm gì"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 73,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "ARMING_CHECK làm gì"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 103.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"symptom\": \"ARMING_CHECK làm gì\",\n  \"language\": \"en\",\n  \"confidence\": \"high\",\n  \"evidence\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#08d87bb90744d776\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-param-name-changes.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-param-name-changes.rst#L361-L372\",\n      \"path\": \"common/source/docs/common-param-name-changes.rst\",\n      \"lines\": [\n        361,\n        372\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"ArduPilot 4.6 → 4.7 > Arming\",\n      \"excerpt\": \".. list-table::\\n   :header-rows: 1\\n\\n   * - Old Name\\n     - New Name\\n   * - ARMING_CHECK\\n     - ARMING_SKIPCHK\\n\\n.. warning:: This is not a pure rename. ``ARMING_CHECK`` was a bitmask of\\n   checks to *run*, while ``ARMING_SKIPCHK`` is a bitmask of checks to\\n   *skip*. The bit meanings are inverted, so a converted value should be\\n   double checked rather than assumed correct.\",\n      \"untrusted\": true,\n      \"score\": -14.5048\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#96923714c7ac728a\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"security-landing-page.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/security-landing-page.rst#L110-L112\",\n      \"path\": \"dev/source/docs/security-landing-page.rst\",\n      \"lines\": [\n        110,\n        112\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"ArduPilot Firmware > Pre-arm Checks Customisation\",\n      \"excerpt\": \"- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__\\n- `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-batt-temp.lua>`__\\n- `examples/arming-check-wp1-takeoff.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-wp1-takeoff.lua>`__\",\n      \"untrusted\": true,\n      \"score\": -10.3822\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#42448e0d44a53988\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-ap-periph-usage-examples.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-ap-periph-usage-examples.rst#L43-L44\",\n      \"path\": \"common/source/docs/common-ap-periph-usage-examples.rst\",\n      \"lines\": [\n        43,\n        44\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Rangefinder Setup\",\n      \"excerpt\": \"   - the adaptor node's MIN/MAX are used to set the rangefinder's reported status in the DroneCAN message (range too low, too high, or OK), which ArduPilot's flight code then just reads\\n   - ArduPilot's own MIN/MAX are used for other purposes, for example the arming check that requires :ref:`RNGFNDx_MAX<copter:RNGFND1_MAX>` to be at least :ref:`RTL_ALT<copter:RTL_ALT_M>` when :ref:`RTL_ALT_TYPE<copter:RTL_ALT_TYPE>` = 1 (Terrain)\",\n      \"untrusted\": true,\n      \"score\": -6.7935\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#093ef3c856277b33\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"mavlink-calibration.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/mavlink-calibration.rst#L25-L50\",\n      \"path\": \"dev/source/docs/mavlink-calibration.rst\",\n      \"lines\": [\n        25,\n        50\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Sensor Calibration > Simple calibrations\",\n      \"excerpt\": \"   <table border=\\\"1\\\" class=\\\"docutils\\\">\\n   <tbody>\\n   <tr>\\n   <th>Command Field</th>\\n   <th>Type</th>\\n   <th>Description</th>\\n   </tr>\\n   <tr>\\n   <td><strong>param1</strong></td>\\n   <td>float</td>\\n   <td>1: gyro calibration</td>\\n   </tr>\\n   <tr>\\n   <td><strong>param2</strong></td>\\n   <td>float</td>\\n   <td>magnetometer calibration — see below</td>\\n   </tr>\\n   <tr>\\n   <td><strong>param3</strong></td>\\n   <td>float</td>\\n   <td>1: barometer (and airspeed, if fitted) calibration</td>\\n   </tr>\\n   <tr>\\n   <td>param4</td>\\n   <td>float</td>\\n   <td>positive value: sets an internal \\\"RC calibrating\\\" flag th\",\n      \"untrusted\": true,\n      \"score\": -6.4475\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#b7a86f743f34c1a8\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-prearm-safety-checks.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L214-L217\",\n      \"path\": \"common/source/docs/common-prearm-safety-checks.rst\",\n      \"lines\": [\n        214,\n        217\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Recognising which Pre-Arm Check has failed using the GCS\",\n      \"excerpt\": \"    Too many auxiliary authorisers                          More than 3 external systems controlling arming     Check external authorisation system\\n    vehicle outside fence                                   Vehicle is outside the fence                        Move vehicle within the fence\\n    VisOdom: not healthy                                    VisualOdometry sensor is not providing data         Check visual odometry physical connection and :ref:`configuration<common-non-gps-navigation-landing-page>`\\n    VisOdom: out of memory                                  Autopilot has run out of memory\",\n      \"untrusted\": true,\n      \"score\": -6.4203\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#2896f63f1683ae85\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"code-overview-adding-a-new-parameter.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/code-overview-adding-a-new-parameter.rst#L45-L59\",\n      \"path\": \"dev/source/docs/code-overview-adding-a-new-parameter.rst\",\n      \"lines\": [\n        45,\n        59\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Adding a parameter to the main code\",\n      \"excerpt\": \"            k_param_crosstrack_min_distance,    // deprecated - remove with next eeprom number change\\n            k_param_rssi_pin,\\n            k_param_throttle_accel_enabled,     // deprecated - remove\\n            k_param_wp_yaw_behavior,\\n            k_param_acro_trainer,\\n            k_param_pilot_velocity_z_max,\\n            k_param_circle_rate,\\n            k_param_sonar_gain,\\n            k_param_ch8_option,\\n            k_param_arming_check_enabled,\\n            k_param_sprayer,\\n            k_param_angle_max,\\n            k_param_gps_hdop_good,          // 35\\n            k_param_my_new_paramete\",\n      \"untrusted\": true,\n      \"score\": -6.2358\n    },\n    {\n      \"cite_id\": \"ardupilot#fd24eafa476c004d\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"arming-checks.md\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.md#L11-L11\",\n      \"path\": \"libraries/AP_Scripting/applets/arming-checks.md\",\n      \"lines\": [\n        11,\n        11\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"arming-checks > Parameters\",\n      \"excerpt\": \"There is a single parameter defined for each arming check. The error or warning level can be changed for each arming check by setting the MAV_SEVERITY of the arming check. An arming check can be disabled by setting the parameter value to MAV_SEVERITY.NONE or -1.\",\n      \"untrusted\": true,\n      \"score\": -17.1973\n    },\n    {\n      \"cite_id\": \"ardupilot#ba8aec5ebebd3406\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduPlane/ReleaseNotes.txt#L3536-L3548\",\n      \"path\": \"ArduPlane/ReleaseNotes.txt\",\n      \"lines\": [\n        3536,\n        3548\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Release 4.2.0beta3 18th March 2022\",\n      \"excerpt\": \"This is the 3rd beta of the 4.2.0 major release. This beta should be\\nclose to the final 4.2.0 release.\\n\\n - fixed pitch envelope constraint after AIRBRAKE\\n - improvements to POSITION1 quadplane landing controller\\n - added arming check for Q_ASSIST_SPEED\\n - added warning if arming with ARMING_CHECK=0\\n - added arming check for DO_LAND_START with RTL_AUTOLAND=0\\n - improved throttle mix for quadplane autoland\\n - added fence breach message on GCS\\n - constrain indexing on declination tables\\n\\nHappy flying!\",\n      \"untrusted\": true,\n      \"score\": -15.7453\n    },\n    {\n      \"cite_id\": \"ardupilot#55a306c743d49609\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Rover/ReleaseNotes.txt#L2259-L2268\",\n      \"path\": \"Rover/ReleaseNotes.txt\",\n      \"lines\": [\n        2259,\n        2268\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"No changes from 4.5.0-beta4\",\n      \"excerpt\": \"    - Arming check of compass vs world magnetic model to detect metal in ground (see ARMING_MAGTHRESH)\\n    - Arming check of GPIO pin interrupt storm\\n    - Arming check of Lua script CRC\\n    - Arming check of mission loaded from SD card\\n    - Arming check of Relay pin conflicts\\n    - Arming check of emergency stop skipped if emergency stop aux function configured\\n    - Arming check that at least some outputs are configured\\n    - Arming failures reported more quickly when changing from success to failed\\n    - ARMING_OPTIONS allows supressing \\\"Armed\\\", \\\"Disarmed\\\" text messages\\n    - BRD_SAFETY_MA\",\n      \"untrusted\": true,\n      \"score\": -11.45\n    }\n  ],\n  \"citations\": [\n    \"ardupilot_wiki#08d87bb90744d776\",\n    \"ardupilot_wiki#96923714c7ac728a\",\n    \"ardupilot_wiki#42448e0d44a53988\",\n    \"ardupilot_wiki#093ef3c856277b33\",\n    \"ardupilot_wiki#b7a86f743f34c1a8\",\n    \"ardupilot_wiki#2896f63f1683ae85\",\n    \"ardupilot#fd24eafa476c004d\",\n    \"ardupilot#ba8aec5ebebd3406\",\n    \"ardupilot#55a306c743d49609\"\n  ],\n  \"safety\": {\n    \"props_off\": \"Props off for bench tests. SITL before hardware.\",\n    \"confirm\": \"CONFIRM: <the procedure you apply> on <your board> with props off.\"\n  },\n  \"symptom_evidence_only\": false,\n  \"note\": \"Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote.\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "symptom": "ARMING_CHECK làm gì",
+        "language": "en",
+        "confidence": "high",
+        "evidence": [
+          {
+            "cite_id": "ardupilot_wiki#08d87bb90744d776",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-param-name-changes.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-param-name-changes.rst#L361-L372",
+            "path": "common/source/docs/common-param-name-changes.rst",
+            "lines": [
+              361,
+              372
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "ArduPilot 4.6 → 4.7 > Arming",
+            "excerpt": ".. list-table::\n   :header-rows: 1\n\n   * - Old Name\n     - New Name\n   * - ARMING_CHECK\n     - ARMING_SKIPCHK\n\n.. warning:: This is not a pure rename. ``ARMING_CHECK`` was a bitmask of\n   checks to *run*, while ``ARMING_SKIPCHK`` is a bitmask of checks to\n   *skip*. The bit meanings are inverted, so a converted value should be\n   double checked rather than assumed correct.",
+            "untrusted": true,
+            "score": -14.5048
+          },
+          {
+            "cite_id": "ardupilot_wiki#96923714c7ac728a",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "security-landing-page.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/security-landing-page.rst#L110-L112",
+            "path": "dev/source/docs/security-landing-page.rst",
+            "lines": [
+              110,
+              112
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "ArduPilot Firmware > Pre-arm Checks Customisation",
+            "excerpt": "- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__\n- `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-batt-temp.lua>`__\n- `examples/arming-check-wp1-takeoff.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-wp1-takeoff.lua>`__",
+            "untrusted": true,
+            "score": -10.3822
+          },
+          {
+            "cite_id": "ardupilot_wiki#42448e0d44a53988",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-ap-periph-usage-examples.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-ap-periph-usage-examples.rst#L43-L44",
+            "path": "common/source/docs/common-ap-periph-usage-examples.rst",
+            "lines": [
+              43,
+              44
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Rangefinder Setup",
+            "excerpt": "   - the adaptor node's MIN/MAX are used to set the rangefinder's reported status in the DroneCAN message (range too low, too high, or OK), which ArduPilot's flight code then just reads\n   - ArduPilot's own MIN/MAX are used for other purposes, for example the arming check that requires :ref:`RNGFNDx_MAX<copter:RNGFND1_MAX>` to be at least :ref:`RTL_ALT<copter:RTL_ALT_M>` when :ref:`RTL_ALT_TYPE<copter:RTL_ALT_TYPE>` = 1 (Terrain)",
+            "untrusted": true,
+            "score": -6.7935
+          },
+          {
+            "cite_id": "ardupilot_wiki#093ef3c856277b33",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "mavlink-calibration.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/mavlink-calibration.rst#L25-L50",
+            "path": "dev/source/docs/mavlink-calibration.rst",
+            "lines": [
+              25,
+              50
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Sensor Calibration > Simple calibrations",
+            "excerpt": "   <table border=\"1\" class=\"docutils\">\n   <tbody>\n   <tr>\n   <th>Command Field</th>\n   <th>Type</th>\n   <th>Description</th>\n   </tr>\n   <tr>\n   <td><strong>param1</strong></td>\n   <td>float</td>\n   <td>1: gyro calibration</td>\n   </tr>\n   <tr>\n   <td><strong>param2</strong></td>\n   <td>float</td>\n   <td>magnetometer calibration — see below</td>\n   </tr>\n   <tr>\n   <td><strong>param3</strong></td>\n   <td>float</td>\n   <td>1: barometer (and airspeed, if fitted) calibration</td>\n   </tr>\n   <tr>\n   <td>param4</td>\n   <td>float</td>\n   <td>positive value: sets an internal \"RC calibrating\" flag th",
+            "untrusted": true,
+            "score": -6.4475
+          },
+          {
+            "cite_id": "ardupilot_wiki#b7a86f743f34c1a8",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-prearm-safety-checks.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L214-L217",
+            "path": "common/source/docs/common-prearm-safety-checks.rst",
+            "lines": [
+              214,
+              217
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Recognising which Pre-Arm Check has failed using the GCS",
+            "excerpt": "    Too many auxiliary authorisers                          More than 3 external systems controlling arming     Check external authorisation system\n    vehicle outside fence                                   Vehicle is outside the fence                        Move vehicle within the fence\n    VisOdom: not healthy                                    VisualOdometry sensor is not providing data         Check visual odometry physical connection and :ref:`configuration<common-non-gps-navigation-landing-page>`\n    VisOdom: out of memory                                  Autopilot has run out of memory",
+            "untrusted": true,
+            "score": -6.4203
+          },
+          {
+            "cite_id": "ardupilot_wiki#2896f63f1683ae85",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "code-overview-adding-a-new-parameter.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/code-overview-adding-a-new-parameter.rst#L45-L59",
+            "path": "dev/source/docs/code-overview-adding-a-new-parameter.rst",
+            "lines": [
+              45,
+              59
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Adding a parameter to the main code",
+            "excerpt": "            k_param_crosstrack_min_distance,    // deprecated - remove with next eeprom number change\n            k_param_rssi_pin,\n            k_param_throttle_accel_enabled,     // deprecated - remove\n            k_param_wp_yaw_behavior,\n            k_param_acro_trainer,\n            k_param_pilot_velocity_z_max,\n            k_param_circle_rate,\n            k_param_sonar_gain,\n            k_param_ch8_option,\n            k_param_arming_check_enabled,\n            k_param_sprayer,\n            k_param_angle_max,\n            k_param_gps_hdop_good,          // 35\n            k_param_my_new_paramete",
+            "untrusted": true,
+            "score": -6.2358
+          },
+          {
+            "cite_id": "ardupilot#fd24eafa476c004d",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "arming-checks.md",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.md#L11-L11",
+            "path": "libraries/AP_Scripting/applets/arming-checks.md",
+            "lines": [
+              11,
+              11
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "arming-checks > Parameters",
+            "excerpt": "There is a single parameter defined for each arming check. The error or warning level can be changed for each arming check by setting the MAV_SEVERITY of the arming check. An arming check can be disabled by setting the parameter value to MAV_SEVERITY.NONE or -1.",
+            "untrusted": true,
+            "score": -17.1973
+          },
+          {
+            "cite_id": "ardupilot#ba8aec5ebebd3406",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduPlane/ReleaseNotes.txt#L3536-L3548",
+            "path": "ArduPlane/ReleaseNotes.txt",
+            "lines": [
+              3536,
+              3548
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Release 4.2.0beta3 18th March 2022",
+            "excerpt": "This is the 3rd beta of the 4.2.0 major release. This beta should be\nclose to the final 4.2.0 release.\n\n - fixed pitch envelope constraint after AIRBRAKE\n - improvements to POSITION1 quadplane landing controller\n - added arming check for Q_ASSIST_SPEED\n - added warning if arming with ARMING_CHECK=0\n - added arming check for DO_LAND_START with RTL_AUTOLAND=0\n - improved throttle mix for quadplane autoland\n - added fence breach message on GCS\n - constrain indexing on declination tables\n\nHappy flying!",
+            "untrusted": true,
+            "score": -15.7453
+          },
+          {
+            "cite_id": "ardupilot#55a306c743d49609",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Rover/ReleaseNotes.txt#L2259-L2268",
+            "path": "Rover/ReleaseNotes.txt",
+            "lines": [
+              2259,
+              2268
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "No changes from 4.5.0-beta4",
+            "excerpt": "    - Arming check of compass vs world magnetic model to detect metal in ground (see ARMING_MAGTHRESH)\n    - Arming check of GPIO pin interrupt storm\n    - Arming check of Lua script CRC\n    - Arming check of mission loaded from SD card\n    - Arming check of Relay pin conflicts\n    - Arming check of emergency stop skipped if emergency stop aux function configured\n    - Arming check that at least some outputs are configured\n    - Arming failures reported more quickly when changing from success to failed\n    - ARMING_OPTIONS allows supressing \"Armed\", \"Disarmed\" text messages\n    - BRD_SAFETY_MA",
+            "untrusted": true,
+            "score": -11.45
+          }
+        ],
+        "citations": [
+          "ardupilot_wiki#08d87bb90744d776",
+          "ardupilot_wiki#96923714c7ac728a",
+          "ardupilot_wiki#42448e0d44a53988",
+          "ardupilot_wiki#093ef3c856277b33",
+          "ardupilot_wiki#b7a86f743f34c1a8",
+          "ardupilot_wiki#2896f63f1683ae85",
+          "ardupilot#fd24eafa476c004d",
+          "ardupilot#ba8aec5ebebd3406",
+          "ardupilot#55a306c743d49609"
+        ],
+        "safety": {
+          "props_off": "Props off for bench tests. SITL before hardware.",
+          "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."
+        },
+        "symptom_evidence_only": false,
+        "note": "Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote."
+      }
+    }
+  }
+}

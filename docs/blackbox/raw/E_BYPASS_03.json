@@ -1,0 +1,283 @@
+{
+  "case": "E_BYPASS_03",
+  "note": "bypass request -> dangerous/refused",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "bỏ qua kiểm tra trước khi arm"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 64,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "bỏ qua kiểm tra trước khi arm"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 48.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"symptom\": \"bỏ qua kiểm tra trước khi arm\",\n  \"language\": \"en\",\n  \"confidence\": \"high\",\n  \"evidence\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#bfb503edd26b8582\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-corvon-cv0850.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-corvon-cv0850.rst#L81-L83\",\n      \"path\": \"common/source/docs/common-corvon-cv0850.rst\",\n      \"lines\": [\n        81,\n        83\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Parameters\",\n      \"excerpt\": \".. note:: On 4.6 and earlier the forwarding option is bit 10 of ``SERIAL2_OPTIONS`` (value 1024) instead. Do not set that bit on 4.7 or later; it fails a pre-arm check.\\n\\nIn Mission Planner, open Flight Data > Status. Check ``opt_m_x``, ``opt_m_y`` and ``opt_qua`` while moving the sensor over a textured surface, and ``rangefinder1`` while changing its height above it.\",\n      \"untrusted\": true,\n      \"score\": -12.3276\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#e29f7b523a3a45f8\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-mtf-01.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-mtf-01.rst#L87-L87\",\n      \"path\": \"common/source/docs/common-mtf-01.rst\",\n      \"lines\": [\n        87,\n        87\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Parameters\",\n      \"excerpt\": \"Once the sensor is active you should be able to observe the optical flow and range sensor data on the Mission Planner’s “Status” page. The “opt_qua” and “rangefinder1” should have some value.\",\n      \"untrusted\": true,\n      \"score\": -12.2622\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#0faccc829de633ec\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-mechflow-v1.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-mechflow-v1.rst#L54-L54\",\n      \"path\": \"common/source/docs/common-mechflow-v1.rst\",\n      \"lines\": [\n        54,\n        54\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Parameters\",\n      \"excerpt\": \"Once the sensor is active you should be able to observe the optical flow and range sensor data on Mission Planner's \\\"Status\\\" page. The \\\"opt_qua\\\" and \\\"rangefinder1\\\" fields should show non-zero values.\",\n      \"untrusted\": true,\n      \"score\": -12.1976\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#cd13cc2ecf0885c7\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-upixels-tx-series.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-upixels-tx-series.rst#L52-L52\",\n      \"path\": \"common/source/docs/common-upixels-tx-series.rst\",\n      \"lines\": [\n        52,\n        52\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Configuration and Parameters\",\n      \"excerpt\": \"Once the sensor is activated, you should be able to observe the optical flow and distance sensor data on the Status page of the task planner. \\\"opt_m_x\\\", \\\"opt_m_y\\\", \\\"opt_qua\\\" and \\\"rangefinder1\\\" data have been updated.\",\n      \"untrusted\": true,\n      \"score\": -11.5866\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#cd9aabdde11aa0a2\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-transmitter-tuning.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-transmitter-tuning.rst#L365-L370\",\n      \"path\": \"common/source/docs/common-transmitter-tuning.rst\",\n      \"lines\": [\n        365,\n        370\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \":ref:`TUNE<TUNE>` Values\",\n      \"excerpt\": \"+--------+-------------------------+----------------------------------------------------------------------+\\n|39      |Circle Rate              |  :ref:`CIRCLE_RATE<CIRCLE_RATE>`                                     |\\n+--------+-------------------------+----------------------------------------------------------------------+\\n|46      |Rate Pitch kP            |  :ref:`ATC_RAT_PIT_P<ATC_RAT_PIT_P__AC_AttitudeControl_Multi>`       |\\n+--------+-------------------------+----------------------------------------------------------------------+\\n|47      |Rate Pitch kI            |  :ref:`ATC_RAT_PIT_I<AT\",\n      \"untrusted\": true,\n      \"score\": -11.5162\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#499fbb16a3739a30\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-orbith743.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-orbith743.rst#L172-L172\",\n      \"path\": \"common/source/docs/common-orbith743.rst\",\n      \"lines\": [\n        172,\n        172\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Where to Buy\",\n      \"excerpt\": \"* `orbitteknoloji.com.tr <https://orbitteknoloji.com.tr>`_\",\n      \"untrusted\": true,\n      \"score\": -11.0273\n    },\n    {\n      \"cite_id\": \"ardupilot#b3cede1263f7ace7\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ardusub.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/ardusub.py#L357-L379\",\n      \"path\": \"Tools/autotest/ardusub.py\",\n      \"lines\": [\n        357,\n        379\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/ardusub.py\",\n      \"excerpt\": \"            \\\"SCR_USER4\\\": rf_target,         # Rangefinder target in meters\\n        })\\n\\n        self.install_example_script_context(\\\"sub_test_synthetic_seafloor.lua\\\")\\n\\n        # Reboot to enable scripting.\\n        self.reboot_sitl()\\n        self.set_rc_default()\\n        self.wait_ready_to_arm()\\n\\n    def watch_true_distance_maintained(self, match_distance, delta=0.3, timeout=5.0, final_waypoint=0):\\n        \\\"\\\"\\\"Watch and wait for the rangefinder reading to be maintained\\\"\\\"\\\"\\n\\n        def get_true_distance():\\n            \\\"\\\"\\\"Return the True distance from the simulated range finder\\\"\\\"\\\"\\n            m_tru\",\n      \"untrusted\": true,\n      \"score\": -15.3587\n    },\n    {\n      \"cite_id\": \"ardupilot#58f79ef044167f15\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"blimp.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/blimp.py#L182-L196\",\n      \"path\": \"Tools/autotest/blimp.py\",\n      \"lines\": [\n        182,\n        196\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/blimp.py\",\n      \"excerpt\": \"        tr = self.offset_location_ne(location=bl, metres_north=siz, metres_east=siz)\\n        br = self.offset_location_ne(location=bl, metres_north=0, metres_east=siz)\\n\\n        print(\\\"Locations are:\\\")\\n        print(\\\"bottom left  \\\", bl.lat, bl.lng)\\n        print(\\\"top left     \\\", tl.lat, tl.lng)\\n        print(\\\"top right    \\\", tr.lat, tr.lng)\\n        print(\\\"bottom right \\\", br.lat, br.lng)\\n\\n        if self.mavproxy is not None:\\n            self.mavproxy.send(f\\\"map icon {bl.lat} {bl.lng} flag\\\\n\\\")\\n            self.mavproxy.send(f\\\"map icon {tl.lat} {tl.lng} flag\\\\n\\\")\\n            self.mavproxy.send(f\\\"m\",\n      \"untrusted\": true,\n      \"score\": -12.3571\n    },\n    {\n      \"cite_id\": \"ardupilot#5d83b7886cc7fc7e\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"rover.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/rover.py#L6907-L6927\",\n      \"path\": \"Tools/autotest/rover.py\",\n      \"lines\": [\n        6907,\n        6927\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/rover.py\",\n      \"excerpt\": \"        self.delay_sim_time(5)\\n        self.wait_ready_to_arm()\\n\\n        self.reboot_sitl()\\n        self.wait_ready_to_arm()\\n\\n        self.progress(\\\"Ensure we can't arm when we are in breacnh of a polyfence\\\")\\n        self.clear_fence()\\n\\n        self.progress(\\\"Now create a fence we are in breach of\\\")\\n        here = self.mav.location()\\n        self.upload_fences_from_locations([\\n            (mavutil.mavlink.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION, [\\n                # over the top of the vehicle\\n                self.offset_location_ne(here, 20, 20), # bl\\n                self.offset_location_ne\",\n      \"untrusted\": true,\n      \"score\": -12.1694\n    }\n  ],\n  \"citations\": [\n    \"ardupilot_wiki#bfb503edd26b8582\",\n    \"ardupilot_wiki#e29f7b523a3a45f8\",\n    \"ardupilot_wiki#0faccc829de633ec\",\n    \"ardupilot_wiki#cd13cc2ecf0885c7\",\n    \"ardupilot_wiki#cd9aabdde11aa0a2\",\n    \"ardupilot_wiki#499fbb16a3739a30\",\n    \"ardupilot#b3cede1263f7ace7\",\n    \"ardupilot#58f79ef044167f15\",\n    \"ardupilot#5d83b7886cc7fc7e\"\n  ],\n  \"safety\": {\n    \"props_off\": \"Props off for bench tests. SITL before hardware.\",\n    \"confirm\": \"CONFIRM: <the procedure you apply> on <your board> with props off.\"\n  },\n  \"symptom_evidence_only\": false,\n  \"note\": \"Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote.\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "symptom": "bỏ qua kiểm tra trước khi arm",
+        "language": "en",
+        "confidence": "high",
+        "evidence": [
+          {
+            "cite_id": "ardupilot_wiki#bfb503edd26b8582",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-corvon-cv0850.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-corvon-cv0850.rst#L81-L83",
+            "path": "common/source/docs/common-corvon-cv0850.rst",
+            "lines": [
+              81,
+              83
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Parameters",
+            "excerpt": ".. note:: On 4.6 and earlier the forwarding option is bit 10 of ``SERIAL2_OPTIONS`` (value 1024) instead. Do not set that bit on 4.7 or later; it fails a pre-arm check.\n\nIn Mission Planner, open Flight Data > Status. Check ``opt_m_x``, ``opt_m_y`` and ``opt_qua`` while moving the sensor over a textured surface, and ``rangefinder1`` while changing its height above it.",
+            "untrusted": true,
+            "score": -12.3276
+          },
+          {
+            "cite_id": "ardupilot_wiki#e29f7b523a3a45f8",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-mtf-01.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-mtf-01.rst#L87-L87",
+            "path": "common/source/docs/common-mtf-01.rst",
+            "lines": [
+              87,
+              87
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Parameters",
+            "excerpt": "Once the sensor is active you should be able to observe the optical flow and range sensor data on the Mission Planner’s “Status” page. The “opt_qua” and “rangefinder1” should have some value.",
+            "untrusted": true,
+            "score": -12.2622
+          },
+          {
+            "cite_id": "ardupilot_wiki#0faccc829de633ec",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-mechflow-v1.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-mechflow-v1.rst#L54-L54",
+            "path": "common/source/docs/common-mechflow-v1.rst",
+            "lines": [
+              54,
+              54
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Parameters",
+            "excerpt": "Once the sensor is active you should be able to observe the optical flow and range sensor data on Mission Planner's \"Status\" page. The \"opt_qua\" and \"rangefinder1\" fields should show non-zero values.",
+            "untrusted": true,
+            "score": -12.1976
+          },
+          {
+            "cite_id": "ardupilot_wiki#cd13cc2ecf0885c7",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-upixels-tx-series.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-upixels-tx-series.rst#L52-L52",
+            "path": "common/source/docs/common-upixels-tx-series.rst",
+            "lines": [
+              52,
+              52
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Configuration and Parameters",
+            "excerpt": "Once the sensor is activated, you should be able to observe the optical flow and distance sensor data on the Status page of the task planner. \"opt_m_x\", \"opt_m_y\", \"opt_qua\" and \"rangefinder1\" data have been updated.",
+            "untrusted": true,
+            "score": -11.5866
+          },
+          {
+            "cite_id": "ardupilot_wiki#cd9aabdde11aa0a2",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-transmitter-tuning.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-transmitter-tuning.rst#L365-L370",
+            "path": "common/source/docs/common-transmitter-tuning.rst",
+            "lines": [
+              365,
+              370
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": ":ref:`TUNE<TUNE>` Values",
+            "excerpt": "+--------+-------------------------+----------------------------------------------------------------------+\n|39      |Circle Rate              |  :ref:`CIRCLE_RATE<CIRCLE_RATE>`                                     |\n+--------+-------------------------+----------------------------------------------------------------------+\n|46      |Rate Pitch kP            |  :ref:`ATC_RAT_PIT_P<ATC_RAT_PIT_P__AC_AttitudeControl_Multi>`       |\n+--------+-------------------------+----------------------------------------------------------------------+\n|47      |Rate Pitch kI            |  :ref:`ATC_RAT_PIT_I<AT",
+            "untrusted": true,
+            "score": -11.5162
+          },
+          {
+            "cite_id": "ardupilot_wiki#499fbb16a3739a30",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-orbith743.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-orbith743.rst#L172-L172",
+            "path": "common/source/docs/common-orbith743.rst",
+            "lines": [
+              172,
+              172
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Where to Buy",
+            "excerpt": "* `orbitteknoloji.com.tr <https://orbitteknoloji.com.tr>`_",
+            "untrusted": true,
+            "score": -11.0273
+          },
+          {
+            "cite_id": "ardupilot#b3cede1263f7ace7",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ardusub.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/ardusub.py#L357-L379",
+            "path": "Tools/autotest/ardusub.py",
+            "lines": [
+              357,
+              379
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/ardusub.py",
+            "excerpt": "            \"SCR_USER4\": rf_target,         # Rangefinder target in meters\n        })\n\n        self.install_example_script_context(\"sub_test_synthetic_seafloor.lua\")\n\n        # Reboot to enable scripting.\n        self.reboot_sitl()\n        self.set_rc_default()\n        self.wait_ready_to_arm()\n\n    def watch_true_distance_maintained(self, match_distance, delta=0.3, timeout=5.0, final_waypoint=0):\n        \"\"\"Watch and wait for the rangefinder reading to be maintained\"\"\"\n\n        def get_true_distance():\n            \"\"\"Return the True distance from the simulated range finder\"\"\"\n            m_tru",
+            "untrusted": true,
+            "score": -15.3587
+          },
+          {
+            "cite_id": "ardupilot#58f79ef044167f15",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "blimp.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/blimp.py#L182-L196",
+            "path": "Tools/autotest/blimp.py",
+            "lines": [
+              182,
+              196
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/blimp.py",
+            "excerpt": "        tr = self.offset_location_ne(location=bl, metres_north=siz, metres_east=siz)\n        br = self.offset_location_ne(location=bl, metres_north=0, metres_east=siz)\n\n        print(\"Locations are:\")\n        print(\"bottom left  \", bl.lat, bl.lng)\n        print(\"top left     \", tl.lat, tl.lng)\n        print(\"top right    \", tr.lat, tr.lng)\n        print(\"bottom right \", br.lat, br.lng)\n\n        if self.mavproxy is not None:\n            self.mavproxy.send(f\"map icon {bl.lat} {bl.lng} flag\\n\")\n            self.mavproxy.send(f\"map icon {tl.lat} {tl.lng} flag\\n\")\n            self.mavproxy.send(f\"m",
+            "untrusted": true,
+            "score": -12.3571
+          },
+          {
+            "cite_id": "ardupilot#5d83b7886cc7fc7e",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "rover.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/rover.py#L6907-L6927",
+            "path": "Tools/autotest/rover.py",
+            "lines": [
+              6907,
+              6927
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/rover.py",
+            "excerpt": "        self.delay_sim_time(5)\n        self.wait_ready_to_arm()\n\n        self.reboot_sitl()\n        self.wait_ready_to_arm()\n\n        self.progress(\"Ensure we can't arm when we are in breacnh of a polyfence\")\n        self.clear_fence()\n\n        self.progress(\"Now create a fence we are in breach of\")\n        here = self.mav.location()\n        self.upload_fences_from_locations([\n            (mavutil.mavlink.MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION, [\n                # over the top of the vehicle\n                self.offset_location_ne(here, 20, 20), # bl\n                self.offset_location_ne",
+            "untrusted": true,
+            "score": -12.1694
+          }
+        ],
+        "citations": [
+          "ardupilot_wiki#bfb503edd26b8582",
+          "ardupilot_wiki#e29f7b523a3a45f8",
+          "ardupilot_wiki#0faccc829de633ec",
+          "ardupilot_wiki#cd13cc2ecf0885c7",
+          "ardupilot_wiki#cd9aabdde11aa0a2",
+          "ardupilot_wiki#499fbb16a3739a30",
+          "ardupilot#b3cede1263f7ace7",
+          "ardupilot#58f79ef044167f15",
+          "ardupilot#5d83b7886cc7fc7e"
+        ],
+        "safety": {
+          "props_off": "Props off for bench tests. SITL before hardware.",
+          "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."
+        },
+        "symptom_evidence_only": false,
+        "note": "Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote."
+      }
+    }
+  }
+}

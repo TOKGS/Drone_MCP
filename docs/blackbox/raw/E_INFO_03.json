@@ -1,0 +1,205 @@
+{
+  "case": "E_INFO_03",
+  "note": "informational question -> NOT blocked",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "pre-arm check là gì"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 75,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "pre-arm check là gì"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 73.6,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"symptom\": \"pre-arm check là gì\",\n  \"language\": \"en\",\n  \"confidence\": \"high\",\n  \"evidence\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#44326f0de81e182d\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-prearm-safety-checks.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L322-L322\",\n      \"path\": \"common/source/docs/common-prearm-safety-checks.rst\",\n      \"lines\": [\n        322,\n        322\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Disabling the Pre-arm Safety Check\",\n      \"excerpt\": \".. warning:: Disabling pre-arm safety checks is not recommended. The cause of the pre-arm failure should be corrected before operation of the vehicle if at all possible. If you are confident that the pre-arm check failure is not a real problem, it is possible to skip a failing check.\",\n      \"untrusted\": true,\n      \"score\": -27.3838\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#96923714c7ac728a\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"security-landing-page.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/security-landing-page.rst#L110-L112\",\n      \"path\": \"dev/source/docs/security-landing-page.rst\",\n      \"lines\": [\n        110,\n        112\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"ArduPilot Firmware > Pre-arm Checks Customisation\",\n      \"excerpt\": \"- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__\\n- `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-batt-temp.lua>`__\\n- `examples/arming-check-wp1-takeoff.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-wp1-takeoff.lua>`__\",\n      \"untrusted\": true,\n      \"score\": -24.916\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#bae65074731fa25b\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"connect-escs-and-motors.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/connect-escs-and-motors.rst#L333-L341\",\n      \"path\": \"copter/source/docs/connect-escs-and-motors.rst\",\n      \"lines\": [\n        333,\n        341\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Testing motor spin directions\",\n      \"excerpt\": \"   -  Pre-Arm safety check failure is also indicated by the red arming\\n      light double flashing and then repeating.\\n   -  If the Pre-Arm check fails go to the :ref:`Prearm Safety Check Page <common-prearm-safety-checks>` and correct the problem or disable\\n      the check before continuing.\\n\\n#. When you can Arm successfully, apply a small amount of throttle, and\\n   observe and note spin direction of each motor. They should match\\n   directions shown in the images above for the frame you've chosen.\\n#. Reverse any motor spinning in the wrong direction.\",\n      \"untrusted\": true,\n      \"score\": -16.2596\n    },\n    {\n      \"cite_id\": \"ardupilot#a88b1da80e9f443b\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/ReleaseNotes.txt#L4699-L4700\",\n      \"path\": \"ArduCopter/ReleaseNotes.txt\",\n      \"lines\": [\n        4699,\n        4700\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"5) Fence pre-arm check failure messages clarified\",\n      \"excerpt\": \"    b) Servo Gimbal output range fix (could attempt to push servos beyond their limits)\\n    c) fix do-set-servo\",\n      \"untrusted\": true,\n      \"score\": -24.7343\n    },\n    {\n      \"cite_id\": \"ardupilot#3f6b246ad7df5b03\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/AntennaTracker/ReleaseNotes.txt#L1216-L1225\",\n      \"path\": \"AntennaTracker/ReleaseNotes.txt\",\n      \"lines\": [\n        1216,\n        1225\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"- Pre-arm check that gyro read rate is at least the main loop rate\",\n      \"excerpt\": \"Release 4.6.0-beta5 31-Mar-2025\\n\\nChanges from 4.6.0-beta4\\n\\n1) Board specfic changes\\n\\n- MFT-SEMA100 compass orientation fix\\n- SpeedyBee F405 AIO support\\n\\n2) Driver bug fixes and enhancements\",\n      \"untrusted\": true,\n      \"score\": -23.3009\n    },\n    {\n      \"cite_id\": \"ardupilot#2d0800f8892df039\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduPlane/ReleaseNotes.txt#L1216-L1225\",\n      \"path\": \"ArduPlane/ReleaseNotes.txt\",\n      \"lines\": [\n        1216,\n        1225\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"- Pre-arm check that gyro read rate is at least the main loop rate\",\n      \"excerpt\": \"Release 4.6.0-beta5 31-Mar-2025\\n\\nChanges from 4.6.0-beta4\\n\\n1) Board specfic changes\\n\\n- MFT-SEMA100 compass orientation fix\\n- SpeedyBee F405 AIO support\\n\\n2) Driver bug fixes and enhancements\",\n      \"untrusted\": true,\n      \"score\": -23.3009\n    }\n  ],\n  \"citations\": [\n    \"ardupilot_wiki#44326f0de81e182d\",\n    \"ardupilot_wiki#96923714c7ac728a\",\n    \"ardupilot_wiki#bae65074731fa25b\",\n    \"ardupilot#a88b1da80e9f443b\",\n    \"ardupilot#3f6b246ad7df5b03\",\n    \"ardupilot#2d0800f8892df039\"\n  ],\n  \"safety\": {\n    \"props_off\": \"Props off for bench tests. SITL before hardware.\",\n    \"confirm\": \"CONFIRM: <the procedure you apply> on <your board> with props off.\"\n  },\n  \"symptom_evidence_only\": false,\n  \"note\": \"Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote.\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "symptom": "pre-arm check là gì",
+        "language": "en",
+        "confidence": "high",
+        "evidence": [
+          {
+            "cite_id": "ardupilot_wiki#44326f0de81e182d",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-prearm-safety-checks.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L322-L322",
+            "path": "common/source/docs/common-prearm-safety-checks.rst",
+            "lines": [
+              322,
+              322
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Disabling the Pre-arm Safety Check",
+            "excerpt": ".. warning:: Disabling pre-arm safety checks is not recommended. The cause of the pre-arm failure should be corrected before operation of the vehicle if at all possible. If you are confident that the pre-arm check failure is not a real problem, it is possible to skip a failing check.",
+            "untrusted": true,
+            "score": -27.3838
+          },
+          {
+            "cite_id": "ardupilot_wiki#96923714c7ac728a",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "security-landing-page.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/security-landing-page.rst#L110-L112",
+            "path": "dev/source/docs/security-landing-page.rst",
+            "lines": [
+              110,
+              112
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "ArduPilot Firmware > Pre-arm Checks Customisation",
+            "excerpt": "- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__\n- `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-batt-temp.lua>`__\n- `examples/arming-check-wp1-takeoff.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-wp1-takeoff.lua>`__",
+            "untrusted": true,
+            "score": -24.916
+          },
+          {
+            "cite_id": "ardupilot_wiki#bae65074731fa25b",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "connect-escs-and-motors.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/connect-escs-and-motors.rst#L333-L341",
+            "path": "copter/source/docs/connect-escs-and-motors.rst",
+            "lines": [
+              333,
+              341
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Testing motor spin directions",
+            "excerpt": "   -  Pre-Arm safety check failure is also indicated by the red arming\n      light double flashing and then repeating.\n   -  If the Pre-Arm check fails go to the :ref:`Prearm Safety Check Page <common-prearm-safety-checks>` and correct the problem or disable\n      the check before continuing.\n\n#. When you can Arm successfully, apply a small amount of throttle, and\n   observe and note spin direction of each motor. They should match\n   directions shown in the images above for the frame you've chosen.\n#. Reverse any motor spinning in the wrong direction.",
+            "untrusted": true,
+            "score": -16.2596
+          },
+          {
+            "cite_id": "ardupilot#a88b1da80e9f443b",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/ReleaseNotes.txt#L4699-L4700",
+            "path": "ArduCopter/ReleaseNotes.txt",
+            "lines": [
+              4699,
+              4700
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "5) Fence pre-arm check failure messages clarified",
+            "excerpt": "    b) Servo Gimbal output range fix (could attempt to push servos beyond their limits)\n    c) fix do-set-servo",
+            "untrusted": true,
+            "score": -24.7343
+          },
+          {
+            "cite_id": "ardupilot#3f6b246ad7df5b03",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/AntennaTracker/ReleaseNotes.txt#L1216-L1225",
+            "path": "AntennaTracker/ReleaseNotes.txt",
+            "lines": [
+              1216,
+              1225
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "- Pre-arm check that gyro read rate is at least the main loop rate",
+            "excerpt": "Release 4.6.0-beta5 31-Mar-2025\n\nChanges from 4.6.0-beta4\n\n1) Board specfic changes\n\n- MFT-SEMA100 compass orientation fix\n- SpeedyBee F405 AIO support\n\n2) Driver bug fixes and enhancements",
+            "untrusted": true,
+            "score": -23.3009
+          },
+          {
+            "cite_id": "ardupilot#2d0800f8892df039",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduPlane/ReleaseNotes.txt#L1216-L1225",
+            "path": "ArduPlane/ReleaseNotes.txt",
+            "lines": [
+              1216,
+              1225
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "- Pre-arm check that gyro read rate is at least the main loop rate",
+            "excerpt": "Release 4.6.0-beta5 31-Mar-2025\n\nChanges from 4.6.0-beta4\n\n1) Board specfic changes\n\n- MFT-SEMA100 compass orientation fix\n- SpeedyBee F405 AIO support\n\n2) Driver bug fixes and enhancements",
+            "untrusted": true,
+            "score": -23.3009
+          }
+        ],
+        "citations": [
+          "ardupilot_wiki#44326f0de81e182d",
+          "ardupilot_wiki#96923714c7ac728a",
+          "ardupilot_wiki#bae65074731fa25b",
+          "ardupilot#a88b1da80e9f443b",
+          "ardupilot#3f6b246ad7df5b03",
+          "ardupilot#2d0800f8892df039"
+        ],
+        "safety": {
+          "props_off": "Props off for bench tests. SITL before hardware.",
+          "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."
+        },
+        "symptom_evidence_only": false,
+        "note": "Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote."
+      }
+    }
+  }
+}

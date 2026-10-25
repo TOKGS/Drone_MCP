@@ -1,0 +1,59 @@
+{
+  "case": "G2_02",
+  "note": "same content as the C/D hit for expresslrs#fe280216f9d9cd5e",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "expresslrs#fe280216f9d9cd5e"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1002,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "expresslrs#fe280216f9d9cd5e"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.0,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"expresslrs#fe280216f9d9cd5e\",\n  \"source_id\": \"expresslrs\",\n  \"repo\": \"ExpressLRS/ExpressLRS\",\n  \"ref\": \"4.1.0\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"msp2crsf.cpp\",\n  \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CRSF2MSP/msp2crsf.cpp#L92-L133\",\n  \"path\": \"src/lib/CRSF2MSP/msp2crsf.cpp\",\n  \"lines\": [\n    92,\n    133\n  ],\n  \"version\": \"ExpressLRS 4.1.0\",\n  \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n  \"heading_path\": \"src/lib/CRSF2MSP/msp2crsf.cpp\",\n  \"excerpt\": \"    }\\n    return packetLen;\\n}\\n\\nMSPframeType_e MSP2CROSSFIRE::getVersion(const uint8_t *data)\\n{\\n    if (data[1] == 'M') // detect if V1 or V2\\n    {\\n        if (data[3] == 0xFF)\\n        {\\n            return MSP_FRAME_V1_JUMBO;\\n        }\\n        return MSP_FRAME_V1;\\n    }\\n    if (data[1] == 'X')\\n    {\\n        return MSP_FRAME_V2;\\n    }\\n    return MSP_FRAME_UNKNOWN;\\n}\\n\\nvoid MSP2CROSSFIRE::parse(CRSFConnector *connector, const uint8_t *data, uint32_t frameLen, const crsf_addr_e src, const crsf_addr_e dest)\\n{\\n    const MSPframeType_e mspVersion = getVersion(data);\\n    const uint32_t mspPayloadLen = \",\n  \"untrusted\": true,\n  \"text\": \"    }\\n    return packetLen;\\n}\\n\\nMSPframeType_e MSP2CROSSFIRE::getVersion(const uint8_t *data)\\n{\\n    if (data[1] == 'M') // detect if V1 or V2\\n    {\\n        if (data[3] == 0xFF)\\n        {\\n            return MSP_FRAME_V1_JUMBO;\\n        }\\n        return MSP_FRAME_V1;\\n    }\\n    if (data[1] == 'X')\\n    {\\n        return MSP_FRAME_V2;\\n    }\\n    return MSP_FRAME_UNKNOWN;\\n}\\n\\nvoid MSP2CROSSFIRE::parse(CRSFConnector *connector, const uint8_t *data, uint32_t frameLen, const crsf_addr_e src, const crsf_addr_e dest)\\n{\\n    const MSPframeType_e mspVersion = getVersion(data);\\n    const uint32_t mspPayloadLen = getPayloadLen(data, mspVersion);\\n    const uint32_t MSPframeLen = getFrameLen(mspPayloadLen, mspVersion);\\n    const uint8_t numChunks = (MSPframeLen / CRSF_MSP_MAX_BYTES_PER_CHUNK) + 1; // count the first chunk!\\n    const uint8_t chunkRemainder = MSPframeLen % CRSF_MSP_MAX_BYTES_PER_CHUNK;\\n\\n    for (uint8_t i = 0; i < numChunks; i++)\\n    {\\n        uint8_t packet[CRSF_MAX_PACKET_LEN] {};\\n        packet[5] = getVersionBits(mspVersion) | getSeqNumberBits(seqNum++) | getNewFrameBits(i == 0);\\n\\n        const uint32_t startIdx = (i * CRSF_MSP_MAX_BYTES_PER_CHUNK) + 3; // we don't transmit the MSP header\\n        const uint8_t CRSFpktLen = (i == (numChunks - 1)) ? chunkRemainder : (CRSF_MSP_MAX_BYTES_PER_CHUNK);\\n\\n        memcpy(&packet[6], &data[startIdx], CRSFpktLen);\\n        crsfRouter.SetExtendedHeaderAndCrc((crsf_ext_header_t *)packet, getHeaderDir(data[CRSF_MSP_TYPE_IDX]), CRSFpktLen + CRSF_EXT_FRAME_PAYLOAD_LEN_SIZE_OFFSET, dest, src);\\n        crsfRouter.processMessage(connector, (crsf_header_t *)packet);\\n    }\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "expresslrs#fe280216f9d9cd5e",
+        "source_id": "expresslrs",
+        "repo": "ExpressLRS/ExpressLRS",
+        "ref": "4.1.0",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "msp2crsf.cpp",
+        "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CRSF2MSP/msp2crsf.cpp#L92-L133",
+        "path": "src/lib/CRSF2MSP/msp2crsf.cpp",
+        "lines": [
+          92,
+          133
+        ],
+        "version": "ExpressLRS 4.1.0",
+        "ingested_at": "2026-10-25T17:42:44+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T17:42:44+0700",
+        "heading_path": "src/lib/CRSF2MSP/msp2crsf.cpp",
+        "excerpt": "    }\n    return packetLen;\n}\n\nMSPframeType_e MSP2CROSSFIRE::getVersion(const uint8_t *data)\n{\n    if (data[1] == 'M') // detect if V1 or V2\n    {\n        if (data[3] == 0xFF)\n        {\n            return MSP_FRAME_V1_JUMBO;\n        }\n        return MSP_FRAME_V1;\n    }\n    if (data[1] == 'X')\n    {\n        return MSP_FRAME_V2;\n    }\n    return MSP_FRAME_UNKNOWN;\n}\n\nvoid MSP2CROSSFIRE::parse(CRSFConnector *connector, const uint8_t *data, uint32_t frameLen, const crsf_addr_e src, const crsf_addr_e dest)\n{\n    const MSPframeType_e mspVersion = getVersion(data);\n    const uint32_t mspPayloadLen = ",
+        "untrusted": true,
+        "text": "    }\n    return packetLen;\n}\n\nMSPframeType_e MSP2CROSSFIRE::getVersion(const uint8_t *data)\n{\n    if (data[1] == 'M') // detect if V1 or V2\n    {\n        if (data[3] == 0xFF)\n        {\n            return MSP_FRAME_V1_JUMBO;\n        }\n        return MSP_FRAME_V1;\n    }\n    if (data[1] == 'X')\n    {\n        return MSP_FRAME_V2;\n    }\n    return MSP_FRAME_UNKNOWN;\n}\n\nvoid MSP2CROSSFIRE::parse(CRSFConnector *connector, const uint8_t *data, uint32_t frameLen, const crsf_addr_e src, const crsf_addr_e dest)\n{\n    const MSPframeType_e mspVersion = getVersion(data);\n    const uint32_t mspPayloadLen = getPayloadLen(data, mspVersion);\n    const uint32_t MSPframeLen = getFrameLen(mspPayloadLen, mspVersion);\n    const uint8_t numChunks = (MSPframeLen / CRSF_MSP_MAX_BYTES_PER_CHUNK) + 1; // count the first chunk!\n    const uint8_t chunkRemainder = MSPframeLen % CRSF_MSP_MAX_BYTES_PER_CHUNK;\n\n    for (uint8_t i = 0; i < numChunks; i++)\n    {\n        uint8_t packet[CRSF_MAX_PACKET_LEN] {};\n        packet[5] = getVersionBits(mspVersion) | getSeqNumberBits(seqNum++) | getNewFrameBits(i == 0);\n\n        const uint32_t startIdx = (i * CRSF_MSP_MAX_BYTES_PER_CHUNK) + 3; // we don't transmit the MSP header\n        const uint8_t CRSFpktLen = (i == (numChunks - 1)) ? chunkRemainder : (CRSF_MSP_MAX_BYTES_PER_CHUNK);\n\n        memcpy(&packet[6], &data[startIdx], CRSFpktLen);\n        crsfRouter.SetExtendedHeaderAndCrc((crsf_ext_header_t *)packet, getHeaderDir(data[CRSF_MSP_TYPE_IDX]), CRSFpktLen + CRSF_EXT_FRAME_PAYLOAD_LEN_SIZE_OFFSET, dest, src);\n        crsfRouter.processMessage(connector, (crsf_header_t *)packet);\n    }\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

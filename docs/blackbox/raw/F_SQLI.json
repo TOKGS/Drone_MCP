@@ -1,0 +1,227 @@
+{
+  "case": "F_SQLI",
+  "note": "no crash, no injection",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "'; DROP TABLE chunks;--"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 81,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "'; DROP TABLE chunks;--"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 36.7,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"'; DROP TABLE chunks;--\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"crsf_spec#dcf5667793214464\",\n      \"source_id\": \"crsf_spec\",\n      \"repo\": \"tbs-fpv/tbs-crsf-spec\",\n      \"ref\": \"a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"crsf.md\",\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L47-L58\",\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        47,\n        58\n      ],\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-4.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"Table of Contents\",\n      \"excerpt\": \"  - [0x1E Attitude](#0x1e-attitude)\\n  - [0x1F MAVLink FC](#0x1f-mavlink-fc)\\n  - [0x21 Flight Mode](#0x21-flight-mode)\\n  - [0x22 ESP_NOW Messages](#0x22-esp_now-messages)\\n  - [0x23 GPS Home](#0x23-gps-home)\\n  - [0x27 Reserved](#0x27-reserved)\\n- [Extended Frame Types](#extended-frame-types)\\n  - [0x28 Parameter Ping Devices](#0x28-parameter-ping-devices)\\n  - [0x29 Parameter Device Information](#0x29-parameter-device-information)\\n  - [Chunks](#chunks)\\n  - [0x2B Parameter Settings (Entry)](#0x2b-parameter-settings-entry)\\n    - [Parameter Type Definitions & Hidden Bit](#parameter-type-definitions--h\",\n      \"untrusted\": true,\n      \"score\": -19.6249\n    },\n    {\n      \"cite_id\": \"ardupilot#fb0f074b9e1228b5\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"dma_parse.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py#L65-L91\",\n      \"path\": \"libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py\",\n      \"lines\": [\n        65,\n        91\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py\",\n      \"excerpt\": \"            if not ((1<<c) & stream_mask[i]):\\n                error(\\\"Missing stream %u for dma table %u\\\" % (c, i))\\n    \\n\\ntable = {}\\n\\nif len(sys.argv) != 2:\\n    print(\\\"Error: expected a CSV files and output file\\\")\\n    sys.exit(1)\\n\\nparse_dma_table(sys.argv[1], table)\\n\\ncheck_full_table(table)\\n\\nsys.stdout.write(\\\"DMA_Map = {\\\\n\\\");\\nsys.stdout.write('\\\\t# format is (DMA_TABLE, StreamNum, Channel)\\\\n')\\nsys.stdout.write('\\\\t# extracted from %s\\\\n' % os.path.basename(sys.argv[1]))\\n\\nfor k in sorted(table.keys()):\\n    s = '\\\"%s\\\"' % k\\n    sys.stdout.write('\\\\t%-10s\\\\t:\\\\t[' % s)\\n    for i in range(len(table[k])):\\n \",\n      \"untrusted\": true,\n      \"score\": -15.0481\n    },\n    {\n      \"cite_id\": \"ardupilot#61413df040d1aff6\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"arducopter.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/arducopter.py#L16581-L16595\",\n      \"path\": \"Tools/autotest/arducopter.py\",\n      \"lines\": [\n        16581,\n        16595\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/arducopter.py\",\n      \"excerpt\": \"            if pname not in all_params:\\n                raise ValueError(f\\\"{pname} not in fetched-all-parameters\\\")\\n\\n        self.start_subtest(\\\"Remove parameter at runtime\\\")\\n        script_content = \\\"\\\"\\\"\\nlocal PARAM_TABLE_KEY = 10\\nlocal PARAM_TABLE_PREFIX = \\\"TST_\\\"\\nassert(param:add_table(PARAM_TABLE_KEY, PARAM_TABLE_PREFIX, 16), 'could not add param table')\\n\\n-- add a parameter and bind it to a variable\\nfunction bind_add_param(name, idx, default_value)\\n    assert(param:add_param(PARAM_TABLE_KEY, idx, name, default_value), string.format('could not add param %s', PARAM_TABLE_PREFIX .. name))\\n    re\",\n      \"untrusted\": true,\n      \"score\": -15.0049\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#6ea20b7289ca6119\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-scripting-parameters.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-scripting-parameters.rst#L45-L48\",\n      \"path\": \"common/source/docs/common-scripting-parameters.rst\",\n      \"lines\": [\n        45,\n        48\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Adding Parameters > Creating a Parameter Group\",\n      \"excerpt\": \"Groups of up to 63 parameters can created within a script using the \\\"add_table\\\" command. :: \\n\\n   local PARAM_TABLE_KEY = 72\\n   assert(param:add_table(PARAM_TABLE_KEY, \\\"AERO_\\\", 30), 'could not add param table')\",\n      \"untrusted\": true,\n      \"score\": -14.8806\n    },\n    {\n      \"cite_id\": \"expresslrs#a72827f2d3667726\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"functions.py\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/python/external/jmespath/functions.py#L61-L82\",\n      \"path\": \"src/python/external/jmespath/functions.py\",\n      \"lines\": [\n        61,\n        82\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"src/python/external/jmespath/functions.py\",\n      \"excerpt\": \"                    'function': method,\\n                    'signature': signature,\\n                }\\n        cls.FUNCTION_TABLE = function_table\\n\\n\\nclass Functions(metaclass=FunctionRegistry):\\n\\n    FUNCTION_TABLE = {\\n    }\\n\\n    def call_function(self, function_name, resolved_args):\\n        try:\\n            spec = self.FUNCTION_TABLE[function_name]\\n        except KeyError:\\n            raise exceptions.UnknownFunctionError(\\n                \\\"Unknown function: %s()\\\" % function_name)\\n        function = spec['function']\\n        signature = spec['signature']\\n        self._validate_arguments(resolved_\",\n      \"untrusted\": true,\n      \"score\": -14.2366\n    },\n    {\n      \"cite_id\": \"ardupilot#db88c774990b2478\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_ExpandingArray.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/AP_ExpandingArray.cpp#L13-L71\",\n      \"path\": \"libraries/AP_Common/AP_ExpandingArray.cpp\",\n      \"lines\": [\n        13,\n        71\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_Common/AP_ExpandingArray.cpp\",\n      \"excerpt\": \"   along with this program.  If not, see <http://www.gnu.org/licenses/>.\\n */\\n\\n#include \\\"AP_ExpandingArray.h\\\"\\n#include <AP_HAL/AP_HAL.h>\\n\\n#ifndef HAL_BOOTLOADER_BUILD\\n\\nextern const AP_HAL::HAL& hal;\\n\\nAP_ExpandingArrayGeneric::~AP_ExpandingArrayGeneric(void)\\n{\\n    // free chunks\\n    for (uint16_t i=0; i<chunk_count; i++) {\\n        free(chunk_ptrs[i]);\\n    }\\n    // free chunks_ptrs array\\n    free(chunk_ptrs);\\n}\\n\\n// expand the array by specified number of chunks, returns true on success\\nbool AP_ExpandingArrayGeneric::expand(uint16_t num_chunks)\\n{\\n    // expand chunk_ptrs array if necessary\\n    if \",\n      \"untrusted\": true,\n      \"score\": -12.968\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#06af75fea6310ae0\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"reefmaster-for-bathymetry.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/rover/source/docs/reefmaster-for-bathymetry.rst#L24-L29\",\n      \"path\": \"rover/source/docs/reefmaster-for-bathymetry.rst\",\n      \"lines\": [\n        24,\n        29\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"ReefMaster > Extract DPTH messages from the Onboard Log\",\n      \"excerpt\": \"- :ref:`Download the Onboard Logs over MAVLink <common-downloading-and-analyzing-data-logs-in-mission-planner>` or eject the autopilot's SD card, insert it into your PC and directly copy the .BIN files from the APM/LOGS directory to your PC\\n- Open the .BIN file using Mission Planner's Data >> DataFlash Logs >> Review a Log feature\\n- Check the \\\"Data Table\\\" checkbox, then click anywhere on the data table's column header and select \\\"DPTH\\\" from the drop-down and push the \\\"Filter\\\" button\\n\\n  .. image:: ../images/reefmaster-log-filter.png\\n      :target: ../_images/reefmaster-log-filter.png\",\n      \"untrusted\": true,\n      \"score\": -12.0156\n    }\n  ],\n  \"candidates\": [\n    \"crsf_spec#dcf5667793214464\",\n    \"ardupilot#fb0f074b9e1228b5\",\n    \"ardupilot#61413df040d1aff6\",\n    \"ardupilot_wiki#6ea20b7289ca6119\",\n    \"expresslrs#a72827f2d3667726\"\n  ],\n  \"note\": null,\n  \"result_count\": 7\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "'; DROP TABLE chunks;--",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "crsf_spec#dcf5667793214464",
+            "source_id": "crsf_spec",
+            "repo": "tbs-fpv/tbs-crsf-spec",
+            "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "crsf.md",
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L47-L58",
+            "path": "crsf.md",
+            "lines": [
+              47,
+              58
+            ],
+            "version": "CRSF spec@a73f7dc",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-4.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "Table of Contents",
+            "excerpt": "  - [0x1E Attitude](#0x1e-attitude)\n  - [0x1F MAVLink FC](#0x1f-mavlink-fc)\n  - [0x21 Flight Mode](#0x21-flight-mode)\n  - [0x22 ESP_NOW Messages](#0x22-esp_now-messages)\n  - [0x23 GPS Home](#0x23-gps-home)\n  - [0x27 Reserved](#0x27-reserved)\n- [Extended Frame Types](#extended-frame-types)\n  - [0x28 Parameter Ping Devices](#0x28-parameter-ping-devices)\n  - [0x29 Parameter Device Information](#0x29-parameter-device-information)\n  - [Chunks](#chunks)\n  - [0x2B Parameter Settings (Entry)](#0x2b-parameter-settings-entry)\n    - [Parameter Type Definitions & Hidden Bit](#parameter-type-definitions--h",
+            "untrusted": true,
+            "score": -19.6249
+          },
+          {
+            "cite_id": "ardupilot#fb0f074b9e1228b5",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "dma_parse.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py#L65-L91",
+            "path": "libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py",
+            "lines": [
+              65,
+              91
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py",
+            "excerpt": "            if not ((1<<c) & stream_mask[i]):\n                error(\"Missing stream %u for dma table %u\" % (c, i))\n    \n\ntable = {}\n\nif len(sys.argv) != 2:\n    print(\"Error: expected a CSV files and output file\")\n    sys.exit(1)\n\nparse_dma_table(sys.argv[1], table)\n\ncheck_full_table(table)\n\nsys.stdout.write(\"DMA_Map = {\\n\");\nsys.stdout.write('\\t# format is (DMA_TABLE, StreamNum, Channel)\\n')\nsys.stdout.write('\\t# extracted from %s\\n' % os.path.basename(sys.argv[1]))\n\nfor k in sorted(table.keys()):\n    s = '\"%s\"' % k\n    sys.stdout.write('\\t%-10s\\t:\\t[' % s)\n    for i in range(len(table[k])):\n ",
+            "untrusted": true,
+            "score": -15.0481
+          },
+          {
+            "cite_id": "ardupilot#61413df040d1aff6",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "arducopter.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/arducopter.py#L16581-L16595",
+            "path": "Tools/autotest/arducopter.py",
+            "lines": [
+              16581,
+              16595
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/arducopter.py",
+            "excerpt": "            if pname not in all_params:\n                raise ValueError(f\"{pname} not in fetched-all-parameters\")\n\n        self.start_subtest(\"Remove parameter at runtime\")\n        script_content = \"\"\"\nlocal PARAM_TABLE_KEY = 10\nlocal PARAM_TABLE_PREFIX = \"TST_\"\nassert(param:add_table(PARAM_TABLE_KEY, PARAM_TABLE_PREFIX, 16), 'could not add param table')\n\n-- add a parameter and bind it to a variable\nfunction bind_add_param(name, idx, default_value)\n    assert(param:add_param(PARAM_TABLE_KEY, idx, name, default_value), string.format('could not add param %s', PARAM_TABLE_PREFIX .. name))\n    re",
+            "untrusted": true,
+            "score": -15.0049
+          },
+          {
+            "cite_id": "ardupilot_wiki#6ea20b7289ca6119",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-scripting-parameters.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-scripting-parameters.rst#L45-L48",
+            "path": "common/source/docs/common-scripting-parameters.rst",
+            "lines": [
+              45,
+              48
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Adding Parameters > Creating a Parameter Group",
+            "excerpt": "Groups of up to 63 parameters can created within a script using the \"add_table\" command. :: \n\n   local PARAM_TABLE_KEY = 72\n   assert(param:add_table(PARAM_TABLE_KEY, \"AERO_\", 30), 'could not add param table')",
+            "untrusted": true,
+            "score": -14.8806
+          },
+          {
+            "cite_id": "expresslrs#a72827f2d3667726",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "functions.py",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/python/external/jmespath/functions.py#L61-L82",
+            "path": "src/python/external/jmespath/functions.py",
+            "lines": [
+              61,
+              82
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "src/python/external/jmespath/functions.py",
+            "excerpt": "                    'function': method,\n                    'signature': signature,\n                }\n        cls.FUNCTION_TABLE = function_table\n\n\nclass Functions(metaclass=FunctionRegistry):\n\n    FUNCTION_TABLE = {\n    }\n\n    def call_function(self, function_name, resolved_args):\n        try:\n            spec = self.FUNCTION_TABLE[function_name]\n        except KeyError:\n            raise exceptions.UnknownFunctionError(\n                \"Unknown function: %s()\" % function_name)\n        function = spec['function']\n        signature = spec['signature']\n        self._validate_arguments(resolved_",
+            "untrusted": true,
+            "score": -14.2366
+          },
+          {
+            "cite_id": "ardupilot#db88c774990b2478",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_ExpandingArray.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/AP_ExpandingArray.cpp#L13-L71",
+            "path": "libraries/AP_Common/AP_ExpandingArray.cpp",
+            "lines": [
+              13,
+              71
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_Common/AP_ExpandingArray.cpp",
+            "excerpt": "   along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\n#include \"AP_ExpandingArray.h\"\n#include <AP_HAL/AP_HAL.h>\n\n#ifndef HAL_BOOTLOADER_BUILD\n\nextern const AP_HAL::HAL& hal;\n\nAP_ExpandingArrayGeneric::~AP_ExpandingArrayGeneric(void)\n{\n    // free chunks\n    for (uint16_t i=0; i<chunk_count; i++) {\n        free(chunk_ptrs[i]);\n    }\n    // free chunks_ptrs array\n    free(chunk_ptrs);\n}\n\n// expand the array by specified number of chunks, returns true on success\nbool AP_ExpandingArrayGeneric::expand(uint16_t num_chunks)\n{\n    // expand chunk_ptrs array if necessary\n    if ",
+            "untrusted": true,
+            "score": -12.968
+          },
+          {
+            "cite_id": "ardupilot_wiki#06af75fea6310ae0",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "reefmaster-for-bathymetry.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/rover/source/docs/reefmaster-for-bathymetry.rst#L24-L29",
+            "path": "rover/source/docs/reefmaster-for-bathymetry.rst",
+            "lines": [
+              24,
+              29
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "ReefMaster > Extract DPTH messages from the Onboard Log",
+            "excerpt": "- :ref:`Download the Onboard Logs over MAVLink <common-downloading-and-analyzing-data-logs-in-mission-planner>` or eject the autopilot's SD card, insert it into your PC and directly copy the .BIN files from the APM/LOGS directory to your PC\n- Open the .BIN file using Mission Planner's Data >> DataFlash Logs >> Review a Log feature\n- Check the \"Data Table\" checkbox, then click anywhere on the data table's column header and select \"DPTH\" from the drop-down and push the \"Filter\" button\n\n  .. image:: ../images/reefmaster-log-filter.png\n      :target: ../_images/reefmaster-log-filter.png",
+            "untrusted": true,
+            "score": -12.0156
+          }
+        ],
+        "candidates": [
+          "crsf_spec#dcf5667793214464",
+          "ardupilot#fb0f074b9e1228b5",
+          "ardupilot#61413df040d1aff6",
+          "ardupilot_wiki#6ea20b7289ca6119",
+          "expresslrs#a72827f2d3667726"
+        ],
+        "note": null,
+        "result_count": 7
+      }
+    }
+  }
+}

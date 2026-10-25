@@ -1,0 +1,59 @@
+{
+  "case": "G2_12",
+  "note": "same content as the C/D hit for ardupilot#0566f786fd5d051a",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#0566f786fd5d051a"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1012,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#0566f786fd5d051a"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.4,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#0566f786fd5d051a\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"Bitmask.h\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/Bitmask.h#L16-L131\",\n  \"path\": \"libraries/AP_Common/Bitmask.h\",\n  \"lines\": [\n    16,\n    131\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n  \"heading_path\": \"libraries/AP_Common/Bitmask.h\",\n  \"excerpt\": \"  simple bitmask class\\n */\\n\\n#pragma once\\n\\n#include <stdint.h>\\n#include <string.h>\\n\\n#include <AP_InternalError/AP_InternalError.h>\\n\\ntemplate<uint16_t NUMBITS>\\nclass Bitmask {\\n    static constexpr uint16_t NUMWORDS = ((NUMBITS+31)/32);\\n\\n    static_assert(NUMBITS > 0, \\\"must store something\\\");\\n    // for first_set()'s return value\\n    static_assert(NUMBITS <= INT16_MAX, \\\"must fit in int16_t\\\");\\n    // so that 1U << bits is in range\\n    static_assert(sizeof(unsigned int) >= sizeof(uint32_t), \\\"int too small\\\");\\n\\npublic:\\n    Bitmask() {\\n        clearall();\\n    }\\n\\n    Bitmask &operator=(const Bitmask&ot\",\n  \"untrusted\": true,\n  \"text\": \"  simple bitmask class\\n */\\n\\n#pragma once\\n\\n#include <stdint.h>\\n#include <string.h>\\n\\n#include <AP_InternalError/AP_InternalError.h>\\n\\ntemplate<uint16_t NUMBITS>\\nclass Bitmask {\\n    static constexpr uint16_t NUMWORDS = ((NUMBITS+31)/32);\\n\\n    static_assert(NUMBITS > 0, \\\"must store something\\\");\\n    // for first_set()'s return value\\n    static_assert(NUMBITS <= INT16_MAX, \\\"must fit in int16_t\\\");\\n    // so that 1U << bits is in range\\n    static_assert(sizeof(unsigned int) >= sizeof(uint32_t), \\\"int too small\\\");\\n\\npublic:\\n    Bitmask() {\\n        clearall();\\n    }\\n\\n    Bitmask &operator=(const Bitmask&other) {\\n        memcpy(bits, other.bits, sizeof(bits[0])*NUMWORDS);\\n        return *this;\\n    }\\n\\n    bool operator==(const Bitmask&other) {\\n        return memcmp(bits, other.bits, sizeof(bits[0])*NUMWORDS) == 0;\\n    }\\n\\n    bool operator!=(const Bitmask&other) {\\n        return !(*this == other);\\n    }\\n\\n    Bitmask(const Bitmask &other) = delete;\\n\\n\\n    // Construct a bitmask with some bits enabled.\\n    template<size_t N>\\n    Bitmask(const uint16_t (&enabled_bits)[N]) {\\n        clearall();\\n        for (size_t i = 0; i < N; ++i) {\\n            if (enabled_bits[i] < NUMBITS) {\\n                set(enabled_bits[i]);\\n            }\\n        }\\n    }\\n\\n    // set given bitnumber\\n    void set(uint16_t bit) {\\n        if (!validate(bit)) {\\n            return; // ignore access of invalid bit\\n        }\\n        uint16_t word = bit/32;\\n        uint8_t ofs = bit & 0x1f;\\n        bits[word] |= (1U << ofs);\\n    }\\n\\n    // set all bits\\n    void setall(void) {\\n        // set all words to 111...\\n        for (uint16_t i=0; i<NUMWORDS; i++) {\\n            bits[i] = 0xffffffff;\\n        }\\n        // ensure out-of-range bits in the last word, if any exist, are 0\\n        uint16_t num_valid_bits = NUMBITS % 32;\\n        if (num_valid_bits) { // word has out of range bits\\n            bits[NUMWORDS-1] = (1U << num_valid_bits) - 1;\\n        }\\n    }\\n\\n    // clear given bitnumber\\n    void clear(uint16_t bit) {\\n        if (!validate(bit)) {\\n            return; // ignore access of invalid bit\\n        }\\n        uint16_t word = bit/32;\\n        uint8_t ofs = bit & 0x1f;\\n        bits[word] &= ~(1U << ofs);\\n    }\\n\\n    // set given bitnumber to on/off\\n    void setonoff(uint16_t bit, bool onoff) {\\n        if (onoff) {\\n            set(bit);\\n        } else {\\n            clear(bit);\\n        }\\n    }\\n\\n    // clear all bits\\n    void clearall(void) {\\n        memset(bits, 0, NUMWORDS*sizeof(bits[0]));\\n    }\\n\\n    // return true if given bitnumber is set\\n    bool get(uint16_t bit) const {\\n        if (!validate(bit)) {\\n            return false; // pretend invalid bit is not set\\n        }\\n        uint16_t word = bit/32;\\n        uint8_t ofs = bit & 0x1f;\\n        return (bits[word] & (1U << ofs)) != 0;\\n    }\\n\\n    // return true if all bits are clear\\n    bool empty(void) const {\\n        for (uint16_t i=0; i<NUMWORDS; i++) {\\n            if (bits[i] != 0) {\\n                return false;\\n            }\\n        }\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#0566f786fd5d051a",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "Bitmask.h",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/Bitmask.h#L16-L131",
+        "path": "libraries/AP_Common/Bitmask.h",
+        "lines": [
+          16,
+          131
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T17:42:42+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T17:42:42+0700",
+        "heading_path": "libraries/AP_Common/Bitmask.h",
+        "excerpt": "  simple bitmask class\n */\n\n#pragma once\n\n#include <stdint.h>\n#include <string.h>\n\n#include <AP_InternalError/AP_InternalError.h>\n\ntemplate<uint16_t NUMBITS>\nclass Bitmask {\n    static constexpr uint16_t NUMWORDS = ((NUMBITS+31)/32);\n\n    static_assert(NUMBITS > 0, \"must store something\");\n    // for first_set()'s return value\n    static_assert(NUMBITS <= INT16_MAX, \"must fit in int16_t\");\n    // so that 1U << bits is in range\n    static_assert(sizeof(unsigned int) >= sizeof(uint32_t), \"int too small\");\n\npublic:\n    Bitmask() {\n        clearall();\n    }\n\n    Bitmask &operator=(const Bitmask&ot",
+        "untrusted": true,
+        "text": "  simple bitmask class\n */\n\n#pragma once\n\n#include <stdint.h>\n#include <string.h>\n\n#include <AP_InternalError/AP_InternalError.h>\n\ntemplate<uint16_t NUMBITS>\nclass Bitmask {\n    static constexpr uint16_t NUMWORDS = ((NUMBITS+31)/32);\n\n    static_assert(NUMBITS > 0, \"must store something\");\n    // for first_set()'s return value\n    static_assert(NUMBITS <= INT16_MAX, \"must fit in int16_t\");\n    // so that 1U << bits is in range\n    static_assert(sizeof(unsigned int) >= sizeof(uint32_t), \"int too small\");\n\npublic:\n    Bitmask() {\n        clearall();\n    }\n\n    Bitmask &operator=(const Bitmask&other) {\n        memcpy(bits, other.bits, sizeof(bits[0])*NUMWORDS);\n        return *this;\n    }\n\n    bool operator==(const Bitmask&other) {\n        return memcmp(bits, other.bits, sizeof(bits[0])*NUMWORDS) == 0;\n    }\n\n    bool operator!=(const Bitmask&other) {\n        return !(*this == other);\n    }\n\n    Bitmask(const Bitmask &other) = delete;\n\n\n    // Construct a bitmask with some bits enabled.\n    template<size_t N>\n    Bitmask(const uint16_t (&enabled_bits)[N]) {\n        clearall();\n        for (size_t i = 0; i < N; ++i) {\n            if (enabled_bits[i] < NUMBITS) {\n                set(enabled_bits[i]);\n            }\n        }\n    }\n\n    // set given bitnumber\n    void set(uint16_t bit) {\n        if (!validate(bit)) {\n            return; // ignore access of invalid bit\n        }\n        uint16_t word = bit/32;\n        uint8_t ofs = bit & 0x1f;\n        bits[word] |= (1U << ofs);\n    }\n\n    // set all bits\n    void setall(void) {\n        // set all words to 111...\n        for (uint16_t i=0; i<NUMWORDS; i++) {\n            bits[i] = 0xffffffff;\n        }\n        // ensure out-of-range bits in the last word, if any exist, are 0\n        uint16_t num_valid_bits = NUMBITS % 32;\n        if (num_valid_bits) { // word has out of range bits\n            bits[NUMWORDS-1] = (1U << num_valid_bits) - 1;\n        }\n    }\n\n    // clear given bitnumber\n    void clear(uint16_t bit) {\n        if (!validate(bit)) {\n            return; // ignore access of invalid bit\n        }\n        uint16_t word = bit/32;\n        uint8_t ofs = bit & 0x1f;\n        bits[word] &= ~(1U << ofs);\n    }\n\n    // set given bitnumber to on/off\n    void setonoff(uint16_t bit, bool onoff) {\n        if (onoff) {\n            set(bit);\n        } else {\n            clear(bit);\n        }\n    }\n\n    // clear all bits\n    void clearall(void) {\n        memset(bits, 0, NUMWORDS*sizeof(bits[0]));\n    }\n\n    // return true if given bitnumber is set\n    bool get(uint16_t bit) const {\n        if (!validate(bit)) {\n            return false; // pretend invalid bit is not set\n        }\n        uint16_t word = bit/32;\n        uint8_t ofs = bit & 0x1f;\n        return (bits[word] & (1U << ofs)) != 0;\n    }\n\n    // return true if all bits are clear\n    bool empty(void) const {\n        for (uint16_t i=0; i<NUMWORDS; i++) {\n            if (bits[i] != 0) {\n                return false;\n            }\n        }",
+        "served_from": "index"
+      }
+    }
+  }
+}

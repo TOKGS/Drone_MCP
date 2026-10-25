@@ -1,0 +1,59 @@
+{
+  "case": "G2_14",
+  "note": "same content as the C/D hit for ardupilot#bca71e018b58cdcb",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#bca71e018b58cdcb"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1014,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#bca71e018b58cdcb"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.2,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#bca71e018b58cdcb\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"test_crc8.cpp\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_crc8.cpp#L1-L14\",\n  \"path\": \"libraries/AP_Math/tests/test_crc8.cpp\",\n  \"lines\": [\n    1,\n    14\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n  \"heading_path\": \"libraries/AP_Math/tests/test_crc8.cpp\",\n  \"excerpt\": \"#include <AP_gtest.h>\\n\\n#include <AP_Math/AP_Math.h>\\n\\nconst AP_HAL::HAL& hal = AP_HAL::get_HAL();\\n\\nTEST(CRC8, crc8_dvb_buffer)\\n{\\n    const uint8_t buffer[2] { 0xBE, 0xEF };\\n    EXPECT_EQ(0x92, crc8_generic(buffer, 2, 0x31, 0xff));\\n}\\n\\nAP_GTEST_PANIC()\\nAP_GTEST_MAIN()\",\n  \"untrusted\": true,\n  \"text\": \"#include <AP_gtest.h>\\n\\n#include <AP_Math/AP_Math.h>\\n\\nconst AP_HAL::HAL& hal = AP_HAL::get_HAL();\\n\\nTEST(CRC8, crc8_dvb_buffer)\\n{\\n    const uint8_t buffer[2] { 0xBE, 0xEF };\\n    EXPECT_EQ(0x92, crc8_generic(buffer, 2, 0x31, 0xff));\\n}\\n\\nAP_GTEST_PANIC()\\nAP_GTEST_MAIN()\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#bca71e018b58cdcb",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "test_crc8.cpp",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_crc8.cpp#L1-L14",
+        "path": "libraries/AP_Math/tests/test_crc8.cpp",
+        "lines": [
+          1,
+          14
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T17:42:42+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T17:42:42+0700",
+        "heading_path": "libraries/AP_Math/tests/test_crc8.cpp",
+        "excerpt": "#include <AP_gtest.h>\n\n#include <AP_Math/AP_Math.h>\n\nconst AP_HAL::HAL& hal = AP_HAL::get_HAL();\n\nTEST(CRC8, crc8_dvb_buffer)\n{\n    const uint8_t buffer[2] { 0xBE, 0xEF };\n    EXPECT_EQ(0x92, crc8_generic(buffer, 2, 0x31, 0xff));\n}\n\nAP_GTEST_PANIC()\nAP_GTEST_MAIN()",
+        "untrusted": true,
+        "text": "#include <AP_gtest.h>\n\n#include <AP_Math/AP_Math.h>\n\nconst AP_HAL::HAL& hal = AP_HAL::get_HAL();\n\nTEST(CRC8, crc8_dvb_buffer)\n{\n    const uint8_t buffer[2] { 0xBE, 0xEF };\n    EXPECT_EQ(0x92, crc8_generic(buffer, 2, 0x31, 0xff));\n}\n\nAP_GTEST_PANIC()\nAP_GTEST_MAIN()",
+        "served_from": "index"
+      }
+    }
+  }
+}

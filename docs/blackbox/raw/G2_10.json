@@ -1,0 +1,59 @@
+{
+  "case": "G2_10",
+  "note": "same content as the C/D hit for crsf_spec#90c2ac349451f6c9",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "crsf_spec#90c2ac349451f6c9"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1010,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "crsf_spec#90c2ac349451f6c9"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"crsf_spec#90c2ac349451f6c9\",\n  \"source_id\": \"crsf_spec\",\n  \"repo\": \"tbs-fpv/tbs-crsf-spec\",\n  \"ref\": \"a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92\",\n  \"channel\": \"snapshot\",\n  \"unreleased\": true,\n  \"pinned\": true,\n  \"title\": \"crsf.md\",\n  \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L966-L979\",\n  \"path\": \"crsf.md\",\n  \"lines\": [\n    966,\n    979\n  ],\n  \"version\": \"CRSF spec@a73f7dc\",\n  \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"CC-BY-SA-4.0\",\n  \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n  \"heading_path\": \"Extended Frame Types > 0x32 Direct Commands\",\n  \"excerpt\": \"Command frame\\n\\n```cpp\\n    uint8_t     Command_ID;\\n    uint8_t[]   Payload;        // depending on Command ID\\n    uint8_t     Command_CRC8;   // 8 bit CRC POLYNOM = 0xBA\\n```\\n\\nCommand frame is protected by additional CRC at the end of its payload. The CRC includes frame type (byte 0x32), Destination, Origin, Command ID and Payload of each Command Frame.\\n\\nCommand_CRC8 implementation with polynom = x7+ x5+ x4+ x3+ x1 (0xBA)\\n\\n> [!NOTE]\\n> The polynom is different from the main CRSF frame CRC.\",\n  \"untrusted\": true,\n  \"text\": \"Command frame\\n\\n```cpp\\n    uint8_t     Command_ID;\\n    uint8_t[]   Payload;        // depending on Command ID\\n    uint8_t     Command_CRC8;   // 8 bit CRC POLYNOM = 0xBA\\n```\\n\\nCommand frame is protected by additional CRC at the end of its payload. The CRC includes frame type (byte 0x32), Destination, Origin, Command ID and Payload of each Command Frame.\\n\\nCommand_CRC8 implementation with polynom = x7+ x5+ x4+ x3+ x1 (0xBA)\\n\\n> [!NOTE]\\n> The polynom is different from the main CRSF frame CRC.\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "crsf_spec#90c2ac349451f6c9",
+        "source_id": "crsf_spec",
+        "repo": "tbs-fpv/tbs-crsf-spec",
+        "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+        "channel": "snapshot",
+        "unreleased": true,
+        "pinned": true,
+        "title": "crsf.md",
+        "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L966-L979",
+        "path": "crsf.md",
+        "lines": [
+          966,
+          979
+        ],
+        "version": "CRSF spec@a73f7dc",
+        "ingested_at": "2026-10-25T17:42:44+0700",
+        "tier": "T1",
+        "license": "CC-BY-SA-4.0",
+        "retrieved_at": "2026-10-25T17:42:44+0700",
+        "heading_path": "Extended Frame Types > 0x32 Direct Commands",
+        "excerpt": "Command frame\n\n```cpp\n    uint8_t     Command_ID;\n    uint8_t[]   Payload;        // depending on Command ID\n    uint8_t     Command_CRC8;   // 8 bit CRC POLYNOM = 0xBA\n```\n\nCommand frame is protected by additional CRC at the end of its payload. The CRC includes frame type (byte 0x32), Destination, Origin, Command ID and Payload of each Command Frame.\n\nCommand_CRC8 implementation with polynom = x7+ x5+ x4+ x3+ x1 (0xBA)\n\n> [!NOTE]\n> The polynom is different from the main CRSF frame CRC.",
+        "untrusted": true,
+        "text": "Command frame\n\n```cpp\n    uint8_t     Command_ID;\n    uint8_t[]   Payload;        // depending on Command ID\n    uint8_t     Command_CRC8;   // 8 bit CRC POLYNOM = 0xBA\n```\n\nCommand frame is protected by additional CRC at the end of its payload. The CRC includes frame type (byte 0x32), Destination, Origin, Command ID and Payload of each Command Frame.\n\nCommand_CRC8 implementation with polynom = x7+ x5+ x4+ x3+ x1 (0xBA)\n\n> [!NOTE]\n> The polynom is different from the main CRSF frame CRC.",
+        "served_from": "index"
+      }
+    }
+  }
+}

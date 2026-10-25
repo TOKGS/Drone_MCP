@@ -1,0 +1,154 @@
+{
+  "case": "D1",
+  "note": "out-of-corpus: found:false or an explicit scope/version caveat",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "PX4 EKF2 tuning parameters",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 57,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "PX4 EKF2 tuning parameters",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 61.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"PX4 EKF2 tuning parameters\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#ce59dd9477cf45a4\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"ekf2-estimation-system.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/ekf2-estimation-system.rst#L670-L677\",\n      \"path\": \"dev/source/docs/ekf2-estimation-system.rst\",\n      \"lines\": [\n        670,\n        677\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"EKF2 Log Data > Tuning Parameters\",\n      \"excerpt\": \".. |EKF2 - velocity D| image:: ../images/EKF2-velocity-D.png\\n    :target: ../_images/EKF2-velocity-D.png\\n\\n.. |EKF2 - hagl and range| image:: ../images/EKF2-hagl-and-range.png\\n    :target: ../_images/EKF2-hagl-and-range.png\\n\\n.. |EKF2 - offset uncertainty| image:: ../images/EKF2-offset-uncertainty.png\\n    :target: ../_images/EKF2-offset-uncertainty.png\",\n      \"untrusted\": true,\n      \"score\": -46.0316\n    },\n    {\n      \"cite_id\": \"ardupilot#2460c72b8042972f\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"Parameters.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L375-L468\",\n      \"path\": \"ArduCopter/Parameters.cpp\",\n      \"lines\": [\n        375,\n        468\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"ArduCopter/Parameters.cpp\",\n      \"excerpt\": \"#if MODE_CIRCLE_ENABLED\\n    // @Group: CIRCLE_\\n    // @Path: ../libraries/AC_WPNav/AC_Circle.cpp\\n    GOBJECTPTR(circle_nav, \\\"CIRCLE_\\\",  AC_Circle),\\n#endif\\n\\n    // @Group: ATC_\\n    // @Path: ../libraries/AC_AttitudeControl/AC_AttitudeControl.cpp,../libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp,../libraries/AC_AttitudeControl/AC_AttitudeControl_Heli.cpp\\n    GOBJECTVARPTR(attitude_control, \\\"ATC_\\\", &copter.attitude_control_var_info),\\n\\n    // @Group: PSC\\n    // @Path: ../libraries/AC_AttitudeControl/AC_PosControl.cpp\\n    GOBJECTPTR(pos_control, \\\"PSC\\\", AC_PosControl),\\n\\n    // SR0 through\",\n      \"untrusted\": true,\n      \"score\": -9.5\n    },\n    {\n      \"cite_id\": \"ardupilot#bd03ee2ed0da6668\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"Parameters.h\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.h#L1-L99\",\n      \"path\": \"ArduCopter/Parameters.h\",\n      \"lines\": [\n        1,\n        99\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"ArduCopter/Parameters.h\",\n      \"excerpt\": \"#pragma once\\n\\n#define AP_PARAM_VEHICLE_NAME copter\\n\\n#include <AP_Common/AP_Common.h>\\n#include \\\"RC_Channel_Copter.h\\\"\\n#include <AP_Proximity/AP_Proximity.h>\\n\\nclass ModeRTL;\\n\\n#if MODE_FOLLOW_ENABLED\\n # include <AP_Follow/AP_Follow.h>\\n#endif\\n#if WEATHERVANE_ENABLED\\n #include <AC_AttitudeControl/AC_WeatherVane.h>\\n#endif\\n\\n// Global parameter class.\\n//\\nclass Parameters {\\npublic:\\n    // The version of the layout as described by the parameter enum.\\n    //\\n    // When changing the parameter enum in an incompatible fashion, this\\n    // value should be incremented by one.\\n    //\\n    // The increment will \",\n      \"untrusted\": true,\n      \"score\": -9.5\n    },\n    {\n      \"cite_id\": \"ardupilot#3409355a1a38d1e5\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/AntennaTracker/ReleaseNotes.txt#L1433-L1445\",\n      \"path\": \"AntennaTracker/ReleaseNotes.txt\",\n      \"lines\": [\n        1433,\n        1445\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"- Tramp VTX OSD power indicator fixed\",\n      \"excerpt\": \"- MicoAir743 internal compass orientation fixed\\n- MicroAir405Mini, MicroAir743, NxtPX4v2 support\\n- MicroAir405v2 Bi-directional DShot and LED DMA fixes\\n- MicroAir405v2 defined as FPV board with reduced features (to save flash)\\n- ModalAI VOXL2 support including Starling 2 and Starling 2 max\\n- mRo Control Zero Classic supports servo rail analog input\\n- mRo KitCAN revC fixed\\n- Mugin MUPilot support\\n- OmnibusF7v2 loses quadplane support (to save flash)\\n- Pixhack-v3 board added (same as fmuv3)\\n- Pixhawk6C bootloader supports flashing firmware from SD card\\n- RadiolinkPIX6 imu orientation fixed\\n- Rad\",\n      \"untrusted\": true,\n      \"score\": -6.0\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot_wiki#ce59dd9477cf45a4\",\n    \"ardupilot#2460c72b8042972f\",\n    \"ardupilot#bd03ee2ed0da6668\",\n    \"ardupilot#3409355a1a38d1e5\",\n    \"ardupilot#d0c387706c98917a\"\n  ],\n  \"note\": null,\n  \"result_count\": 4\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "PX4 EKF2 tuning parameters",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot_wiki#ce59dd9477cf45a4",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "ekf2-estimation-system.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/ekf2-estimation-system.rst#L670-L677",
+            "path": "dev/source/docs/ekf2-estimation-system.rst",
+            "lines": [
+              670,
+              677
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "EKF2 Log Data > Tuning Parameters",
+            "excerpt": ".. |EKF2 - velocity D| image:: ../images/EKF2-velocity-D.png\n    :target: ../_images/EKF2-velocity-D.png\n\n.. |EKF2 - hagl and range| image:: ../images/EKF2-hagl-and-range.png\n    :target: ../_images/EKF2-hagl-and-range.png\n\n.. |EKF2 - offset uncertainty| image:: ../images/EKF2-offset-uncertainty.png\n    :target: ../_images/EKF2-offset-uncertainty.png",
+            "untrusted": true,
+            "score": -46.0316
+          },
+          {
+            "cite_id": "ardupilot#2460c72b8042972f",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "Parameters.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L375-L468",
+            "path": "ArduCopter/Parameters.cpp",
+            "lines": [
+              375,
+              468
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "ArduCopter/Parameters.cpp",
+            "excerpt": "#if MODE_CIRCLE_ENABLED\n    // @Group: CIRCLE_\n    // @Path: ../libraries/AC_WPNav/AC_Circle.cpp\n    GOBJECTPTR(circle_nav, \"CIRCLE_\",  AC_Circle),\n#endif\n\n    // @Group: ATC_\n    // @Path: ../libraries/AC_AttitudeControl/AC_AttitudeControl.cpp,../libraries/AC_AttitudeControl/AC_AttitudeControl_Multi.cpp,../libraries/AC_AttitudeControl/AC_AttitudeControl_Heli.cpp\n    GOBJECTVARPTR(attitude_control, \"ATC_\", &copter.attitude_control_var_info),\n\n    // @Group: PSC\n    // @Path: ../libraries/AC_AttitudeControl/AC_PosControl.cpp\n    GOBJECTPTR(pos_control, \"PSC\", AC_PosControl),\n\n    // SR0 through",
+            "untrusted": true,
+            "score": -9.5
+          },
+          {
+            "cite_id": "ardupilot#bd03ee2ed0da6668",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "Parameters.h",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.h#L1-L99",
+            "path": "ArduCopter/Parameters.h",
+            "lines": [
+              1,
+              99
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "ArduCopter/Parameters.h",
+            "excerpt": "#pragma once\n\n#define AP_PARAM_VEHICLE_NAME copter\n\n#include <AP_Common/AP_Common.h>\n#include \"RC_Channel_Copter.h\"\n#include <AP_Proximity/AP_Proximity.h>\n\nclass ModeRTL;\n\n#if MODE_FOLLOW_ENABLED\n # include <AP_Follow/AP_Follow.h>\n#endif\n#if WEATHERVANE_ENABLED\n #include <AC_AttitudeControl/AC_WeatherVane.h>\n#endif\n\n// Global parameter class.\n//\nclass Parameters {\npublic:\n    // The version of the layout as described by the parameter enum.\n    //\n    // When changing the parameter enum in an incompatible fashion, this\n    // value should be incremented by one.\n    //\n    // The increment will ",
+            "untrusted": true,
+            "score": -9.5
+          },
+          {
+            "cite_id": "ardupilot#3409355a1a38d1e5",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/AntennaTracker/ReleaseNotes.txt#L1433-L1445",
+            "path": "AntennaTracker/ReleaseNotes.txt",
+            "lines": [
+              1433,
+              1445
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "- Tramp VTX OSD power indicator fixed",
+            "excerpt": "- MicoAir743 internal compass orientation fixed\n- MicroAir405Mini, MicroAir743, NxtPX4v2 support\n- MicroAir405v2 Bi-directional DShot and LED DMA fixes\n- MicroAir405v2 defined as FPV board with reduced features (to save flash)\n- ModalAI VOXL2 support including Starling 2 and Starling 2 max\n- mRo Control Zero Classic supports servo rail analog input\n- mRo KitCAN revC fixed\n- Mugin MUPilot support\n- OmnibusF7v2 loses quadplane support (to save flash)\n- Pixhack-v3 board added (same as fmuv3)\n- Pixhawk6C bootloader supports flashing firmware from SD card\n- RadiolinkPIX6 imu orientation fixed\n- Rad",
+            "untrusted": true,
+            "score": -6.0
+          }
+        ],
+        "candidates": [
+          "ardupilot_wiki#ce59dd9477cf45a4",
+          "ardupilot#2460c72b8042972f",
+          "ardupilot#bd03ee2ed0da6668",
+          "ardupilot#3409355a1a38d1e5",
+          "ardupilot#d0c387706c98917a"
+        ],
+        "note": null,
+        "result_count": 4
+      }
+    }
+  }
+}

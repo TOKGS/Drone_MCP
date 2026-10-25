@@ -1,0 +1,59 @@
+{
+  "case": "G2_17",
+  "note": "same content as the C/D hit for ardupilot#ade96649dd76f1f9",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#ade96649dd76f1f9"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1017,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#ade96649dd76f1f9"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 11.6,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#ade96649dd76f1f9\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"AP_Arming_Copter.h\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/AP_Arming_Copter.h#L1-L65\",\n  \"path\": \"ArduCopter/AP_Arming_Copter.h\",\n  \"lines\": [\n    1,\n    65\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n  \"heading_path\": \"ArduCopter/AP_Arming_Copter.h\",\n  \"excerpt\": \"#pragma once\\n\\n#include <AP_Arming/AP_Arming.h>\\n\\nclass AP_Arming_Copter : public AP_Arming\\n{\\npublic:\\n    friend class Copter;\\n    friend class ToyMode;\\n\\n    AP_Arming_Copter() : AP_Arming()\\n    {\\n        // default REQUIRE parameter to 1 (Copter does not have an\\n        // actual ARMING_REQUIRE parameter)\\n        require.set_default((uint8_t)Required::YES_MIN_PWM);\\n    }\\n\\n    /* Do not allow copies */\\n    CLASS_NO_COPY(AP_Arming_Copter);\\n\\n    bool rc_calibration_checks(bool display_failure) override;\\n\\n    bool disarm(AP_Arming::Method method, bool do_disarm_checks=true) override;\\n    bool arm(A\",\n  \"untrusted\": true,\n  \"text\": \"#pragma once\\n\\n#include <AP_Arming/AP_Arming.h>\\n\\nclass AP_Arming_Copter : public AP_Arming\\n{\\npublic:\\n    friend class Copter;\\n    friend class ToyMode;\\n\\n    AP_Arming_Copter() : AP_Arming()\\n    {\\n        // default REQUIRE parameter to 1 (Copter does not have an\\n        // actual ARMING_REQUIRE parameter)\\n        require.set_default((uint8_t)Required::YES_MIN_PWM);\\n    }\\n\\n    /* Do not allow copies */\\n    CLASS_NO_COPY(AP_Arming_Copter);\\n\\n    bool rc_calibration_checks(bool display_failure) override;\\n\\n    bool disarm(AP_Arming::Method method, bool do_disarm_checks=true) override;\\n    bool arm(AP_Arming::Method method, bool do_arming_checks=true) override;\\n\\nprotected:\\n\\n    bool pre_arm_checks(bool display_failure) override;\\n    bool pre_arm_ekf_attitude_check();\\n#if HAL_PROXIMITY_ENABLED\\n    bool proximity_checks(bool display_failure) const override;\\n#endif\\n    bool arm_checks(AP_Arming::Method method) override;\\n\\n    // mandatory checks that cannot be bypassed.  This function will only be called if ARMING_SKIPCHK skips all or arming forced\\n    bool mandatory_checks(bool display_failure) override;\\n\\n    // NOTE! the following check functions *DO* call into AP_Arming:\\n    bool ins_checks(bool display_failure) override;\\n    bool gps_checks(bool display_failure) override;\\n    bool barometer_checks(bool display_failure) override;\\n    bool board_voltage_checks(bool display_failure) override;\\n\\n    // NOTE! the following check functions *DO NOT* call into AP_Arming!\\n    bool parameter_checks(bool display_failure);\\n    bool oa_checks(bool display_failure);\\n    bool mandatory_position_checks(bool display_failure);\\n    bool gcs_failsafe_check(bool display_failure);\\n    bool winch_checks(bool display_failure) const;\\n    bool alt_checks(bool display_failure);\\n    bool rc_throttle_failsafe_checks(bool display_failure) const;\\n\\n    void set_pre_arm_check(bool b);\\n\\n    // expected to return true if the terrain database is required to have\\n    // all data loaded\\n    bool terrain_database_required() const override;\\n\\nprivate:\\n\\n    // actually contains the pre-arm checks.  This is wrapped so that\\n    // we can store away success/failure of the checks.\\n    bool run_pre_arm_checks(bool display_failure);\\n\\n};\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#ade96649dd76f1f9",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "AP_Arming_Copter.h",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/AP_Arming_Copter.h#L1-L65",
+        "path": "ArduCopter/AP_Arming_Copter.h",
+        "lines": [
+          1,
+          65
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T17:42:42+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T17:42:42+0700",
+        "heading_path": "ArduCopter/AP_Arming_Copter.h",
+        "excerpt": "#pragma once\n\n#include <AP_Arming/AP_Arming.h>\n\nclass AP_Arming_Copter : public AP_Arming\n{\npublic:\n    friend class Copter;\n    friend class ToyMode;\n\n    AP_Arming_Copter() : AP_Arming()\n    {\n        // default REQUIRE parameter to 1 (Copter does not have an\n        // actual ARMING_REQUIRE parameter)\n        require.set_default((uint8_t)Required::YES_MIN_PWM);\n    }\n\n    /* Do not allow copies */\n    CLASS_NO_COPY(AP_Arming_Copter);\n\n    bool rc_calibration_checks(bool display_failure) override;\n\n    bool disarm(AP_Arming::Method method, bool do_disarm_checks=true) override;\n    bool arm(A",
+        "untrusted": true,
+        "text": "#pragma once\n\n#include <AP_Arming/AP_Arming.h>\n\nclass AP_Arming_Copter : public AP_Arming\n{\npublic:\n    friend class Copter;\n    friend class ToyMode;\n\n    AP_Arming_Copter() : AP_Arming()\n    {\n        // default REQUIRE parameter to 1 (Copter does not have an\n        // actual ARMING_REQUIRE parameter)\n        require.set_default((uint8_t)Required::YES_MIN_PWM);\n    }\n\n    /* Do not allow copies */\n    CLASS_NO_COPY(AP_Arming_Copter);\n\n    bool rc_calibration_checks(bool display_failure) override;\n\n    bool disarm(AP_Arming::Method method, bool do_disarm_checks=true) override;\n    bool arm(AP_Arming::Method method, bool do_arming_checks=true) override;\n\nprotected:\n\n    bool pre_arm_checks(bool display_failure) override;\n    bool pre_arm_ekf_attitude_check();\n#if HAL_PROXIMITY_ENABLED\n    bool proximity_checks(bool display_failure) const override;\n#endif\n    bool arm_checks(AP_Arming::Method method) override;\n\n    // mandatory checks that cannot be bypassed.  This function will only be called if ARMING_SKIPCHK skips all or arming forced\n    bool mandatory_checks(bool display_failure) override;\n\n    // NOTE! the following check functions *DO* call into AP_Arming:\n    bool ins_checks(bool display_failure) override;\n    bool gps_checks(bool display_failure) override;\n    bool barometer_checks(bool display_failure) override;\n    bool board_voltage_checks(bool display_failure) override;\n\n    // NOTE! the following check functions *DO NOT* call into AP_Arming!\n    bool parameter_checks(bool display_failure);\n    bool oa_checks(bool display_failure);\n    bool mandatory_position_checks(bool display_failure);\n    bool gcs_failsafe_check(bool display_failure);\n    bool winch_checks(bool display_failure) const;\n    bool alt_checks(bool display_failure);\n    bool rc_throttle_failsafe_checks(bool display_failure) const;\n\n    void set_pre_arm_check(bool b);\n\n    // expected to return true if the terrain database is required to have\n    // all data loaded\n    bool terrain_database_required() const override;\n\nprivate:\n\n    // actually contains the pre-arm checks.  This is wrapped so that\n    // we can store away success/failure of the checks.\n    bool run_pre_arm_checks(bool display_failure);\n\n};",
+        "served_from": "index"
+      }
+    }
+  }
+}

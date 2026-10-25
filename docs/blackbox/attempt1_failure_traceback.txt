@@ -1,0 +1,32 @@
+# Attempt 1 — aborted before any case ran (environment, not a case result)
+
+- When: 2026-10-25, first invocation of `python scripts/blackbox_run.py`
+- Result: process crashed in `mcp.client.stdio.stdio_client` -> `anyio.open_process` ->
+  `asyncio.windows_utils.pipe` -> `_winapi.CreateFile`, `PermissionError: [WinError 5] Access is denied`
+- The DSH file sandbox (`workspace-write`) refuses pipe creation for a confined process, so the
+  MCP client cannot spawn the server with piped stdio.
+- Evidence that **no case was executed**: the crash happens at process creation, i.e. before
+  `session.initialize()`. The only artifact on disk was an empty
+  `docs/blackbox/raw/_meta/server-stderr.log` (0 bytes); no `<CASE>.json` file and no
+  `_meta/handshake.json` was ever written.
+- Action: the empty `raw/` directory was removed (it held no case data) and the run was retried
+  once with the sandbox escalated, so the cases were still executed exactly once.
+- Not retried for correctness: no case had produced a result, so no case was run twice.
+
+Traceback (tail):
+
+```
+File "D:\Skill_tulan\ardupilot-research-mcp\scripts\blackbox_run.py", line 322, in run
+    async with stdio_client(server, errlog=stderr) as (read, write):
+  File "...\site-packages\mcp\client\stdio\__init__.py", line 124, in stdio_client
+    process = await _create_platform_compatible_process(
+  File "...\site-packages\mcp\client\stdio\__init__.py", line 249, in _create_platform_compatible_process
+    process = await create_windows_process(command, args, env, errlog, cwd)
+  File "...\site-packages\mcp\os\win32\utilities.py", line 184, in create_windows_process
+    process = await anyio.open_process(
+  File "...\site-packages\anyio\_backends\_asyncio.py", line 2588, in open_process
+    process = await asyncio.create_subprocess_exec(
+  File "...\Lib\asyncio\windows_utils.py", line 63, in pipe
+    h2 = _winapi.CreateFile(
+PermissionError: [WinError 5] Access is denied
+```

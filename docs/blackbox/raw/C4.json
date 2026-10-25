@@ -1,0 +1,179 @@
+{
+  "case": "C4",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "where does ArduPilot parse CRSF",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 48,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "where does ArduPilot parse CRSF",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 61.2,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"where does ArduPilot parse CRSF\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"edgetx#d3d997571493b805\",\n      \"source_id\": \"edgetx\",\n      \"repo\": \"EdgeTX/edgetx\",\n      \"ref\": \"v2.12.5\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_measure.cpp\",\n      \"url\": \"https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.cpp#L260-L372\",\n      \"path\": \"radio/src/targets/hrs/v15/crsf_measure.cpp\",\n      \"lines\": [\n        260,\n        372\n      ],\n      \"version\": \"EdgeTX 2.12.5\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-2.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"radio/src/targets/hrs/v15/crsf_measure.cpp\",\n      \"excerpt\": \"    const uint32_t dt = nowUs - g_lastFrameUs;\\n    if (dt >= 2000U && dt <= 50000U) {\\n      g_framePeriodUs = dt;\\n    }\\n  }\\n  g_lastFrameUs = nowUs;\\n  g_lastFrame10ms = get_tmr10ms();\\n  g_haveSignal = true;\\n  {\\n    uint16_t raw[8];\\n    for (uint8_t i = 0; i < 8; ++i) raw[i] = g_chRaw[i];\\n    v15MeasureTrainerFeedPushBusRaw(raw, 8);\\n  }\\n\\n  if (!g_configLocked) {\\n    g_configLocked = true;\\n    g_baudUi = BAUD_CANDIDATES[g_tryBaudIdx];\\n    g_polarityUi = (g_tryPolarity == ETX_Pol_Inverted) ? CRSF_MEASURE_POL_INVERTED\\n                                                       : CRSF_MEASURE_POL_NORMAL\",\n      \"untrusted\": true,\n      \"score\": -27.5064\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#404de9db527efa08\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-crsf-telemetry.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-crsf-telemetry.rst#L50-L50\",\n      \"path\": \"common/source/docs/common-crsf-telemetry.rst\",\n      \"lines\": [\n        50,\n        50\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Scripted CRSF Menus\",\n      \"excerpt\": \"ArduPilot supports custom CRSF menus created via Lua scripts. These menus appear alongside the built-in ArduPilot parameter editor in the transmitter's Crossfire Configuration screen, and can be used to provide task-specific configuration interfaces.\",\n      \"untrusted\": true,\n      \"score\": -26.8762\n    },\n    {\n      \"cite_id\": \"expresslrs#2642238e9bbfdf82\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"msp2crsf.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CRSF2MSP/msp2crsf.h#L1-L29\",\n      \"path\": \"src/lib/CRSF2MSP/msp2crsf.h\",\n      \"lines\": [\n        1,\n        29\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"src/lib/CRSF2MSP/msp2crsf.h\",\n      \"excerpt\": \"#pragma once\\n\\n#include \\\"CRSFConnector.h\\\"\\n#include \\\"FIFO.h\\\"\\n#include \\\"crsfmsp_common.h\\\"\\n\\n/* Takes an MSP frame and converts it to a raw CRSF frame\\n   adding the CRSF header and checksum. Handles chunking of messages\\n*/\\n\\nclass MSP2CROSSFIRE final\\n{\\npublic:\\n    MSP2CROSSFIRE() = default;\\n    void parse(CRSFConnector *connector, const uint8_t *data, uint32_t frameLen, crsf_addr_e src = CRSF_ADDRESS_CRSF_RECEIVER, crsf_addr_e dest = CRSF_ADDRESS_FLIGHT_CONTROLLER);\\n    static bool validate(const uint8_t *data, uint32_t expectLen);\\n\\nprivate:\\n    uint8_t seqNum = 0;\\n\\n    static uint8_t getNewFrameBit\",\n      \"untrusted\": true,\n      \"score\": -26.7136\n    },\n    {\n      \"cite_id\": \"expresslrs#5ca3d45f5fa4a924\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_protocol.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L51-L91\",\n      \"path\": \"src/include/crsf_protocol.h\",\n      \"lines\": [\n        51,\n        91\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"src/include/crsf_protocol.h\",\n      \"excerpt\": \"#define CRSF_MSP_RESP_PAYLOAD_SIZE 58\\n#define CRSF_MSP_MAX_PAYLOAD_SIZE (CRSF_MSP_REQ_PAYLOAD_SIZE > CRSF_MSP_RESP_PAYLOAD_SIZE ? CRSF_MSP_REQ_PAYLOAD_SIZE : CRSF_MSP_RESP_PAYLOAD_SIZE)\\n\\ntypedef enum : uint8_t\\n{\\n    CRSF_FRAMETYPE_GPS = 0x02,\\n    CRSF_FRAMETYPE_GPS_TIME = 0x03,\\n    CRSF_FRAMETYPE_VARIO = 0x07,\\n    CRSF_FRAMETYPE_BATTERY_SENSOR = 0x08,\\n    CRSF_FRAMETYPE_BARO_ALTITUDE = 0x09,\\n    CRSF_FRAMETYPE_AIRSPEED = 0x0A,\\n    CRSF_FRAMETYPE_HEARTBEAT = 0x0B,\\n    CRSF_FRAMETYPE_RPM = 0x0C,\\n    CRSF_FRAMETYPE_TEMP = 0x0D,\\n    CRSF_FRAMETYPE_CELLS = 0x0E,\\n    CRSF_FRAMETYPE_LINK_STATISTICS =\",\n      \"untrusted\": true,\n      \"score\": -26.2326\n    },\n    {\n      \"cite_id\": \"expresslrs#fe280216f9d9cd5e\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"msp2crsf.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CRSF2MSP/msp2crsf.cpp#L92-L133\",\n      \"path\": \"src/lib/CRSF2MSP/msp2crsf.cpp\",\n      \"lines\": [\n        92,\n        133\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"src/lib/CRSF2MSP/msp2crsf.cpp\",\n      \"excerpt\": \"    }\\n    return packetLen;\\n}\\n\\nMSPframeType_e MSP2CROSSFIRE::getVersion(const uint8_t *data)\\n{\\n    if (data[1] == 'M') // detect if V1 or V2\\n    {\\n        if (data[3] == 0xFF)\\n        {\\n            return MSP_FRAME_V1_JUMBO;\\n        }\\n        return MSP_FRAME_V1;\\n    }\\n    if (data[1] == 'X')\\n    {\\n        return MSP_FRAME_V2;\\n    }\\n    return MSP_FRAME_UNKNOWN;\\n}\\n\\nvoid MSP2CROSSFIRE::parse(CRSFConnector *connector, const uint8_t *data, uint32_t frameLen, const crsf_addr_e src, const crsf_addr_e dest)\\n{\\n    const MSPframeType_e mspVersion = getVersion(data);\\n    const uint32_t mspPayloadLen = \",\n      \"untrusted\": true,\n      \"score\": -26.0213\n    }\n  ],\n  \"candidates\": [\n    \"edgetx#d3d997571493b805\",\n    \"ardupilot_wiki#404de9db527efa08\",\n    \"expresslrs#2642238e9bbfdf82\",\n    \"expresslrs#5ca3d45f5fa4a924\",\n    \"expresslrs#fe280216f9d9cd5e\"\n  ],\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "where does ArduPilot parse CRSF",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "edgetx#d3d997571493b805",
+            "source_id": "edgetx",
+            "repo": "EdgeTX/edgetx",
+            "ref": "v2.12.5",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_measure.cpp",
+            "url": "https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.cpp#L260-L372",
+            "path": "radio/src/targets/hrs/v15/crsf_measure.cpp",
+            "lines": [
+              260,
+              372
+            ],
+            "version": "EdgeTX 2.12.5",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-2.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "radio/src/targets/hrs/v15/crsf_measure.cpp",
+            "excerpt": "    const uint32_t dt = nowUs - g_lastFrameUs;\n    if (dt >= 2000U && dt <= 50000U) {\n      g_framePeriodUs = dt;\n    }\n  }\n  g_lastFrameUs = nowUs;\n  g_lastFrame10ms = get_tmr10ms();\n  g_haveSignal = true;\n  {\n    uint16_t raw[8];\n    for (uint8_t i = 0; i < 8; ++i) raw[i] = g_chRaw[i];\n    v15MeasureTrainerFeedPushBusRaw(raw, 8);\n  }\n\n  if (!g_configLocked) {\n    g_configLocked = true;\n    g_baudUi = BAUD_CANDIDATES[g_tryBaudIdx];\n    g_polarityUi = (g_tryPolarity == ETX_Pol_Inverted) ? CRSF_MEASURE_POL_INVERTED\n                                                       : CRSF_MEASURE_POL_NORMAL",
+            "untrusted": true,
+            "score": -27.5064
+          },
+          {
+            "cite_id": "ardupilot_wiki#404de9db527efa08",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-crsf-telemetry.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-crsf-telemetry.rst#L50-L50",
+            "path": "common/source/docs/common-crsf-telemetry.rst",
+            "lines": [
+              50,
+              50
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Scripted CRSF Menus",
+            "excerpt": "ArduPilot supports custom CRSF menus created via Lua scripts. These menus appear alongside the built-in ArduPilot parameter editor in the transmitter's Crossfire Configuration screen, and can be used to provide task-specific configuration interfaces.",
+            "untrusted": true,
+            "score": -26.8762
+          },
+          {
+            "cite_id": "expresslrs#2642238e9bbfdf82",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "msp2crsf.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CRSF2MSP/msp2crsf.h#L1-L29",
+            "path": "src/lib/CRSF2MSP/msp2crsf.h",
+            "lines": [
+              1,
+              29
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "src/lib/CRSF2MSP/msp2crsf.h",
+            "excerpt": "#pragma once\n\n#include \"CRSFConnector.h\"\n#include \"FIFO.h\"\n#include \"crsfmsp_common.h\"\n\n/* Takes an MSP frame and converts it to a raw CRSF frame\n   adding the CRSF header and checksum. Handles chunking of messages\n*/\n\nclass MSP2CROSSFIRE final\n{\npublic:\n    MSP2CROSSFIRE() = default;\n    void parse(CRSFConnector *connector, const uint8_t *data, uint32_t frameLen, crsf_addr_e src = CRSF_ADDRESS_CRSF_RECEIVER, crsf_addr_e dest = CRSF_ADDRESS_FLIGHT_CONTROLLER);\n    static bool validate(const uint8_t *data, uint32_t expectLen);\n\nprivate:\n    uint8_t seqNum = 0;\n\n    static uint8_t getNewFrameBit",
+            "untrusted": true,
+            "score": -26.7136
+          },
+          {
+            "cite_id": "expresslrs#5ca3d45f5fa4a924",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_protocol.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L51-L91",
+            "path": "src/include/crsf_protocol.h",
+            "lines": [
+              51,
+              91
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "src/include/crsf_protocol.h",
+            "excerpt": "#define CRSF_MSP_RESP_PAYLOAD_SIZE 58\n#define CRSF_MSP_MAX_PAYLOAD_SIZE (CRSF_MSP_REQ_PAYLOAD_SIZE > CRSF_MSP_RESP_PAYLOAD_SIZE ? CRSF_MSP_REQ_PAYLOAD_SIZE : CRSF_MSP_RESP_PAYLOAD_SIZE)\n\ntypedef enum : uint8_t\n{\n    CRSF_FRAMETYPE_GPS = 0x02,\n    CRSF_FRAMETYPE_GPS_TIME = 0x03,\n    CRSF_FRAMETYPE_VARIO = 0x07,\n    CRSF_FRAMETYPE_BATTERY_SENSOR = 0x08,\n    CRSF_FRAMETYPE_BARO_ALTITUDE = 0x09,\n    CRSF_FRAMETYPE_AIRSPEED = 0x0A,\n    CRSF_FRAMETYPE_HEARTBEAT = 0x0B,\n    CRSF_FRAMETYPE_RPM = 0x0C,\n    CRSF_FRAMETYPE_TEMP = 0x0D,\n    CRSF_FRAMETYPE_CELLS = 0x0E,\n    CRSF_FRAMETYPE_LINK_STATISTICS =",
+            "untrusted": true,
+            "score": -26.2326
+          },
+          {
+            "cite_id": "expresslrs#fe280216f9d9cd5e",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "msp2crsf.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CRSF2MSP/msp2crsf.cpp#L92-L133",
+            "path": "src/lib/CRSF2MSP/msp2crsf.cpp",
+            "lines": [
+              92,
+              133
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "src/lib/CRSF2MSP/msp2crsf.cpp",
+            "excerpt": "    }\n    return packetLen;\n}\n\nMSPframeType_e MSP2CROSSFIRE::getVersion(const uint8_t *data)\n{\n    if (data[1] == 'M') // detect if V1 or V2\n    {\n        if (data[3] == 0xFF)\n        {\n            return MSP_FRAME_V1_JUMBO;\n        }\n        return MSP_FRAME_V1;\n    }\n    if (data[1] == 'X')\n    {\n        return MSP_FRAME_V2;\n    }\n    return MSP_FRAME_UNKNOWN;\n}\n\nvoid MSP2CROSSFIRE::parse(CRSFConnector *connector, const uint8_t *data, uint32_t frameLen, const crsf_addr_e src, const crsf_addr_e dest)\n{\n    const MSPframeType_e mspVersion = getVersion(data);\n    const uint32_t mspPayloadLen = ",
+            "untrusted": true,
+            "score": -26.0213
+          }
+        ],
+        "candidates": [
+          "edgetx#d3d997571493b805",
+          "ardupilot_wiki#404de9db527efa08",
+          "expresslrs#2642238e9bbfdf82",
+          "expresslrs#5ca3d45f5fa4a924",
+          "expresslrs#fe280216f9d9cd5e"
+        ],
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

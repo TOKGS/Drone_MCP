@@ -1,0 +1,127 @@
+{
+  "case": "F_FIND_QUOTE",
+  "note": "no crash",
+  "tool": "find_source",
+  "arguments": {
+    "symbol_or_file": "\" OR \""
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 88,
+    "method": "tools/call",
+    "params": {
+      "name": "find_source",
+      "arguments": {
+        "symbol_or_file": "\" OR \""
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 105.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"\\\" OR \\\"\",\n  \"mode\": \"symbol\",\n  \"repo_filter\": null,\n  \"hits\": [\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        887,\n        891\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L887-L891\",\n      \"cite_id\": \"crsf_spec#683d71576629763d\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Extended Frame Types > 0x2B Parameter Settings (Entry) > COMMAND\"\n    },\n    {\n      \"path\": \"src/lua/elrs.lua\",\n      \"lines\": [\n        887,\n        915\n      ],\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lua/elrs.lua#L887-L915\",\n      \"cite_id\": \"expresslrs#2c805e9cf0842406\",\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"channel\": \"stable\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"src/lua/elrs.lua\"\n    },\n    {\n      \"path\": \"Tools/debug/README.md\",\n      \"lines\": [\n        38,\n        46\n      ],\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/debug/README.md#L38-L46\",\n      \"cite_id\": \"ardupilot#9e192822d58dfed9\",\n      \"version\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Hardware Debugging with ArduPilot > Debugging with a Black Magic Probe\"\n    },\n    {\n      \"path\": \"Tools/scripts/uploader.py\",\n      \"lines\": [\n        861,\n        906\n      ],\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/scripts/uploader.py#L861-L906\",\n      \"cite_id\": \"ardupilot#7435f55e5946809e\",\n      \"version\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Tools/scripts/uploader.py\"\n    },\n    {\n      \"path\": \"libraries/AP_Arming/AP_Arming.cpp\",\n      \"lines\": [\n        332,\n        363\n      ],\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L332-L363\",\n      \"cite_id\": \"ardupilot#d63ae3653293e151\",\n      \"version\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"libraries/AP_Arming/AP_Arming.cpp\"\n    },\n    {\n      \"path\": \"libraries/AP_Arming/AP_Arming.cpp\",\n      \"lines\": [\n        361,\n        387\n      ],\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L361-L387\",\n      \"cite_id\": \"ardupilot#cfae8ebc54cddf65\",\n      \"version\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"libraries/AP_Arming/AP_Arming.cpp\"\n    }\n  ],\n  \"candidates\": [\n    \"crsf_spec#683d71576629763d crsf.md:887\",\n    \"expresslrs#2c805e9cf0842406 src/lua/elrs.lua:887\",\n    \"ardupilot#9e192822d58dfed9 Tools/debug/README.md:38\",\n    \"ardupilot#7435f55e5946809e Tools/scripts/uploader.py:861\",\n    \"ardupilot#d63ae3653293e151 libraries/AP_Arming/AP_Arming.cpp:332\"\n  ],\n  \"note\": null\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "\" OR \"",
+        "mode": "symbol",
+        "repo_filter": null,
+        "hits": [
+          {
+            "path": "crsf.md",
+            "lines": [
+              887,
+              891
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L887-L891",
+            "cite_id": "crsf_spec#683d71576629763d",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Extended Frame Types > 0x2B Parameter Settings (Entry) > COMMAND"
+          },
+          {
+            "path": "src/lua/elrs.lua",
+            "lines": [
+              887,
+              915
+            ],
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lua/elrs.lua#L887-L915",
+            "cite_id": "expresslrs#2c805e9cf0842406",
+            "version": "ExpressLRS 4.1.0",
+            "channel": "stable",
+            "tier": "T1",
+            "heading_path": "src/lua/elrs.lua"
+          },
+          {
+            "path": "Tools/debug/README.md",
+            "lines": [
+              38,
+              46
+            ],
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/debug/README.md#L38-L46",
+            "cite_id": "ardupilot#9e192822d58dfed9",
+            "version": "Copter-4.7.2",
+            "channel": "stable",
+            "tier": "T1",
+            "heading_path": "Hardware Debugging with ArduPilot > Debugging with a Black Magic Probe"
+          },
+          {
+            "path": "Tools/scripts/uploader.py",
+            "lines": [
+              861,
+              906
+            ],
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/scripts/uploader.py#L861-L906",
+            "cite_id": "ardupilot#7435f55e5946809e",
+            "version": "Copter-4.7.2",
+            "channel": "stable",
+            "tier": "T1",
+            "heading_path": "Tools/scripts/uploader.py"
+          },
+          {
+            "path": "libraries/AP_Arming/AP_Arming.cpp",
+            "lines": [
+              332,
+              363
+            ],
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L332-L363",
+            "cite_id": "ardupilot#d63ae3653293e151",
+            "version": "Copter-4.7.2",
+            "channel": "stable",
+            "tier": "T1",
+            "heading_path": "libraries/AP_Arming/AP_Arming.cpp"
+          },
+          {
+            "path": "libraries/AP_Arming/AP_Arming.cpp",
+            "lines": [
+              361,
+              387
+            ],
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L361-L387",
+            "cite_id": "ardupilot#cfae8ebc54cddf65",
+            "version": "Copter-4.7.2",
+            "channel": "stable",
+            "tier": "T1",
+            "heading_path": "libraries/AP_Arming/AP_Arming.cpp"
+          }
+        ],
+        "candidates": [
+          "crsf_spec#683d71576629763d crsf.md:887",
+          "expresslrs#2c805e9cf0842406 src/lua/elrs.lua:887",
+          "ardupilot#9e192822d58dfed9 Tools/debug/README.md:38",
+          "ardupilot#7435f55e5946809e Tools/scripts/uploader.py:861",
+          "ardupilot#d63ae3653293e151 libraries/AP_Arming/AP_Arming.cpp:332"
+        ],
+        "note": null
+      }
+    }
+  }
+}

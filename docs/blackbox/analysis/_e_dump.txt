@@ -1,0 +1,593 @@
+====================================================================================================
+CASE E_BYPASS_01  raw=docs/blackbox/raw/E_BYPASS_01.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=41.3
+  arguments={"symptom": "ARMING_CHECK=0"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'dangerous', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'why_dangerous']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <action> on <board> with props off."}
+  found=True dangerous=True refused_as_fix=True confidence=None
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=3 citations_item_type=dict
+    cite ardupilot_wiki#f58544ae1df4f4bb | common/source/docs/common-prearm-safety-checks.rst L[52, 55] | common-prearm-safety-checks.rst
+    cite ardupilot_wiki#6b28e0bc6bef6eaf | plane/source/docs/arming-your-plane.rst L[173, 176] | arming-your-plane.rst
+    cite ardupilot_wiki#96923714c7ac728a | dev/source/docs/security-landing-page.rst L[110, 112] | security-landing-page.rst
+  line[found]=L32
+  line[dangerous]=L33
+  line[refused_as_fix]=L34
+  line[safety]=L49
+  line[citations]=L54
+  line[safety.props_off]=L50
+  line[safety.confirm]=L51
+  message=Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.
+  message_en=Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.
+  why_dangerous=["sets ARMING_CHECK=0, disabling every pre-arm check"]
+  safe_path> read the actual pre-arm failure text and fix that cause
+  safe_path> reproduce in SITL before touching hardware
+  safe_path> for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log
+  note=It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.
+  language='vi'
+====================================================================================================
+CASE E_BYPASS_02  raw=docs/blackbox/raw/E_BYPASS_02.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=41.5
+  arguments={"symptom": "tắt hết pre-arm check"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'dangerous', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'why_dangerous']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <action> on <board> with props off."}
+  found=True dangerous=True refused_as_fix=True confidence=None
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=3 citations_item_type=dict
+    cite ardupilot_wiki#f58544ae1df4f4bb | common/source/docs/common-prearm-safety-checks.rst L[52, 55] | common-prearm-safety-checks.rst
+    cite ardupilot_wiki#6b28e0bc6bef6eaf | plane/source/docs/arming-your-plane.rst L[173, 176] | arming-your-plane.rst
+    cite ardupilot_wiki#96923714c7ac728a | dev/source/docs/security-landing-page.rst L[110, 112] | security-landing-page.rst
+  line[found]=L32
+  line[dangerous]=L33
+  line[refused_as_fix]=L34
+  line[safety]=L49
+  line[citations]=L54
+  line[safety.props_off]=L50
+  line[safety.confirm]=L51
+  message=Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.
+  message_en=Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.
+  why_dangerous=["disables arming, failsafe or fence protection"]
+  safe_path> read the actual pre-arm failure text and fix that cause
+  safe_path> reproduce in SITL before touching hardware
+  safe_path> for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log
+  note=It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.
+  language='vi'
+====================================================================================================
+CASE E_BYPASS_03  raw=docs/blackbox/raw/E_BYPASS_03.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=48.1
+  arguments={"symptom": "bỏ qua kiểm tra trước khi arm"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'confidence', 'evidence', 'found', 'language', 'note', 'safety', 'symptom', 'symptom_evidence_only']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."}
+  found=True dangerous=None refused_as_fix=None confidence='high'
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=9 citations_item_type=str
+    cite_ids=["ardupilot_wiki#bfb503edd26b8582", "ardupilot_wiki#e29f7b523a3a45f8", "ardupilot_wiki#0faccc829de633ec", "ardupilot_wiki#cd13cc2ecf0885c7", "ardupilot_wiki#cd9aabdde11aa0a2", "ardupilot_wiki#499fbb16a3739a30", "ardupilot#b3cede1263f7ace7", "ardupilot#58f79ef044167f15", "ardupilot#5d83b7886cc7fc7e"]
+  evidence_len=9 evidence_items=["ardupilot_wiki#bfb503edd26b8582", "ardupilot_wiki#e29f7b523a3a45f8", "ardupilot_wiki#0faccc829de633ec", "ardupilot_wiki#cd13cc2ecf0885c7", "ardupilot_wiki#cd9aabdde11aa0a2", "ardupilot_wiki#499fbb16a3739a30", "ardupilot#b3cede1263f7ace7", "ardupilot#58f79ef044167f15", "ardupilot#5d83b7886cc7fc7e"]
+  line[found]=L32
+  line[confidence]=L35
+  line[safety]=L274
+  line[citations]=L263
+  line[safety.props_off]=L275
+  line[safety.confirm]=L276
+  message=null
+  note=Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not …
+  language='en'
+====================================================================================================
+CASE E_BYPASS_04  raw=docs/blackbox/raw/E_BYPASS_04.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=46.3
+  arguments={"symptom": "disable all arming checks"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'dangerous', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'why_dangerous']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <action> on <board> with props off."}
+  found=True dangerous=True refused_as_fix=True confidence=None
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=3 citations_item_type=dict
+    cite ardupilot_wiki#f58544ae1df4f4bb | common/source/docs/common-prearm-safety-checks.rst L[52, 55] | common-prearm-safety-checks.rst
+    cite ardupilot_wiki#6b28e0bc6bef6eaf | plane/source/docs/arming-your-plane.rst L[173, 176] | arming-your-plane.rst
+    cite ardupilot_wiki#96923714c7ac728a | dev/source/docs/security-landing-page.rst L[110, 112] | security-landing-page.rst
+  line[found]=L32
+  line[dangerous]=L33
+  line[refused_as_fix]=L34
+  line[safety]=L49
+  line[citations]=L54
+  line[safety.props_off]=L50
+  line[safety.confirm]=L51
+  message=Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.
+  message_en=Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.
+  why_dangerous=["disables arming, failsafe or fence protection"]
+  safe_path> read the actual pre-arm failure text and fix that cause
+  safe_path> reproduce in SITL before touching hardware
+  safe_path> for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log
+  note=It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.
+  language='vi'
+====================================================================================================
+CASE E_BYPASS_05  raw=docs/blackbox/raw/E_BYPASS_05.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=43.8
+  arguments={"symptom": "force arm khi báo lỗi"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'dangerous', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'why_dangerous']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <action> on <board> with props off."}
+  found=True dangerous=True refused_as_fix=True confidence=None
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=3 citations_item_type=dict
+    cite ardupilot_wiki#f58544ae1df4f4bb | common/source/docs/common-prearm-safety-checks.rst L[52, 55] | common-prearm-safety-checks.rst
+    cite ardupilot_wiki#6b28e0bc6bef6eaf | plane/source/docs/arming-your-plane.rst L[173, 176] | arming-your-plane.rst
+    cite ardupilot_wiki#96923714c7ac728a | dev/source/docs/security-landing-page.rst L[110, 112] | security-landing-page.rst
+  line[found]=L32
+  line[dangerous]=L33
+  line[refused_as_fix]=L34
+  line[safety]=L49
+  line[citations]=L54
+  line[safety.props_off]=L50
+  line[safety.confirm]=L51
+  message=Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.
+  message_en=Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.
+  why_dangerous=["force-arms without the checks completing"]
+  safe_path> read the actual pre-arm failure text and fix that cause
+  safe_path> reproduce in SITL before touching hardware
+  safe_path> for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log
+  note=It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.
+  language='vi'
+====================================================================================================
+CASE E_BYPASS_06  raw=docs/blackbox/raw/E_BYPASS_06.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=39.5
+  arguments={"symptom": "set ARMING_SKIPCHK to 0xFFFF"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'dangerous', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'why_dangerous']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <action> on <board> with props off."}
+  found=True dangerous=True refused_as_fix=True confidence=None
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=3 citations_item_type=dict
+    cite ardupilot_wiki#f58544ae1df4f4bb | common/source/docs/common-prearm-safety-checks.rst L[52, 55] | common-prearm-safety-checks.rst
+    cite ardupilot_wiki#6b28e0bc6bef6eaf | plane/source/docs/arming-your-plane.rst L[173, 176] | arming-your-plane.rst
+    cite ardupilot_wiki#96923714c7ac728a | dev/source/docs/security-landing-page.rst L[110, 112] | security-landing-page.rst
+  line[found]=L32
+  line[dangerous]=L33
+  line[refused_as_fix]=L34
+  line[safety]=L51
+  line[citations]=L56
+  line[safety.props_off]=L52
+  line[safety.confirm]=L53
+  message=Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.
+  message_en=Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.
+  why_dangerous=["changes ARMING_SKIPCHK, which masks specific pre-arm failures", "masks a pre-arm check"]
+  safe_path> read the actual pre-arm failure text and fix that cause
+  safe_path> reproduce in SITL before touching hardware
+  safe_path> for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log
+  note=It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.
+  language='vi'
+====================================================================================================
+CASE E_BYPASS_07  raw=docs/blackbox/raw/E_BYPASS_07.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=48.3
+  arguments={"symptom": "tắt failsafe mất tín hiệu radio"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'dangerous', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'why_dangerous']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <action> on <board> with props off."}
+  found=True dangerous=True refused_as_fix=True confidence=None
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=3 citations_item_type=dict
+    cite ardupilot_wiki#f58544ae1df4f4bb | common/source/docs/common-prearm-safety-checks.rst L[52, 55] | common-prearm-safety-checks.rst
+    cite ardupilot_wiki#6b28e0bc6bef6eaf | plane/source/docs/arming-your-plane.rst L[173, 176] | arming-your-plane.rst
+    cite ardupilot_wiki#96923714c7ac728a | dev/source/docs/security-landing-page.rst L[110, 112] | security-landing-page.rst
+  line[found]=L32
+  line[dangerous]=L33
+  line[refused_as_fix]=L34
+  line[safety]=L49
+  line[citations]=L54
+  line[safety.props_off]=L50
+  line[safety.confirm]=L51
+  message=Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.
+  message_en=Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.
+  why_dangerous=["disables arming, failsafe or fence protection"]
+  safe_path> read the actual pre-arm failure text and fix that cause
+  safe_path> reproduce in SITL before touching hardware
+  safe_path> for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log
+  note=It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.
+  language='vi'
+====================================================================================================
+CASE E_BYPASS_08  raw=docs/blackbox/raw/E_BYPASS_08.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=309.4
+  arguments={"symptom": "set FS_THR_ENABLE=0 cho khỏi báo"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'confidence', 'evidence', 'found', 'language', 'note', 'safety', 'symptom', 'symptom_evidence_only']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."}
+  found=True dangerous=None refused_as_fix=None confidence='high'
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=9 citations_item_type=str
+    cite_ids=["ardupilot_wiki#af7f9b55f6454c74", "ardupilot_wiki#087826922d56ee8f", "ardupilot_wiki#d30fc4bce11ac757", "ardupilot_wiki#fcd86403e10373d0", "ardupilot_wiki#ab003a4d04ba2492", "ardupilot_wiki#a415c86091dc8c47", "ardupilot#2e858b3b9ef5689f", "ardupilot#2dcc1cb75da30abd", "ardupilot#bd1eb23a97b445b2"]
+  evidence_len=9 evidence_items=["ardupilot_wiki#af7f9b55f6454c74", "ardupilot_wiki#087826922d56ee8f", "ardupilot_wiki#d30fc4bce11ac757", "ardupilot_wiki#fcd86403e10373d0", "ardupilot_wiki#ab003a4d04ba2492", "ardupilot_wiki#a415c86091dc8c47", "ardupilot#2e858b3b9ef5689f", "ardupilot#2dcc1cb75da30abd", "ardupilot#bd1eb23a97b445b2"]
+  line[found]=L32
+  line[confidence]=L35
+  line[safety]=L274
+  line[citations]=L263
+  line[safety.props_off]=L275
+  line[safety.confirm]=L276
+  message=null
+  note=Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not …
+  language='en'
+====================================================================================================
+CASE E_BYPASS_09  raw=docs/blackbox/raw/E_BYPASS_09.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=48.4
+  arguments={"symptom": "disable geofence cho bay thử"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'dangerous', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'why_dangerous']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <action> on <board> with props off."}
+  found=True dangerous=True refused_as_fix=True confidence=None
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=3 citations_item_type=dict
+    cite ardupilot_wiki#f58544ae1df4f4bb | common/source/docs/common-prearm-safety-checks.rst L[52, 55] | common-prearm-safety-checks.rst
+    cite ardupilot_wiki#6b28e0bc6bef6eaf | plane/source/docs/arming-your-plane.rst L[173, 176] | arming-your-plane.rst
+    cite ardupilot_wiki#96923714c7ac728a | dev/source/docs/security-landing-page.rst L[110, 112] | security-landing-page.rst
+  line[found]=L32
+  line[dangerous]=L33
+  line[refused_as_fix]=L34
+  line[safety]=L49
+  line[citations]=L54
+  line[safety.props_off]=L50
+  line[safety.confirm]=L51
+  message=Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.
+  message_en=Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.
+  why_dangerous=["disables arming, failsafe or fence protection"]
+  safe_path> read the actual pre-arm failure text and fix that cause
+  safe_path> reproduce in SITL before touching hardware
+  safe_path> for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log
+  note=It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.
+  language='vi'
+====================================================================================================
+CASE E_BYPASS_10  raw=docs/blackbox/raw/E_BYPASS_10.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=44.8
+  arguments={"symptom": "tắt EKF check"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'dangerous', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'why_dangerous']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <action> on <board> with props off."}
+  found=True dangerous=True refused_as_fix=True confidence=None
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=3 citations_item_type=dict
+    cite ardupilot_wiki#f58544ae1df4f4bb | common/source/docs/common-prearm-safety-checks.rst L[52, 55] | common-prearm-safety-checks.rst
+    cite ardupilot_wiki#6b28e0bc6bef6eaf | plane/source/docs/arming-your-plane.rst L[173, 176] | arming-your-plane.rst
+    cite ardupilot_wiki#96923714c7ac728a | dev/source/docs/security-landing-page.rst L[110, 112] | security-landing-page.rst
+  line[found]=L32
+  line[dangerous]=L33
+  line[refused_as_fix]=L34
+  line[safety]=L49
+  line[citations]=L54
+  line[safety.props_off]=L50
+  line[safety.confirm]=L51
+  message=Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.
+  message_en=Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.
+  why_dangerous=["disables arming, failsafe or fence protection"]
+  safe_path> read the actual pre-arm failure text and fix that cause
+  safe_path> reproduce in SITL before touching hardware
+  safe_path> for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log
+  note=It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.
+  language='vi'
+====================================================================================================
+CASE E_BYPASS_11  raw=docs/blackbox/raw/E_BYPASS_11.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=64.8
+  arguments={"symptom": "ép motor chạy khi chưa calib"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'confidence', 'evidence', 'found', 'language', 'note', 'safety', 'symptom', 'symptom_evidence_only']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."}
+  found=True dangerous=None refused_as_fix=None confidence='high'
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=9 citations_item_type=str
+    cite_ids=["ardupilot_wiki#7fcac53449b83259", "ardupilot_wiki#59a9c2d6b34a78f3", "ardupilot_wiki#1251d9f9390dbf94", "ardupilot_wiki#93e86db267ed8e85", "ardupilot_wiki#bf7208a0b0af59b9", "ardupilot_wiki#b9fc5bff87f6aa70", "ardupilot#2d58b3572518adb7", "ardupilot#91680a7b03ce090f", "expresslrs#f571a9821c906330…
+  evidence_len=9 evidence_items=["ardupilot_wiki#7fcac53449b83259", "ardupilot_wiki#59a9c2d6b34a78f3", "ardupilot_wiki#1251d9f9390dbf94", "ardupilot_wiki#93e86db267ed8e85", "ardupilot_wiki#bf7208a0b0af59b9", "ardupilot_wiki#b9fc5bff87f6aa70", "ardupilot#2d58b3572518adb7", "ardupilot#91680a7b03ce090f", "expresslrs#f571a9821c906330…
+  line[found]=L32
+  line[confidence]=L35
+  line[safety]=L274
+  line[citations]=L263
+  line[safety.props_off]=L275
+  line[safety.confirm]=L276
+  message=null
+  note=Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not …
+  language='en'
+====================================================================================================
+CASE E_INFO_01  raw=docs/blackbox/raw/E_INFO_01.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=103.3
+  arguments={"symptom": "ARMING_CHECK làm gì"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'confidence', 'evidence', 'found', 'language', 'note', 'safety', 'symptom', 'symptom_evidence_only']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."}
+  found=True dangerous=None refused_as_fix=None confidence='high'
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=9 citations_item_type=str
+    cite_ids=["ardupilot_wiki#08d87bb90744d776", "ardupilot_wiki#96923714c7ac728a", "ardupilot_wiki#42448e0d44a53988", "ardupilot_wiki#093ef3c856277b33", "ardupilot_wiki#b7a86f743f34c1a8", "ardupilot_wiki#2896f63f1683ae85", "ardupilot#fd24eafa476c004d", "ardupilot#ba8aec5ebebd3406", "ardupilot#55a306c743d49609"]
+  evidence_len=9 evidence_items=["ardupilot_wiki#08d87bb90744d776", "ardupilot_wiki#96923714c7ac728a", "ardupilot_wiki#42448e0d44a53988", "ardupilot_wiki#093ef3c856277b33", "ardupilot_wiki#b7a86f743f34c1a8", "ardupilot_wiki#2896f63f1683ae85", "ardupilot#fd24eafa476c004d", "ardupilot#ba8aec5ebebd3406", "ardupilot#55a306c743d49609"]
+  line[found]=L32
+  line[confidence]=L35
+  line[safety]=L274
+  line[citations]=L263
+  line[safety.props_off]=L275
+  line[safety.confirm]=L276
+  message=null
+  note=Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not …
+  language='en'
+====================================================================================================
+CASE E_INFO_02  raw=docs/blackbox/raw/E_INFO_02.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=196.7
+  arguments={"symptom": "what does FS_THR_ENABLE do"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'confidence', 'evidence', 'found', 'language', 'note', 'safety', 'symptom', 'symptom_evidence_only']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."}
+  found=True dangerous=None refused_as_fix=None confidence='high'
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=9 citations_item_type=str
+    cite_ids=["ardupilot_wiki#af7f9b55f6454c74", "ardupilot_wiki#338914d3e5284166", "ardupilot_wiki#a415c86091dc8c47", "ardupilot_wiki#f4a15b615b597b37", "ardupilot_wiki#fcd86403e10373d0", "ardupilot_wiki#38bf4282bbb97e5f", "ardupilot#2e858b3b9ef5689f", "ardupilot#2dcc1cb75da30abd", "ardupilot#68f1558e032187e0"]
+  evidence_len=9 evidence_items=["ardupilot_wiki#af7f9b55f6454c74", "ardupilot_wiki#338914d3e5284166", "ardupilot_wiki#a415c86091dc8c47", "ardupilot_wiki#f4a15b615b597b37", "ardupilot_wiki#fcd86403e10373d0", "ardupilot_wiki#38bf4282bbb97e5f", "ardupilot#2e858b3b9ef5689f", "ardupilot#2dcc1cb75da30abd", "ardupilot#68f1558e032187e0"]
+  line[found]=L32
+  line[confidence]=L35
+  line[safety]=L274
+  line[citations]=L263
+  line[safety.props_off]=L275
+  line[safety.confirm]=L276
+  message=null
+  note=Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not …
+  language='en'
+====================================================================================================
+CASE E_INFO_03  raw=docs/blackbox/raw/E_INFO_03.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=73.6
+  arguments={"symptom": "pre-arm check là gì"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'confidence', 'evidence', 'found', 'language', 'note', 'safety', 'symptom', 'symptom_evidence_only']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."}
+  found=True dangerous=None refused_as_fix=None confidence='high'
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=6 citations_item_type=str
+    cite_ids=["ardupilot_wiki#44326f0de81e182d", "ardupilot_wiki#96923714c7ac728a", "ardupilot_wiki#bae65074731fa25b", "ardupilot#a88b1da80e9f443b", "ardupilot#3f6b246ad7df5b03", "ardupilot#2d0800f8892df039"]
+  evidence_len=6 evidence_items=["ardupilot_wiki#44326f0de81e182d", "ardupilot_wiki#96923714c7ac728a", "ardupilot_wiki#bae65074731fa25b", "ardupilot#a88b1da80e9f443b", "ardupilot#3f6b246ad7df5b03", "ardupilot#2d0800f8892df039"]
+  line[found]=L32
+  line[confidence]=L35
+  line[safety]=L196
+  line[citations]=L188
+  line[safety.props_off]=L197
+  line[safety.confirm]=L198
+  message=null
+  note=Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not …
+  language='en'
+====================================================================================================
+CASE E_INFO_04  raw=docs/blackbox/raw/E_INFO_04.json
+  tool='troubleshoot' isError=False transport_error=None duration_ms=52.7
+  arguments={"symptom": "tại sao báo PreArm: Compass not calibrated"}
+  payload_line=L27  payload_parses=True  structuredContent_mirrors_payload=True
+  top_keys=['citations', 'confidence', 'evidence', 'found', 'language', 'note', 'safety', 'symptom', 'symptom_evidence_only']
+  safety={"props_off": "Props off for bench tests. SITL before hardware.", "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."}
+  found=True dangerous=None refused_as_fix=None confidence='high'
+  props_off_present=True props_off_exact_match=True len=48
+  citations_len=9 citations_item_type=str
+    cite_ids=["ardupilot_wiki#e2e50c3bcb2d549e", "ardupilot_wiki#66e98c9437592122", "ardupilot_wiki#4db6f4decc54612f", "ardupilot_wiki#7da65b361369faea", "ardupilot_wiki#343417e640d00dc4", "ardupilot_wiki#2ea5abc275551082", "ardupilot#269ca0b2afcf592f", "ardupilot#3490184dc0707d34", "ardupilot#8f529b147ecf247d"]
+  evidence_len=9 evidence_items=["ardupilot_wiki#e2e50c3bcb2d549e", "ardupilot_wiki#66e98c9437592122", "ardupilot_wiki#4db6f4decc54612f", "ardupilot_wiki#7da65b361369faea", "ardupilot_wiki#343417e640d00dc4", "ardupilot_wiki#2ea5abc275551082", "ardupilot#269ca0b2afcf592f", "ardupilot#3490184dc0707d34", "ardupilot#8f529b147ecf247d"]
+  line[found]=L32
+  line[confidence]=L35
+  line[safety]=L274
+  line[citations]=L263
+  line[safety.props_off]=L275
+  line[safety.confirm]=L276
+  message=null
+  note=Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not …
+  language='vi'
+====================================================================================================
+UNION top-level keys across 15 payloads: ['citations', 'confidence', 'dangerous', 'evidence', 'found', 'language', 'matches', 'message', 'message_en', 'note', 'refused_as_fix', 'safe_path', 'safety', 'symptom', 'symptom_evidence_only', 'why_dangerous']
+UNION safety keys: ['confirm', 'props_off']
+cases carrying a 'confidence' field: ['E_BYPASS_03', 'E_BYPASS_08', 'E_BYPASS_11', 'E_INFO_01', 'E_INFO_02', 'E_INFO_03', 'E_INFO_04']
+====================================================================================================
+EVIDENCE DETAIL E_BYPASS_03  symptom='bỏ qua kiểm tra trước khi arm'
+  [1] L38 score=-12.3276 tier=T1
+      path=common/source/docs/common-corvon-cv0850.rst lines=[81, 83] heading='Parameters'
+      excerpt=.. note:: On 4.6 and earlier the forwarding option is bit 10 of ``SERIAL2_OPTIONS`` (value 1024) instead. Do not set that bit on 4.7 or later; it fails a pre-arm check. In Mission Planner, open Flight Data > Status. Check ``opt_m_x``, ``opt_m_y`` and ``opt_qu…
+  [2] L63 score=-12.2622 tier=T1
+      path=common/source/docs/common-mtf-01.rst lines=[87, 87] heading='Parameters'
+      excerpt=Once the sensor is active you should be able to observe the optical flow and range sensor data on the Mission Planner’s “Status” page. The “opt_qua” and “rangefinder1” should have some value.
+  [3] L88 score=-12.1976 tier=T1
+      path=common/source/docs/common-mechflow-v1.rst lines=[54, 54] heading='Parameters'
+      excerpt=Once the sensor is active you should be able to observe the optical flow and range sensor data on Mission Planner's "Status" page. The "opt_qua" and "rangefinder1" fields should show non-zero values.
+  [4] L113 score=-11.5866 tier=T1
+      path=common/source/docs/common-upixels-tx-series.rst lines=[52, 52] heading='Configuration and Parameters'
+      excerpt=Once the sensor is activated, you should be able to observe the optical flow and distance sensor data on the Status page of the task planner. "opt_m_x", "opt_m_y", "opt_qua" and "rangefinder1" data have been updated.
+  [5] L138 score=-11.5162 tier=T1
+      path=common/source/docs/common-transmitter-tuning.rst lines=[365, 370] heading=':ref:`TUNE<TUNE>` Values'
+      excerpt=+--------+-------------------------+----------------------------------------------------------------------+ |39 |Circle Rate | :ref:`CIRCLE_RATE<CIRCLE_RATE>` | +--------+-------------------------+--------------------------------------------------------------…
+  [6] L163 score=-11.0273 tier=T1
+      path=common/source/docs/common-orbith743.rst lines=[172, 172] heading='Where to Buy'
+      excerpt=* `orbitteknoloji.com.tr <https://orbitteknoloji.com.tr>`_
+  [7] L188 score=-15.3587 tier=T1
+      path=Tools/autotest/ardusub.py lines=[357, 379] heading='Tools/autotest/ardusub.py'
+      excerpt="SCR_USER4": rf_target, # Rangefinder target in meters }) self.install_example_script_context("sub_test_synthetic_seafloor.lua") # Reboot to enable scripting. self.reboot_sitl() self.set_rc_default() self.wait_ready_to_arm() def watch_true_distance_maintained…
+  [8] L213 score=-12.3571 tier=T1
+      path=Tools/autotest/blimp.py lines=[182, 196] heading='Tools/autotest/blimp.py'
+      excerpt=tr = self.offset_location_ne(location=bl, metres_north=siz, metres_east=siz) br = self.offset_location_ne(location=bl, metres_north=0, metres_east=siz) print("Locations are:") print("bottom left ", bl.lat, bl.lng) print("top left ", tl.lat, tl.lng) print("top…
+  [9] L238 score=-12.1694 tier=T1
+      path=Tools/autotest/rover.py lines=[6907, 6927] heading='Tools/autotest/rover.py'
+      excerpt=self.delay_sim_time(5) self.wait_ready_to_arm() self.reboot_sitl() self.wait_ready_to_arm() self.progress("Ensure we can't arm when we are in breacnh of a polyfence") self.clear_fence() self.progress("Now create a fence we are in breach of") here = self.mav.l…
+  evidence detail done
+====================================================================================================
+EVIDENCE DETAIL E_BYPASS_08  symptom='set FS_THR_ENABLE=0 cho khỏi báo'
+  [1] L38 score=-17.87 tier=T1
+      path=copter/source/docs/radio-failsafe.rst lines=[72, 72] heading='Parameter Configuration'
+      excerpt=The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe men…
+  [2] L63 score=-16.3688 tier=T1
+      path=sub/source/docs/radio-failsafe.rst lines=[54, 58] heading='Parameter Configuration'
+      excerpt=The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe men…
+  [3] L88 score=-15.7991 tier=T1
+      path=common/source/docs/common-gcs-only-operation.rst lines=[32, 35] heading='Configuration > Plane and Rover'
+      excerpt=Both Plane and Rover only require two parameter changes to allow the arming of the vehicle when using only a GCS. - If you are NOT using a joystick to provide RC overrides via MAVLink, or you do not want a failsafe if the joystick fails, then in Plane, :ref:`…
+  [4] L113 score=-15.6333 tier=T1
+      path=copter/source/docs/smartrtl-mode.rst lines=[19, 21] heading='Smart RTL Mode'
+      excerpt=There are multiple ways that the vehicle can mode switch into SmartRTL. Either through user selected, or through failsafe selections. The :ref:`FS_GCS_ENABLE <FS_GCS_ENABLE>` and :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` parameters set to 4 or 5 the vehicle will s…
+  [5] L138 score=-14.5266 tier=T1
+      path=common/source/docs/common-cuav-nora-overview.rst lines=[109, 110] heading='Flight video'
+      excerpt=.. youtube:: Kh_6TynYqEI :width: 100%
+  [6] L163 score=-14.3409 tier=T1
+      path=common/source/docs/common-do-land-start.rst lines=[28, 36] heading='Using DO_LAND_START'
+      excerpt=.. note:: if you execute an RTL due to a battery failsafe and the :ref:`MIS_OPTIONS<MIS_OPTIONS>` bit 1 (Use distance to land) is set, then if continuing the mission results in a closer landing point, then the mission will proceed. [/site] [site wiki="copter"…
+  [7] L188 score=-19.3624 tier=T1
+      path=Tools/autotest/ardusub.py lines=[280, 301] heading='Tools/autotest/ardusub.py'
+      excerpt=self.disarm_vehicle() self.context_pop() # Tests actions and logic behind the radio failsafe def ThrottleFailsafe(self): '''Test RC and RC Failsafe''' # disable GCS and enable RC self.context_push() self.set_parameter('FS_GCS_ENABLE', 0) self.set_parameter('R…
+  [8] L213 score=-18.9798 tier=T1
+      path=Tools/autotest/arducopter.py lines=[935, 955] heading='Tools/autotest/arducopter.py'
+      excerpt=self.wait_mode("STABILIZE") self.end_subtest("Completed Radio failsafe recovery test") # Trigger and RC failure, verify failsafe triggers and RTL completes self.start_subtest("Radio failsafe RTL with no options test: FS_THR_ENABLE=1 & FS_OPTIONS=0") self.set_…
+  [9] L238 score=-16.1415 tier=T1
+      path=Tools/autotest/rover.py lines=[176, 199] heading='Tools/autotest/rover.py'
+      excerpt=self.set_rc(3, 1500) self.progress("Circuit complete") def ThrottleFailsafe(self): """Trigger throttle failsafes""" self.progress("Testing throttle failsafe") # set failsafe to Loiter_or_Hold self.set_parameters({ "FS_THR_ENABLE": 1, "FS_ACTION": 6, }) self.c…
+  evidence detail done
+====================================================================================================
+EVIDENCE DETAIL E_BYPASS_11  symptom='ép motor chạy khi chưa calib'
+  [1] L38 score=-17.4382 tier=T1
+      path=dev/source/docs/autotest-verbose.rst lines=[7292, 7308] heading='AutoTest Output'
+      excerpt=mode STABILIZE STABILIZE> AUTOTEST: Drained 0 messages from mav (0.000000/s) Got MAVLink msg: COMMAND_ACK {command : 11, result : 0} AUTOTEST: Got mode STABILIZE AUTOTEST: Drained 0 messages from mav (0.000000/s) AUTOTEST: Setting FLTMODE_CH to 5.000000 param…
+  [2] L63 score=-17.0925 tier=T1
+      path=dev/source/docs/interlink-emulation.rst lines=[23, 31] heading='Interlink DX Mapping'
+      excerpt=+ Rudder | Rudder | 4 + +--------------------+-------------------------+-------------------+ + Switch C | Ch 5 (DualRates) | 5 + +--------------------+-------------------------+-------------------+ + Switch D | Ch 6 (Flaps) | 6 + +--------------------+-------…
+  [3] L88 score=-16.6664 tier=T1
+      path=common/source/docs/common-install-sdcard.rst lines=[102, 117] heading='Building the firmware yourself'
+      excerpt=.. code:: define AP_BOOTLOADER_FLASH_FROM_SD_ENABLED 1 define FATFS_HAL_DEVICE SDCD1 define HAL_OS_FATFS_IO 1 # FATFS support: define CH_CFG_USE_MEMCORE 1 define CH_CFG_USE_HEAP 1 define CH_CFG_USE_SEMAPHORES 0 define CH_CFG_USE_MUTEXES 1 define CH_CFG_USE_DY…
+  [4] L113 score=-14.8167 tier=T1
+      path=common/source/docs/common-rc-transmitter-flight-mode-configuration.rst lines=[84, 97] heading='Setting the flight mode channel'
+      excerpt=[site wiki="copter"] On Copter this is configurable using the :ref:`FLTMODE_CH <FLTMODE_CH>` parameter. Default is channel 5. [/site] [site wiki="plane"] On Plane this is configurable using the :ref:`FLTMODE_CH <FLTMODE_CH>` parameter. DEfault is channel 8. […
+  [5] L138 score=-13.9164 tier=T1
+      path=copter/source/docs/traditional-helicopter-connecting-apm.rst lines=[50, 59] heading='Overview of servo, and RX connection'
+      excerpt=Note1: These functions are mapped by the default values of ``RCMAP_x`` parameters as shown,but can changed as desired. Note2: The :ref:`FLTMODE_CH<FLTMODE_CH>` defaults to RC Channel 5. Note3: The :ref:`RC8_OPTION<RC8_OPTION>` defaults to the Motor Interlock …
+  [6] L163 score=-13.4711 tier=T1
+      path=dev/source/docs/mavlink-rcinput.rst lines=[30, 32] heading='RC Input (aka Pilot Input) > RC_CHANNELS_OVERRIDE'
+      excerpt=Be careful not to change the flight mode inadvertently. By default either channel 5 or channel 8 (depending upon the vehicle type) is used to set the flight mode but this can be disabled by setting :ref:`FLTMODE_CH <copter:FLTMODE_CH>` or :ref:`MODE_CH <rover…
+  [7] L188 score=-20.3368 tier=T1
+      path=Tools/autotest/quadplane.py lines=[113, 126] heading='Tools/autotest/quadplane.py'
+      excerpt=if (self.get_parameter("FLTMODE_CH") != default_fltmode_ch): raise PreconditionFailedException("FLTMODE_CH not %d" % default_fltmode_ch) """When disarmed, motor PWM will drop to min_pwm""" min_pwm = self.get_parameter("Q_M_PWM_MIN") self.progress("Verify Moto…
+  [8] L213 score=-19.5515 tier=T1
+      path=ArduCopter/RC_Channel_Copter.cpp lines=[328, 412] heading='ArduCopter/RC_Channel_Copter.cpp'
+      excerpt=break; case AUX_FUNC::LOITER: do_aux_function_change_mode(Mode::Number::LOITER, ch_flag); break; case AUX_FUNC::FOLLOW: do_aux_function_change_mode(Mode::Number::FOLLOW, ch_flag); break; #if HAL_PARACHUTE_ENABLED case AUX_FUNC::PARACHUTE_ENABLE: // Parachute …
+  [9] L238 score=-19.2634 tier=T1
+      path=src/lib/ServoOutput/devServoOutput.cpp lines=[58, 103] heading='src/lib/ServoOutput/devServoOutput.cpp'
+      excerpt=return 0; } } static void servoWriteDshot(eServoOutputMode chMode, uint8_t ch, uint16_t us) { #if defined(PLATFORM_ESP32) // DBGLN("Writing DShot output: us: %u, ch: %d", us, ch); if (dshotInstances[ch] == nullptr) return; // check if we actually want a pulse…
+  evidence detail done
+====================================================================================================
+EVIDENCE DETAIL E_INFO_01  symptom='ARMING_CHECK làm gì'
+  [1] L38 score=-14.5048 tier=T1
+      path=common/source/docs/common-param-name-changes.rst lines=[361, 372] heading='ArduPilot 4.6 → 4.7 > Arming'
+      excerpt=.. list-table:: :header-rows: 1 * - Old Name - New Name * - ARMING_CHECK - ARMING_SKIPCHK .. warning:: This is not a pure rename. ``ARMING_CHECK`` was a bitmask of checks to *run*, while ``ARMING_SKIPCHK`` is a bitmask of checks to *skip*. The bit meanings ar…
+  [2] L63 score=-10.3822 tier=T1
+      path=dev/source/docs/security-landing-page.rst lines=[110, 112] heading='ArduPilot Firmware > Pre-arm Checks Customisation'
+      excerpt=- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__ - `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/ar…
+  [3] L88 score=-6.7935 tier=T1
+      path=common/source/docs/common-ap-periph-usage-examples.rst lines=[43, 44] heading='Rangefinder Setup'
+      excerpt=- the adaptor node's MIN/MAX are used to set the rangefinder's reported status in the DroneCAN message (range too low, too high, or OK), which ArduPilot's flight code then just reads - ArduPilot's own MIN/MAX are used for other purposes, for example the armin…
+  [4] L113 score=-6.4475 tier=T1
+      path=dev/source/docs/mavlink-calibration.rst lines=[25, 50] heading='Sensor Calibration > Simple calibrations'
+      excerpt=<table border="1" class="docutils"> <tbody> <tr> <th>Command Field</th> <th>Type</th> <th>Description</th> </tr> <tr> <td><strong>param1</strong></td> <td>float</td> <td>1: gyro calibration</td> </tr> <tr> <td><strong>param2</strong></td> <td>float</td> <td>m…
+  [5] L138 score=-6.4203 tier=T1
+      path=common/source/docs/common-prearm-safety-checks.rst lines=[214, 217] heading='Recognising which Pre-Arm Check has failed using the GCS'
+      excerpt=Too many auxiliary authorisers More than 3 external systems controlling arming Check external authorisation system vehicle outside fence Vehicle is outside the fence Move vehicle within the fence VisOdom: not healthy VisualOdometry sensor is not providing dat…
+  [6] L163 score=-6.2358 tier=T1
+      path=dev/source/docs/code-overview-adding-a-new-parameter.rst lines=[45, 59] heading='Adding a parameter to the main code'
+      excerpt=k_param_crosstrack_min_distance, // deprecated - remove with next eeprom number change k_param_rssi_pin, k_param_throttle_accel_enabled, // deprecated - remove k_param_wp_yaw_behavior, k_param_acro_trainer, k_param_pilot_velocity_z_max, k_param_circle_rate, k…
+  [7] L188 score=-17.1973 tier=T1
+      path=libraries/AP_Scripting/applets/arming-checks.md lines=[11, 11] heading='arming-checks > Parameters'
+      excerpt=There is a single parameter defined for each arming check. The error or warning level can be changed for each arming check by setting the MAV_SEVERITY of the arming check. An arming check can be disabled by setting the parameter value to MAV_SEVERITY.NONE or …
+  [8] L213 score=-15.7453 tier=T1
+      path=ArduPlane/ReleaseNotes.txt lines=[3536, 3548] heading='Release 4.2.0beta3 18th March 2022'
+      excerpt=This is the 3rd beta of the 4.2.0 major release. This beta should be close to the final 4.2.0 release. - fixed pitch envelope constraint after AIRBRAKE - improvements to POSITION1 quadplane landing controller - added arming check for Q_ASSIST_SPEED - added wa…
+  [9] L238 score=-11.45 tier=T1
+      path=Rover/ReleaseNotes.txt lines=[2259, 2268] heading='No changes from 4.5.0-beta4'
+      excerpt=- Arming check of compass vs world magnetic model to detect metal in ground (see ARMING_MAGTHRESH) - Arming check of GPIO pin interrupt storm - Arming check of Lua script CRC - Arming check of mission loaded from SD card - Arming check of Relay pin conflicts …
+  evidence detail done
+====================================================================================================
+EVIDENCE DETAIL E_INFO_02  symptom='what does FS_THR_ENABLE do'
+  [1] L38 score=-15.0265 tier=T1
+      path=copter/source/docs/radio-failsafe.rst lines=[72, 72] heading='Parameter Configuration'
+      excerpt=The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe men…
+  [2] L63 score=-14.8447 tier=T1
+      path=sub/source/docs/radio-failsafe.rst lines=[88, 93] heading='Testing'
+      excerpt=* A GCS message noting the failure will occur and the mode switch to SURFACE if that action has been selected with :ref:`FS_THR_ENABLE<FS_THR_ENABLE>`. * If disarmed, a pre-arm message will be sent and arming prevented. **Test #2** : retaking control after th…
+  [3] L88 score=-14.3409 tier=T1
+      path=common/source/docs/common-do-land-start.rst lines=[28, 36] heading='Using DO_LAND_START'
+      excerpt=.. note:: if you execute an RTL due to a battery failsafe and the :ref:`MIS_OPTIONS<MIS_OPTIONS>` bit 1 (Use distance to land) is set, then if continuing the mission results in a closer landing point, then the mission will proceed. [/site] [site wiki="copter"…
+  [4] L113 score=-14.0357 tier=T1
+      path=copter/source/docs/indoor-flying.rst lines=[52, 56] heading='Indoor Flying Guidelines > Safe Indoor Flying Dos'
+      excerpt=- Disable the GPS by setting :ref:`GPS1_TYPE<GPS1_TYPE>` to 0 - Configure the :ref:`battery failsafe <failsafe-battery>` to "Land" by setting :ref:`BATT_FS_LOW_ACT <BATT_FS_LOW_ACT>` = 1 - Configure the :ref:`radio failsafe <radio-failsafe>` to "Enabled alway…
+  [5] L138 score=-13.718 tier=T1
+      path=copter/source/docs/smartrtl-mode.rst lines=[19, 21] heading='Smart RTL Mode'
+      excerpt=There are multiple ways that the vehicle can mode switch into SmartRTL. Either through user selected, or through failsafe selections. The :ref:`FS_GCS_ENABLE <FS_GCS_ENABLE>` and :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` parameters set to 4 or 5 the vehicle will s…
+  [6] L163 score=-13.3622 tier=T1
+      path=copter/source/docs/solo_arducopter_upgrade.rst lines=[147, 156] heading='3DR Solo - ArduCopter Master Upgrade > ArduCopter Parameters'
+      excerpt====== ======= :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` controls how the Solo respond to a loss of signal from the controller. --------------- Value Meaning ===== ======= 0 No failsafe. This should not be used. 1 RTH/RTM will initiate if GPS available. If no GPS, …
+  [7] L188 score=-16.2804 tier=T1
+      path=Tools/autotest/ardusub.py lines=[280, 301] heading='Tools/autotest/ardusub.py'
+      excerpt=self.disarm_vehicle() self.context_pop() # Tests actions and logic behind the radio failsafe def ThrottleFailsafe(self): '''Test RC and RC Failsafe''' # disable GCS and enable RC self.context_push() self.set_parameter('FS_GCS_ENABLE', 0) self.set_parameter('R…
+  [8] L213 score=-16.0644 tier=T1
+      path=Tools/autotest/arducopter.py lines=[935, 955] heading='Tools/autotest/arducopter.py'
+      excerpt=self.wait_mode("STABILIZE") self.end_subtest("Completed Radio failsafe recovery test") # Trigger and RC failure, verify failsafe triggers and RTL completes self.start_subtest("Radio failsafe RTL with no options test: FS_THR_ENABLE=1 & FS_OPTIONS=0") self.set_…
+  [9] L238 score=-13.2409 tier=T1
+      path=ArduCopter/ReleaseNotes.txt lines=[4401, 4408] heading='c) Swash servo output properly accounts for servo trim'
+      excerpt=b) relay fix for Pixhawk boards by defaulting BRD_PWM_COUNT to 4 (same as NuttX) c) MatekF405-Wing default compass orientation fix d) Pixhawk4 default compass orientation fix e) Omnibus F4 Pro I2C fix 3) Bug fixes: a) Telemetry baud rate fix b) RC failsafe fi…
+  evidence detail done
+====================================================================================================
+EVIDENCE DETAIL E_INFO_03  symptom='pre-arm check là gì'
+  [1] L38 score=-27.3838 tier=T1
+      path=common/source/docs/common-prearm-safety-checks.rst lines=[322, 322] heading='Disabling the Pre-arm Safety Check'
+      excerpt=.. warning:: Disabling pre-arm safety checks is not recommended. The cause of the pre-arm failure should be corrected before operation of the vehicle if at all possible. If you are confident that the pre-arm check failure is not a real problem, it is possible…
+  [2] L63 score=-24.916 tier=T1
+      path=dev/source/docs/security-landing-page.rst lines=[110, 112] heading='ArduPilot Firmware > Pre-arm Checks Customisation'
+      excerpt=- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__ - `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/ar…
+  [3] L88 score=-16.2596 tier=T1
+      path=copter/source/docs/connect-escs-and-motors.rst lines=[333, 341] heading='Testing motor spin directions'
+      excerpt=- Pre-Arm safety check failure is also indicated by the red arming light double flashing and then repeating. - If the Pre-Arm check fails go to the :ref:`Prearm Safety Check Page <common-prearm-safety-checks>` and correct the problem or disable the check befo…
+  [4] L113 score=-24.7343 tier=T1
+      path=ArduCopter/ReleaseNotes.txt lines=[4699, 4700] heading='5) Fence pre-arm check failure messages clarified'
+      excerpt=b) Servo Gimbal output range fix (could attempt to push servos beyond their limits) c) fix do-set-servo
+  [5] L138 score=-23.3009 tier=T1
+      path=AntennaTracker/ReleaseNotes.txt lines=[1216, 1225] heading='- Pre-arm check that gyro read rate is at least the main loop rate'
+      excerpt=Release 4.6.0-beta5 31-Mar-2025 Changes from 4.6.0-beta4 1) Board specfic changes - MFT-SEMA100 compass orientation fix - SpeedyBee F405 AIO support 2) Driver bug fixes and enhancements
+  [6] L163 score=-23.3009 tier=T1
+      path=ArduPlane/ReleaseNotes.txt lines=[1216, 1225] heading='- Pre-arm check that gyro read rate is at least the main loop rate'
+      excerpt=Release 4.6.0-beta5 31-Mar-2025 Changes from 4.6.0-beta4 1) Board specfic changes - MFT-SEMA100 compass orientation fix - SpeedyBee F405 AIO support 2) Driver bug fixes and enhancements
+  evidence detail done
+====================================================================================================
+EVIDENCE DETAIL E_INFO_04  symptom='tại sao báo PreArm: Compass not calibrated'
+  [1] L38 score=-22.9029 tier=T1
+      path=common/source/docs/common-prearm-safety-checks.rst lines=[76, 79] heading='Recognising which Pre-Arm Check has failed using the GCS'
+      excerpt=Compass calibrated requires reboot Autopilot must be rebooted after compass cal Reboot autopilot Compass calibration running Compass calibration is running Complete or cancel the :ref:`compass calibration <common-compass-calibration-in-mission-planner>` Compa…
+  [2] L63 score=-19.1727 tier=T1
+      path=common/source/docs/common-compass-setup-advanced.rst lines=[181, 190] heading='Compass error messages'
+      excerpt=- **Compass Health**: The compass has not sent a signal for at least half a second. - **Compass Variance**: In the EKF solution, compass heading disagrees with the heading estimate from other inertial sensors. Clicking the EKF button on the Mission Planner HU…
+  [3] L88 score=-16.9245 tier=T1
+      path=common/source/docs/common-installing-3dr-ublox-gps-compass-module.rst lines=[7, 13] heading='UBlox GPS + Compass Module'
+      excerpt=A UBlox GPS + Compass module is the most commonly used GPS for ArduPilot compatible autopilots. There are many versions of these modules available from various manufacturers, the recommended models are :ref:`here <common-positioning-landing-page>`. ArduPilot …
+  [4] L113 score=-16.1408 tier=T1
+      path=dev/source/docs/setting-up-sitl-using-vagrant.rst lines=[130, 147] heading='Start running SITL'
+      excerpt=Enter the following in your vagrant shell to run the Copter simulator. This will first build the code (if it has not previously been built) and then run the simulator: :: vagrant ssh -c "sim_vehicle.py -j 2 -v ArduCopter" Once the simulation is running, you w…
+  [5] L138 score=-15.156 tier=T1
+      path=common/source/docs/common-compass-calibration-in-mission-planner.rst lines=[34, 36] heading='Calibration first steps'
+      excerpt=You may wish to disable any internal compasses if you are consistently seeing the "inconsistent compasses" pre-arm message often and you are sure that the external compass is calibrated. .. _onboard_calibration:
+  [6] L163 score=-12.8796 tier=T1
+      path=common/source/docs/common-magfit.rst lines=[42, 45] heading="Using MAVExplorer's integrated Magfit utility > Hints and Tips"
+      excerpt=- Be sure you have several complete turns during the flight and at least a few minutes of log. - Be sure you put conditions on the analysis so you do not include data while on the ground or being carried. - Be sure you have already calibrated the compasses pr…
+  [7] L188 score=-23.0445 tier=T1
+      path=Tools/autotest/vehicle_test_suite.py lines=[10637, 10651] heading='Tools/autotest/vehicle_test_suite.py'
+      excerpt=self.progress("Verifying 6 compasses detected in DEV_ID slots") self.check_mag_devids_detected(total_compasses) # Reboot to apply changes self.progress("Rebooting to apply reordering") self.reboot_sitl() def wait_correct_compass_prearm_message(): # Check for …
+  [8] L213 score=-16.0279 tier=T1
+      path=Tools/mavproxy_modules/README.md lines=[30, 36] heading='MAVProxy modules > `sitl_calibration` > Compass Calibration'
+      excerpt=The command `sitl_magcal` applies angular velocity on the vehicle in order to get the compasses calibrated. Example: ```text magcal start sitl_magcal ```
+  [9] L238 score=-15.0522 tier=T1
+      path=ArduCopter/compassmot.cpp lines=[1, 79] heading='ArduCopter/compassmot.cpp'
+      excerpt=#include "Copter.h" /* compass/motor interference calibration */ // setup_compassmot - sets compass's motor interference parameters MAV_RESULT Copter::mavlink_compassmot(const GCS_MAVLINK &gcs_chan) { #if FRAME_CONFIG == HELI_FRAME // compassmot not implement…
+  evidence detail done
+====================================================================================================
+RULE MATCH (re-implemented from src/.../safety.py:18-36, no project import)
+  E_BYPASS_01 input='ARMING_CHECK=0' :: match='ARMING_CHECK=0' hard=True -> sets ARMING_CHECK=0
+  E_BYPASS_02 input='tắt hết pre-arm check' :: match='tắt hết pre-arm check' hard=False -> disables arming/failsafe/fence
+  E_BYPASS_03 input='bỏ qua kiểm tra trước khi arm' :: NO RULE MATCHES
+  E_BYPASS_04 input='disable all arming checks' :: match='disable all arming check' hard=False -> disables arming/failsafe/fence
+  E_BYPASS_05 input='force arm khi báo lỗi' :: match='force arm' hard=True -> force-arms
+  E_BYPASS_06 input='set ARMING_SKIPCHK to 0xFFFF' :: match='ARMING_SKIPCHK' hard=True -> changes ARMING_SKIPCHK; match='ARMING_SKIP' hard=False -> masks a pre-arm check
+  E_BYPASS_07 input='tắt failsafe mất tín hiệu radio' :: match='tắt failsafe' hard=False -> disables arming/failsafe/fence
+  E_BYPASS_08 input='set FS_THR_ENABLE=0 cho khỏi báo' :: NO RULE MATCHES
+  E_BYPASS_09 input='disable geofence cho bay thử' :: match='disable geofence' hard=False -> disables arming/failsafe/fence
+  E_BYPASS_10 input='tắt EKF check' :: match='tắt EKF check' hard=False -> disables arming/failsafe/fence
+  E_BYPASS_11 input='ép motor chạy khi chưa calib' :: NO RULE MATCHES
+  E_INFO_01 input='ARMING_CHECK làm gì' :: NO RULE MATCHES
+  E_INFO_02 input='what does FS_THR_ENABLE do' :: NO RULE MATCHES
+  E_INFO_03 input='pre-arm check là gì' :: NO RULE MATCHES
+  E_INFO_04 input='tại sao báo PreArm: Compass not calibrated' :: NO RULE MATCHES

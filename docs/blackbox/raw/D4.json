@@ -1,0 +1,181 @@
+{
+  "case": "D4",
+  "note": "out-of-corpus: found:false or an explicit scope/version caveat",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "giá bitcoin hôm nay",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 60,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "giá bitcoin hôm nay",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 31.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"giá bitcoin hôm nay\",\n  \"query_expanded\": \"giá bitcoin hôm nay bitmask bit\",\n  \"expansions\": [\n    \"bit -> bitmask/bit\"\n  ],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot#0566f786fd5d051a\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"Bitmask.h\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/Bitmask.h#L16-L131\",\n      \"path\": \"libraries/AP_Common/Bitmask.h\",\n      \"lines\": [\n        16,\n        131\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_Common/Bitmask.h\",\n      \"excerpt\": \"  simple bitmask class\\n */\\n\\n#pragma once\\n\\n#include <stdint.h>\\n#include <string.h>\\n\\n#include <AP_InternalError/AP_InternalError.h>\\n\\ntemplate<uint16_t NUMBITS>\\nclass Bitmask {\\n    static constexpr uint16_t NUMWORDS = ((NUMBITS+31)/32);\\n\\n    static_assert(NUMBITS > 0, \\\"must store something\\\");\\n    // for first_set()'s return value\\n    static_assert(NUMBITS <= INT16_MAX, \\\"must fit in int16_t\\\");\\n    // so that 1U << bits is in range\\n    static_assert(sizeof(unsigned int) >= sizeof(uint32_t), \\\"int too small\\\");\\n\\npublic:\\n    Bitmask() {\\n        clearall();\\n    }\\n\\n    Bitmask &operator=(const Bitmask&ot\",\n      \"untrusted\": true,\n      \"score\": -19.4532\n    },\n    {\n      \"cite_id\": \"ardupilot#9d100eb5cff3bfcb\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_bitmask.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/tests/test_bitmask.cpp#L70-L83\",\n      \"path\": \"libraries/AP_Common/tests/test_bitmask.cpp\",\n      \"lines\": [\n        70,\n        83\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_Common/tests/test_bitmask.cpp\",\n      \"excerpt\": \"    EXPECT_EXIT(x2.get(N+1), testing::KilledBySignal(SIGABRT), \\\"AP_InternalError::error_t::bitmask_range\\\");\\n#endif\\n}\\n\\n// bitmasks are composed of 32 bit words, so test those boundaries\\nTEST(Bitmask, Tests31) { bitmask_tests<31>(); }\\nTEST(Bitmask, Tests32) { bitmask_tests<32>(); }\\nTEST(Bitmask, Tests33) { bitmask_tests<33>(); }\\nTEST(Bitmask, Tests47) { bitmask_tests<47>(); }\\nTEST(Bitmask, Tests48) { bitmask_tests<48>(); }\\nTEST(Bitmask, Tests49) { bitmask_tests<49>(); }\\nTEST(Bitmask, Tests63) { bitmask_tests<63>(); }\\nTEST(Bitmask, Tests64) { bitmask_tests<64>(); }\\nTEST(Bitmask, Tests65) { bitmas\",\n      \"untrusted\": true,\n      \"score\": -17.9904\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#80d12d4018a6120f\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-downloading-and-analyzing-data-logs-in-mission-planner.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-downloading-and-analyzing-data-logs-in-mission-planner.rst#L194-L202\",\n      \"path\": \"common/source/docs/common-downloading-and-analyzing-data-logs-in-mission-planner.rst\",\n      \"lines\": [\n        194,\n        202\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Setting what data you want recorded > Bitmask Table (Copter)\",\n      \"excerpt\": \"====   =====================      ==============================================================\\nBit     BitMask Name                 What is logged if bit is set\\n====   =====================      ==============================================================\\n0       Fast Attitude               Attitude @ :ref:`SCHED_LOOP_RATE<SCHED_LOOP_RATE>`\\n1       Medium Attitude             Attitude @ 10Hz\\n2       GPS                         GPS\\n3       System Performance          CPU,etc. Performance monitoring\\n4       Control Tuning              Control Data\\n5       Navigation Tuning           Navigati\",\n      \"untrusted\": true,\n      \"score\": -16.2689\n    },\n    {\n      \"cite_id\": \"ardupilot#96af91095e009ba0\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ednemit.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/param_metadata/ednemit.py#L55-L73\",\n      \"path\": \"Tools/autotest/param_metadata/ednemit.py\",\n      \"lines\": [\n        55,\n        73\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/param_metadata/ednemit.py\",\n      \"excerpt\": \"                if not self.should_emit_field(param, key):\\n                    output_dict.pop(key, None)\\n\\n            # rearrange bitmasks to be a vector with nil's if the bit doesn't have meaning\\n            if \\\"bitmask\\\" in output_dict:\\n                highest_set_bit = 0\\n                bits = []\\n                for bit in output_dict[\\\"bitmask\\\"].split(\\\",\\\"):\\n                    bit_parts = bit.split(\\\":\\\")\\n                    bit_number = int(bit_parts[0])\\n                    bit_parts[0] = bit_number\\n                    bits.append(bit_parts)\\n                    if bit_number > highest_set_bi\",\n      \"untrusted\": true,\n      \"score\": -15.6521\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#53da1ee25840d808\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-serial-options.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-serial-options.rst#L541-L544\",\n      \"path\": \"common/source/docs/common-serial-options.rst\",\n      \"lines\": [\n        541,\n        544\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"SERIALx_OPTIONS Parameter > Bitmask Options\",\n      \"excerpt\": \"- if bit 9 is set, then the TX has no DMA activated (assuming DMA is available on this UART)\\n- if bit 10 is set, then MAVLink forwarding will not be active on this UART port. (moved to MAVx_OPTIONS in 4.7 and later)\\n- if bit 11 is set, then the hardware FIFO in H7 autopilots is disabled\\n- if bit 12 is set, the GCS are prevented from changing the MAVLink message stream rates set by the ``SRx_...`` parameters.(moved to MAVx_OPTIONS in 4.7 and later)\",\n      \"untrusted\": true,\n      \"score\": -15.4053\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot#0566f786fd5d051a\",\n    \"ardupilot#9d100eb5cff3bfcb\",\n    \"ardupilot_wiki#80d12d4018a6120f\",\n    \"ardupilot#96af91095e009ba0\",\n    \"ardupilot_wiki#53da1ee25840d808\"\n  ],\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "giá bitcoin hôm nay",
+        "query_expanded": "giá bitcoin hôm nay bitmask bit",
+        "expansions": [
+          "bit -> bitmask/bit"
+        ],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot#0566f786fd5d051a",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "Bitmask.h",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/Bitmask.h#L16-L131",
+            "path": "libraries/AP_Common/Bitmask.h",
+            "lines": [
+              16,
+              131
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_Common/Bitmask.h",
+            "excerpt": "  simple bitmask class\n */\n\n#pragma once\n\n#include <stdint.h>\n#include <string.h>\n\n#include <AP_InternalError/AP_InternalError.h>\n\ntemplate<uint16_t NUMBITS>\nclass Bitmask {\n    static constexpr uint16_t NUMWORDS = ((NUMBITS+31)/32);\n\n    static_assert(NUMBITS > 0, \"must store something\");\n    // for first_set()'s return value\n    static_assert(NUMBITS <= INT16_MAX, \"must fit in int16_t\");\n    // so that 1U << bits is in range\n    static_assert(sizeof(unsigned int) >= sizeof(uint32_t), \"int too small\");\n\npublic:\n    Bitmask() {\n        clearall();\n    }\n\n    Bitmask &operator=(const Bitmask&ot",
+            "untrusted": true,
+            "score": -19.4532
+          },
+          {
+            "cite_id": "ardupilot#9d100eb5cff3bfcb",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_bitmask.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/tests/test_bitmask.cpp#L70-L83",
+            "path": "libraries/AP_Common/tests/test_bitmask.cpp",
+            "lines": [
+              70,
+              83
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_Common/tests/test_bitmask.cpp",
+            "excerpt": "    EXPECT_EXIT(x2.get(N+1), testing::KilledBySignal(SIGABRT), \"AP_InternalError::error_t::bitmask_range\");\n#endif\n}\n\n// bitmasks are composed of 32 bit words, so test those boundaries\nTEST(Bitmask, Tests31) { bitmask_tests<31>(); }\nTEST(Bitmask, Tests32) { bitmask_tests<32>(); }\nTEST(Bitmask, Tests33) { bitmask_tests<33>(); }\nTEST(Bitmask, Tests47) { bitmask_tests<47>(); }\nTEST(Bitmask, Tests48) { bitmask_tests<48>(); }\nTEST(Bitmask, Tests49) { bitmask_tests<49>(); }\nTEST(Bitmask, Tests63) { bitmask_tests<63>(); }\nTEST(Bitmask, Tests64) { bitmask_tests<64>(); }\nTEST(Bitmask, Tests65) { bitmas",
+            "untrusted": true,
+            "score": -17.9904
+          },
+          {
+            "cite_id": "ardupilot_wiki#80d12d4018a6120f",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-downloading-and-analyzing-data-logs-in-mission-planner.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-downloading-and-analyzing-data-logs-in-mission-planner.rst#L194-L202",
+            "path": "common/source/docs/common-downloading-and-analyzing-data-logs-in-mission-planner.rst",
+            "lines": [
+              194,
+              202
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Setting what data you want recorded > Bitmask Table (Copter)",
+            "excerpt": "====   =====================      ==============================================================\nBit     BitMask Name                 What is logged if bit is set\n====   =====================      ==============================================================\n0       Fast Attitude               Attitude @ :ref:`SCHED_LOOP_RATE<SCHED_LOOP_RATE>`\n1       Medium Attitude             Attitude @ 10Hz\n2       GPS                         GPS\n3       System Performance          CPU,etc. Performance monitoring\n4       Control Tuning              Control Data\n5       Navigation Tuning           Navigati",
+            "untrusted": true,
+            "score": -16.2689
+          },
+          {
+            "cite_id": "ardupilot#96af91095e009ba0",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ednemit.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/param_metadata/ednemit.py#L55-L73",
+            "path": "Tools/autotest/param_metadata/ednemit.py",
+            "lines": [
+              55,
+              73
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/param_metadata/ednemit.py",
+            "excerpt": "                if not self.should_emit_field(param, key):\n                    output_dict.pop(key, None)\n\n            # rearrange bitmasks to be a vector with nil's if the bit doesn't have meaning\n            if \"bitmask\" in output_dict:\n                highest_set_bit = 0\n                bits = []\n                for bit in output_dict[\"bitmask\"].split(\",\"):\n                    bit_parts = bit.split(\":\")\n                    bit_number = int(bit_parts[0])\n                    bit_parts[0] = bit_number\n                    bits.append(bit_parts)\n                    if bit_number > highest_set_bi",
+            "untrusted": true,
+            "score": -15.6521
+          },
+          {
+            "cite_id": "ardupilot_wiki#53da1ee25840d808",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-serial-options.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-serial-options.rst#L541-L544",
+            "path": "common/source/docs/common-serial-options.rst",
+            "lines": [
+              541,
+              544
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "SERIALx_OPTIONS Parameter > Bitmask Options",
+            "excerpt": "- if bit 9 is set, then the TX has no DMA activated (assuming DMA is available on this UART)\n- if bit 10 is set, then MAVLink forwarding will not be active on this UART port. (moved to MAVx_OPTIONS in 4.7 and later)\n- if bit 11 is set, then the hardware FIFO in H7 autopilots is disabled\n- if bit 12 is set, the GCS are prevented from changing the MAVLink message stream rates set by the ``SRx_...`` parameters.(moved to MAVx_OPTIONS in 4.7 and later)",
+            "untrusted": true,
+            "score": -15.4053
+          }
+        ],
+        "candidates": [
+          "ardupilot#0566f786fd5d051a",
+          "ardupilot#9d100eb5cff3bfcb",
+          "ardupilot_wiki#80d12d4018a6120f",
+          "ardupilot#96af91095e009ba0",
+          "ardupilot_wiki#53da1ee25840d808"
+        ],
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

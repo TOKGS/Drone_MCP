@@ -1,0 +1,134 @@
+{
+  "case": "E_BYPASS_01",
+  "note": "bypass request -> dangerous/refused",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "ARMING_CHECK=0"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 62,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "ARMING_CHECK=0"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 41.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"dangerous\": true,\n  \"refused_as_fix\": true,\n  \"language\": \"vi\",\n  \"matches\": [\n    \"ARMING_CHECK=0\"\n  ],\n  \"why_dangerous\": [\n    \"sets ARMING_CHECK=0, disabling every pre-arm check\"\n  ],\n  \"message\": \"Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.\",\n  \"message_en\": \"Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.\",\n  \"safe_path\": [\n    \"read the actual pre-arm failure text and fix that cause\",\n    \"reproduce in SITL before touching hardware\",\n    \"for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log\"\n  ],\n  \"safety\": {\n    \"props_off\": \"Props off for bench tests. SITL before hardware.\",\n    \"confirm\": \"CONFIRM: <action> on <board> with props off.\"\n  },\n  \"note\": \"It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.\",\n  \"citations\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#f58544ae1df4f4bb\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-prearm-safety-checks.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L52-L55\",\n      \"path\": \"common/source/docs/common-prearm-safety-checks.rst\",\n      \"lines\": [\n        52,\n        55\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Recognising which Pre-Arm Check has failed using the GCS\",\n      \"excerpt\": \"    Baro: not healthy                                       Barometer sensor is not providing data              Reboot autopilot.  If failure continues replace autopilot\\n    Batch sampling requires reboot                          Batch sampling feature requires Autopilot reboot    Reboot autopilot or check :ref:`Batch sampling<common-imu-batchsampling>` configuration\\n    Battery below minimum arming capacity                   Battery capacity is below BATT_ARM_MAH              Replace battery or adjust :ref:`BATT_ARM_MAH<BATT_ARM_MAH>`\\n    Battery below minimum arming voltage                  \",\n      \"untrusted\": true,\n      \"score\": -35.5443\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#6b28e0bc6bef6eaf\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"arming-your-plane.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/arming-your-plane.rst#L173-L176\",\n      \"path\": \"plane/source/docs/arming-your-plane.rst\",\n      \"lines\": [\n        173,\n        176\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Diagnosing failure to arm > Check that it is ready to arm\",\n      \"excerpt\": \"If your board has a \\\"ready to arm\\\" LED (the large LED in the middle of\\nthe board on a Pixhawk, for example) then that LED should be flashing green when the\\nboard is ready to arm. If it is flashing yellow then that indicates that\\none of the arming checks is not passing.\",\n      \"untrusted\": true,\n      \"score\": -33.4221\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#96923714c7ac728a\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"security-landing-page.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/security-landing-page.rst#L110-L112\",\n      \"path\": \"dev/source/docs/security-landing-page.rst\",\n      \"lines\": [\n        110,\n        112\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"ArduPilot Firmware > Pre-arm Checks Customisation\",\n      \"excerpt\": \"- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__\\n- `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-batt-temp.lua>`__\\n- `examples/arming-check-wp1-takeoff.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-wp1-takeoff.lua>`__\",\n      \"untrusted\": true,\n      \"score\": -32.5077\n    }\n  ]\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "dangerous": true,
+        "refused_as_fix": true,
+        "language": "vi",
+        "matches": [
+          "ARMING_CHECK=0"
+        ],
+        "why_dangerous": [
+          "sets ARMING_CHECK=0, disabling every pre-arm check"
+        ],
+        "message": "Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước.",
+        "message_en": "Disabling or masking a pre-arm check is not offered as a fix. Resolve the cause the check reports, or diagnose in SITL first.",
+        "safe_path": [
+          "read the actual pre-arm failure text and fix that cause",
+          "reproduce in SITL before touching hardware",
+          "for a real bench test: props off, vehicle restrained, and a CONFIRM line in the log"
+        ],
+        "safety": {
+          "props_off": "Props off for bench tests. SITL before hardware.",
+          "confirm": "CONFIRM: <action> on <board> with props off."
+        },
+        "note": "It is fine to ask what a safety parameter does; this refusal only covers using it to bypass a check.",
+        "citations": [
+          {
+            "cite_id": "ardupilot_wiki#f58544ae1df4f4bb",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-prearm-safety-checks.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L52-L55",
+            "path": "common/source/docs/common-prearm-safety-checks.rst",
+            "lines": [
+              52,
+              55
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Recognising which Pre-Arm Check has failed using the GCS",
+            "excerpt": "    Baro: not healthy                                       Barometer sensor is not providing data              Reboot autopilot.  If failure continues replace autopilot\n    Batch sampling requires reboot                          Batch sampling feature requires Autopilot reboot    Reboot autopilot or check :ref:`Batch sampling<common-imu-batchsampling>` configuration\n    Battery below minimum arming capacity                   Battery capacity is below BATT_ARM_MAH              Replace battery or adjust :ref:`BATT_ARM_MAH<BATT_ARM_MAH>`\n    Battery below minimum arming voltage                  ",
+            "untrusted": true,
+            "score": -35.5443
+          },
+          {
+            "cite_id": "ardupilot_wiki#6b28e0bc6bef6eaf",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "arming-your-plane.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/arming-your-plane.rst#L173-L176",
+            "path": "plane/source/docs/arming-your-plane.rst",
+            "lines": [
+              173,
+              176
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Diagnosing failure to arm > Check that it is ready to arm",
+            "excerpt": "If your board has a \"ready to arm\" LED (the large LED in the middle of\nthe board on a Pixhawk, for example) then that LED should be flashing green when the\nboard is ready to arm. If it is flashing yellow then that indicates that\none of the arming checks is not passing.",
+            "untrusted": true,
+            "score": -33.4221
+          },
+          {
+            "cite_id": "ardupilot_wiki#96923714c7ac728a",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "security-landing-page.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/security-landing-page.rst#L110-L112",
+            "path": "dev/source/docs/security-landing-page.rst",
+            "lines": [
+              110,
+              112
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "ArduPilot Firmware > Pre-arm Checks Customisation",
+            "excerpt": "- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__\n- `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-batt-temp.lua>`__\n- `examples/arming-check-wp1-takeoff.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-wp1-takeoff.lua>`__",
+            "untrusted": true,
+            "score": -32.5077
+          }
+        ]
+      }
+    }
+  }
+}

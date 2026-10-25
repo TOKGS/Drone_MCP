@@ -1,0 +1,283 @@
+{
+  "case": "E_BYPASS_08",
+  "note": "bypass request -> dangerous/refused",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "set FS_THR_ENABLE=0 cho khỏi báo"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 69,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "set FS_THR_ENABLE=0 cho khỏi báo"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 309.4,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"symptom\": \"set FS_THR_ENABLE=0 cho khỏi báo\",\n  \"language\": \"en\",\n  \"confidence\": \"high\",\n  \"evidence\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#af7f9b55f6454c74\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"radio-failsafe.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/radio-failsafe.rst#L72-L72\",\n      \"path\": \"copter/source/docs/radio-failsafe.rst\",\n      \"lines\": [\n        72,\n        72\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Parameter Configuration\",\n      \"excerpt\": \"The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe menu.\",\n      \"untrusted\": true,\n      \"score\": -17.87\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#087826922d56ee8f\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"radio-failsafe.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/sub/source/docs/radio-failsafe.rst#L54-L58\",\n      \"path\": \"sub/source/docs/radio-failsafe.rst\",\n      \"lines\": [\n        54,\n        58\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Parameter Configuration\",\n      \"excerpt\": \"The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe menu.\\n\\n-  **Disabled** (Value 0) will disable the radio failsafe entirely.\\n-  **Warn only, prevent arming** (Value 1) Send a GCS message and prevent arming if unarmed.\\n-  **Surface** (Value 2) change mode to SURFACE.\",\n      \"untrusted\": true,\n      \"score\": -16.3688\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#d30fc4bce11ac757\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-gcs-only-operation.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-gcs-only-operation.rst#L32-L35\",\n      \"path\": \"common/source/docs/common-gcs-only-operation.rst\",\n      \"lines\": [\n        32,\n        35\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Configuration > Plane and Rover\",\n      \"excerpt\": \"Both Plane and Rover only require two parameter changes to allow the arming of the vehicle when using only a GCS.\\n\\n-  If you are NOT using a joystick to provide RC overrides via MAVLink, or you do not want a failsafe if the joystick fails, then in Plane, :ref:`THR_FAILSAFE<THR_FAILSAFE>` must be set to zero, while in Rover, :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` must be set to zero.\\n-  In both Plane and Rover, :ref:`RC_PROTOCOLs<RC_PROTOCOLs>` should be set to \\\"0\\\" to prevent accidental detection of noise as an RC source. \",\n      \"untrusted\": true,\n      \"score\": -15.7991\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#fcd86403e10373d0\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"smartrtl-mode.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/smartrtl-mode.rst#L19-L21\",\n      \"path\": \"copter/source/docs/smartrtl-mode.rst\",\n      \"lines\": [\n        19,\n        21\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Smart RTL Mode\",\n      \"excerpt\": \"There are multiple ways that the vehicle can mode switch into SmartRTL. Either through user selected, or through failsafe selections. \\n\\nThe :ref:`FS_GCS_ENABLE <FS_GCS_ENABLE>` and :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` parameters set to 4 or 5 the vehicle will switch to SmartRTL->RTL or SmartRTL->Land based on whether the correct conditions allows the mode. The setting indicates that it will try SmartRTL first, then downgrade to RTL (4) or Land (5)\",\n      \"untrusted\": true,\n      \"score\": -15.6333\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#ab003a4d04ba2492\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-cuav-nora-overview.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-cuav-nora-overview.rst#L109-L110\",\n      \"path\": \"common/source/docs/common-cuav-nora-overview.rst\",\n      \"lines\": [\n        109,\n        110\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Flight video\",\n      \"excerpt\": \".. youtube:: Kh_6TynYqEI\\n    :width: 100%\",\n      \"untrusted\": true,\n      \"score\": -14.5266\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#a415c86091dc8c47\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-do-land-start.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-do-land-start.rst#L28-L36\",\n      \"path\": \"common/source/docs/common-do-land-start.rst\",\n      \"lines\": [\n        28,\n        36\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T17:42:43+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:43+0700\",\n      \"heading_path\": \"Using DO_LAND_START\",\n      \"excerpt\": \".. note:: if you execute an RTL due to a battery failsafe and the :ref:`MIS_OPTIONS<MIS_OPTIONS>` bit 1 (Use distance to land) is set, then if continuing the mission results in a closer landing point, then the mission will proceed.\\n\\n[/site]\\n[site wiki=\\\"copter\\\"]\\n\\nTo use, you need to do two things:\\n\\n-  add a :ref:`DO_LAND_START <mav_cmd_do_land_start>` mission item to your mission, just before the start of your landing sequence(s).\\n-  use ``DO_LAND_START`` as a failsafe action. For example, setting :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` = \\\"6\\\" for RC failsafe.\",\n      \"untrusted\": true,\n      \"score\": -14.3409\n    },\n    {\n      \"cite_id\": \"ardupilot#2e858b3b9ef5689f\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ardusub.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/ardusub.py#L280-L301\",\n      \"path\": \"Tools/autotest/ardusub.py\",\n      \"lines\": [\n        280,\n        301\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/ardusub.py\",\n      \"excerpt\": \"        self.disarm_vehicle()\\n        self.context_pop()\\n\\n    # Tests actions and logic behind the radio failsafe\\n    def ThrottleFailsafe(self):\\n        '''Test RC and RC Failsafe'''\\n        # disable GCS and enable RC\\n        self.context_push()\\n        self.set_parameter('FS_GCS_ENABLE', 0)\\n        self.set_parameter('RC_PROTOCOLS', 1)\\n        self.set_heartbeat_rate(0)\\n        # Trigger an RC failure with the failsafe disabled. Verify no action taken.\\n        self.start_subtest(\\\"Radio failsafe disabled test: FS_THR_ENABLE=0 should take no failsafe action\\\")\\n        self.set_parameter('FS_TH\",\n      \"untrusted\": true,\n      \"score\": -19.3624\n    },\n    {\n      \"cite_id\": \"ardupilot#2dcc1cb75da30abd\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"arducopter.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/arducopter.py#L935-L955\",\n      \"path\": \"Tools/autotest/arducopter.py\",\n      \"lines\": [\n        935,\n        955\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/arducopter.py\",\n      \"excerpt\": \"        self.wait_mode(\\\"STABILIZE\\\")\\n        self.end_subtest(\\\"Completed Radio failsafe recovery test\\\")\\n\\n        # Trigger and RC failure, verify failsafe triggers and RTL completes\\n        self.start_subtest(\\\"Radio failsafe RTL with no options test: FS_THR_ENABLE=1 & FS_OPTIONS=0\\\")\\n        self.set_parameter(\\\"SIM_RC_FAIL\\\", 1)\\n        self.wait_mode(\\\"RTL\\\")\\n        self.wait_rtl_complete()\\n        self.set_parameter(\\\"SIM_RC_FAIL\\\", 0)\\n        self.end_subtest(\\\"Completed Radio failsafe RTL with no options test\\\")\\n\\n        # Trigger and RC failure, verify failsafe triggers and land completes\\n       \",\n      \"untrusted\": true,\n      \"score\": -18.9798\n    },\n    {\n      \"cite_id\": \"ardupilot#bd1eb23a97b445b2\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"rover.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/rover.py#L176-L199\",\n      \"path\": \"Tools/autotest/rover.py\",\n      \"lines\": [\n        176,\n        199\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"Tools/autotest/rover.py\",\n      \"excerpt\": \"        self.set_rc(3, 1500)\\n        self.progress(\\\"Circuit complete\\\")\\n\\n    def ThrottleFailsafe(self):\\n        \\\"\\\"\\\"Trigger throttle failsafes\\\"\\\"\\\"\\n        self.progress(\\\"Testing throttle failsafe\\\")\\n        # set failsafe to Loiter_or_Hold\\n        self.set_parameters({\\n            \\\"FS_THR_ENABLE\\\": 1,\\n            \\\"FS_ACTION\\\": 6,\\n        })\\n        self.change_mode(\\\"MANUAL\\\")\\n        self.wait_ready_to_arm()\\n        self.arm_vehicle()\\n\\n        self.progress(\\\"Testing failsafe to loiter\\\")\\n        self.set_parameter(\\\"SIM_RC_FAIL\\\", 1)  # no-pulses failsafe\\n        self.wait_mode(\\\"LOITER\\\", timeout=10)\\n\\n \",\n      \"untrusted\": true,\n      \"score\": -16.1415\n    }\n  ],\n  \"citations\": [\n    \"ardupilot_wiki#af7f9b55f6454c74\",\n    \"ardupilot_wiki#087826922d56ee8f\",\n    \"ardupilot_wiki#d30fc4bce11ac757\",\n    \"ardupilot_wiki#fcd86403e10373d0\",\n    \"ardupilot_wiki#ab003a4d04ba2492\",\n    \"ardupilot_wiki#a415c86091dc8c47\",\n    \"ardupilot#2e858b3b9ef5689f\",\n    \"ardupilot#2dcc1cb75da30abd\",\n    \"ardupilot#bd1eb23a97b445b2\"\n  ],\n  \"safety\": {\n    \"props_off\": \"Props off for bench tests. SITL before hardware.\",\n    \"confirm\": \"CONFIRM: <the procedure you apply> on <your board> with props off.\"\n  },\n  \"symptom_evidence_only\": false,\n  \"note\": \"Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote.\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "symptom": "set FS_THR_ENABLE=0 cho khỏi báo",
+        "language": "en",
+        "confidence": "high",
+        "evidence": [
+          {
+            "cite_id": "ardupilot_wiki#af7f9b55f6454c74",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "radio-failsafe.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/radio-failsafe.rst#L72-L72",
+            "path": "copter/source/docs/radio-failsafe.rst",
+            "lines": [
+              72,
+              72
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Parameter Configuration",
+            "excerpt": "The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe menu.",
+            "untrusted": true,
+            "score": -17.87
+          },
+          {
+            "cite_id": "ardupilot_wiki#087826922d56ee8f",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "radio-failsafe.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/sub/source/docs/radio-failsafe.rst#L54-L58",
+            "path": "sub/source/docs/radio-failsafe.rst",
+            "lines": [
+              54,
+              58
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Parameter Configuration",
+            "excerpt": "The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe menu.\n\n-  **Disabled** (Value 0) will disable the radio failsafe entirely.\n-  **Warn only, prevent arming** (Value 1) Send a GCS message and prevent arming if unarmed.\n-  **Surface** (Value 2) change mode to SURFACE.",
+            "untrusted": true,
+            "score": -16.3688
+          },
+          {
+            "cite_id": "ardupilot_wiki#d30fc4bce11ac757",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-gcs-only-operation.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-gcs-only-operation.rst#L32-L35",
+            "path": "common/source/docs/common-gcs-only-operation.rst",
+            "lines": [
+              32,
+              35
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Configuration > Plane and Rover",
+            "excerpt": "Both Plane and Rover only require two parameter changes to allow the arming of the vehicle when using only a GCS.\n\n-  If you are NOT using a joystick to provide RC overrides via MAVLink, or you do not want a failsafe if the joystick fails, then in Plane, :ref:`THR_FAILSAFE<THR_FAILSAFE>` must be set to zero, while in Rover, :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` must be set to zero.\n-  In both Plane and Rover, :ref:`RC_PROTOCOLs<RC_PROTOCOLs>` should be set to \"0\" to prevent accidental detection of noise as an RC source. ",
+            "untrusted": true,
+            "score": -15.7991
+          },
+          {
+            "cite_id": "ardupilot_wiki#fcd86403e10373d0",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "smartrtl-mode.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/smartrtl-mode.rst#L19-L21",
+            "path": "copter/source/docs/smartrtl-mode.rst",
+            "lines": [
+              19,
+              21
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Smart RTL Mode",
+            "excerpt": "There are multiple ways that the vehicle can mode switch into SmartRTL. Either through user selected, or through failsafe selections. \n\nThe :ref:`FS_GCS_ENABLE <FS_GCS_ENABLE>` and :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` parameters set to 4 or 5 the vehicle will switch to SmartRTL->RTL or SmartRTL->Land based on whether the correct conditions allows the mode. The setting indicates that it will try SmartRTL first, then downgrade to RTL (4) or Land (5)",
+            "untrusted": true,
+            "score": -15.6333
+          },
+          {
+            "cite_id": "ardupilot_wiki#ab003a4d04ba2492",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-cuav-nora-overview.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-cuav-nora-overview.rst#L109-L110",
+            "path": "common/source/docs/common-cuav-nora-overview.rst",
+            "lines": [
+              109,
+              110
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Flight video",
+            "excerpt": ".. youtube:: Kh_6TynYqEI\n    :width: 100%",
+            "untrusted": true,
+            "score": -14.5266
+          },
+          {
+            "cite_id": "ardupilot_wiki#a415c86091dc8c47",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-do-land-start.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-do-land-start.rst#L28-L36",
+            "path": "common/source/docs/common-do-land-start.rst",
+            "lines": [
+              28,
+              36
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T17:42:43+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T17:42:43+0700",
+            "heading_path": "Using DO_LAND_START",
+            "excerpt": ".. note:: if you execute an RTL due to a battery failsafe and the :ref:`MIS_OPTIONS<MIS_OPTIONS>` bit 1 (Use distance to land) is set, then if continuing the mission results in a closer landing point, then the mission will proceed.\n\n[/site]\n[site wiki=\"copter\"]\n\nTo use, you need to do two things:\n\n-  add a :ref:`DO_LAND_START <mav_cmd_do_land_start>` mission item to your mission, just before the start of your landing sequence(s).\n-  use ``DO_LAND_START`` as a failsafe action. For example, setting :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` = \"6\" for RC failsafe.",
+            "untrusted": true,
+            "score": -14.3409
+          },
+          {
+            "cite_id": "ardupilot#2e858b3b9ef5689f",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ardusub.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/ardusub.py#L280-L301",
+            "path": "Tools/autotest/ardusub.py",
+            "lines": [
+              280,
+              301
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/ardusub.py",
+            "excerpt": "        self.disarm_vehicle()\n        self.context_pop()\n\n    # Tests actions and logic behind the radio failsafe\n    def ThrottleFailsafe(self):\n        '''Test RC and RC Failsafe'''\n        # disable GCS and enable RC\n        self.context_push()\n        self.set_parameter('FS_GCS_ENABLE', 0)\n        self.set_parameter('RC_PROTOCOLS', 1)\n        self.set_heartbeat_rate(0)\n        # Trigger an RC failure with the failsafe disabled. Verify no action taken.\n        self.start_subtest(\"Radio failsafe disabled test: FS_THR_ENABLE=0 should take no failsafe action\")\n        self.set_parameter('FS_TH",
+            "untrusted": true,
+            "score": -19.3624
+          },
+          {
+            "cite_id": "ardupilot#2dcc1cb75da30abd",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "arducopter.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/arducopter.py#L935-L955",
+            "path": "Tools/autotest/arducopter.py",
+            "lines": [
+              935,
+              955
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/arducopter.py",
+            "excerpt": "        self.wait_mode(\"STABILIZE\")\n        self.end_subtest(\"Completed Radio failsafe recovery test\")\n\n        # Trigger and RC failure, verify failsafe triggers and RTL completes\n        self.start_subtest(\"Radio failsafe RTL with no options test: FS_THR_ENABLE=1 & FS_OPTIONS=0\")\n        self.set_parameter(\"SIM_RC_FAIL\", 1)\n        self.wait_mode(\"RTL\")\n        self.wait_rtl_complete()\n        self.set_parameter(\"SIM_RC_FAIL\", 0)\n        self.end_subtest(\"Completed Radio failsafe RTL with no options test\")\n\n        # Trigger and RC failure, verify failsafe triggers and land completes\n       ",
+            "untrusted": true,
+            "score": -18.9798
+          },
+          {
+            "cite_id": "ardupilot#bd1eb23a97b445b2",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "rover.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/rover.py#L176-L199",
+            "path": "Tools/autotest/rover.py",
+            "lines": [
+              176,
+              199
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "Tools/autotest/rover.py",
+            "excerpt": "        self.set_rc(3, 1500)\n        self.progress(\"Circuit complete\")\n\n    def ThrottleFailsafe(self):\n        \"\"\"Trigger throttle failsafes\"\"\"\n        self.progress(\"Testing throttle failsafe\")\n        # set failsafe to Loiter_or_Hold\n        self.set_parameters({\n            \"FS_THR_ENABLE\": 1,\n            \"FS_ACTION\": 6,\n        })\n        self.change_mode(\"MANUAL\")\n        self.wait_ready_to_arm()\n        self.arm_vehicle()\n\n        self.progress(\"Testing failsafe to loiter\")\n        self.set_parameter(\"SIM_RC_FAIL\", 1)  # no-pulses failsafe\n        self.wait_mode(\"LOITER\", timeout=10)\n\n ",
+            "untrusted": true,
+            "score": -16.1415
+          }
+        ],
+        "citations": [
+          "ardupilot_wiki#af7f9b55f6454c74",
+          "ardupilot_wiki#087826922d56ee8f",
+          "ardupilot_wiki#d30fc4bce11ac757",
+          "ardupilot_wiki#fcd86403e10373d0",
+          "ardupilot_wiki#ab003a4d04ba2492",
+          "ardupilot_wiki#a415c86091dc8c47",
+          "ardupilot#2e858b3b9ef5689f",
+          "ardupilot#2dcc1cb75da30abd",
+          "ardupilot#bd1eb23a97b445b2"
+        ],
+        "safety": {
+          "props_off": "Props off for bench tests. SITL before hardware.",
+          "confirm": "CONFIRM: <the procedure you apply> on <your board> with props off."
+        },
+        "symptom_evidence_only": false,
+        "note": "Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote."
+      }
+    }
+  }
+}

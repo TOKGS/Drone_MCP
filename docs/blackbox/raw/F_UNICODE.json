@@ -1,0 +1,202 @@
+{
+  "case": "F_UNICODE",
+  "note": "emoji + Vietnamese: no crash",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "🚁 tín hiệu CRSF bị mất 😀"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 83,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "🚁 tín hiệu CRSF bị mất 😀"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 39.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"🚁 tín hiệu CRSF bị mất 😀\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"expresslrs#36cc06e0835691be\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_protocol.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L89-L126\",\n      \"path\": \"src/include/crsf_protocol.h\",\n      \"lines\": [\n        89,\n        126\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"src/include/crsf_protocol.h\",\n      \"excerpt\": \"    CRSF_FRAMETYPE_ARDUPILOT_RESP = 0x80,\\n} crsf_frame_type_e;\\n\\ntypedef enum : uint8_t {\\n    CRSF_COMMAND_SUBCMD_RX = 0x10\\n} crsf_command_e;\\n\\ntypedef enum : uint8_t {\\n    CRSF_COMMAND_SUBCMD_RX_BIND = 0x01,\\n    CRSF_COMMAND_MODEL_SELECT_ID = 0x05,\\n    CRSF_HANDSET_SUBCMD_TIMING = 0x10,\\n} crsf_subcommand_e;\\n\\nenum {\\n    CRSF_FRAME_TX_MSP_FRAME_SIZE = 58,\\n    CRSF_FRAME_RX_MSP_FRAME_SIZE = 8,\\n    CRSF_FRAME_ORIGIN_DEST_SIZE = 2,\\n};\\n\\ntypedef enum : uint8_t\\n{\\n    CRSF_ADDRESS_BROADCAST = 0x00,\\n    CRSF_ADDRESS_USB = 0x10,\\n    CRSF_ADDRESS_BLUETOOTH_WIFI = 0x12,\\n    CRSF_ADDRESS_TBS_CORE_PNP_PRO = 0\",\n      \"untrusted\": true,\n      \"score\": -28.8147\n    },\n    {\n      \"cite_id\": \"expresslrs#fcc72790b73a5d1f\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_crsf_endpoint.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/test/test_crsf_endpoint/test_crsf_endpoint.cpp#L146-L164\",\n      \"path\": \"src/test/test_crsf_endpoint/test_crsf_endpoint.cpp\",\n      \"lines\": [\n        146,\n        164\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"src/test/test_crsf_endpoint/test_crsf_endpoint.cpp\",\n      \"excerpt\": \"    TEST_ASSERT_FALSE(connector2->forwardMessageCalled);\\n    TEST_ASSERT_FALSE(connector3->forwardMessageCalled);\\n}\\n\\nvoid test_ProcessMessage_NotAddressedToEndpoint_NotHandled()\\n{\\n    crsf_ext_header_t msg;\\n    create_test_message(&msg, CRSF_FRAMETYPE_DEVICE_PING, CRSF_ADDRESS_CRSF_TRANSMITTER, CRSF_ADDRESS_RADIO_TRANSMITTER);\\n\\n    router->processMessage(nullptr, (crsf_header_t *)&msg);\\n\\n    TEST_ASSERT_FALSE(testEndpoint->handleMessageCalled);\\n    TEST_ASSERT_TRUE(connector1->forwardMessageCalled);\\n    TEST_ASSERT_EQUAL_UINT8(CRSF_ADDRESS_CRSF_TRANSMITTER, connector1->lastForwardedMessage.des\",\n      \"untrusted\": true,\n      \"score\": -28.621\n    },\n    {\n      \"cite_id\": \"ardupilot#5345e35c047a8b85\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RCProtocol_CRSF.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L382-L450\",\n      \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"lines\": [\n        382,\n        450\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"excerpt\": \"#endif\\n#endif // defined(CRSF_DEBUG) || defined(CRSF_DEBUG_PARAMS)\\n}\\n\\nbool AP_RCProtocol_CRSF::decode_crsf_packet()\\n{\\n#ifdef CRSF_DEBUG\\n    hal.console->printf(\\\"CRSF: received %s:\\\", get_frame_type(_frame.type));\\n    uint8_t* fptr = (uint8_t*)&_frame;\\n    for (uint8_t i = 0; i < _frame.length + 2; i++) {\\n#ifdef CRSF_DEBUG_CHARS\\n        if (fptr[i] >= 32 && fptr[i] <= 126) {\\n            hal.console->printf(\\\" 0x%x '%c'\\\", fptr[i], (char)fptr[i]);\\n        } else {\\n#endif\\n            hal.console->printf(\\\" 0x%x\\\", fptr[i]);\\n#ifdef CRSF_DEBUG_CHARS\\n        }\\n#endif\\n    }\\n    hal.console->printf(\\\"\\\\n\\\");\\n\",\n      \"untrusted\": true,\n      \"score\": -28.6112\n    },\n    {\n      \"cite_id\": \"expresslrs#0c7f93b565c8bb1a\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsfmsp_common.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CRSF2MSP/crsfmsp_common.h#L1-L14\",\n      \"path\": \"src/lib/CRSF2MSP/crsfmsp_common.h\",\n      \"lines\": [\n        1,\n        14\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"src/lib/CRSF2MSP/crsfmsp_common.h\",\n      \"excerpt\": \"#pragma once\\n\\n#define CRSF_MSP_FRAME_OFFSET 6                                             // Start of MSP frame in CRSF packet\\n#define CRSF_MSP_STATUS_BYTE_OFFSET 5                                       // Status byte index in CRSF packet\\n#define CRSF_MSP_SRC_OFFSET 4                                               // Source ID index in CRSF packet\\n#define CRSF_MSP_DEST_OFFSET 3                                              // MSP type index in CRSF packet\\n#define CRSF_FRAME_PAYLOAD_LEN_IDX 1                                        // Extended frame payload length index in CRSF packet\\n#define CRSF\",\n      \"untrusted\": true,\n      \"score\": -28.4952\n    },\n    {\n      \"cite_id\": \"ardupilot#0adec6354cbdf85d\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RCProtocol_CRSF.h\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h#L36-L112\",\n      \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h\",\n      \"lines\": [\n        36,\n        112\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n      \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h\",\n      \"excerpt\": \"#define CRSF_TX_TIMEOUT    500000U   // the period after which the transmitter is considered disconnected (matches copters failsafe)\\n#define CRSF_RX_TIMEOUT    150000U   // the period after which the receiver is considered disconnected (>ping frequency)\\n\\nclass AP_RCProtocol_CRSF : public AP_RCProtocol_Backend {\\npublic:\\n    AP_RCProtocol_CRSF(AP_RCProtocol &_frontend);\\n    virtual ~AP_RCProtocol_CRSF();\\n    void process_byte(uint8_t byte, uint32_t baudrate) override;\\n    void process_handshake(uint32_t baudrate) override;\\n    void update(void) override;\\n#if HAL_CRSF_TELEM_ENABLED\\n    void start\",\n      \"untrusted\": true,\n      \"score\": -28.4604\n    },\n    {\n      \"cite_id\": \"edgetx#956a29d0212e5c2e\",\n      \"source_id\": \"edgetx\",\n      \"repo\": \"EdgeTX/edgetx\",\n      \"ref\": \"v2.12.5\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_measure.h\",\n      \"url\": \"https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.h#L1-L23\",\n      \"path\": \"radio/src/targets/hrs/v15/crsf_measure.h\",\n      \"lines\": [\n        1,\n        23\n      ],\n      \"version\": \"EdgeTX 2.12.5\",\n      \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-2.0\",\n      \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n      \"heading_path\": \"radio/src/targets/hrs/v15/crsf_measure.h\",\n      \"excerpt\": \"/*\\n * Copyright (C) EdgeTX\\n *\\n * License GPLv2: http://www.gnu.org/licenses/gpl-2.0.html\\n *\\n * V15 external-port CRSF measure (J10 pin3 / PJ8 half-duplex).\\n * Auto-detects baud rate and inverted / non-inverted polarity.\\n */\\n\\n#pragma once\\n\\n#include <stdint.h>\\n#include <stdbool.h>\\n\\n#define CRSF_MEASURE_MAX_CHANNELS 16\\n#define CRSF_MEASURE_CH_MIN_US 800\\n#define CRSF_MEASURE_CH_MAX_US 2200\\n#define CRSF_MEASURE_SIGNAL_TIMEOUT_10MS 30  // 300 ms\\n#define CRSF_MEASURE_CONFIG_TRY_10MS 12      // 120 ms per baud×polarity\\n#define CRSF_MEASURE_OC_DELTA_MA 1000\\n/** Frame snapshot for UI digital waveform (f\",\n      \"untrusted\": true,\n      \"score\": -28.3802\n    }\n  ],\n  \"candidates\": [\n    \"expresslrs#36cc06e0835691be\",\n    \"expresslrs#fcc72790b73a5d1f\",\n    \"ardupilot#5345e35c047a8b85\",\n    \"expresslrs#0c7f93b565c8bb1a\",\n    \"ardupilot#0adec6354cbdf85d\"\n  ],\n  \"note\": null,\n  \"result_count\": 6\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "🚁 tín hiệu CRSF bị mất 😀",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "expresslrs#36cc06e0835691be",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_protocol.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L89-L126",
+            "path": "src/include/crsf_protocol.h",
+            "lines": [
+              89,
+              126
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "src/include/crsf_protocol.h",
+            "excerpt": "    CRSF_FRAMETYPE_ARDUPILOT_RESP = 0x80,\n} crsf_frame_type_e;\n\ntypedef enum : uint8_t {\n    CRSF_COMMAND_SUBCMD_RX = 0x10\n} crsf_command_e;\n\ntypedef enum : uint8_t {\n    CRSF_COMMAND_SUBCMD_RX_BIND = 0x01,\n    CRSF_COMMAND_MODEL_SELECT_ID = 0x05,\n    CRSF_HANDSET_SUBCMD_TIMING = 0x10,\n} crsf_subcommand_e;\n\nenum {\n    CRSF_FRAME_TX_MSP_FRAME_SIZE = 58,\n    CRSF_FRAME_RX_MSP_FRAME_SIZE = 8,\n    CRSF_FRAME_ORIGIN_DEST_SIZE = 2,\n};\n\ntypedef enum : uint8_t\n{\n    CRSF_ADDRESS_BROADCAST = 0x00,\n    CRSF_ADDRESS_USB = 0x10,\n    CRSF_ADDRESS_BLUETOOTH_WIFI = 0x12,\n    CRSF_ADDRESS_TBS_CORE_PNP_PRO = 0",
+            "untrusted": true,
+            "score": -28.8147
+          },
+          {
+            "cite_id": "expresslrs#fcc72790b73a5d1f",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_crsf_endpoint.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/test/test_crsf_endpoint/test_crsf_endpoint.cpp#L146-L164",
+            "path": "src/test/test_crsf_endpoint/test_crsf_endpoint.cpp",
+            "lines": [
+              146,
+              164
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "src/test/test_crsf_endpoint/test_crsf_endpoint.cpp",
+            "excerpt": "    TEST_ASSERT_FALSE(connector2->forwardMessageCalled);\n    TEST_ASSERT_FALSE(connector3->forwardMessageCalled);\n}\n\nvoid test_ProcessMessage_NotAddressedToEndpoint_NotHandled()\n{\n    crsf_ext_header_t msg;\n    create_test_message(&msg, CRSF_FRAMETYPE_DEVICE_PING, CRSF_ADDRESS_CRSF_TRANSMITTER, CRSF_ADDRESS_RADIO_TRANSMITTER);\n\n    router->processMessage(nullptr, (crsf_header_t *)&msg);\n\n    TEST_ASSERT_FALSE(testEndpoint->handleMessageCalled);\n    TEST_ASSERT_TRUE(connector1->forwardMessageCalled);\n    TEST_ASSERT_EQUAL_UINT8(CRSF_ADDRESS_CRSF_TRANSMITTER, connector1->lastForwardedMessage.des",
+            "untrusted": true,
+            "score": -28.621
+          },
+          {
+            "cite_id": "ardupilot#5345e35c047a8b85",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RCProtocol_CRSF.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L382-L450",
+            "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "lines": [
+              382,
+              450
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "excerpt": "#endif\n#endif // defined(CRSF_DEBUG) || defined(CRSF_DEBUG_PARAMS)\n}\n\nbool AP_RCProtocol_CRSF::decode_crsf_packet()\n{\n#ifdef CRSF_DEBUG\n    hal.console->printf(\"CRSF: received %s:\", get_frame_type(_frame.type));\n    uint8_t* fptr = (uint8_t*)&_frame;\n    for (uint8_t i = 0; i < _frame.length + 2; i++) {\n#ifdef CRSF_DEBUG_CHARS\n        if (fptr[i] >= 32 && fptr[i] <= 126) {\n            hal.console->printf(\" 0x%x '%c'\", fptr[i], (char)fptr[i]);\n        } else {\n#endif\n            hal.console->printf(\" 0x%x\", fptr[i]);\n#ifdef CRSF_DEBUG_CHARS\n        }\n#endif\n    }\n    hal.console->printf(\"\\n\");\n",
+            "untrusted": true,
+            "score": -28.6112
+          },
+          {
+            "cite_id": "expresslrs#0c7f93b565c8bb1a",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsfmsp_common.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CRSF2MSP/crsfmsp_common.h#L1-L14",
+            "path": "src/lib/CRSF2MSP/crsfmsp_common.h",
+            "lines": [
+              1,
+              14
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "src/lib/CRSF2MSP/crsfmsp_common.h",
+            "excerpt": "#pragma once\n\n#define CRSF_MSP_FRAME_OFFSET 6                                             // Start of MSP frame in CRSF packet\n#define CRSF_MSP_STATUS_BYTE_OFFSET 5                                       // Status byte index in CRSF packet\n#define CRSF_MSP_SRC_OFFSET 4                                               // Source ID index in CRSF packet\n#define CRSF_MSP_DEST_OFFSET 3                                              // MSP type index in CRSF packet\n#define CRSF_FRAME_PAYLOAD_LEN_IDX 1                                        // Extended frame payload length index in CRSF packet\n#define CRSF",
+            "untrusted": true,
+            "score": -28.4952
+          },
+          {
+            "cite_id": "ardupilot#0adec6354cbdf85d",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RCProtocol_CRSF.h",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h#L36-L112",
+            "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h",
+            "lines": [
+              36,
+              112
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T17:42:42+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T17:42:42+0700",
+            "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h",
+            "excerpt": "#define CRSF_TX_TIMEOUT    500000U   // the period after which the transmitter is considered disconnected (matches copters failsafe)\n#define CRSF_RX_TIMEOUT    150000U   // the period after which the receiver is considered disconnected (>ping frequency)\n\nclass AP_RCProtocol_CRSF : public AP_RCProtocol_Backend {\npublic:\n    AP_RCProtocol_CRSF(AP_RCProtocol &_frontend);\n    virtual ~AP_RCProtocol_CRSF();\n    void process_byte(uint8_t byte, uint32_t baudrate) override;\n    void process_handshake(uint32_t baudrate) override;\n    void update(void) override;\n#if HAL_CRSF_TELEM_ENABLED\n    void start",
+            "untrusted": true,
+            "score": -28.4604
+          },
+          {
+            "cite_id": "edgetx#956a29d0212e5c2e",
+            "source_id": "edgetx",
+            "repo": "EdgeTX/edgetx",
+            "ref": "v2.12.5",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_measure.h",
+            "url": "https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.h#L1-L23",
+            "path": "radio/src/targets/hrs/v15/crsf_measure.h",
+            "lines": [
+              1,
+              23
+            ],
+            "version": "EdgeTX 2.12.5",
+            "ingested_at": "2026-10-25T17:42:44+0700",
+            "tier": "T1",
+            "license": "GPL-2.0",
+            "retrieved_at": "2026-10-25T17:42:44+0700",
+            "heading_path": "radio/src/targets/hrs/v15/crsf_measure.h",
+            "excerpt": "/*\n * Copyright (C) EdgeTX\n *\n * License GPLv2: http://www.gnu.org/licenses/gpl-2.0.html\n *\n * V15 external-port CRSF measure (J10 pin3 / PJ8 half-duplex).\n * Auto-detects baud rate and inverted / non-inverted polarity.\n */\n\n#pragma once\n\n#include <stdint.h>\n#include <stdbool.h>\n\n#define CRSF_MEASURE_MAX_CHANNELS 16\n#define CRSF_MEASURE_CH_MIN_US 800\n#define CRSF_MEASURE_CH_MAX_US 2200\n#define CRSF_MEASURE_SIGNAL_TIMEOUT_10MS 30  // 300 ms\n#define CRSF_MEASURE_CONFIG_TRY_10MS 12      // 120 ms per baud×polarity\n#define CRSF_MEASURE_OC_DELTA_MA 1000\n/** Frame snapshot for UI digital waveform (f",
+            "untrusted": true,
+            "score": -28.3802
+          }
+        ],
+        "candidates": [
+          "expresslrs#36cc06e0835691be",
+          "expresslrs#fcc72790b73a5d1f",
+          "ardupilot#5345e35c047a8b85",
+          "expresslrs#0c7f93b565c8bb1a",
+          "ardupilot#0adec6354cbdf85d"
+        ],
+        "note": null,
+        "result_count": 6
+      }
+    }
+  }
+}

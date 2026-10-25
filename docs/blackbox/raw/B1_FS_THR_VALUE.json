@@ -1,0 +1,85 @@
+{
+  "case": "B1_FS_THR_VALUE",
+  "note": "found + description/default must match the pinned tag",
+  "tool": "lookup_param",
+  "arguments": {
+    "name_or_pattern": "FS_THR_VALUE"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 31,
+    "method": "tools/call",
+    "params": {
+      "name": "lookup_param",
+      "arguments": {
+        "name_or_pattern": "FS_THR_VALUE"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 10.0,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"FS_THR_VALUE\",\n  \"vehicle\": \"ArduCopter\",\n  \"version_filter\": null,\n  \"resolved_by\": \"exact\",\n  \"params\": [\n    {\n      \"citation\": {\n        \"cite_id\": \"ardupilot#aff614bd8d1d5b3d\",\n        \"source_id\": \"ardupilot\",\n        \"repo\": \"ArduPilot/ardupilot\",\n        \"ref\": \"Copter-4.7.2\",\n        \"channel\": \"stable\",\n        \"unreleased\": false,\n        \"pinned\": true,\n        \"title\": \"Parameters.cpp\",\n        \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L95-L145\",\n        \"path\": \"ArduCopter/Parameters.cpp\",\n        \"lines\": [\n          95,\n          145\n        ],\n        \"version\": \"Copter-4.7.2\",\n        \"ingested_at\": \"2026-10-25T17:42:42+0700\",\n        \"tier\": \"T1\",\n        \"license\": \"GPL-3.0\",\n        \"retrieved_at\": \"2026-10-25T17:42:42+0700\",\n        \"heading_path\": \"ArduCopter/Parameters.cpp\",\n        \"excerpt\": \"    // @Param: FS_GCS_ENABLE\\n    // @DisplayName: Ground Station Failsafe Enable\\n    // @Description: Controls whether failsafe will be invoked (and what action to take) when connection with Ground station is lost for at least 5 seconds. See FS_OPTIONS param for additional actions, or for cases allowing Mission continuation, when GCS failsafe is enabled.\\n    // @Values: 0:Disabled/NoAction,1:RTL,2:RTL or Continue with Mission in Auto Mode (Removed in 4.0+-see FS_OPTIONS),3:SmartRTL or RTL,4:SmartRTL or Land,5:Land,6:Auto DO_LAND_START/DO_RETURN_PATH_START or RTL,7:Brake or Land\\n    // @User: S\",\n        \"untrusted\": true\n      },\n      \"name_raw\": \"FS_THR_VALUE\",\n      \"name_suffix\": \"FS_THR_VALUE\",\n      \"display_name\": \"Throttle Failsafe Value\",\n      \"description\": \"The PWM level in microseconds on channel 3 below which throttle failsafe triggers\",\n      \"vehicle\": \"ArduCopter\",\n      \"version\": \"Copter-4.7.2\",\n      \"units\": \"PWM\",\n      \"range\": \"910 1100\",\n      \"default\": null,\n      \"reboot_required\": false,\n      \"values\": null,\n      \"bitmask\": null,\n      \"resolved_by\": \"exact\"\n    }\n  ],\n  \"candidates\": [\n    \"FS_THR_VALUE\"\n  ],\n  \"note\": null\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "FS_THR_VALUE",
+        "vehicle": "ArduCopter",
+        "version_filter": null,
+        "resolved_by": "exact",
+        "params": [
+          {
+            "citation": {
+              "cite_id": "ardupilot#aff614bd8d1d5b3d",
+              "source_id": "ardupilot",
+              "repo": "ArduPilot/ardupilot",
+              "ref": "Copter-4.7.2",
+              "channel": "stable",
+              "unreleased": false,
+              "pinned": true,
+              "title": "Parameters.cpp",
+              "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L95-L145",
+              "path": "ArduCopter/Parameters.cpp",
+              "lines": [
+                95,
+                145
+              ],
+              "version": "Copter-4.7.2",
+              "ingested_at": "2026-10-25T17:42:42+0700",
+              "tier": "T1",
+              "license": "GPL-3.0",
+              "retrieved_at": "2026-10-25T17:42:42+0700",
+              "heading_path": "ArduCopter/Parameters.cpp",
+              "excerpt": "    // @Param: FS_GCS_ENABLE\n    // @DisplayName: Ground Station Failsafe Enable\n    // @Description: Controls whether failsafe will be invoked (and what action to take) when connection with Ground station is lost for at least 5 seconds. See FS_OPTIONS param for additional actions, or for cases allowing Mission continuation, when GCS failsafe is enabled.\n    // @Values: 0:Disabled/NoAction,1:RTL,2:RTL or Continue with Mission in Auto Mode (Removed in 4.0+-see FS_OPTIONS),3:SmartRTL or RTL,4:SmartRTL or Land,5:Land,6:Auto DO_LAND_START/DO_RETURN_PATH_START or RTL,7:Brake or Land\n    // @User: S",
+              "untrusted": true
+            },
+            "name_raw": "FS_THR_VALUE",
+            "name_suffix": "FS_THR_VALUE",
+            "display_name": "Throttle Failsafe Value",
+            "description": "The PWM level in microseconds on channel 3 below which throttle failsafe triggers",
+            "vehicle": "ArduCopter",
+            "version": "Copter-4.7.2",
+            "units": "PWM",
+            "range": "910 1100",
+            "default": null,
+            "reboot_required": false,
+            "values": null,
+            "bitmask": null,
+            "resolved_by": "exact"
+          }
+        ],
+        "candidates": [
+          "FS_THR_VALUE"
+        ],
+        "note": null
+      }
+    }
+  }
+}

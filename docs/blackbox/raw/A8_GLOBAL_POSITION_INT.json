@@ -1,0 +1,123 @@
+{
+  "case": "A8_GLOBAL_POSITION_INT",
+  "note": "msgid must match the pinned XML id for GLOBAL_POSITION_INT",
+  "tool": "mavlink_message",
+  "arguments": {
+    "name_or_id": "GLOBAL_POSITION_INT"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 14,
+    "method": "tools/call",
+    "params": {
+      "name": "mavlink_message",
+      "arguments": {
+        "name_or_id": "GLOBAL_POSITION_INT"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.9,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"GLOBAL_POSITION_INT\",\n  \"kind\": \"message\",\n  \"resolved_by\": \"name\",\n  \"msgid\": 33,\n  \"name\": \"GLOBAL_POSITION_INT\",\n  \"description\": \"The filtered global position (e.g. fused GPS and accelerometers). The position is in GPS-frame (right-handed, Z-up). It is designed as scaled integer message since the resolution of float is not sufficient.\",\n  \"fields\": [\n    {\n      \"type\": \"uint32_t\",\n      \"name\": \"time_boot_ms\",\n      \"units\": \"ms\",\n      \"description\": null\n    },\n    {\n      \"type\": \"int32_t\",\n      \"name\": \"lat\",\n      \"units\": \"degE7\",\n      \"description\": null\n    },\n    {\n      \"type\": \"int32_t\",\n      \"name\": \"lon\",\n      \"units\": \"degE7\",\n      \"description\": null\n    },\n    {\n      \"type\": \"int32_t\",\n      \"name\": \"alt\",\n      \"units\": \"mm\",\n      \"description\": null\n    },\n    {\n      \"type\": \"int32_t\",\n      \"name\": \"relative_alt\",\n      \"units\": \"mm\",\n      \"description\": null\n    },\n    {\n      \"type\": \"int16_t\",\n      \"name\": \"vx\",\n      \"units\": \"cm/s\",\n      \"description\": null\n    },\n    {\n      \"type\": \"int16_t\",\n      \"name\": \"vy\",\n      \"units\": \"cm/s\",\n      \"description\": null\n    },\n    {\n      \"type\": \"int16_t\",\n      \"name\": \"vz\",\n      \"units\": \"cm/s\",\n      \"description\": null\n    },\n    {\n      \"type\": \"uint16_t\",\n      \"name\": \"hdg\",\n      \"units\": \"cdeg\",\n      \"description\": null\n    }\n  ],\n  \"citation\": {\n    \"cite_id\": \"mavlink#63662f55c62c8ca0\",\n    \"source_id\": \"mavlink\",\n    \"repo\": \"mavlink/mavlink\",\n    \"ref\": \"eec8824212c1fe8c5d8f5181fcfdef54ee219b63\",\n    \"channel\": \"snapshot\",\n    \"unreleased\": true,\n    \"pinned\": true,\n    \"title\": \"standard.xml\",\n    \"url\": \"https://github.com/mavlink/mavlink/blob/eec8824212c1fe8c5d8f5181fcfdef54ee219b63/message_definitions/v1.0/standard.xml#L93-L134\",\n    \"path\": \"message_definitions/v1.0/standard.xml\",\n    \"lines\": [\n      93,\n      134\n    ],\n    \"version\": \"mavlink@eec8824 (2026-10-22)\",\n    \"ingested_at\": \"2026-10-25T17:42:44+0700\",\n    \"tier\": \"T1\",\n    \"license\": \"(L)GPL-3.0 generator; MIT generated code; XML definitions unstated\",\n    \"retrieved_at\": \"2026-10-25T17:42:44+0700\",\n    \"heading_path\": \"message_definitions/v1.0/standard.xml\",\n    \"excerpt\": \"        <description>Autopilot has a connected gripper. MAVLink Grippers would set MAV_TYPE_GRIPPER instead.</description>\\n      </entry>\\n    </enum>\\n    <enum name=\\\"FIRMWARE_VERSION_TYPE\\\">\\n      <description>These values define the type of firmware release.  These values indicate the first version or release of this type.  For example the first alpha release would be 64, the second would be 65.</description>\\n      <entry value=\\\"0\\\" name=\\\"FIRMWARE_VERSION_TYPE_DEV\\\">\\n        <description>development release</description>\\n      </entry>\\n      <entry value=\\\"64\\\" name=\\\"FIRMWARE_VERSION_TYPE_ALPHA\\\">\\n\",\n    \"untrusted\": true\n  },\n  \"untrusted\": true\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "GLOBAL_POSITION_INT",
+        "kind": "message",
+        "resolved_by": "name",
+        "msgid": 33,
+        "name": "GLOBAL_POSITION_INT",
+        "description": "The filtered global position (e.g. fused GPS and accelerometers). The position is in GPS-frame (right-handed, Z-up). It is designed as scaled integer message since the resolution of float is not sufficient.",
+        "fields": [
+          {
+            "type": "uint32_t",
+            "name": "time_boot_ms",
+            "units": "ms",
+            "description": null
+          },
+          {
+            "type": "int32_t",
+            "name": "lat",
+            "units": "degE7",
+            "description": null
+          },
+          {
+            "type": "int32_t",
+            "name": "lon",
+            "units": "degE7",
+            "description": null
+          },
+          {
+            "type": "int32_t",
+            "name": "alt",
+            "units": "mm",
+            "description": null
+          },
+          {
+            "type": "int32_t",
+            "name": "relative_alt",
+            "units": "mm",
+            "description": null
+          },
+          {
+            "type": "int16_t",
+            "name": "vx",
+            "units": "cm/s",
+            "description": null
+          },
+          {
+            "type": "int16_t",
+            "name": "vy",
+            "units": "cm/s",
+            "description": null
+          },
+          {
+            "type": "int16_t",
+            "name": "vz",
+            "units": "cm/s",
+            "description": null
+          },
+          {
+            "type": "uint16_t",
+            "name": "hdg",
+            "units": "cdeg",
+            "description": null
+          }
+        ],
+        "citation": {
+          "cite_id": "mavlink#63662f55c62c8ca0",
+          "source_id": "mavlink",
+          "repo": "mavlink/mavlink",
+          "ref": "eec8824212c1fe8c5d8f5181fcfdef54ee219b63",
+          "channel": "snapshot",
+          "unreleased": true,
+          "pinned": true,
+          "title": "standard.xml",
+          "url": "https://github.com/mavlink/mavlink/blob/eec8824212c1fe8c5d8f5181fcfdef54ee219b63/message_definitions/v1.0/standard.xml#L93-L134",
+          "path": "message_definitions/v1.0/standard.xml",
+          "lines": [
+            93,
+            134
+          ],
+          "version": "mavlink@eec8824 (2026-10-22)",
+          "ingested_at": "2026-10-25T17:42:44+0700",
+          "tier": "T1",
+          "license": "(L)GPL-3.0 generator; MIT generated code; XML definitions unstated",
+          "retrieved_at": "2026-10-25T17:42:44+0700",
+          "heading_path": "message_definitions/v1.0/standard.xml",
+          "excerpt": "        <description>Autopilot has a connected gripper. MAVLink Grippers would set MAV_TYPE_GRIPPER instead.</description>\n      </entry>\n    </enum>\n    <enum name=\"FIRMWARE_VERSION_TYPE\">\n      <description>These values define the type of firmware release.  These values indicate the first version or release of this type.  For example the first alpha release would be 64, the second would be 65.</description>\n      <entry value=\"0\" name=\"FIRMWARE_VERSION_TYPE_DEV\">\n        <description>development release</description>\n      </entry>\n      <entry value=\"64\" name=\"FIRMWARE_VERSION_TYPE_ALPHA\">\n",
+          "untrusted": true
+        },
+        "untrusted": true
+      }
+    }
+  }
+}
