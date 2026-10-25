@@ -12,7 +12,7 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 
 | nhánh | sub đã spawn? | trạng thái | commit cuối | đã merge? | ghi chú |
 |---|---|---|---|---|---|
-| A (lỗi 3→1→2) | **rồi** (`fix-a`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-A`, cần rebuild index |
+| A (lỗi 3→1→2) | **rồi** (`fix-a`) | đang chạy: A-3 xong phần code (index 123→182 MB, params 230→5089), đang làm A-1/A-2 | `0adbb0e` | **chưa** | 2 hồi quy do corpus mở rộng: golden P@1 0.767→0.733 (G22), `test_out_of_corpus...` fail |
 | B (lỗi 4) | **rồi** (`fix-b`) | DONE — FIXED | `dc5bcc0` (merge `67f4e80`) | **rồi** | 99 passed · audit: 5/5 refusal, mỗi refusal 1 citation mục đích |
 | C (lỗi 5+7) | **rồi** (`fix-c`) | DONE — FIXED (E2E tool_matrix chưa chạy: sandbox chặn pipe) | `22b9fa8` (merge `a36790b`) | **rồi** | 117 passed · golden 1.000/0.767/0.865 · fidelity PASS |
 | D (lỗi 6) | **rồi** (`fix-d`) | DONE — FIXED | `fb981a1` (merge `e1f2f9d`) | **rồi** | 84 passed · fidelity 0 mismatch · golden 1.000/0.767/0.865 |
@@ -36,3 +36,11 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 - `tests/blackbox_cases.md` SHA-256 = `1b53e693441339207c5f770113f1f6d08b7002ebefb618d3ce73b99a58dcaf27` (khớp).
 - Sandbox: lệnh cần pipe stdio (`scripts/blackbox_run.py`, `scripts/smoke_stdio.py`) phải chạy ở
   chế độ `danger-full-access`; pytest bình thường chạy được.
+
+## Quyết định của lead (ghi để không mất ngữ cảnh)
+
+- **A xin sửa `query.py` để vá 2 hồi quy do corpus mở rộng → TỪ CHỐI** (chọn phương án b): `query.py`,
+  `scope.yaml`, weak-match là phạm vi nhánh C (đã merge). Lý do ghi vào FIX_REPORT.md mục (e).
+- Cho phép A thử trong write-scope của mình: loại `libraries/SITL/**` (simulator-only) khỏi corpus và
+  ĐO lại golden P@1 + test ngoài kho; giữ nếu P@1 về >= 0.767 và recall@5 = 1.000, ngược lại revert.
+- A phải giải thích params 230 -> 5089 (trùng lặp tiền tố theo xe hay không) trước khi merge.
