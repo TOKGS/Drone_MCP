@@ -38,8 +38,16 @@ def block_pattern(raw: str) -> re.Pattern[str]:
     return re.compile(rf"@Param(?:\{{[^}}]*\}})?:\s*{re.escape(raw)}\b")
 
 
-def source_lines(row) -> list[str]:
+def corpus_file(row) -> Path | None:
+    """The row's source file, or None when `data/corpus` (gitignored) is not extracted."""
     path = config.corpus_root() / "ardupilot" / row["path"]
+    return path if path.is_file() else None
+
+
+def source_lines(row) -> list[str]:
+    path = corpus_file(row)
+    if path is None:
+        pytest.skip("corpus not extracted: run python -m research.extract")
     return path.read_text(encoding="utf-8", errors="replace").splitlines()
 
 
@@ -116,5 +124,6 @@ def test_source_check_skips_when_the_corpus_is_absent(tmp_path, monkeypatch) -> 
     sources are missing. Reading them at that point is an environment gap, not a defect.
     """
     monkeypatch.setattr(config, "corpus_root", lambda: tmp_path / "corpus")
+    assert corpus_file({"path": "ArduCopter/Parameters.cpp"}) is None
     with pytest.raises(pytest.skip.Exception):
         test_citation_lines_cover_the_parameter_block()
