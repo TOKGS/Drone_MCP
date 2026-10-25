@@ -1,39 +1,38 @@
-﻿# STATE â€” Ä‘iá»u phá»‘i sá»­a 8 lá»—i blackbox
+# STATE — điều phối sửa 8 lỗi blackbox
 
-Cáº­p nháº­t sau Má»–I bÆ°á»›c. Náº¿u máº¥t ngá»¯ cáº£nh: Ä‘á»c file nÃ y trÆ°á»›c, tiáº¿p tá»¥c tá»« dÃ²ng "BÆ°á»›c hiá»‡n táº¡i".
+Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trước, tiếp tục từ dòng "Bước hiện tại".
 
-## BÆ°á»›c hiá»‡n táº¡i
+## Bước hiện tại
 
-- BÆ°á»›c 4/8 XONG: Ä‘Ã£ spawn A, B, C, D (song song) lÃºc 19:2x. E sáº½ spawn sau khi má»™t nhÃ¡nh xong.
-- Commit ná»n: `8690dfb` "docs: freeze FIX_SPEC/FIX_BRIEFS and start fix/STATE.md" trÃªn `master`; tree CLEAN.
-- Task board: `task-1`=A, `task-2`=B, `task-3`=C, `task-4`=D (sub tá»± claim).
+- Bước 5/8 đang chạy: **D xong và đã merge** (`e1f2f9d`); E đã spawn sau khi D xong. A, B, C đang chạy.
+- Commit nền: `8690dfb` (docs freeze) → `58db470` (STATE) → `4c58a4c` lỗi encoding PowerShell, đã sửa ở commit này.
+- Task board: `task-1`=A, `task-2`=B, `task-3`=C, `task-4`=D (completed), `task-5`=E.
 
-## Báº£ng nhÃ¡nh
+## Bảng nhánh
 
-| nhÃ¡nh | sub Ä‘Ã£ spawn? | tráº¡ng thÃ¡i | commit cuá»‘i | Ä‘Ã£ merge? | ghi chÃº |
+| nhánh | sub đã spawn? | trạng thái | commit cuối | đã merge? | ghi chú |
 |---|---|---|---|---|---|
-| A (lá»—i 3â†’1â†’2) | **rá»“i** (`fix-a`) | Ä‘ang cháº¡y | â€” | chÆ°a | worktree `D:\Skill_tulan\wt-A`, cáº§n rebuild index |
-| B (lá»—i 4) | **rá»“i** (`fix-b`) | Ä‘ang cháº¡y | â€” | chÆ°a | worktree `D:\Skill_tulan\wt-B` |
-| C (lá»—i 5+7) | **rá»“i** (`fix-c`) | Ä‘ang cháº¡y | â€” | chÆ°a | worktree `D:\Skill_tulan\wt-C` |
-| D (lá»—i 6) | **rá»“i** (`fix-d`) | Ä‘ang cháº¡y | â€” | chÆ°a | worktree `D:\Skill_tulan\wt-D` |
-| E (lá»—i 8) | chÆ°a | chá» (spawn sau khi má»™t nhÃ¡nh xong) | â€” | chÆ°a | worktree `D:\Skill_tulan\wt-E` |
-| verify (Ä‘á»™c láº­p) | chÆ°a | chÆ°a báº¯t Ä‘áº§u | â€” | â€” | chá»‰ spawn sau khi merge háº¿t |
+| A (lỗi 3→1→2) | **rồi** (`fix-a`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-A`, cần rebuild index |
+| B (lỗi 4) | **rồi** (`fix-b`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-B` |
+| C (lỗi 5+7) | **rồi** (`fix-c`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-C` |
+| D (lỗi 6) | **rồi** (`fix-d`) | DONE — FIXED | `fb981a1` (merge `e1f2f9d`) | **rồi** | 84 passed · fidelity 0 mismatch · golden 1.000/0.767/0.865 |
+| E (lỗi 8) | **rồi** (`fix-e`) | đang chạy (chỉ chẩn đoán) | — | chưa | worktree `D:\Skill_tulan\wt-E` |
+| verify (độc lập) | chưa | chưa bắt đầu | — | — | chỉ spawn sau khi merge hết |
 
-## MÃ´i trÆ°á»ng Ä‘Ã£ dá»±ng (bÆ°á»›c 3)
+## Môi trường đã dựng (bước 3)
 
-- NhÃ¡nh chÃ­nh cá»§a repo lÃ  **`master`** (khÃ´ng pháº£i `main` nhÆ° FIX_SPEC ghi) â†’ rebase/merge vÃ o `master`.
-- ÄÆ°á»ng dáº«n index/ledger **khÃ´ng cá»‘ Ä‘á»‹nh**, Ä‘Ã£ cÃ³ biáº¿n mÃ´i trÆ°á»ng sáºµn trong code:
-  - `ARM_REPO_ROOT` â†’ gá»‘c repo; `ARM_DATA_DIR` â†’ thÆ° má»¥c data; index = `<data>/index.sqlite`
-    (`src/ardupilot_research_mcp/config.py:12-22`) â†’ má»—i worktree tá»± dÃ¹ng index cá»§a mÃ¬nh, khÃ´ng cáº§n sá»­a src.
-  - `GOVERNOR_HOME` â†’ thÆ° má»¥c chá»©a `ledger.sqlite` (`research/governor.py:60-62`).
-  - VÃ¬ váº­y KHÃ”NG thÃªm `ARDU_MCP_INDEX`/`ARDU_MCP_LEDGER`: Ä‘Ã£ cÃ³ cÆ¡ cháº¿ tÆ°Æ¡ng Ä‘Æ°Æ¡ng, khÃ´ng cáº§n sá»­a src.
-- 5 worktree: `D:\Skill_tulan\wt-{A,B,C,D,E}`, nhÃ¡nh `fix/{A..E}`, base `7fe0382`.
-- Má»—i worktree: `data/index.sqlite` **báº£n sao riÃªng** 123,1 MB; `data/corpus` vÃ  `research/cache`
-  lÃ  junction (chá»‰ Ä‘á»c) trá» vá» repo gá»‘c; ledger riÃªng (chÆ°a cÃ³ file â†’ governor táº¡o má»›i).
-- Kiá»ƒm chá»©ng: `wt-B` in `index_path: D:\Skill_tulan\wt-B\data\index.sqlite`,
+- Nhánh chính của repo là **`master`** (không phải `main` như FIX_SPEC ghi) → rebase/merge vào `master`.
+- Đường dẫn index/ledger **không cố định**, đã có biến môi trường sẵn trong code:
+  - `ARM_REPO_ROOT` → gốc repo; `ARM_DATA_DIR` → thư mục data; index = `<data>/index.sqlite`
+    (`src/ardupilot_research_mcp/config.py:12-22`) → mỗi worktree tự dùng index của mình, không cần sửa src.
+  - `GOVERNOR_HOME` → thư mục chứa `ledger.sqlite` (`research/governor.py:60-62`).
+  - Vì vậy KHÔNG thêm `ARDU_MCP_INDEX`/`ARDU_MCP_LEDGER`: đã có cơ chế tương đương, không cần sửa src.
+- 5 worktree: `D:\Skill_tulan\wt-{A,B,C,D,E}`, nhánh `fix/{A..E}`, base `7fe0382`.
+- Mỗi worktree: `data/index.sqlite` **bản sao riêng** 123,1 MB; `data/corpus` và `research/cache`
+  là junction (chỉ đọc) trỏ về repo gốc; ledger riêng (chưa có file → governor tạo mới).
+- Kiểm chứng: `wt-B` in `index_path: D:\Skill_tulan\wt-B\data\index.sqlite`,
   `{"sources":7,"documents":4908,"chunks":65509,"params":230,"mavlink_msgs":397,"mavlink_enums":2367}`.
-- Baseline master: `python -m pytest -q` â†’ `80 passed in 24.22s`.
-- `tests/blackbox_cases.md` SHA-256 = `1b53e693441339207c5f770113f1f6d08b7002ebefb618d3ce73b99a58dcaf27` (khá»›p).
-- Sandbox: lá»‡nh cáº§n pipe stdio (`scripts/blackbox_run.py`, `scripts/smoke_stdio.py`) pháº£i cháº¡y á»Ÿ
-  cháº¿ Ä‘á»™ `danger-full-access`; pytest bÃ¬nh thÆ°á»ng cháº¡y Ä‘Æ°á»£c.
-
+- Baseline master: `python -m pytest -q` → `80 passed in 24.22s`.
+- `tests/blackbox_cases.md` SHA-256 = `1b53e693441339207c5f770113f1f6d08b7002ebefb618d3ce73b99a58dcaf27` (khớp).
+- Sandbox: lệnh cần pipe stdio (`scripts/blackbox_run.py`, `scripts/smoke_stdio.py`) phải chạy ở
+  chế độ `danger-full-access`; pytest bình thường chạy được.
