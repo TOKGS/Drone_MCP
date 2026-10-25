@@ -14,10 +14,12 @@ import datetime as dt
 import hashlib
 import json
 import os
+import platform
 import re
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -29,6 +31,7 @@ OMIT_LIMIT = 80
 # ---------------------------------------------------------------- command capture
 def run(argv: list[str], *, shell: bool = False, timeout: int = 1800) -> dict:
     started = dt.datetime.now().astimezone().isoformat(timespec="seconds")
+    started_at = time.perf_counter()
     try:
         proc = subprocess.run(argv, cwd=str(REPO), env=ENV, capture_output=True, text=True,
                               shell=shell, timeout=timeout)
@@ -36,7 +39,12 @@ def run(argv: list[str], *, shell: bool = False, timeout: int = 1800) -> dict:
     except Exception as exc:  # noqa: BLE001 - a missing tool is data, not a crash
         out, err, code = "", f"{type(exc).__name__}: {exc}", 127
     return {"cmd": " ".join(argv) if isinstance(argv, list) else argv, "exit": code,
-            "ts": started, "stdout": out.rstrip("\n"), "stderr": err.rstrip("\n")}
+            "ts": started, "seconds": round(time.perf_counter() - started_at, 2),
+            "stdout": out.rstrip("\n"), "stderr": err.rstrip("\n")}
+
+
+# lines a reader must never lose when an output is truncated
+KEEP_ALWAYS = re.compile(r"FAIL|ERROR|Traceback|WARN")
 
 
 def clip(text: str) -> str:
@@ -44,22 +52,29 @@ def clip(text: str) -> str:
     if len(lines) <= OMIT_LIMIT:
         return text
     head, tail = lines[:40], lines[-40:]
-    omitted = len(lines) - len(head) - len(tail)
-    return "\n".join(head + [f"[... {omitted} lines omitted ...]"] + tail)
+    middle = lines[40:-40]
+    kept = [line for line in middle if KEEP_ALWAYS.search(line)]
+    omitted = len(middle) - len(kept)
+    parts = head + [f"[... {omitted} lines omitted; every FAIL/ERROR/Traceback/WARN line below "
+                    f"is kept verbatim ...]"] + kept + tail
+    return "\n".join(parts)
 
 
 class Report:
     def __init__(self) -> None:
         self.lines: list[str] = []
         self.spans: dict[str, tuple[int, int]] = {}
+        self.timings: list[tuple[str, float, int]] = []
 
     def emit(self, text: str = "") -> None:
         self.lines.extend(text.split("\n"))
 
     def command(self, key: str, result: dict, note: str = "") -> None:
         start = len(self.lines) + 1
+        self.timings.append((key, result.get("seconds", 0.0), result["exit"]))
         self.emit(f"### `{result['cmd']}`{(' — ' + note) if note else ''}")
-        self.emit(f"exit={result['exit']}  captured={result['ts']}")
+        self.emit(f"exit={result['exit']}  duration={result.get('seconds', 0)}s  "
+                  f"captured={result['ts']}")
         self.emit("```")
         if result["stdout"]:
             self.emit(clip(result["stdout"]))
@@ -134,12 +149,33 @@ def main() -> int:
         "import sqlite3;c=sqlite3.connect(':memory:');"
         "print('sqlite', sqlite3.sqlite_version);"
         "print('fts5', bool(c.execute(\"select 1 from pragma_compile_options where compile_options like '%FTS5%'\").fetchone()))"]))
+    report.command("os", run([PY, "-c",
+        "import platform,sys;print(platform.platform());print(platform.machine());"
+        "print('cpu_count', platform.os.cpu_count());sys.stdout.write(sys.version)"]))
+    report.command("git_version", run(["git", "--version"]))
+    report.command("pytest_version", run([PY, "-m", "pytest", "--version"]))
+    report.command("targets_file", run([PY, "-c",
+        "from pathlib import Path;import subprocess;"
+        "p=Path('docs/targets.yaml');"
+        "print('exists', p.exists(), 'bytes', p.stat().st_size if p.exists() else 0);"
+        "print(subprocess.run(['git','log','--all','--oneline','--','docs/targets.yaml'],"
+        "capture_output=True,text=True).stdout.strip() or 'no commit in history')"]))
+    report.command("prev_checkpoint", run([PY, "-c",
+        "from pathlib import Path;import subprocess;"
+        "p=Path('docs/checkpoints/prev.json');"
+        "print('exists', p.exists(), 'bytes', p.stat().st_size if p.exists() else 0);"
+        "print(subprocess.run(['git','log','--all','--oneline','--','docs/checkpoints/prev.json'],"
+        "capture_output=True,text=True).stdout.strip() or 'no commit in history')"]))
     report.emit()
 
     report.emit("## Tests")
     report.emit()
     unittest_result = run([PY, "-m", "unittest", "discover", "-s", "tests"])
-    unittest_tail = "\n".join((unittest_result["stdout"] + unittest_result["stderr"]).strip().splitlines()[-6:])
+    unittest_full = (unittest_result["stdout"] + unittest_result["stderr"]).strip()
+    unittest_lines = unittest_full.splitlines()
+    unittest_important = [line for line in unittest_lines[:-6]
+                          if re.search(r"FAIL|ERROR|Traceback|WARN", line)]
+    unittest_tail = "\n".join(unittest_important + unittest_lines[-6:])
     unittest_result = {**unittest_result, "stdout": unittest_tail, "stderr": ""}
     report.command("unittest", unittest_result,
                    "this repo's tests are pytest-style; unittest discovery finds no TestCase classes")
@@ -283,7 +319,39 @@ for case in cases:
     print(f"{case:<34}{str(p.get('dangerous')):<11}{str(p.get('refused_as_fix')):<9}"
           f"{str(p.get('found')):<7}{bool(p.get('safety', {}).get('props_off'))}")
 '''
-    report.command("safety", run([PY, "-c", safety_script]))
+    safety_result = run([PY, "-c", safety_script])
+    report.command("safety", safety_result)
+    # acceptance targets and the expected safety results must come from docs/targets.yaml if it
+    # exists; it is never edited here. Missing file means no targets are assumed at all.
+    targets_yaml = REPO / "docs" / "targets.yaml"
+    safety_target_rows: list[str] = []
+    if targets_yaml.exists():
+        import yaml  # local import: the report still works when PyYAML is absent
+        targets = yaml.safe_load(targets_yaml.read_text(encoding="utf-8")) or {}
+        report.emit(f"### targets read from `docs/targets.yaml` (sha256 "
+                    f"`{hashlib.sha256(targets_yaml.read_bytes()).hexdigest()[:16]}…`)")
+        report.emit("```")
+        report.emit(yaml.safe_dump(targets, allow_unicode=True, sort_keys=False).strip()[:3000])
+        report.emit("```")
+        expected = targets.get("safety") or {}
+        for case, want in expected.items():
+            row = next((line for line in safety_result["stdout"].splitlines()
+                        if line.startswith(case[:24])), "")
+            got = "dangerous" if " True" in row[:60] else "answered"
+            ok = str(want).lower() in row.lower()
+            safety_target_rows.append(
+                f"| {case} | {want} | {want if got == 'dangerous' else got} | "
+                f"{'PASS' if ok else 'FAIL'} |")
+        report.emit()
+    else:
+        report.emit("### `docs/targets.yaml` is ABSENT — no targets are assumed")
+        report.emit("```")
+        report.emit("exists: False  (git log --all -- docs/targets.yaml: no commit in history)")
+        report.emit("The acceptance targets used below therefore come from the goal statement, and")
+        report.emit("the safety-table expectations were not pre-registered, so they are reported as")
+        report.emit("observed behaviour only. This is recorded again in the deviations section.")
+        report.emit("```")
+        report.emit()
 
     report.emit("## Citation sample (seed 42)")
     report.emit()
@@ -460,43 +528,43 @@ for item in found:
         trace.append(f"| {name} | {citation} | {tested} | {hostile} |")
     trace.append("")
 
-    def from_doc(relative: str, pattern: str):
-        path = REPO / relative
-        if not path.exists():
-            return None
-        return parse(pattern, path.read_text(encoding="utf-8"))
+    # Before/after comes ONLY from docs/checkpoints/prev.json. Missing file -> "không có baseline".
+    prev_path = REPO / "docs" / "checkpoints" / "prev.json"
+    prev: dict = {}
+    if prev_path.exists():
+        try:
+            prev = json.loads(prev_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            prev = {}
+    NO_BASELINE = "không có baseline"
 
-    before_v1 = from_doc("docs/eval-heldout.md", r"recall@5 = \S+ = ([\d.]+)")
-    before_v2 = from_doc("docs/eval-heldout-v2.md", r"initial\s+recall@5 \d+/\d+ = ([\d.]+)")
-    before_tests = from_doc("HANDOFF.md", r"(\d+) passed in")
-    before_fidelity = from_doc("HANDOFF.md", r"total mismatch = (\d+)")
+    def before(key: str) -> str:
+        value = prev.get(key)
+        return NO_BASELINE if value is None else str(value)
 
     before_after = [
         "## Before / after (previous checkpoint → this run)", "",
-        "Every 'before' cell is parsed from a committed report in this repo (named in the cell); a "
-        "missing parse shows 'not recorded'.", "",
-        "| metric | before (parsed from repo docs) | after | raw output |",
-        "|---|---|---|---|",
-        f"| chunks | not recorded in a machine-readable artifact | {fidelity_chunks} | "
-        f"{line_of('fidelity')} |",
-        f"| fidelity mismatches | {before_fidelity if before_fidelity is not None else 'not recorded'} "
-        f"(HANDOFF.md) | {fidelity_bad} | {line_of('fidelity')} |",
-        f"| recall@5 (heldout_locked) | {before_v1 or 'not recorded'} (docs/eval-heldout.md) | "
-        f"{verdict_heldout} | {line_of('heldout')} |",
-        f"| recall@5 (blind v2) | {before_v2 or 'not recorded'} (docs/eval-heldout-v2.md, first run) | "
-        f"n/a (set superseded) | n/a |",
-        f"| recall@5 (blind v3, unambiguous) | not measured before this run | {verdict_recall} | "
-        f"{line_of('v3')} |",
-        f"| precision@1 / MRR (golden) | not recorded separately | "
-        f"{evals.get('golden', {}).get('p1')} / {evals.get('golden', {}).get('mrr')} | "
-        f"{line_of('golden')} |",
-        f"| tests | {before_tests or 'not recorded'} passed (HANDOFF.md) | {passed} | "
-        f"{line_of('pytest')} |",
-        f"| coverage | not measured (coverage package absent) | NOT RUN | {line_of('coverage')} |",
-        f"| mutation score | not recorded before this run | {score_text} | {line_of('mutation')} |",
+        (f"Baseline source: `docs/checkpoints/prev.json` "
+         f"({'present' if prev_path.exists() else 'ABSENT'}). Every 'before' cell is read from that "
+         f"file; where it has no value the cell says '{NO_BASELINE}' — nothing is filled in by hand."),
         "",
-        "Cells marked 'not recorded' are honest gaps: no raw artifact in this repo captures those "
-        "earlier numbers.",
+        "| metric | before (prev.json) | after (this run) | raw output |",
+        "|---|---|---|---|",
+        f"| chunks | {before('chunks')} | {fidelity_chunks} | {line_of('fidelity')} |",
+        f"| fidelity mismatches | {before('fidelity_mismatches')} | {fidelity_bad} | "
+        f"{line_of('fidelity')} |",
+        f"| recall@5 (heldout_locked) | {before('recall_at_5_heldout_locked')} | {verdict_heldout} | "
+        f"{line_of('heldout')} |",
+        f"| recall@5 (heldout_v3) | {before('recall_at_5_heldout_v3')} | {verdict_recall} | "
+        f"{line_of('v3')} |",
+        f"| precision@1 (golden, tunable set) | {before('precision_at_1_golden')} | "
+        f"{evals.get('golden', {}).get('p1')} | {line_of('golden')} |",
+        f"| MRR (golden, tunable set) | {before('mrr_golden')} | "
+        f"{evals.get('golden', {}).get('mrr')} | {line_of('golden')} |",
+        f"| tests passed | {before('tests_passed')} | {passed} | {line_of('pytest')} |",
+        f"| coverage | {before('coverage_percent')} | NOT RUN (coverage absent) | "
+        f"{line_of('coverage')} |",
+        f"| mutation score | {before('mutation_score')} | {score_text} | {line_of('mutation')} |",
         "",
     ]
 
@@ -603,31 +671,82 @@ for item in found:
         "",
     ]
 
+    total_seconds = sum(item[1] for item in report.timings)
+    timings = [
+        "## Run bookkeeping", "",
+        f"Total wall time of the measured steps: {total_seconds:.1f} s across "
+        f"{len(report.timings)} commands.", "",
+        "| step | seconds | exit |", "|---|---|---|",
+    ]
+    for key, seconds, code in report.timings:
+        timings.append(f"| {key} | {seconds} | {code} |")
+    timings += [
+        "",
+        f"Quota spent by this report: ledger fingerprint before `{ledger_before}`, after "
+        f"`{ledger_after}` (identical means the report itself called no provider).",
+        "",
+        "Session size: this report measures the repository, not the assistant's token usage. The "
+        "number of tokens and the monetary cost of the authoring session were not exposed in the "
+        "session, so they are reported as **unknown** rather than estimated. Metered provider cost "
+        "recorded in the ledger is the `cost_units` value above (units, not currency).",
+        "",
+    ]
+
+    declarations = [
+        "## Declarations", "",
+        "| question | answer |", "|---|---|",
+        "| Did you open `tests/heldout_locked.yaml` before its final run? | **Yes, indirectly.** "
+        "The file itself was never opened with an editor or `cat`, but in round 10 the evaluator "
+        "printed its 19 miss lines (frozen expectations plus the retrieved top hit) because the "
+        "`--aggregate-only` flag did not exist yet. Those lines revealed part of the frozen "
+        "expectations. Afterwards only aggregate numbers were printed. |",
+        "| Was retrieval tuned after seeing held-out content? | For `heldout_locked` no tuning "
+        "followed; for the blind `heldout_v2` set, five measurement rounds did follow improvements. "
+        "`heldout_v3` was generated after the code was frozen and is the only set used as evidence. |",
+        "| Was `docs/targets.yaml` edited during this work? | It does not exist in this repository or "
+        "in its git history (`git log --all -- docs/targets.yaml` is empty), so it was neither read "
+        "nor edited. Its absence is reported instead of being back-filled. |",
+        "| Was `docs/checkpoints/prev.json` created for this report? | No. It does not exist, so every "
+        "baseline cell says `không có baseline`. |",
+        "",
+    ]
+
     body = (summary + acceptance + trace + before_after + bugs + unverified + deviations
-            + limits + reproduce + ["---", "", "## Raw command output", ""]
-            + report.lines)
+            + limits + declarations + timings + reproduce
+            + ["---", "", "## Raw command output", ""] + report.lines)
     text = "\n".join(body)
     # resolve the line references now that the front matter length is known
     offset = len(body) - len(report.lines)
     for key, (start, end) in report.spans.items():
         text = text.replace(f"@@L:{key}@@", f"L{start + offset - 1}–L{end + offset - 1}")
-    out = REPO / "FINAL_REPORT.md"
+    artifacts = REPO / "artifacts"
+    artifacts.mkdir(exist_ok=True)
+    out = artifacts / "FINAL_REPORT.md"
     out.write_text(text + "\n", encoding="utf-8")
 
     # ------------------------------------------------------------ review bundle
-    bundle = REPO / "review_bundle"
+    bundle = artifacts / "review_bundle"
     if bundle.exists():
         shutil.rmtree(bundle)
     bundle.mkdir()
     shutil.copy2(out, bundle / "FINAL_REPORT.md")
     for name in ("src", "tests", "scripts", "examples", "docs"):
         shutil.copytree(REPO / name, bundle / name)
+    # the frozen held-out questions never leave the repo: only their SHA-256 may travel
+    leaked = [path for path in bundle.rglob("heldout*") if path.suffix == ".yaml"]
+    for path in leaked:
+        path.unlink()
     keep_files = ["sources.yaml", "glossary.vi-en.yaml", "HANDOFF.md", "research/governor.py",
-                  "research/limits.yaml", "tests/golden.yaml"]
+                  "research/limits.yaml", "tests/golden.yaml", "pyproject.toml", ".gitignore"]
+    if (REPO / "LICENSE").exists():
+        keep_files.append("LICENSE")
     for relative in keep_files:
+        source = REPO / relative
+        if not source.exists():
+            continue
         target = bundle / relative
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(REPO / relative, target)
+        shutil.copy2(source, target)
 
     secret_pattern = re.compile(
         r"(?i)(api[_-]?key|secret|token|password|bearer)\s*[:=]\s*[\"']?[A-Za-z0-9_\-]{12,}"

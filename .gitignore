@@ -19,3 +19,6 @@ build/
 FINAL_REPORT.md
 review_bundle/
 review_bundle.zip
+
+# generated report artifacts
+artifacts/
