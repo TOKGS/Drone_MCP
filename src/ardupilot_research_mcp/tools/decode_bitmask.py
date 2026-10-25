@@ -20,13 +20,16 @@ def _find_param(con: sqlite3.Connection, param: str, vehicle: str, version: str 
         sql += " AND version LIKE ?"
         params.append(f"%{version}%")
     rows = con.execute(sql, params).fetchall()
-    for row in rows:
-        if row["name_raw"].upper() == upper or row["name_suffix"].upper() == upper:
-            return row, [r["name_raw"] for r in rows[:8]]
+    exact = [row for row in rows
+             if row["param_name"].upper() == upper
+             or row["name_raw"].upper() == upper or row["name_suffix"].upper() == upper]
+    exact.sort(key=lambda row: 0 if row["param_name"].upper() == upper else 1)
+    if exact:
+        return exact[0], [r["param_name"] for r in rows[:8]]
     ordered = order_suffix_matches(rows, upper)
     if ordered:
-        return ordered[0], [r["name_raw"] for r in rows[:8]]
-    return None, [r["name_raw"] for r in rows[:8]]
+        return ordered[0], [r["param_name"] for r in rows[:8]]
+    return None, [r["param_name"] for r in rows[:8]]
 
 
 @guarded
@@ -37,14 +40,14 @@ def decode_bitmask(con: sqlite3.Connection, param: str, value: str | int | None 
     Pass `value` as a decimal/hex string ("0x2000"), an integer, or a comma-separated list of
     bit names as they appear in the source (e.g. "Use 420kbaud for ELRS protocol"). Requires an
     exact parameter match with a @Bitmask definition; otherwise found:false plus real candidates.
-    The returned citation is the source block that defines the bits — no bit is ever invented.
+    The returned citation is the source block that defines the bits â€” no bit is ever invented.
     """
     row, candidates = _find_param(con, param, vehicle, version)
     if row is None:
         return {"found": False, "param": param, "candidates": candidates,
                 "note": "parameter not found; nothing was invented"}
     if not row["bitmask"]:
-        return {"found": False, "param": row["name_raw"],
+        return {"found": False, "param": row["param_name"],
                 "candidates": candidates,
                 "note": "this parameter has no @Bitmask definition in the indexed source"}
 
@@ -53,7 +56,7 @@ def decode_bitmask(con: sqlite3.Connection, param: str, value: str | int | None 
     citation = cite.build_citation(con, cite.make_cite_id(row["source_id"], row["cite_hash"]))
     payload = {
         "found": True,
-        "param": row["name_raw"],
+        "param": row["param_name"],
         "display_name": row["display_name"],
         "vehicle": row["vehicle"],
         "version": row["version"],

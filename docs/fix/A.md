@@ -66,3 +66,149 @@ ratio params/@Param blocks: 8.26%
 
 Khớp `docs/blackbox/REPORT.md` §2.2(e): 311 khối nằm trong corpus hiện tại = ArduCopter 142 +
 AP_InertialSensor 105 + AP_GPS 45 + RC_Channel 10 + AP_Arming 9.
+
+### Bước (2)(3) — sửa nguyên nhân gốc
+
+Nguyên nhân: allowlist chỉ có 5 thư mục `libraries/`; corpus vì thế **không chứa file** khai báo
+tham số của 96 thư mục còn lại. Ngoài ra `research/build_params.py` cũ **không ghép tiền tố**:
+nó lưu nguyên hậu tố khai báo (`_OPTIONS`, `1_PROTOCOL`) nên `lookup_param` phải đoán bằng khớp
+chuỗi đuôi, dẫn tới RC_OPTIONS trả cả ARMING_OPTIONS (báo cáo §2.2(b)) và SERIAL1_PROTOCOL /
+BATT_FS_LOW_ACT không tìm được.
+
+Sửa (đúng cơ chế của chính bản pin, `Tools/autotest/param_metadata/param_parse.py`): đi theo
+chuỗi `@Group:`/`@Path:` từ `ArduCopter/Parameters.cpp` + `libraries/AP_Vehicle/AP_Vehicle.cpp`
+(nhóm lồng nhau ghép tiếp tiền tố: `BATT` + `_` → `BATT_FS_LOW_ACT`; `SERIAL` + `1_PROTOCOL` →
+`SERIAL1_PROTOCOL`). Khối không chuỗi nào tới được thì **không đoán**: không đưa vào bảng, liệt kê
+ ở `docs/fix/A-unresolved.txt` (509 khối, kèm `file:dòng:tên (lý do)`).
+
+`sources.yaml`: thêm 101 thư mục `libraries/*` có `@Param` (gồm bắt buộc AP_SerialManager,
+AP_BattMonitor, AP_Vehicle; AP_Vehicle cần cho chuỗi tiền tố). Không sửa file ngoài write-scope.
+
+```
+PS> python -m research.extract --only ardupilot --force
+ardupilot        files=5228      93.7MB license=COPYING.txt 7.2s
+corpus total: 5228 files, 93.7MB
+
+PS> python -m ardupilot_research_mcp.ingest.cli --source ardupilot
+ardupilot        files=2448  chunks=20753  skipped=2652  filtered=59  binary=53  19.1MB 55.3s
+counts: {"sources": 7, "documents": 7356, "chunks": 86262, "params": 230, "mavlink_msgs": 397, "mavlink_enums": 2367}
+
+PS> python -m research.build_params --unresolved docs/fix/A-unresolved.txt
+{"blocks": 2770, "stored_blocks": 2119, "rows": 5318, "unresolved_blocks": 509,
+ "unlinked_blocks": 142, "params_in_table": 5089, "version": "Copter-4.7.2"}
+```
+
+Cổng A-3:
+
+(i) `SERIAL1_PROTOCOL`, `BATT_FS_LOW_ACT` found:true bằng khớp **exact** (`tests/test_param_coverage.py`):
+
+```
+PS> python -m pytest tests/test_param_coverage.py -q
+.....                                                                    [100%]
+5 passed in 0.93s
+```
+
+(ii) Tên có thật từ 122 file `Tools/autotest/default_params/*.parm` + `Tools/Frame_params/*.param`
+    tại pin (`scripts/param_coverage.py --names`, output đầy đủ `docs/fix/A-names.txt`):
+
+```
+names in 122 shipped parameter files: 1440
+found by lookup_param: 739/1440 (51.3%)
+not found: 701
+```
+
+Phân loại 701 tên không tìm thấy (đếm theo lý do do script in ra): phần lớn là tham số **của xe
+khác** — các file `.param` đóng gói cả frame Plane/Rover/Sub/Blimp (ACRO_LOCKING, AIRSPEED_*,
+ALT_SLOPE_*, Q_* …) mà bảng tham số ở đây là bảng **Copter** (chỉ đi chuỗi từ ArduCopter +
+AP_Vehicle); phần còn lại là tên đã đổi (renamed_hint) hoặc cùng hậu tố khác tiền tố. Đây là
+scope Copter chứ không phải lỗi ghép: mọi tên có trong bảng đều là khớp exact.
+
+(iii) `index_status` công bố `counts.params` (sửa `query.index_status`) — test
+`test_index_status_publishes_the_parameter_count` pass (cùng 5 passed ở trên).
+
+(iv) Kích thước index: `(Get-Item data\index.sqlite).Length/1MB` → `183.47265625` (≤ 400 MB).
+
+(v) `ARMING_CHECK`, `WPNAV_SPEED` vẫn found:false; ReleaseNotes tại pin có câu
+    "ARMING_CHECK replaced with ARMING_SKIPCHK" (`ArduCopter/ReleaseNotes.txt:654`) nên trả
+    `renamed_hint`, còn WPNAV_SPEED không có câu "replaced with" nên không gợi ý:
+
+```
+{"found": false, "query": "ARMING_CHECK", ...,
+ "renamed_hint": {"old": "ARMING_CHECK", "new": "ARMING_SKIPCHK",
+                  "path": "ArduCopter/ReleaseNotes.txt", "lines": [653, 660], ...},
+ "note": "no parameter matched; nothing was invented; the pinned release notes record ARMING_CHECK replaced with ARMING_SKIPCHK"}
+```
+
+### Giải thích `params 230 → 5089` (bảng, không có bản ghi trùng nghĩa)
+
+Output `docs/fix/A-params-rows.txt` (một dòng SQL mỗi câu):
+
+```
+rows: 5089
+distinct param_name: 5089
+distinct (path, line_start) blocks: 2070
+distinct (path, line_start, prefix) groups: 5089
+duplicate rows sharing (path, line_start, prefix): 0
+blocks reached by more than one prefix: 550
+rows per vehicle: [{'vehicle': 'shared', 'n': 4947}, {'vehicle': 'ArduCopter', 'n': 142}]
+rows whose prefix carries an instance number: 2343
+top prefixes by row count: SIM_ 227, OSD4_ 201, OSD3_ 201, OSD2_ 201, OSD1_ 201,
+  (top-level "") 93, COMPASS_ 73, ATC_ 66, INS 62, CC2_ 42
+rows whose param_name != prefix || name_raw: 0
+```
+
+5089 = 2070 khối `@Param` × các tiền tố mà **bảng Copter** gán cho khối đó. 550 khối được gán
+nhiều tiền tố vì chúng là tham số **theo từng instance** của Copter (RC_Channel.cpp dưới `1_` …
+`16_` → RC1_MIN..RC16_MIN; AP_OSD_Screen dưới `OSD1_`..`OSD5_`; AP_BattMonitor_Params dưới
+`BATT_`, `BATT2_`..`BATTA_`; AP_InertialSensor dưới `INS`, `INS2_`, `INS3_`; SERIAL1..8; COMPASS2/3).
+Đó là các tham số khác nhau của bản pin, không phải trùng nghĩa. **Không** có bản ghi trùng
+`(path, dòng, tiền tố)` (0), mọi `param_name == prefix + name_raw` (0 sai), và không có bội
+xe (chỉ Copter + shared) vì chuỗi chỉ đi từ bảng Copter.
+
+### Thí nghiệm bị loại (bằng chứng "đã thử, không giữ hack")
+
+**(a) Loại đường dẫn simulator khỏi allowlist** (lead cho phép thử MỘT lần; đã bỏ
+`libraries/SITL/**`, re-extract, xoá 467 document SITL, rebuild FTS + params):
+
+```
+docs to drop: 467; counts documents=6889 chunks=82927
+build_params: params_in_table=4642
+pytest tests/test_query.py: 1 failed (test_out_of_corpus_question_is_not_answered)
+golden: recall@5 = 30/30 = 1.000, precision@1 = 23/30 = 0.767, MRR = 0.859
+```
+
+P@1 về lại 0.767 nhưng test ngoài kho **vẫn fail** (nguyên nhân là comment "bread crumbs" trong
+`libraries/AP_SmartRTL/AP_SmartRTL.cpp`, không thuộc SITL). Theo điều kiện lead đặt ra, đã
+**revert**: thêm lại `libraries/SITL/**`, re-extract + ingest + build_params → params=5089,
+index=183.5 MB. Hồi quy P@1 (0.733 so với 0.767) được liệt kê là known limitation, chờ nhánh C.
+
+**(b) Ba biến thể guard trong `query.search` — đã ĐO rồi revert, không commit hack nào:**
+  1. `unknown > known` (tỉ lệ từ không có trong index > 50%): query rác vẫn found:true
+     ("bake"/"bread" có trong index, chỉ "sourdough" unknown = 1/3) → không hiệu quả.
+  2. Candidate phải chứa ≥ một nửa số token: golden recall@5 tụt **29/30 = 0.967**, P@1 21/30.
+  3. Candidate phải chứa **toàn bộ** token mà index biết: golden recall@5 tụt **26/30 = 0.867**,
+     P@1 18/30. Ba lần đều revert; `query.py` chỉ còn thay đổi `counts.params`.
+
+### Hồi quy còn lại của A-3 (known limitation, thuộc phạm vi C theo quyết định của lead)
+
+```
+PS> python -m pytest -q
+1 failed, 84 passed in 24.05s
+FAILED tests/test_query.py::test_out_of_corpus_question_is_not_answered   # "bread crumbs" trong AP_SmartRTL.cpp
+PS> python scripts/fidelity_scan.py
+TOTAL                          86262         0
+fidelity: PASS
+PS> python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
+recall@5 = 30/30 = 1.000
+precision@1 = 22/30 = 0.733   # G22 (ELRS packet rate) từ rank1 → rank3 vì libraries/SITL/SIM_ELRS.cpp
+MRR = 0.837
+```
+
+Known limitation khác của bảng tham số (ghi rõ, không giả vờ đủ):
+* tham số khai trong file `.lua` (AP_Scripting applets/drivers, 358 tên) không lấy — build_params
+  chỉ đọc `.cpp/.h` như brief.
+* tham số vector (`@Vector3Parameter` / field Vector3f) không tách `_X/_Y/_Z` như generator.
+* file nguồn có dòng > 1000 ký tự bị ingest lọc (guard chống file sinh tự động) nên 142 khối
+  `@Param` không có chunk → không có citation → không vào bảng (`unlinked_blocks=142`).
+* 509 khối không ghép được tiền tố → liệt kê ở `A-unresolved.txt`, không đoán.
+

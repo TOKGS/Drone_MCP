@@ -90,8 +90,8 @@ def test_absent_names_are_not_invented_and_renames_come_from_the_pinned_notes() 
 def test_real_frame_parameter_names_resolve_exactly() -> None:
     # Names taken from the frame/default parameter files shipped at the pin.
     for name in ("BATT_MONITOR", "SERIAL2_PROTOCOL", "ARMING_RUDDER", "FS_THR_ENABLE",
-                 "MOT_SPIN_ARM", "PILOT_Y_RATE", "WPNAV_SPEED_UP", "LOG_BITMASK",
-                 "INS_ACCEL_FILTER", "RTL_ALT", "ATC_RAT_RLL_P", "RC1_MIN"):
+                 "MOT_SPIN_ARM", "PILOT_Y_RATE", "WP_SPD_UP", "LOG_BITMASK",
+                 "INS_ACCEL_FILTER", "RTL_ALT_M", "ATC_RAT_RLL_P", "RC1_MIN"):
         payload = lookup_param(name)
         assert payload["found"] is True, name
         assert payload["resolved_by"] == "exact", name
