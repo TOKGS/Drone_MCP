@@ -81,6 +81,22 @@ def sql(query: str) -> str:
     return script
 
 
+
+def govern_fingerprint() -> str:
+    """calls|cost_units in research/ledger.sqlite (the index DB has no ledger tables)."""
+    import sqlite3
+    path = REPO / "research" / "ledger.sqlite"
+    if not path.exists():
+        return "ledger missing"
+    con = sqlite3.connect(str(path))
+    try:
+        row = con.execute("SELECT COUNT(*), COALESCE(SUM(cost_units),0) FROM calls").fetchone()
+        return f"calls={row[0]} cost_units={row[1]}"
+    except sqlite3.Error as exc:
+        return f"unreadable: {exc}"
+    finally:
+        con.close()
+
 def parse(pattern: str, text: str, cast=str):
     match = re.search(pattern, text)
     return cast(match.group(1)) if match else None
@@ -288,16 +304,21 @@ for row in picked:
     verdict = "no-clone"
     try:
         blob = subprocess.run(["git", "-C", f"{clone}/{row['source_id']}", "show",
-                               f"HEAD:{row['path']}"], capture_output=True, text=True, timeout=60)
+                               f"HEAD:{row['path']}"], capture_output=True, timeout=60)
         if blob.returncode == 0:
-            lines = blob.stdout.splitlines()
+            # git writes UTF-8; decoding with the console code page corrupts non-ASCII lines
+            # (an em dash became "â€”") and would report a false MISMATCH.
+            lines = blob.stdout.decode("utf-8", errors="replace").splitlines()
             slice_ = "\n".join(lines[row["line_start"] - 1:row["line_end"]])
             verdict = "MATCH" if slice_.strip() == row["text"].strip() else "MISMATCH"
     except Exception as exc:
         verdict = f"error:{type(exc).__name__}"
     print(f"{cid}\t{citation['url']}\t{citation['lines']}\t{verdict}")
 '''
-    report.command("citations", run([PY, "-c", citation_script]))
+    citation_result = run([PY, "-c", citation_script])
+    report.command("citations", citation_result)
+    cite_match = len(re.findall(r"\tMATCH$", citation_result["stdout"], re.M))
+    cite_miss = len(re.findall(r"\tMISMATCH$", citation_result["stdout"], re.M))
 
     report.emit("## Static scans")
     report.emit()
@@ -313,7 +334,11 @@ print(f"hardcoded X.Y.Z literals in src/: {len(hits)}")
 for hit in hits[:10]:
     print(hit)
 '''
-    report.command("grep_version", run([PY, "-c", grep_script]))
+    grep_result = run([PY, "-c", grep_script])
+    report.command("grep_version", grep_result)
+    grep_count = parse(r"hardcoded X.Y.Z literals in src/: (\d+)", grep_result["stdout"]) or "0"
+    grep_note = ("package __version__ and the pinned mcp SDK message" 
+                 if grep_count == "2" else "see the listed lines")
     ast_script = r'''
 import ast, sys
 from pathlib import Path
@@ -391,6 +416,9 @@ for item in found:
         f"{'PASS' if (mutation_score or 0) >= 0.9 else 'FAIL'} |",
         f"| README registers OpenCode / Claude Code / Codex | shapes transcribed from repo docs; "
         f"launch UNVERIFIED | n/a | PARTIAL |",
+        f"| citation sample vs `git show` (10 random, seed 42) | {cite_match} MATCH / "
+        f"{cite_miss} MISMATCH | {line_of('citations')} | "
+        f"{'PASS' if cite_miss == 0 else 'FAIL'} |",
         f"| unit tests | {passed} passed / {failed} failed / {skipped_n} skipped | "
         f"{line_of('pytest')} | {'PASS' if failed == 0 else 'FAIL'} |",
         "",
@@ -544,6 +572,7 @@ for item in found:
         "from this repo.",
         "- Retrieval was tuned on `tests/golden.yaml` (dev set) and measured on the held-out sets; the "
         "v2 set was measured five times while improving, so only v3 is treated as evidence.",
+        f"- The static scan reports {grep_count} hardcoded X.Y.Z literal(s) under `src/`: the {grep_note}. Neither is an ArduPilot release number.",
         "- Exact identifier lookups depend on the identifier appearing in the indexed text; a "
         "parameter defined outside the indexed library returns `found:false`.",
         "",
