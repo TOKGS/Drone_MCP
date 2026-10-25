@@ -13,8 +13,8 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 | nhánh | sub đã spawn? | trạng thái | commit cuối | đã merge? | ghi chú |
 |---|---|---|---|---|---|
 | A (lỗi 3→1→2) | **rồi** (`fix-a`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-A`, cần rebuild index |
-| B (lỗi 4) | **rồi** (`fix-b`) | chờ vòng 2 (lead yêu cầu lọc excerpt "disable the check") | `a72d13d` | **chưa** | 88 passed, golden giữ nguyên; audit còn citation chứa bước tắt |
-| C (lỗi 5+7) | **rồi** (`fix-c`) | đang chạy | — | chưa | worktree `D:\Skill_tulan\wt-C` |
+| B (lỗi 4) | **rồi** (`fix-b`) | DONE — FIXED | `dc5bcc0` (merge `67f4e80`) | **rồi** | 99 passed · audit: 5/5 refusal, mỗi refusal 1 citation mục đích |
+| C (lỗi 5+7) | **rồi** (`fix-c`) | DONE — FIXED (E2E tool_matrix chưa chạy: sandbox chặn pipe) | `22b9fa8` (merge `a36790b`) | **rồi** | 117 passed · golden 1.000/0.767/0.865 · fidelity PASS |
 | D (lỗi 6) | **rồi** (`fix-d`) | DONE — FIXED | `fb981a1` (merge `e1f2f9d`) | **rồi** | 84 passed · fidelity 0 mismatch · golden 1.000/0.767/0.865 |
 | E (lỗi 8) | **rồi** (`fix-e`) | DONE — UNKNOWN (chỉ chẩn đoán) | `511c4bb` (merge `4d5ba12`) | **rồi** | chỉ docs; nguyên nhân đo được: pipe `PermissionError` khi spawn trong sandbox; handshake client UNVERIFIED |
 | verify (độc lập) | chưa | chưa bắt đầu | — | — | chỉ spawn sau khi merge hết |
