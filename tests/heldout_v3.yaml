@@ -1,0 +1,186 @@
+version: 3
+generated_by: research.make_heldout_v3
+seed: 20261026
+protocol: unambiguous headings only (each heading owns exactly one file); agent never
+  inspects the questions
+questions:
+- id: V3-01
+  lang: en
+  q: Where is libraries/ap_hal_chibios/hwdef/kakuteh7v2/defaults.parm documented?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/KakuteH7v2/defaults.parm
+- id: V3-02
+  lang: vi
+  q: Tài liệu nói gì về cuav p9 radio?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-cuav-p9.rst
+- id: V3-03
+  lang: en
+  q: Where is rc input¶ documented?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/SDMODELH7V1/README.md
+- id: V3-04
+  lang: vi
+  q: Giải thích 0x10 vtx telemetry.
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+- id: V3-05
+  lang: en
+  q: Explain install ``realsense-ros``.
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/ros-vio-tracking-camera.rst
+- id: V3-06
+  lang: vi
+  q: Giải thích auto-negotiation doesn't work, force 100mbit full duplex.
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/BotBloxDroneNet/hwdef-bl.dat
+- id: V3-07
+  lang: en
+  q: Where is 1) pixracer ppm rc input fix documented?
+  expect:
+  - source: ardupilot
+    path: ArduCopter/ReleaseNotes.txt
+- id: V3-08
+  lang: vi
+  q: Giải thích releasing beta versions / release candidates.
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/release-procedures.rst
+- id: V3-09
+  lang: en
+  q: Summarise the section on reduce noisy control signals.
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/traditional-helicopter-tuning-preparing.rst
+- id: V3-10
+  lang: vi
+  q: Giải thích manual tuning of roll and pitch.
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/ac_rollpitchtuning.rst
+- id: V3-11
+  lang: en
+  q: Summarise the section on do-set-home.
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/mission-command-list.rst
+- id: V3-12
+  lang: vi
+  q: Giải thích rtun_str_i_ratio.
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Scripting/applets/rover-quicktune.md
+- id: V3-13
+  lang: en
+  q: Explain mav_cmd_nav_guided_enable.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-mavlink-mission-command-messages-mav_cmd.rst
+- id: V3-14
+  lang: vi
+  q: Tài liệu nói gì về 15. termination?
+  expect:
+  - source: expresslrs_docs
+    path: docs/info/terms-and-conditions.md
+- id: V3-15
+  lang: en
+  q: Explain do-set-cam-trigg-dist.
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/mission-command-list.rst
+- id: V3-16
+  lang: vi
+  q: adding a parameter to a library được mô tả ở đâu?
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/code-overview-adding-a-new-parameter.rst
+- id: V3-17
+  lang: en
+  q: Explain are normally passed to the compiler using the -i flag..
+  expect:
+  - source: ardupilot
+    path: docs/config/default
+- id: V3-18
+  lang: vi
+  q: silencing the buzzer được mô tả ở đâu?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-buzzer.rst
+- id: V3-19
+  lang: en
+  q: Explain scheduling code to run intermittently.
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/code-overview-scheduling-your-new-code-to-run-intermittently.rst
+- id: V3-20
+  lang: vi
+  q: Tài liệu nói gì về 16. behavioral remarketing?
+  expect:
+  - source: expresslrs_docs
+    path: docs/info/privacy-policy.md
+- id: V3-21
+  lang: en
+  q: Summarise the section on i2c (maroon fade).
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-StampH743.rst
+- id: V3-22
+  lang: vi
+  q: 15. ci/cd tools được mô tả ở đâu?
+  expect:
+  - source: expresslrs_docs
+    path: docs/info/privacy-policy.md
+- id: V3-23
+  lang: en
+  q: Explain libraries/ap_hal_chibios/hwdef/pixhawk4-bdshot/hwdef.dat.
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/Pixhawk4-bdshot/hwdef.dat
+- id: V3-24
+  lang: vi
+  q: Tài liệu nói gì về debugging code built by arduino?
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/jtag.rst
+- id: V3-25
+  lang: en
+  q: Summarise the section on compiling your own firmware and loading to autopilot.
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/sim-on-hardware.rst
+- id: V3-26
+  lang: vi
+  q: accessing/adding parameters via scripts được mô tả ở đâu?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-scripting-parameters.rst
+- id: V3-27
+  lang: en
+  q: Summarise the section on extra information.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-bootloader-update.rst
+- id: V3-28
+  lang: vi
+  q: Tài liệu nói gì về compass (magnetometer) calibration?
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/mavlink-calibration.rst
+- id: V3-29
+  lang: en
+  q: Summarise the section on mqtt publisher.
+  expect:
+  - source: ardupilot_wiki
+    path: mavproxy/source/docs/modules/mqtt.rst
+- id: V3-30
+  lang: vi
+  q: Giải thích 3d printed anti-vibration platform.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-vibration-damping.rst

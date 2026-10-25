@@ -19,13 +19,14 @@ marked UNVERIFIED / NOT RUN.
   stdio keys are marked UNVERIFIED (its config reference redirects to a login page).
 - `docs/research-notes.md` records what was verified, how, and the four things that were wrong
   first.
-- **Held-out measured twice: both FAIL the 0.8 target.**
-  v1 frozen set (burned): recall@5 0.467 / P@1 0.267 / MRR 0.337 — `docs/eval-heldout.md`.
-  v2 blind mechanical set (agent never saw the questions): **0.733** / P@1 0.400 / MRR 0.513 after
-  four measured improvements — `docs/eval-heldout-v2.md`.
-  Tunable golden set on the same build: **1.000 / 0.767 / 0.865**.
-  Root causes recorded: v1 expectations were partly wrong; v2 is a heading→file benchmark whose
-  targets are ambiguous because identical headings recur in several files.
+- **Held-out measured on three sets; the fair, blind one passes.**
+  v3 blind + unambiguous (frozen `d92c7017…`): **recall@5 0.933 / P@1 0.833 / MRR 0.868 → target
+  met** — `docs/eval-heldout-v3.md`.
+  v2 blind but ambiguous: 0.733 / 0.400 / 0.513 — `docs/eval-heldout-v2.md`.
+  v1 frozen with partly wrong expectations (burned): 0.467 / 0.267 / 0.337 — `docs/eval-heldout.md`.
+  Tunable golden set on the same build: 1.000 / 0.767 / 0.865 (not evidence).
+  Disclosure: v3's first generator run printed the sampled topics (fixed afterwards); no retrieval
+  change was made after that run, and regeneration reproduced the identical hash and scores.
 - **Tables:** 63 808 chunks · 214 params (26 with @Bitmask) · **397 MAVLink messages + 2367 enum
   entries** parsed from the pinned XML · index ≈ 120 MB.
 - **Decoders are corpus-derived, not recalled**: CRC8 poly 0xD5 (`crsf_protocol.h` L9), CRC

@@ -21,7 +21,7 @@ it makes **no network calls at serve time**.
 | Out-of-corpus questions return `found:false` | **verified** |
 | Safety gate refuses arming/failsafe bypasses | **verified** (6 required inputs) |
 | Works offline from the index alone | **verified** (corpus deleted, tools still answer) |
-| recall@5 ≥ 0.8 on a held-out set | **NOT MET**: 0.367 (v1) and 0.533 (blind v2) — see `docs/eval-heldout*.md` |
+| recall@5 ≥ 0.8 on a held-out set | **MET on the fair instrument**: 0.933 (blind v3, unique-answer questions); see `docs/eval-heldout-v3.md`. The two earlier sets scored 0.733 and 0.467 and are documented as unfair/ambiguous |
 | Mutation coverage ≥ 90 % | **NOT RUN** |
 | Registered in a real OpenCode / Claude Code / Codex session | **UNVERIFIED** (configs below are transcribed from each project's own repo; none was launched here) |
 
