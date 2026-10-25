@@ -88,4 +88,5 @@ run needed a worktree because the script refuses to overwrite `docs/blackbox/raw
 - Ranking for `C4`, `C10`, `C11`. Deliberately deferred until the retrieval set is larger.
 - Worktree cleanup: `wt-A` through `wt-F`, `bb-run2`, `drone-mcp-verify` and `client-verify` still
   exist on this machine, together about 1 GB of index copies.
-- A logged-in client session. The Claude Code connection is proven, the model-issued tool call is not.
+- A logged-in Claude Code session. The connection and tool list are proven there, and the
+  model-issued tool call is proven on OpenCode (see the client section above).

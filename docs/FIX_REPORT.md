@@ -18,7 +18,7 @@ Không có ngưỡng nào bị hạ, không test đóng băng nào bị sửa, k
 | 5 | Glossary khớp chuỗi con ("bitcoin"→"bit") + không có cờ ngoài phạm vi | **FIXED** | `bc5ef17` | `c0088c6` | `docs/fix/C.md`, `C-5-prefix.txt`, run2 `D1/D2/D4` |
 | 6 | `decode_crsf_frame`: µs lệch 1, `all_crc_valid:true` khi 0 frame | **FIXED** | `fdf38e4` | `fb981a1` | `docs/fix/D.md`, run2 `A3/A4_*` |
 | 7 | Thiếu `maxLength`/validate + rò lỗi SQL thô (`LIKE or GLOB pattern too complex`) | **FIXED** | `8a570e7` | `22b9fa8` | `docs/fix/C.md`, `C-7-prefix.txt`, run2 `F_MB` |
-| 8 | Client báo `status: failed` không nêu lý do | **PARTIAL** — nguyên nhân đã xác định và đo được; server chứng minh lên được trong client thật; tool call do model vẫn chưa có (client chưa `/login`) | — | `ea2992f`, `511c4bb` (docs) + mục (g) | `docs/fix/E.md`, `docs/client-setup.md` §6, `.mcp.json.example` |
+| 8 | Client báo `status: failed` không nêu lý do | **FIXED** — nguyên nhân là project-scope `.mcp.json` chưa duyệt; server chạy được trong hai client thật, và case H có tool call do model phát ra trên OpenCode | — | `ea2992f`, `511c4bb` (docs) + mục (g) | `docs/fix/E.md`, `docs/client-setup.md` §6-7, `docs/blackbox/h/opencode_stream.jsonl` |
 
 Hồi quy do nhánh A gây ra (corpus mở rộng) được xử lý ở nhánh F, giao lại đúng chủ sở hữu `query.py`:
 `bc0efc5` (test-fail) → `5857835`, `9d07c28` (test-fail) → `7b8b314`; report `docs/fix/F.md`.
@@ -225,3 +225,20 @@ của server. Cách chạy được, không cần duyệt tay: `--scope user`, h
 
 Chi tiết + lệnh tái lập: `docs/blackbox/run2/determinism.md`. Giới hạn: đây là tất định của **khâu
 chấm**, không phải của lần chạy server (run2 vẫn chỉ chạy đúng một lần theo luật).
+
+
+### (g.4) Case H — tool call do model phát ra (OpenCode, model miễn phí)
+
+Sau khi báo cáo này được viết, người dùng chỉ ra OpenCode có model miễn phí. Một phiên OpenCode
+`v2.1.3`, model `opencode/deepseek-v4.1-flash-free`, đã chạy trọn:
+
+```
+tools["ardupilot-research"].lookup_param({ name_or_pattern: "RC_OPTIONS" })
+  -> found: true, default: 32, cite_id: ardupilot#11fb2497e2a89d95
+  -> URL: .../Copter-4.7.2/libraries/RC_Channel/RC_Channels_VarInfo.h#L84-L117
+final answer: 32          (mỗi bước "cost":0)
+```
+
+Transcript thô: `docs/blackbox/h/opencode_stream.jsonl`. Cấu hình + lệnh: `docs/client-setup.md` §7.
+Vì vậy case H chuyển từ NOT RUN sang PASS, và lỗi 8 chuyển từ PARTIAL sang FIXED: nguyên nhân gốc là
+cách đăng ký (project scope chờ duyệt), không phải server.

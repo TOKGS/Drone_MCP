@@ -256,3 +256,55 @@ claude -p "<câu hỏi>" --mcp-config .\.mcp.json --strict-mcp-config
 ```
 
 Nếu vẫn `failed` sau khi đã approve: xem §4 (python trên PATH, `PYTHONPATH`, cwd, env, `cmd /c`).
+
+
+---
+
+## 7. OpenCode: chạy thật với model miễn phí — 2026-10-25
+
+Giả thuyết còn treo ở mục 6 là "tool call do model phát ra". Nó đã có bằng chứng, trên OpenCode
+`v2.1.3` với model miễn phí `opencode/deepseek-v4.1-flash-free` (chi phí mỗi bước: `"cost":0`).
+
+Cấu hình dùng để chạy (`D:\Skill_tulan\opencode-verify\opencode.json`, project scope):
+
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "ardupilot-research": {
+      "type": "local",
+      "command": ["python", "-m", "ardupilot_research_mcp.server"],
+      "enabled": true,
+      "environment": {
+        "PYTHONPATH": "D:\\Skill_tulan\\ardupilot-research-mcp\\src",
+        "ARM_REPO_ROOT": "D:\\Skill_tulan\\ardupilot-research-mcp",
+        "ARM_DATA_DIR": "D:\\Skill_tulan\\ardupilot-research-mcp\\data"
+      }
+    }
+  }
+}
+```
+
+Lệnh chạy một phiên không tương tác, lưu nguyên JSON stream:
+
+```powershell
+cd D:\Skill_tulan\opencode-verify
+opencode run --standalone -m opencode/deepseek-v4.1-flash-free --format json `
+  "Call the MCP tool lookup_param on the ardupilot-research server with name_or_pattern='RC_OPTIONS'. Reply with only the numeric default value."
+```
+
+Transcript thô: `docs/blackbox/h/opencode_stream.jsonl` (10 dòng JSON). Ba dòng đáng chú ý:
+
+1. OpenCode liệt kê tool của server (`search({ query: "lookup_param", namespace: "ardupilot-research" })`)
+   và thấy `tools["ardupilot-research"].lookup_param` cùng chữ ký `name_or_pattern: string`
+   với `@maxLength 128`.
+2. Model gọi tool:
+   `await tools["ardupilot-research"].lookup_param({ name_or_pattern: "RC_OPTIONS" })`
+   → `found: true`, `default: 32`, `default_raw: "(uint32_t)RC_Channels::Option::ARMING_CHECK_THROTTLE"`,
+   `cite_id: "ardupilot#11fb2497e2a89d95"`, URL
+   `https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/RC_Channel/RC_Channels_VarInfo.h#L84-L117`.
+3. Câu trả lời cuối: `32`.
+
+Kết luận: case H (client thật) **PASS** trên OpenCode, gồm cả tool call do model phát ra và citation
+ghim đúng `Copter-4.7.2`. Claude Code đã chứng minh phần kết nối + liệt kê 14 tool (mục 6). Codex
+vẫn **UNVERIFIED** vì máy này không cài.

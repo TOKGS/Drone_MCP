@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "ardupilot-research": {
+      "type": "local",
+      "command": ["python", "-m", "ardupilot_research_mcp.server"],
+      "enabled": true,
+      "environment": {
+        "PYTHONPATH": "D:\\Skill_tulan\\ardupilot-research-mcp\\src",
+        "ARM_REPO_ROOT": "D:\\Skill_tulan\\ardupilot-research-mcp",
+        "ARM_DATA_DIR": "D:\\Skill_tulan\\ardupilot-research-mcp\\data"
+      }
+    }
+  }
+}

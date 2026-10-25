@@ -328,11 +328,16 @@ python -m ardupilot_research_mcp.server
 Nó cần `PYTHONPATH=<repo>/src` hoặc cài editable. Thay `D:\Skill_tulan\ardupilot-research-mcp` bằng
 đường dẫn checkout của bạn.
 
-Đã kiểm trên Claude Code 2.1.308 ngoài sandbox: server kết nối được, client liệt kê đủ 14 tool dưới
-dạng `mcp__ardupilot-research__*`, và `claude mcp list` báo `√ Connected` với đăng ký user scope.
-Tool call do model phát ra vẫn chưa có bằng chứng, vì phiên dừng ở `"Not logged in · Please run
-/login"`, là đăng nhập của client chứ không phải server. OpenCode và Codex chưa từng được chạy.
-JSON init thô và cả hai cách đăng ký nằm ở `docs/client-setup.md` mục 6.
+Đã kiểm ngoài sandbox: Claude Code 2.1.308 kết nối được, liệt kê đủ 14 tool dưới dạng
+`mcp__ardupilot-research__*`, `claude mcp list` báo `√ Connected` với đăng ký user scope; lượt model
+ở đó dừng ở `"Not logged in · Please run /login"`, là đăng nhập của client chứ không phải server.
+
+OpenCode 2.1.3 với model miễn phí `opencode/deepseek-v4.1-flash-free` đã chạy trọn một lượt: model
+gọi `tools["ardupilot-research"].lookup_param({name_or_pattern:"RC_OPTIONS"})`, nhận `default: 32`
+với `cite_id ardupilot#11fb2497e2a89d95`, và trả lời `32`. Transcript:
+`docs/blackbox/h/opencode_stream.jsonl`; cấu hình ở `docs/client-setup.md` mục 7.
+
+Codex chưa từng được chạy. JSON init thô của hai client đã chạy nằm ở `docs/client-setup.md`.
 
 `.mcp.json` ở project scope cần một lần duyệt tương tác. Phiên `-p` headless thấy nó ở trạng thái
 `pending` với 0 tool, và đó là thứ run1 ghi thành `status: failed`. Đặt
@@ -560,9 +565,9 @@ gitignore, nên repo chứa công thức chứ không chứa vài GB source upst
 
 Chưa kiểm chứng:
 
-- Tool call do model phát ra. Phiên headless dừng ở bước đăng nhập của client.
-- OpenCode. Chưa từng chạy, cấu hình chép từ tài liệu của chính nó.
 - Codex. Máy này không cài, tên khoá stdio chưa xác nhận.
+- Tool call do model phát ra trong Claude Code, vì phiên đó chưa đăng nhập. OpenCode đã có một lượt
+  như vậy trên hồ sơ.
 
 Hạn chế đã biết:
 
@@ -611,8 +616,9 @@ v0.1.0, lượt hoàn chỉnh đầu tiên, 2026-10-25.
 - `decode_crsf_frame` báo `frames_found`, trả `all_crc_valid:null` khi không có frame, báo
   `truncated_tail_bytes`, và quy micro giây bằng phép chia cắt về 0 kiểu C, nên tick 172 cho 988.
 - Chạy lại blackbox độc lập trên 108 case đóng băng: 92 pass, không hồi quy, khâu chấm tất định.
-- Wiring client đã chứng minh trong phiên Claude Code thật: server connected, 14 tool được liệt kê,
-  user scope báo `√ Connected`.
+- Wiring client đã chứng minh trong hai client thật: Claude Code kết nối và liệt kê 14 tool (user
+  scope báo `√ Connected`), và một phiên OpenCode với model miễn phí đã gọi `lookup_param` rồi trả lời
+  từ citation.
 - Mutation harness trỏ lại đúng code hiện tại, một mutant tương đương được phân loại thay vì tính
   điểm, và bộ lọc stopword đã có test.
 - `research.build_all` gom build về một lối vào, `research.extract` không còn fail ở lớp local, và

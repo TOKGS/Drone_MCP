@@ -342,12 +342,17 @@ python -m ardupilot_research_mcp.server
 It needs `PYTHONPATH=<repo>/src` or an editable install. Replace
 `D:\Skill_tulan\ardupilot-research-mcp` with your checkout path.
 
-What has been verified, on Claude Code 2.1.308 outside the sandbox: the server connects, the client
+What has been verified outside the sandbox: in Claude Code 2.1.308 the server connects, the client
 lists all 14 tools as `mcp__ardupilot-research__*`, and `claude mcp list` reports `√ Connected` for a
-user-scope registration. A model-issued tool call is still unproven because the session stops at
-`"Not logged in · Please run /login"`, which is client authentication and not the server. OpenCode and
-Codex were not launched. Raw init JSON and both registration vectors are in `docs/client-setup.md`
-section 6.
+user-scope registration. The Claude Code model turn stops at `"Not logged in · Please run /login"`,
+which is client authentication and not the server.
+
+In OpenCode 2.1.3 with the free model `opencode/deepseek-v4.1-flash-free` a full turn ran: the model
+called `tools["ardupilot-research"].lookup_param({name_or_pattern:"RC_OPTIONS"})`, got
+`default: 32` with `cite_id ardupilot#11fb2497e2a89d95`, and answered `32`. Transcript:
+`docs/blackbox/h/opencode_stream.jsonl`; setup in `docs/client-setup.md` section 7.
+
+Codex was not launched. Raw init JSON for both working clients is in `docs/client-setup.md`.
 
 A project-scope `.mcp.json` needs one interactive approval. A headless `-p` session shows it as
 `pending` with 0 tools, and that is what run1 recorded as `status: failed`. Setting
@@ -574,9 +579,9 @@ and `claude mcp list` reports `√ Connected` for a user-scope registration.
 
 Still unverified:
 
-- A model-issued tool call. The headless session stops at client login.
-- OpenCode. It was never launched, and its config shape comes from its own docs.
 - Codex. It is not installed here and its stdio key names are unconfirmed.
+- A model-issued tool call inside Claude Code, which needs a logged-in session. OpenCode has one on
+  record (see above); the Claude Code client was not logged in.
 
 Known limitations:
 
@@ -630,8 +635,9 @@ v0.1.0, first complete pass, 2026-10-25.
   gives 988.
 - Independent blackbox rerun over the frozen 108 cases: 92 pass, no regressions, with a deterministic
   scoring pass.
-- Client wiring proven in a real Claude Code session: server connected, 14 tools listed, user scope
-  reporting `√ Connected`.
+- Client wiring proven in two real clients: Claude Code connects and lists 14 tools (user scope
+  reports `√ Connected`), and an OpenCode session with a free model issued a `lookup_param` call and
+  answered from the citation.
 - Chunk selection inside a winning document now prefers whole-word matches and the chunk without a
   narrower heading, which turns C1 from a near-miss into a correct quote.
 - Mutation harness re-pointed at the current code, an equivalent mutant classified instead of scored,
