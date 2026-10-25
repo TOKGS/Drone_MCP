@@ -34,6 +34,8 @@ sources:
       - "libraries/AP_HAL_ESP32/**"
       - "libraries/AP_HAL/**"
       - "libraries/AP_RCProtocol/**"
+      - "libraries/RC_Channel/**"
+      - "libraries/AP_Arming/**"
       - "libraries/AP_Common/**"
       - "libraries/AP_InertialSensor/**"
       - "libraries/AP_Param/**"

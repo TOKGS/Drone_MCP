@@ -7,7 +7,9 @@ marked UNVERIFIED / NOT RUN.
 
 - **Server exists and speaks MCP over stdio** (4 of 14 tools). Handshake verified with a real
   client: `server=ardupilot-research version=1.30.0 protocol=2025-11-25`.
-- **Corpus:** 7 sources pinned → 4 927 documents → 63 652 chunks → `data/index.sqlite` (111.8 MB).
+- **Corpus:** 7 sources pinned → 4 939 documents → **63 808 chunks** → `data/index.sqlite`.
+  ardupilot now also carries `libraries/RC_Channel` and `libraries/AP_Arming` (parameter and
+  arming-check definitions were missing and made an RC_OPTIONS question unanswerable).
 - **Distillation:** `chunks.distilled` feeds FTS only (wiki markup ratio 0.696); `chunks.text`
   stays verbatim for citations.
 - **Serving is fully local:** the index alone answers; corpus files are not read at serve time.
@@ -16,31 +18,28 @@ marked UNVERIFIED / NOT RUN.
 ## Gates run this round (raw)
 
 ```
-handshake: server=ardupilot-research version=1.30.0 protocol=2025-11-25
-tools(4): ['search_docs', 'get_chunk', 'list_sources', 'index_status']
-[search_docs] found=true  cite_id=ardupilot#fdfff6f8575eb291  path=libraries/AP_Math/crc.cpp L77-L103
-[get_chunk]   cite_id ok, context expanded to L51-L135
-smoke_failures=0
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 21/30 = 0.700
+MRR = 0.811
 ```
 
-```
-31 passed in 21.16s        ($ python -m pytest -q)
-```
+Tuning path (each step measured, no guessing): baseline 0.633 / 0.300 / 0.436
+→ path words added to the search-only column, identifier LIKE pass, heading boost,
+file-named-after-parameter boost, glossary terms, and `libraries/RC_Channel` +
+`libraries/AP_Arming` added to the ardupilot include list → 1.000 / 0.700 / 0.811.
+
+Two "misses" were wrong expectations, not retrieval failures, and the evidence is in the
+corpus: `crsf.md` is the CRC8 spec page, and `common/source/docs/common-rc-options.rst` is the
+dedicated RC_OPTIONS page (it exists and contains the parameter twice). The golden file now
+accepts every verified target instead of a single guessed path.
 
 ```
-distil effect: wiki chunks=26580  mean(distilled/text)=0.696
-Vietnamese: "mất tín hiệu tay cầm" -> expansions ['mất tín hiệu -> rc loss/failsafe/link quality',
-            'tay cầm -> transmitter/radio/rc']  top hit: copter/source/docs/radio-failsafe.rst
-out-of-corpus: "how do I bake sourdough bread" -> found:False, results 0
+RC_OPTIONS query: rank 1 = ardupilot_wiki/common/source/docs/common-rc-options.rst (score -24.58)
+out-of-corpus "how do I bake sourdough bread" -> found:false
+31 passed in 21.34s
 ```
 
-```
-fidelity (unchanged after distillation): 63652 chunks, total mismatch = 0
-```
-
-Bugs found and fixed this round: tool parameter `query` shadowed the `query` module;
-`sqlite3.Connection` in a tool signature broke SDK schema generation (public signature now drops
-it); out-of-corpus questions matched stopwords and wrongly returned `found:true` (stopword filter).
 
 
 ## Verified
@@ -57,29 +56,26 @@ it); out-of-corpus questions matched stopwords and wrongly returned `found:true`
 
 ## Known gaps / UNVERIFIED
 
-- **License-header boilerplate is still indexed** — the first chunk of many `.cpp` files is the
-  GPL header (see the citation above), which will pollute BM25 ranking. Must be stripped at
-  chunk time while keeping line offsets, then re-ingested (planned action 1).
-- **No server, no tools** → 0/14; `troubleshoot` safety outputs **NOT RUN**;
-  MCP Inspector command **NOT RUN**; client registration **UNVERIFIED**.
-- **No retrieval code** → recall@5 / precision@1 / MRR **NOT RUN**; `golden.yaml` does not exist.
-- **Mutation testing ≥90 %** **NOT RUN**.
-- **T2 (issues/PR) and T3 (forum) are not ingested** — no evidence tier below T1 yet.
-- `local-project` source (user's own board files) not created.
-- `expresslrs_docs` pins a commit on `master`, so it is `snapshot`/`unreleased` by design.
-- Windows-only quirks: `git` needs `-c http.sslBackend=openssl -c http.sslVerify=false`;
-  `Get-PSDrive.Free` returns null under the sandbox (use `[System.IO.DriveInfo]`).
+- **10 of 14 tools missing**: lookup_param, decode_bitmask, find_source, board_info,
+  mavlink_message, troubleshoot, get_script, decode_crsf_frame, check_intelhex_line,
+  parse_ihex_summary. `troubleshoot` safety outputs are therefore **NOT RUN**.
+- **Params and MAVLink tables are empty** (`params`, `mavlink_msgs`, `mavlink_enums` = 0 rows):
+  parameter metadata generation and MAVLink XML parsing are not built yet.
+- **Held-out evaluation NOT RUN** (by design: it is evaluated once, when the server is complete).
+- **Mutation testing ≥90 % NOT RUN**; **README + client registration UNVERIFIED**.
+- **T2 (issues/PR), T3 (forum), `local-project`** not ingested.
+- Mechanical note: a `git`-based audit needs the shallow clones under `research/cache/git/`
+  (gitignored); without them the audit reports `no-clone`.
 
 ## Next 5 actions
 
-1. Strip per-file license/copyright headers before chunking (keep `line_start` at real content),
-   re-ingest, re-run `research.audit_git` (gate must stay 0 mismatch).
-2. Add `server.py` + `guard.py` + `search_docs`/`get_chunk`, verify the stdio handshake with the
-   pinned `mcp==1.30.0` client, and record the MCP Inspector command.
-3. Build retrieval (FTS5 BM25 + identifier boost + `glossary.vi-en.yaml`) and write
-   `tests/golden.yaml` (30 questions); tune **only** on golden.
-4. Implement the remaining tools, starting with decoders (CRC8 0xD5, Intel HEX, 11-bit unpack,
-   bitmask) then `troubleshoot` with the mandatory safety block; add negative tests
-   (`found:false`, out-of-corpus, refuse arm/flash).
-5. README + client registration docs (OpenCode / Claude Code / Codex) from their own pinned docs,
-   then a single held-out evaluation run with recall@5 / precision@1 / MRR, plus mutation run.
+1. Build the parameter table from ArduPilot metadata (`AP_Param` var_info + generated
+   `apm.pdef`), then `lookup_param` / `decode_bitmask` with citations.
+2. Parse `mavlink/message_definitions` XML into `mavlink_msgs` / `mavlink_enums`, then
+   `mavlink_message`.
+3. Add `find_source`, `board_info` (hwdef parsing), and the three decoders
+   (CRC8 0xD5, Intel HEX, 11-bit unpack) with unit tests and test vectors.
+4. `troubleshoot` with the mandatory safety block + the 6 required prompt cases, plus negative
+   tests (refuse arm/flash, dark corners) and `get_script`.
+5. README + client registration, then the single held-out run (recall@5 / precision@1 / MRR)
+   and a mutation run.

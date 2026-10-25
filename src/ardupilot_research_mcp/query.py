@@ -85,8 +85,8 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
     max_tier = TIER_ORDER.get(tier_max, 0)
 
     sql = (
-        "SELECT c.cite_hash, d.source_id, d.path, c.text, c.line_start, c.line_end,"
-        "       bm25(chunks_fts) AS rank"
+        "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
+        "       c.line_start, c.line_end, bm25(chunks_fts) AS rank"
         "  FROM chunks_fts f JOIN chunks c ON c.rowid = f.rowid"
         "  JOIN documents d ON d.id = c.document_id JOIN sources s ON s.id = d.source_id"
         " WHERE chunks_fts MATCH ?")
@@ -102,16 +102,44 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
 
     rows = con.execute(sql, params).fetchall()
     identifiers = {token for token in tokens if IDENTIFIER.match(token)}
+    path_tokens = {token.lower() for token in tokens if len(token) >= 4}
+    tiers = {row["id"]: row["tier"] for row in con.execute("SELECT id, tier FROM sources")}
+
+    merged: dict[str, tuple[sqlite3.Row, float]] = {
+        row["cite_hash"]: (row, float(row["rank"])) for row in rows
+    }
+    # Exact identifier lookup: FTS splits RC_OPTIONS into rc/options, which floods the
+    # candidate set with unrelated files. A LIKE pass over the verbatim column finds the
+    # files that actually spell the identifier.
+    if identifiers:
+        like = " OR ".join("c.text LIKE ?" for _ in identifiers)
+        extra_sql = (
+            "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
+            "       c.line_start, c.line_end, -8.0 AS rank"
+            "  FROM chunks c JOIN documents d ON d.id = c.document_id"
+            f" WHERE ({like})")
+        extra_params: list[object] = [f"%{token}%" for token in identifiers]
+        if allowed_sources:
+            extra_sql += f" AND d.source_id IN ({','.join('?' * len(allowed_sources))})"
+            extra_params.extend(allowed_sources)
+        extra_sql += " LIMIT 60"
+        for row in con.execute(extra_sql, extra_params):
+            merged.setdefault(row["cite_hash"], (row, 0.0))
 
     scored: list[tuple[float, sqlite3.Row]] = []
-    for row in rows:
-        if TIER_ORDER.get(_tier_for(con, row["source_id"]), 0) > max_tier:
+    for row, rank in merged.values():
+        if TIER_ORDER.get(tiers.get(row["source_id"], "T3"), 0) > max_tier:
             continue
-        score = float(row["rank"])  # lower is better in sqlite bm25
-        hits = sum(1 for token in identifiers if token in row["text"] or token in row["path"])
-        score -= 2.5 * hits                       # identifier matches outrank prose
-        if any(token in row["path"] for token in identifiers):
-            score -= 1.0
+        score = rank                          # lower is better in sqlite bm25
+        score -= 6.0 * sum(1 for token in identifiers if token in row["text"])
+        # A file named after an identifier (common-rc-options.rst for RC_OPTIONS) is the
+        # canonical page for it; without this the parameter-name page loses to incidental
+        # mentions in other documents.
+        score -= 6.0 * sum(1 for token in identifiers
+                           if token.lower().replace("_", "-") in row["path"].lower())
+        score -= 1.5 * sum(1 for token in path_tokens if token in row["path"].lower())
+        heading = (row["heading_path"] or "").lower()
+        score -= 2.0 * sum(1 for token in path_tokens if token in heading)
         scored.append((score, row))
     scored.sort(key=lambda item: item[0])
 

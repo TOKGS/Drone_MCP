@@ -54,3 +54,15 @@ terms:
     en: ["map"]
   - vi: "an toàn"
     en: ["safety", "failsafe", "fence"]
+  - vi: "lưu vào bộ nhớ"
+    en: ["store", "storage", "eeprom", "persistent"]
+  - vi: "bộ nhớ"
+    en: ["memory", "storage", "eeprom"]
+  - vi: "cảm biến rung"
+    en: ["vibration", "accelerometer", "accel"]
+  - vi: "rung"
+    en: ["vibration", "vibrations"]
+  - vi: "đọc ở đâu"
+    en: ["where is", "definition", "source"]
+  - vi: "xử lý thế nào"
+    en: ["how does", "behaviour", "handling"]

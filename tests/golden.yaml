@@ -1,0 +1,211 @@
+# Golden evaluation set — used for tuning. The held-out set (tests/heldout_locked.yaml) is
+# frozen and must NOT be used for tuning; it is evaluated once, at the end.
+# A question may accept several targets: `expect` is a list of {source, path} pairs (path is a
+# substring of the file path; "." accepts any file in that source). recall@5 = any top-5 result
+# matching one pair; precision@1 = the first result matches; MRR = 1 / rank of the first match.
+version: 2
+questions:
+  - id: G01
+    lang: vi
+    q: "CRC8 của CRSF dùng đa thức nào?"
+    scope: all
+    expect:
+      - { source: crsf_spec, path: "crsf.md" }
+      - { source: expresslrs, path: "crsf" }
+  - id: G02
+    lang: en
+    q: "What CRC polynomial does the CRSF protocol use?"
+    scope: all
+    expect:
+      - { source: crsf_spec, path: "crsf.md" }
+      - { source: expresslrs, path: "crsf" }
+      - { source: ardupilot, path: "AP_RCProtocol_CRSF" }
+  - id: G03
+    lang: en
+    q: "Which CRSF frame type carries link statistics?"
+    scope: all
+    expect:
+      - { source: expresslrs, path: "crsf" }
+      - { source: crsf_spec, path: "crsf.md" }
+      - { source: ardupilot, path: "AP_RCProtocol_CRSF" }
+  - id: G04
+    lang: vi
+    q: "RC_OPTIONS là tham số gì?"
+    scope: all
+    expect:
+      - { source: ardupilot_wiki, path: "common-rc-options" }
+      - { source: ardupilot, path: "RC_Channel" }
+      - { source: ardupilot_wiki, path: "crsf-telemetry" }
+      - { source: ardupilot_wiki, path: "parameters" }
+  - id: G05
+    lang: en
+    q: "RC_OPTIONS parameter bit meanings"
+    scope: all
+    expect:
+      - { source: ardupilot, path: "RC_Channel" }
+      - { source: ardupilot_wiki, path: "crsf-telemetry" }
+      - { source: ardupilot_wiki, path: "parameters" }
+  - id: G06
+    lang: vi
+    q: "hwdef.dat khai báo UART như thế nào?"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "hwdef" }
+  - id: G07
+    lang: en
+    q: "How does a hwdef file declare a serial port?"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "hwdef" }
+  - id: G08
+    lang: en
+    q: "AP_RCPROTOCOL_ENABLED ESP32 HAL"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "AP_HAL_ESP32" }
+      - { source: ardupilot, path: "AP_RCProtocol" }
+  - id: G09
+    lang: vi
+    q: "board CubeOrangePlus dùng MCU gì?"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "hwdef/CubeOrangePlus/hwdef.dat" }
+  - id: G10
+    lang: en
+    q: "CubeOrangePlus hwdef MCU definition"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "hwdef/CubeOrangePlus" }
+  - id: G11
+    lang: vi
+    q: "mất tín hiệu RC thì failsafe xử lý thế nào?"
+    scope: docs
+    expect:
+      - { source: ardupilot_wiki, path: "radio-failsafe" }
+      - { source: ardupilot_wiki, path: "failsafe" }
+  - id: G12
+    lang: en
+    q: "What happens when RC input is lost?"
+    scope: docs
+    expect:
+      - { source: ardupilot_wiki, path: "failsafe" }
+  - id: G13
+    lang: en
+    q: "arming check prearm failure causes"
+    scope: docs
+    expect:
+      - { source: ardupilot_wiki, path: "arming" }
+      - { source: ardupilot_wiki, path: "prearm" }
+  - id: G14
+    lang: vi
+    q: "vì sao không arm được?"
+    scope: docs
+    expect:
+      - { source: ardupilot_wiki, path: "arming" }
+      - { source: ardupilot_wiki, path: "prearm" }
+  - id: G15
+    lang: en
+    q: "How to build ArduPilot firmware with waf for a board?"
+    scope: docs
+    expect:
+      - { source: ardupilot_wiki, path: "building" }
+      - { source: ardupilot_wiki, path: "dev/source/docs" }
+  - id: G16
+    lang: vi
+    q: "nạp firmware bằng bootloader"
+    scope: docs
+    expect:
+      - { source: ardupilot_wiki, path: "bootloader" }
+  - id: G17
+    lang: en
+    q: "MAVLink message ATTITUDE definition"
+    scope: mavlink
+    expect:
+      - { source: mavlink, path: "message_definitions" }
+  - id: G18
+    lang: en
+    q: "MAVLink command MAV_CMD_COMPONENT_ARM_DISARM"
+    scope: mavlink
+    expect:
+      - { source: mavlink, path: "message_definitions" }
+  - id: G19
+    lang: vi
+    q: "kênh CRSF được đóng gói 11 bit ra sao?"
+    scope: all
+    expect:
+      - { source: crsf_spec, path: "crsf.md" }
+      - { source: expresslrs, path: "crsf" }
+  - id: G20
+    lang: en
+    q: "CRSF RC channels packed 11 bits payload"
+    scope: all
+    expect:
+      - { source: crsf_spec, path: "crsf.md" }
+      - { source: expresslrs, path: "crsf" }
+  - id: G21
+    lang: en
+    q: "EdgeTX crossfire telemetry handling"
+    scope: code
+    expect:
+      - { source: edgetx, path: "telemetry" }
+      - { source: edgetx, path: "pulses" }
+  - id: G22
+    lang: vi
+    q: "ELRS packet rate đọc ở đâu?"
+    scope: all
+    expect:
+      - { source: expresslrs_docs, path: "." }
+      - { source: expresslrs, path: "crsf" }
+      - { source: ardupilot_wiki, path: "expresslrs" }
+  - id: G23
+    lang: en
+    q: "ExpressLRS packet rate telemetry"
+    scope: all
+    expect:
+      - { source: expresslrs_docs, path: "." }
+      - { source: expresslrs, path: "crsf" }
+  - id: G24
+    lang: en
+    q: "AP_Param parameter table implementation"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "AP_Param" }
+  - id: G25
+    lang: vi
+    q: "tham số được lưu vào bộ nhớ thế nào?"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "AP_Param" }
+  - id: G26
+    lang: en
+    q: "Intel HEX record types bootloader upload"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "Tools" }
+  - id: G27
+    lang: en
+    q: "SERIAL_ORDER pins hwdef ChibiOS"
+    scope: code
+    expect:
+      - { source: ardupilot, path: "hwdef" }
+      - { source: ardupilot, path: "AP_HAL_ChibiOS" }
+  - id: G28
+    lang: vi
+    q: "cảm biến rung thì kiểm tra gì?"
+    scope: docs
+    expect:
+      - { source: ardupilot_wiki, path: "vibration" }
+  - id: G29
+    lang: en
+    q: "throttle based notch filter vibration analysis"
+    scope: docs
+    expect:
+      - { source: ardupilot_wiki, path: "notch" }
+      - { source: ardupilot_wiki, path: "vibration" }
+  - id: G30
+    lang: en
+    q: "ExpressLRS receiver CRSF output configuration"
+    scope: all
+    expect:
+      - { source: expresslrs_docs, path: "." }
+      - { source: ardupilot_wiki, path: "crsf" }

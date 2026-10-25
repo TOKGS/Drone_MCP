@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sqlite3
 import time
 from pathlib import Path
@@ -40,6 +41,11 @@ def _decode(data: bytes) -> str | None:
         except UnicodeDecodeError:
             continue
     return None
+
+
+def _path_words(rel_path: str) -> str:
+    """Split a repo path into words for the search-only column (never cited)."""
+    return " ".join(part for part in re.split(r"[/_.\-]+", rel_path) if part)
 
 
 def _kind(rel_path: str) -> str:
@@ -137,7 +143,10 @@ def ingest_source(con: sqlite3.Connection, source: dict, root: Path, *,
                   piece.line_start, piece.line_end, piece.sha256,
                   cite.compute_cite_hash(source_id, rel, piece.line_start, piece.line_end,
                                          piece.sha256),
-                  textsanitize.distill_for_search(rel, piece.text))
+                  # Path words are prepended for ranking only: "copter/source/docs/
+                  # radio-failsafe.rst" then matches a query about radio failsafe, while the
+                  # cited text stays untouched.
+                  _path_words(rel) + "\n" + textsanitize.distill_for_search(rel, piece.text))
                  for ord_, piece in enumerate(pieces)])
             con.execute("COMMIT")
         except Exception:
