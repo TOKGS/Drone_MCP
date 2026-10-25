@@ -14,3 +14,8 @@ __pycache__/
 dist/
 build/
 *.egg-info/
+
+# generated report artifacts
+FINAL_REPORT.md
+review_bundle/
+review_bundle.zip
