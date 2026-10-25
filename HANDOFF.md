@@ -9,6 +9,12 @@ marked UNVERIFIED / NOT RUN.
   lookup_param, decode_bitmask, find_source, board_info, mavlink_message, troubleshoot,
   get_script, decode_crsf_frame, check_intelhex_line, parse_ihex_summary, list_sources,
   index_status. 4 original example scripts ship in `examples/`, each with real cite_ids.
+- **README written** with install, ingest (PowerShell + WSL), registration for OpenCode /
+  Claude Code / Codex, quota workflow, pin updates, troubleshooting and the honest status table.
+  OpenCode and Claude Code shapes are transcribed from those projects' own repo docs; Codex's
+  stdio keys are marked UNVERIFIED (its config reference redirects to a login page).
+- `docs/research-notes.md` records what was verified, how, and the four things that were wrong
+  first.
 - **Held-out measured twice: both FAIL the 0.8 target.**
   v1 frozen set (burned): recall@5 0.367 / P@1 0.267 / MRR 0.298 — `docs/eval-heldout.md`.
   v2 blind mechanical set (agent never saw the questions): 0.500, then 0.533 after one general
