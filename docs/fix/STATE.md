@@ -13,7 +13,7 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 | nhánh | sub đã spawn? | trạng thái | commit cuối | đã merge? | ghi chú |
 |---|---|---|---|---|---|
 | A (lỗi 3→1→2) | **rồi** (`fix-a`) | DONE — FIXED | `31f6027` (merge `f169cd5`) | **rồi** | params 230→5089 · citation 3891→0 · default 4703 raw / 3003 số · index 183,5 MB |
-| F (hồi quy A) | **rồi** (`fix-c` nhận, nhánh `fix/F` trong `wt-C`) | đang chạy: out-of-corpus gate + hạ hạng `libraries/SITL/**` | — | chưa | mục tiêu: `test_out_of_corpus` PASS lại, P@1 ≥ 0,767, recall 1.000, heldout_v3 ≥ 0,933 |
+| F (hồi quy A) | **rồi** (`fix-c` nhận, nhánh `fix/F` trong `wt-C`) | DONE — FIXED | `7b8b314` (merge `61b1d71`) | **rồi** | 133 passed · fidelity 86262/0 · golden 1.000/0.767/0.859 · heldout_v3 0.933/0.833/0.868 |
 | B (lỗi 4) | **rồi** (`fix-b`) | DONE — FIXED | `dc5bcc0` (merge `67f4e80`) | **rồi** | 99 passed · audit: 5/5 refusal, mỗi refusal 1 citation mục đích |
 | C (lỗi 5+7) | **rồi** (`fix-c`) | DONE — FIXED (E2E tool_matrix chưa chạy: sandbox chặn pipe) | `22b9fa8` (merge `a36790b`) | **rồi** | 117 passed · golden 1.000/0.767/0.865 · fidelity PASS |
 | D (lỗi 6) | **rồi** (`fix-d`) | DONE — FIXED | `fb981a1` (merge `e1f2f9d`) | **rồi** | 84 passed · fidelity 0 mismatch · golden 1.000/0.767/0.865 |

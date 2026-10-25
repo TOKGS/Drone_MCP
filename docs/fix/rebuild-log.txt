@@ -1,0 +1,63 @@
+﻿=== rebuild start 2026-10-25T20:13:01.7756582+07:00 ===
+
+PS> python -m research.extract
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\Skill_tulan\ardupilot-research-mcp\research\extract.py", line 165, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "D:\Skill_tulan\ardupilot-research-mcp\research\extract.py", line 154, in main
+    manifest = extract_source(source, conf, tarball, force=args.force)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Skill_tulan\ardupilot-research-mcp\research\extract.py", line 58, in extract_source
+    raise FileNotFoundError(f"missing tarball {tarball}; run research.fetch download {source_id}")
+FileNotFoundError: missing tarball D:\Skill_tulan\ardupilot-research-mcp\research\cache\repos\local-project.tar.gz; run research.fetch download local-project
+ardupilot        cached  files=5228   93.7MB
+ardupilot_wiki   cached  files=1609   11.4MB
+mavlink          cached  files=43     1.4MB
+expresslrs       cached  files=422    5.7MB
+edgetx           cached  files=109    0.8MB
+expresslrs_docs  cached  files=138    1.8MB
+crsf_spec        cached  files=5      0.1MB
+exit=1
+
+PS> python -m ardupilot_research_mcp.ingest.cli --all --rebuild-index
+ardupilot        files=5100  chunks=50082  skipped=0     filtered=59    binary=53     35.6MB 21.5s
+ardupilot_wiki   files=1599  chunks=26031  skipped=0     filtered=7     binary=3      11.1MB 6.5s
+mavlink          files=40    chunks=991    skipped=0     filtered=3     binary=0       1.4MB 0.3s
+expresslrs       files=391   chunks=4920   skipped=0     filtered=30    binary=0       5.3MB 2.1s
+edgetx           files=95    chunks=845    skipped=0     filtered=14    binary=0       0.7MB 0.4s
+expresslrs_docs  files=127   chunks=3236   skipped=0     filtered=11    binary=0       1.7MB 0.7s
+crsf_spec        files=4     chunks=157    skipped=0     filtered=1     binary=0       0.1MB 0.0s
+local-project    skipped: no files under D:\Skill_tulan\ardupilot-research-mcp\data\local (drop your board files in D:\Skill_tulan\ardupilot-research-mcp\data\local\local-project)
+
+total files=7356 chunks=86262 skipped=0
+counts: {"sources": 7, "documents": 7356, "chunks": 86262, "params": 0, "mavlink_msgs": 0, "mavlink_enums": 0}
+exit=0
+
+PS> python -m research.build_params
+{
+  "blocks": 2770,
+  "stored_blocks": 2119,
+  "rows": 5318,
+  "unresolved_blocks": 509,
+  "unlinked_blocks": 142,
+  "params_in_table": 5089,
+  "with_default_raw": 4703,
+  "default_resolved": 3003,
+  "default_unresolved": 1700,
+  "version": "Copter-4.7.2"
+}
+exit=0
+
+PS> python -m research.build_mavlink
+{
+  "xml_files": 19,
+  "messages": 397,
+  "enums": 2367,
+  "messages_with_citation": 397,
+  "mavlink_version": "eec8824212c1fe8c5d8f5181fcfdef54ee219b63"
+}
+exit=0
+=== rebuild end 2026-10-25T20:13:47.6935508+07:00 ===
