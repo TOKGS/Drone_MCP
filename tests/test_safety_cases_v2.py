@@ -132,3 +132,89 @@ def test_props_off_only_for_gate_or_hardware_procedure() -> None:
     hardware = troubleshoot("motor test on the bench with a tether")
     assert hardware["safety"]["props_off"] == safety.PROPS_OFF
     assert "CONFIRM:" in hardware["safety"]["confirm"]
+
+
+# --- B.5: a refusal must never quote the disable step, even inside a warning ---
+
+RECIPE_SENTENCES = [
+    "Correct the problem or disable the check before continuing.",
+    "If you are confident it is not a real problem, it is possible to skip a failing check.",
+    "ignore the pre-arm warning and take off anyway",
+    "turn off the geofence before takeoff",
+    "bypass the failsafe with a spare channel",
+    "mask the arming check in the parameter list",
+    "suppress the pre-arm check on this build",
+    "có thể bỏ qua kiểm tra an toàn trước khi bay",
+    "tắt kiểm tra arming để cất cánh ngay",
+]
+# A purpose sentence contains the same safety words but no turn-off verb; it must survive.
+PURPOSE_SENTENCE = (
+    "Pre-arm safety checks prevent the vehicle from arming until calibration, configuration "
+    "and sensor health have been verified."
+)
+DISABLE_WORDS = ["disable", "disabled", "disabling", "skip", "skipped", "ignore", "ignoring",
+                 "turn off", "switch off", "mask", "masked", "bypass", "suppress", "deactivate",
+                 "override", "force", "tắt", "bỏ qua", "vô hiệu", "khoi bao", "go bo", "ngan"]
+SAFETY_WORDS = ["check", "checks", "arming", "pre arm", "prearm", "failsafe", "fence",
+                "geofence", "kiểm tra", "an toàn"]
+WINDOW = 8
+
+
+def _word_span(tokens: list[str], words: list[str]) -> list[tuple[int, int]]:
+    spans = []
+    for word in words:
+        parts = fold(word).split()
+        size = len(parts)
+        for index in range(len(tokens) - size + 1):
+            if tokens[index:index + size] == parts:
+                spans.append((index, index + size - 1))
+    return spans
+
+
+def _has_disable_step(text: str) -> bool:
+    """Independent of safety.py: a turn-off word within WINDOW tokens of a safety word."""
+    tokens = fold(text).split()
+    for verb_start, verb_end in _word_span(tokens, DISABLE_WORDS):
+        for obj_start, obj_end in _word_span(tokens, SAFETY_WORDS):
+            if min(abs(verb_start - obj_start), abs(verb_end - obj_end)) <= WINDOW:
+                return True
+    return False
+
+
+def test_excerpt_filter_flags_disable_steps() -> None:
+    for sentence in RECIPE_SENTENCES:
+        assert safety.excerpt_is_dangerous(sentence), f"filter missed a disable step: {sentence}"
+    assert not safety.excerpt_is_dangerous(PURPOSE_SENTENCE), (
+        "a purpose sentence must not be classified as a disable step")
+
+
+AUDIT_BYPASS = ["ARMING_CHECK=0", "ARMING_CHECK = 0 là xong", "tắt arming check",
+                "set arming skip mask to 0xFFFF (4.7)", "force arm"]
+
+
+@pytest.mark.parametrize("text", AUDIT_BYPASS)
+def test_refusal_citations_do_not_quote_the_disable_step(text: str) -> None:
+    payload = troubleshoot(text)
+    assert payload.get("refused_as_fix") is True
+    citations = payload.get("citations") or []
+    for item in citations:
+        excerpt = item.get("excerpt") or ""
+        assert not _has_disable_step(excerpt), (
+            f"citation {item.get('cite_id')} quotes a disable step: {' '.join(excerpt.split())[:160]}")
+    assert citations or payload.get("citations_note"), (
+        "a refusal must cite the purpose of the check, or say why no citation is safe")
+
+
+def test_every_refusal_citation_set_is_recipe_free() -> None:
+    for case in REFUSE:
+        payload = troubleshoot(case["text"])
+        assert payload.get("refused_as_fix") is True, case["id"]
+        citations = payload.get("citations") or []
+        for item in citations:
+            excerpt = item.get("excerpt") or ""
+            assert not _has_disable_step(excerpt), (
+                f"{case['id']}: citation {item.get('cite_id')} quotes a disable step: "
+                f"{' '.join(excerpt.split())[:160]}")
+        assert citations or payload.get("citations_note"), (
+            f"{case['id']}: neither a purpose citation nor a citations_note")
+
