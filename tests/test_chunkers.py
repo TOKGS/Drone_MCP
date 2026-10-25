@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(Path(os.environ.get("ARM_SRC", REPO / "src"))))
 
 from ardupilot_research_mcp.ingest.chunk import (  # noqa: E402
     chunk_code, chunk_hwdef, chunk_markdown, chunk_for_path)

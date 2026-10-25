@@ -1,0 +1,112 @@
+{
+  "results": [
+    {
+      "id": "M01",
+      "file": "cite.py",
+      "note": "cite_id length changes",
+      "status": "killed",
+      "detail": "1 failed, 2 passed in 0.47s"
+    },
+    {
+      "id": "M02",
+      "file": "cite.py",
+      "note": "channel rule inverted",
+      "status": "killed",
+      "detail": "1 failed, 2 passed in 0.28s"
+    },
+    {
+      "id": "M03",
+      "file": "cite.py",
+      "note": "quote verification inverted",
+      "status": "killed",
+      "detail": "1 failed, 3 passed in 0.34s"
+    },
+    {
+      "id": "M04",
+      "file": "decoders/crsf.py",
+      "note": "wrong CRC polynomial",
+      "status": "killed",
+      "detail": "1 failed in 0.19s"
+    },
+    {
+      "id": "M05",
+      "file": "decoders/crsf.py",
+      "note": "CRC bit test inverted",
+      "status": "killed",
+      "detail": "1 failed in 0.26s"
+    },
+    {
+      "id": "M06",
+      "file": "decoders/crsf.py",
+      "note": "microsecond conversion off by one",
+      "status": "killed",
+      "detail": "1 failed, 2 passed in 0.28s"
+    },
+    {
+      "id": "M07",
+      "file": "decoders/crsf.py",
+      "note": "channel bit width wrong",
+      "status": "killed",
+      "detail": "1 failed, 2 passed in 0.19s"
+    },
+    {
+      "id": "M08",
+      "file": "decoders/crsf.py",
+      "note": "sync detection inverted",
+      "status": "killed",
+      "detail": "1 failed, 1 passed in 0.23s"
+    },
+    {
+      "id": "M09",
+      "file": "decoders/ihex.py",
+      "note": "checksum sign dropped",
+      "status": "killed",
+      "detail": "1 failed, 4 passed in 0.22s"
+    },
+    {
+      "id": "M10",
+      "file": "decoders/ihex.py",
+      "note": "length check inverted",
+      "status": "killed",
+      "detail": "1 failed, 4 passed in 0.23s"
+    },
+    {
+      "id": "M11",
+      "file": "safety.py",
+      "note": "hard safety rule demoted",
+      "status": "killed",
+      "detail": "1 failed, 8 passed in 0.19s"
+    },
+    {
+      "id": "M12",
+      "file": "safety.py",
+      "note": "dangerous verdict over-triggered",
+      "status": "killed",
+      "detail": "1 failed, 6 passed in 0.23s"
+    },
+    {
+      "id": "M13",
+      "file": "paths.py",
+      "note": "path containment inverted",
+      "status": "killed",
+      "detail": "1 failed, 6 passed in 0.22s"
+    },
+    {
+      "id": "M14",
+      "file": "query.py",
+      "note": "stopword filter removed",
+      "status": "killed",
+      "detail": "1 failed in 0.29s"
+    },
+    {
+      "id": "M15",
+      "file": "query.py",
+      "note": "identifier boost removed",
+      "status": "SURVIVED",
+      "detail": "10 passed in 0.38s"
+    }
+  ],
+  "total": 15,
+  "killed": 14,
+  "score": 0.9333333333333333
+}

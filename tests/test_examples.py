@@ -4,13 +4,14 @@ from __future__ import annotations
 
 import ast
 import subprocess
+import os
 import sys
 from pathlib import Path
 
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(Path(os.environ.get("ARM_SRC", REPO / "src"))))
 
 from ardupilot_research_mcp import config  # noqa: E402
 from ardupilot_research_mcp.tools.get_script import get_script  # noqa: E402

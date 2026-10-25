@@ -9,7 +9,7 @@ import tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(Path(os.environ.get("ARM_SRC", REPO / "src"))))
 
 from ardupilot_research_mcp import cite, db, query, textsanitize  # noqa: E402
 from ardupilot_research_mcp.ingest import build  # noqa: E402

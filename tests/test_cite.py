@@ -7,12 +7,13 @@ pinned to a SHA, and every excerpt must be a verbatim substring of the stored ch
 from __future__ import annotations
 
 import hashlib
+import os
 import sys
 import tempfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(Path(os.environ.get("ARM_SRC", REPO / "src"))))
 
 from ardupilot_research_mcp import cite, db  # noqa: E402
 from ardupilot_research_mcp.ingest import build  # noqa: E402
@@ -69,6 +70,11 @@ def test_citation_fields_are_pinned_and_verbatim() -> None:
         assert built["url"].startswith("https://github.com/acme/demo/blob/deadbeefcafe/")
         assert "/blob/main/" not in built["url"] and "/blob/master/" not in built["url"]
         assert built["license"] == "MIT" and built["tier"] == "T1"
+        # a commit pin is a moving snapshot, not a released tag
+        assert built["channel"] == "snapshot" and built["unreleased"] is True
+        assert built["repo"] == "acme/demo" and built["ref"] == "deadbeefcafe"
+        # the hash suffix is a fixed width, so ids stay parseable and stable
+        assert len(built["cite_id"].split("#", 1)[1]) == 16
         assert built["untrusted"] is True
         assert len(built["excerpt"]) <= cite.EXCERPT_CHARS
         assert built["excerpt"] in row["text"]

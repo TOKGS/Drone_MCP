@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(Path(os.environ.get("ARM_SRC", REPO / "src"))))
 
 from ardupilot_research_mcp import config, safety  # noqa: E402
 from ardupilot_research_mcp.tools.troubleshoot import troubleshoot  # noqa: E402
@@ -42,6 +43,14 @@ def test_plain_questions_stay_answerable() -> None:
 
 def test_failsafe_disable_is_dangerous() -> None:
     assert safety.classify("disable failsafe for indoor flight").dangerous
+
+
+def test_a_question_about_a_bypass_is_still_refused() -> None:
+    # "what does X mean" is normally informational, but an unambiguous bypass must still be
+    # refused; otherwise a caller can launder the request as a question and get the recipe.
+    verdict = safety.classify("what does ARMING_CHECK=0 actually mean?")
+    assert verdict.dangerous is True
+    assert verdict.informational is True
 
 
 pytestmark_index = pytest.mark.skipif(
