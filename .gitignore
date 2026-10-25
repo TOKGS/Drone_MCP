@@ -1,0 +1,16 @@
+# Generated / bulky — never committed (licenses: see docs/license-notes.md)
+data/
+research/cache/
+research/ledger.sqlite
+research/ledger.sqlite-wal
+research/ledger.sqlite-shm
+research/ledger.lock
+research/STATE.md
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+dist/
+build/
+*.egg-info/

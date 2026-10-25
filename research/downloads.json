@@ -1,0 +1,57 @@
+{
+  "ardupilot": {
+    "url": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/refs/tags/Copter-4.7.2",
+    "path": "D:\\Skill_tulan\\ardupilot-research-mcp\\research\\cache\\repos\\ardupilot.tar.gz",
+    "bytes": 322169959,
+    "sha256": "ff590ee945610990c5ac1d24b694a1ea8befad434fff67660a048ab7d8d1ccf3",
+    "latency_ms": 18542,
+    "ref": "Copter-4.7.2",
+    "ref_kind": "tag",
+    "repo": "ArduPilot/ardupilot",
+    "tier": "T1"
+  },
+  "ardupilot_wiki": {
+    "url": "https://codeload.github.com/ArduPilot/ardupilot_wiki/tar.gz/828de1f225dace34b482e63abaab15d25b2b1732",
+    "path": "D:\\Skill_tulan\\ardupilot-research-mcp\\research\\cache\\repos\\ardupilot_wiki.tar.gz",
+    "bytes": 782849669,
+    "sha256": "d47ed1d6c2bf5b7ffe11969af75cb5f5f2443a5f049c79bfc9f39582d244b367",
+    "latency_ms": 44287,
+    "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+    "ref_kind": "commit",
+    "repo": "ArduPilot/ardupilot_wiki",
+    "tier": "T1"
+  },
+  "mavlink": {
+    "url": "https://codeload.github.com/mavlink/mavlink/tar.gz/eec8824212c1fe8c5d8f5181fcfdef54ee219b63",
+    "path": "D:\\Skill_tulan\\ardupilot-research-mcp\\research\\cache\\repos\\mavlink.tar.gz",
+    "bytes": 322349,
+    "sha256": "91f5d47021dcbcc1979dc4a3f2b17bf8adb218b447bddc3a5dcab9b9a188882d",
+    "latency_ms": 998,
+    "ref": "eec8824212c1fe8c5d8f5181fcfdef54ee219b63",
+    "ref_kind": "commit",
+    "repo": "mavlink/mavlink",
+    "tier": "T1"
+  },
+  "expresslrs": {
+    "url": "https://codeload.github.com/ExpressLRS/ExpressLRS/tar.gz/refs/tags/4.1.0",
+    "path": "D:\\Skill_tulan\\ardupilot-research-mcp\\research\\cache\\repos\\expresslrs.tar.gz",
+    "bytes": 1594346,
+    "sha256": "d1d854d83017dfc09d1c78dfba5ce400952a6c61ae64fdd2a2188fcf16bb36c0",
+    "latency_ms": 1050,
+    "ref": "4.1.0",
+    "ref_kind": "tag",
+    "repo": "ExpressLRS/ExpressLRS",
+    "tier": "T1"
+  },
+  "edgetx": {
+    "url": "https://codeload.github.com/EdgeTX/edgetx/tar.gz/refs/tags/v2.12.5",
+    "path": "D:\\Skill_tulan\\ardupilot-research-mcp\\research\\cache\\repos\\edgetx.tar.gz",
+    "bytes": 65409188,
+    "sha256": "0f5a88ae5f6d987b8ebe1a9b17a84121579dae9020411c8f1628f34c3a2dada8",
+    "latency_ms": 6958,
+    "ref": "v2.12.5",
+    "ref_kind": "tag",
+    "repo": "EdgeTX/edgetx",
+    "tier": "T1"
+  }
+}

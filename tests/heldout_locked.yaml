@@ -1,0 +1,160 @@
+# HELD-OUT evaluation set — LOCKED.
+# Rules: never used for tuning, never evaluated until the freeze hash is recorded and the
+# server is feature-complete. The hash of this file is in docs/heldout.sha256.
+# recall@5 is computed against `expect_path_contains` (a citation whose path contains the
+# substring) or, when `expect_any_source` is set, any citation from that source.
+version: 1
+locked_at: "2026-10-25"
+count_target: 30
+
+questions:
+  - id: H01
+    lang: vi
+    q: "CRC8 của giao thức CRSF dùng đa thức nào?"
+    expect_source: expresslrs
+    expect_path_contains: "src/include/crsf_protocol.h"
+  - id: H02
+    lang: en
+    q: "Which CRSF frame type carries link statistics with LQ and RSSI?"
+    expect_source: expresslrs
+    expect_path_contains: "crsf_protocol.h"
+  - id: H03
+    lang: vi
+    q: "Làm sao đọc packet rate của ELRS từ telemetry?"
+    expect_source: expresslrs
+    expect_path_contains: "CRSFParser"
+  - id: H04
+    lang: en
+    q: "What does RC_OPTIONS control in ArduPilot?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_RCProtocol"
+  - id: H05
+    lang: vi
+    q: "hwdef.dat khai báo một UART như thế nào?"
+    expect_source: ardupilot
+    expect_path_contains: "hwdef"
+  - id: H06
+    lang: en
+    q: "On ESP32 HAL, how does SERIAL numbering relate to the UART label in hwdef?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_HAL_ESP32"
+  - id: H07
+    lang: vi
+    q: "AP_RCPROTOCOL_ENABLED có tác dụng gì trong HAL ESP32?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_HAL_ESP32"
+  - id: H08
+    lang: en
+    q: "Where is a bitmask parameter's bit definition declared for ArduCopter?"
+    expect_source: ardupilot
+    expect_path_contains: "ArduCopter/Parameters.cpp"
+  - id: H09
+    lang: vi
+    q: "Liệt kê các nguyên nhân thường gặp khiến pre-arm check thất bại."
+    expect_source: ardupilot_wiki
+    expect_path_contains: "common/source/docs"
+  - id: H10
+    lang: en
+    q: "How do I build ArduPilot firmware for one board with waf?"
+    expect_source: ardupilot_wiki
+    expect_path_contains: "dev"
+  - id: H11
+    lang: vi
+    q: "Intel HEX có những loại record nào?"
+    expect_source: ardupilot
+    expect_path_contains: "Tools"
+  - id: H12
+    lang: en
+    q: "Which parameters route RC input over CRSF in ArduPilot?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_RCProtocol"
+  - id: H13
+    lang: vi
+    q: "EdgeTX xử lý telemetry CRSF ở file nào?"
+    expect_source: edgetx
+    expect_path_contains: "radio/src/telemetry"
+  - id: H14
+    lang: en
+    q: "What happens on RC loss when a failsafe is configured?"
+    expect_source: ardupilot_wiki
+    expect_path_contains: "common/source/docs"
+  - id: H15
+    lang: vi
+    q: "SITL là gì và chạy nó thế nào?"
+    expect_source: ardupilot_wiki
+    expect_path_contains: "dev"
+  - id: H16
+    lang: en
+    q: "Where is MAVLink message 30 (ATTITUDE) defined?"
+    expect_source: mavlink
+    expect_path_contains: "message_definitions"
+  - id: H17
+    lang: vi
+    q: "hwdef của board CubeOrangePlus khai báo MCU gì?"
+    expect_source: ardupilot
+    expect_path_contains: "hwdef/CubeOrangePlus/hwdef.dat"
+  - id: H18
+    lang: en
+    q: "How does the bootloader decide to stay in bootloader mode?"
+    expect_source: ardupilot
+    expect_path_contains: "Tools/bootloaders"
+  - id: H19
+    lang: vi
+    q: "File .apj khác gì so với .hex khi nạp firmware?"
+    expect_source: ardupilot_wiki
+    expect_path_contains: "common/source/docs"
+  - id: H20
+    lang: en
+    q: "What units and range does a parameter definition carry?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_Param"
+  - id: H21
+    lang: vi
+    q: "EKF báo vibration cao thì kiểm tra gì?"
+    expect_source: ardupilot_wiki
+    expect_path_contains: "common/source/docs"
+  - id: H22
+    lang: en
+    q: "How is serial passthrough configured for a telemetry port?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_HAL"
+  - id: H23
+    lang: vi
+    q: "DMA hint trong hwdef được khai báo ra sao?"
+    expect_source: ardupilot
+    expect_path_contains: "hwdef"
+  - id: H24
+    lang: en
+    q: "What does the CRSF parser do when a frame checksum fails?"
+    expect_source: expresslrs
+    expect_path_contains: "CRSF"
+  - id: H25
+    lang: vi
+    q: "Đổi tần số telemetry SiK thì dùng tham số nào?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_Param"
+  - id: H26
+    lang: en
+    q: "Where are ArduPilot autotest scripts, and what is their entry point?"
+    expect_source: ardupilot
+    expect_path_contains: "Tools/autotest"
+  - id: H27
+    lang: vi
+    q: "Chu kỳ loop của ChibiOS được cấu hình ở đâu?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_HAL_ChibiOS/hwdef"
+  - id: H28
+    lang: en
+    q: "How do I add a new parameter to a vehicle's parameter table?"
+    expect_source: ardupilot
+    expect_path_contains: "AP_Param"
+  - id: H29
+    lang: vi
+    q: "MAVLink enum cho lý do arm bị từ chối nằm ở đâu?"
+    expect_source: mavlink
+    expect_path_contains: "message_definitions"
+  - id: H30
+    lang: en
+    q: "How does EdgeTX drive CRSF pulse output timing?"
+    expect_source: edgetx
+    expect_path_contains: "radio/src/pulses"

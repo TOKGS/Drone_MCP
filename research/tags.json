@@ -1,0 +1,56 @@
+{
+  "resolved_at": "2026-10-25T15:49:55+0700",
+  "sources": {
+    "ardupilot": {
+      "repo": "ArduPilot/ardupilot",
+      "ref": "Copter-4.7.2",
+      "ref_kind": "tag",
+      "via": "tags(copter,page=2)",
+      "tarball": "https://codeload.github.com/ArduPilot/ardupilot/tar.gz/refs/tags/Copter-4.7.2",
+      "tier": "T1",
+      "kind": "source"
+    },
+    "ardupilot_wiki": {
+      "repo": "ArduPilot/ardupilot_wiki",
+      "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+      "ref_kind": "commit",
+      "branch": "master",
+      "via": "commits/master",
+      "committed_at": "2026-10-24T11:23:17Z",
+      "tarball": "https://codeload.github.com/ArduPilot/ardupilot_wiki/tar.gz/828de1f225dace34b482e63abaab15d25b2b1732",
+      "tier": "T1",
+      "kind": "docs"
+    },
+    "mavlink": {
+      "repo": "mavlink/mavlink",
+      "ref": "eec8824212c1fe8c5d8f5181fcfdef54ee219b63",
+      "ref_kind": "commit",
+      "branch": "master",
+      "via": "commits/master",
+      "committed_at": "2026-10-22T03:28:52Z",
+      "tarball": "https://codeload.github.com/mavlink/mavlink/tar.gz/eec8824212c1fe8c5d8f5181fcfdef54ee219b63",
+      "tier": "T1",
+      "kind": "definitions"
+    },
+    "expresslrs": {
+      "repo": "ExpressLRS/ExpressLRS",
+      "ref": "4.1.0",
+      "ref_kind": "tag",
+      "via": "releases/latest",
+      "published_at": "2026-07-17T17:02:11Z",
+      "tarball": "https://codeload.github.com/ExpressLRS/ExpressLRS/tar.gz/refs/tags/4.1.0",
+      "tier": "T1",
+      "kind": "source+docs"
+    },
+    "edgetx": {
+      "repo": "EdgeTX/edgetx",
+      "ref": "v2.12.5",
+      "ref_kind": "tag",
+      "via": "releases/latest",
+      "published_at": "2026-10-17T23:59:08Z",
+      "tarball": "https://codeload.github.com/EdgeTX/edgetx/tar.gz/refs/tags/v2.12.5",
+      "tier": "T1",
+      "kind": "source+docs"
+    }
+  }
+}

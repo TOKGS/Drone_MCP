@@ -1,0 +1,133 @@
+# Pinned corpus. Latest release of each repo, one pin per source (user decision:
+# no multi-version matrix in v1). `ref` is a tag or a commit SHA — never a branch name.
+# Glob rules apply to the repo-relative path (the archive's top directory is stripped).
+
+version: 1
+resolved_at: "2026-10-25"
+corpus_root: data/corpus
+licenses_dir: docs/licenses
+
+# Extensions never copied into the corpus, whatever the includes say.
+exclude_ext:
+  [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico", ".pdf", ".zip", ".gz",
+   ".bz2", ".7z", ".bin", ".hex", ".apj", ".elf", ".a", ".o", ".so", ".dll", ".exe",
+   ".otf", ".ttf", ".woff", ".woff2", ".wav", ".mp3", ".mp4", ".mov", ".psd",
+   ".pyc", ".whl", ".jar", ".tflite", ".uf2", ".dfu"]
+
+# Always kept if present, even when a rule would exclude them.
+always_include:
+  ["LICENSE", "LICENSE.md", "LICENSE.txt", "COPYING", "COPYING.md", "COPYING.txt",
+   "NOTICE", "README.md", "README.rst"]
+
+sources:
+  - id: ardupilot
+    repo: ArduPilot/ardupilot
+    ref: Copter-4.7.2
+    ref_kind: tag
+    tier: T1
+    license: GPL-3.0
+    license_file: COPYING
+    version_label: "Copter-4.7.2"
+    note: "Firmware source of truth: hwdef, RC protocols, params, bootloader tooling."
+    include:
+      - "libraries/AP_HAL_ChibiOS/hwdef/**"
+      - "libraries/AP_HAL_ESP32/**"
+      - "libraries/AP_HAL/**"
+      - "libraries/AP_RCProtocol/**"
+      - "libraries/AP_Common/**"
+      - "libraries/AP_InertialSensor/**"
+      - "libraries/AP_Param/**"
+      - "libraries/AP_Math/**"
+      - "libraries/AP_GPS/**"
+      - "Tools/autotest/**"
+      - "Tools/scripts/**"
+      - "Tools/bootloaders/**"
+      - "ArduCopter/**"
+      - "docs/**"
+      - "*.md"
+      - "*.txt"
+    exclude:
+      - "libraries/AP_HAL_ChibiOS/hwdef/**/bootloader.bin"
+      - "libraries/AP_HAL_ChibiOS/hwdef/**/*.elf"
+      - "Tools/bootloaders/**/*.bin"
+      - "Tools/bootloaders/**/*.hex"
+      - "Tools/autotest/**/*.tlog"
+      - "docs/**/*.png"
+
+  - id: ardupilot_wiki
+    repo: ArduPilot/ardupilot_wiki
+    ref: 828de1f225dace34b482e63abaab15d25b2b1732
+    ref_kind: commit
+    tier: T1
+    license: CC-BY-SA-3.0
+    license_file: LICENSE
+    version_label: "wiki@828de1f (2026-10-24)"
+    note: "Official dev and user documentation, reStructuredText."
+    include:
+      - "common/**"
+      - "dev/**"
+      - "copter/**"
+      - "plane/**"
+      - "rover/**"
+      - "sub/**"
+      - "scripts/**"
+      - "mavproxy/**"
+      - "*.rst"
+    exclude:
+      - "**/images/**"
+      - "**/_static/**"
+
+  - id: mavlink
+    repo: mavlink/mavlink
+    ref: eec8824212c1fe8c5d8f5181fcfdef54ee219b63
+    ref_kind: commit
+    tier: T1
+    license: "(L)GPL-3.0 generator; MIT generated code; XML definitions unstated"
+    license_file: COPYING
+    version_label: "mavlink@eec8824 (2026-10-22)"
+    note: "Message and enum definitions (XML) — the source for mavlink_message/MAV_* tools."
+    include:
+      - "message_definitions/**"
+      - "doc/**"
+      - "component_metadata/**"
+      - "*.py"
+    exclude:
+      - "pymavlink/**"
+      - "**/*.png"
+
+  - id: expresslrs
+    repo: ExpressLRS/ExpressLRS
+    ref: 4.1.0
+    ref_kind: tag
+    tier: T1
+    license: GPL-3.0
+    license_file: LICENSE
+    version_label: "ExpressLRS 4.1.0"
+    note: "CRSF/ELRS implementation: CRC, frame types, telemetry, packet rate."
+    include:
+      - "src/**"
+      - "*.md"
+      - "*.py"
+    exclude:
+      - "src/**/*.bin"
+      - "src/**/*.js"
+
+  - id: edgetx
+    repo: EdgeTX/edgetx
+    ref: v2.12.5
+    ref_kind: tag
+    tier: T1
+    license: GPL-2.0
+    license_file: LICENSE
+    version_label: "EdgeTX 2.12.5"
+    note: "CRSF telemetry handling on the radio side (crossfire.cpp) and protocol notes."
+    include:
+      - "radio/src/telemetry/**"
+      - "radio/src/targets/**/crsf*"
+      - "radio/src/pulses/**"
+      - "radio/src/**/*crsf*"
+      - "docs/**"
+      - "*.md"
+    exclude:
+      - "radio/src/translations/**"
+      - "**/*.ts"

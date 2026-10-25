@@ -1,0 +1,84 @@
+# Quota and rate-limit limits. Single source of truth for research/governor.py.
+# Every number here is either OBSERVED (with where it came from) or ASSUMED.
+# Re-verify with `python -m research.governor status` before a long wave.
+
+version: 1
+updated_at: "2026-10-25"
+
+# Whole-task budget agreed with the user (one message, all providers).
+budget:
+  firecrawl_credits_total: 300
+  exa_calls_total: 100
+  web_search_calls_total: 40
+
+providers:
+  firecrawl:
+    requests_per_hour: 20
+    requests_per_day: 120
+    max_concurrency: 1
+    min_interval_s: 5
+    headroom_pct: 20
+    credits_per_month: 1106
+    credits_budget: 300
+    cost_per_call:
+      search: 1
+      scrape: 1
+      map: 1
+      crawl: 1
+      parse: 1
+    # OBSERVED: firecrawl_credit_usage -> remainingCredits=1106, planCredits=1000,
+    #           billing period 2026-10-11 .. 2026-11-11; each search/scrape earlier
+    #           in this session reported creditsUsed=1.
+    # ASSUMED: request rate limits are not exposed to the MCP client.
+    source_of_numbers: "balance OBSERVED via firecrawl_credit_usage; rate limits ASSUMED (spec 2.1 defaults)"
+    verified_at: "2026-10-25T15:55:00+07:00"
+
+  exa:
+    requests_per_hour: 20
+    requests_per_day: 100
+    max_concurrency: 1
+    min_interval_s: 5
+    headroom_pct: 20
+    calls_budget: 100
+    cost_per_call:
+      search: 1
+    source_of_numbers: "ASSUMED: no usage or rate-limit endpoint exposed by the Exa MCP client"
+    verified_at: "2026-10-25T15:55:00+07:00"
+
+  web_search:
+    requests_per_hour: 20
+    requests_per_day: 100
+    max_concurrency: 1
+    min_interval_s: 5
+    headroom_pct: 20
+    calls_budget: 40
+    cost_per_call:
+      search: 1
+      fetch: 1
+    source_of_numbers: "ASSUMED: built-in web_search/web_fetch expose no quota metadata"
+    verified_at: "2026-10-25T15:55:00+07:00"
+
+  github:
+    # git/tarball/raw fetches cost no search quota; no token => keep away from REST API.
+    requests_per_hour: 60
+    requests_per_day: 400
+    max_concurrency: 4
+    min_interval_s: 1
+    headroom_pct: 20
+    cost_per_call:
+      tarball: 0
+      raw: 0
+      api: 1
+    source_of_numbers: "unauthenticated GitHub REST API is 60 req/h; tarball and raw.githubusercontent are unmetered here"
+    verified_at: "2026-10-25T15:55:00+07:00"
+
+  codeload:
+    requests_per_hour: 30
+    requests_per_day: 200
+    max_concurrency: 3
+    min_interval_s: 2
+    headroom_pct: 20
+    cost_per_call:
+      tarball: 0
+    source_of_numbers: "ASSUMED: no quota metadata; tarball download is not a search call"
+    verified_at: "2026-10-25T15:55:00+07:00"
