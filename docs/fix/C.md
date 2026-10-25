@@ -184,4 +184,114 @@ FAILED tests/test_query.py::test_tool_schemas_advertise_max_length - KeyError...
 ```
 File output đầy đủ: `docs/fix/C-7-prefix.txt`.
 
+## 6. Lỗi 7 — Bước 2+3: sửa nguyên nhân gốc
+
+### 6.1 Thay đổi (`src/ardupilot_research_mcp/tools/_base.py`)
+
+- `LIMITS`: bảng giới hạn ký tự cho **mọi** tham số chuỗi tự do của mọi tool (trừ
+  `decode_crsf_frame` — nhánh D sở hữu schema tool đó; tool này cũng không có `maxLength` trong
+  tools/list, xem 6.4).
+- `_signatures`: gắn `Annotated[..., MaxLen(n)]` vào chữ ký công khai → `maxLength` xuất hiện
+  trong JSON schema của tools/list. `MaxLen.__get_pydantic_json_schema__` chỉ **quảng cáo**
+  giới hạn, không tạo pydantic constraint; nếu để pydantic chặn thì SDK trả lỗi protocol
+  (`pydantic ValidationError: String should have at most N characters` → `ToolError`) trước khi
+  tool chạy, phá vỡ hợp đồng `{"found": false, ...}`. Đã kiểm chứng nguyên văn traceback đó khi
+  thử `StringConstraints(max_length=5)` + query 10 ký tự qua `mcp.call_tool`:
+  `pydantic_core._pydantic_core.ValidationError: 1 validation error for t1Arguments / String
+  should have at most 5 characters [type=string_too_long]` → `ToolError: Error executing tool
+  t1`. Vì vậy giới hạn được **validate trong wrapper** (`_too_long`) trước khi mở index.
+- `_too_long`: bind tham số vào chữ ký đầy đủ rồi so `len(value) > limit`; trả
+  `{"found": false, "error": "<tên> too long (max N chars)", "max_length": N}`.
+- `guarded`/`guarded_pure`: bọc `except Exception` → `_internal_error`: trả
+  `{"found": false, "error": "internal error", "error_id": "<8 hex>"}`, in `repr(exc)` +
+  traceback ra stderr kèm cùng `error_id`. `SlowDown` của rate-guard vẫn ném ra ngoài
+  (`GUARD.check()` đứng trước khối try) và `KeyError`/`ValueError` vẫn giữ thông điệp cũ.
+
+Bảng giới hạn (lý do: độ dài thực tế của dữ liệu trong index):
+
+| tool | tham số | maxLength | lý do |
+|---|---|---|---|
+| search_docs | query | 2000 | câu hỏi tự do; câu dài nhất trong golden 43 ký tự, 2000 đủ cho cả đoạn văn dán vào |
+| search_docs | scope | 32 | enum: "protocol" dài nhất 8 |
+| search_docs | version | 128 | nhãn pin dài nhất "wiki@828de1f (2026-10-24)" = 26 |
+| search_docs | tier_max | 8 | enum T1/T2/T3 |
+| get_chunk | cite_id | 128 | dạng `<source>#<16 hex>` ≤ ~30 ký tự |
+| lookup_param | name_or_pattern | 128 | tên tham số dài nhất trong `params` = 15 ký tự |
+| lookup_param | vehicle, version | 64, 128 | tên xe; nhãn pin |
+| decode_bitmask | param | 128 | như trên |
+| decode_bitmask | value | 1024 | danh sách tên bit phân tách bằng dấu phẩy; khối @Bitmask dài nhất 804 ký tự |
+| decode_bitmask | vehicle, version | 64, 128 | tên xe; nhãn pin |
+| find_source | symbol_or_file | 1024 | có thể là đường dẫn repo (đường dẫn index dài nhất 116) |
+| find_source | repo, version | 64, 128 | source id; nhãn pin |
+| board_info | board_name, hal | 128, 64 | tên board (vd CubeOrangePlus); HAL (ChibiOS/ESP32) |
+| mavlink_message | name_or_id | 128 | tên message/enum |
+| troubleshoot | symptom, context | 2000, 2000 | câu hỏi tự do |
+| get_script | topic | 128 | tên chủ đề |
+| parse_ihex_summary | path | 1024 | đường dẫn file trong data/ |
+| check_intelhex_line | line | 600 | một bản ghi Intel HEX = 43 ký tự; 600 cho ~13 bản ghi liền nhau |
+| index_status, list_sources | — | — | không có tham số chuỗi |
+| decode_crsf_frame | hex | (không đặt ở nhánh C) | nhánh D sở hữu schema/tool này |
+
+### 6.2 Bằng chứng schema tools/list
+
+```
+python - (import ardupilot_research_mcp.server, in tools/list của mcp._tool_manager)
+search_docs          {'query': 2000, 'scope': 32, 'version': 128, 'tier_max': 8}
+get_chunk            {'cite_id': 128}
+lookup_param         {'name_or_pattern': 128, 'vehicle': 64, 'version': 128}
+decode_bitmask       {'param': 128, 'value': 1024, 'vehicle': 64, 'version': 128}
+find_source          {'symbol_or_file': 1024, 'repo': 64, 'version': 128}
+board_info           {'board_name': 128, 'hal': 64}
+mavlink_message      {'name_or_id': 128}
+troubleshoot         {'symptom': 2000, 'context': 2000}
+get_script           {'topic': 128}
+decode_crsf_frame    {}
+check_intelhex_line  {'line': 600}
+parse_ihex_summary   {'path': 1024}
+list_sources         {}
+index_status         {}
+```
+
+### 6.3 Kết quả (output thô)
+
+```
+python -m pytest tests/test_query.py -q
+......................                                                   [100%]
+22 passed in 5.51s
+```
+```
+python -m pytest -q
+........................................................................ [ 73%]
+..........................                                               [100%]
+98 passed in 28.69s
+```
+```
+python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 23/30 = 0.767
+MRR = 0.865
+```
+```
+python scripts/fidelity_scan.py   (2 dòng cuối)
+TOTAL                          65509         0
+fidelity: PASS
+```
+
+## 7. Việc không chạy được trong sandbox của teammate
+
+`scripts/tool_matrix.py` (kiểm thủ tục E2E qua stdio) **không chạy được** trong phiên này vì
+sandbox chặn tạo pipe cho subprocess — nguyên văn:
+```
+  File "C:\Users\ADMIN\AppData\Local\Programs\Python\Python311\Lib\asyncio\windows_utils.py", line 63, in pipe
+    h2 = _winapi.CreateFile(
+PermissionError: [WinError 5] Access is denied
+[sandbox: file access denied under workspace-write mode]
+[exit code: 1]
+```
+Không thử cách khác (theo chỉ dẫn: sandbox chặn pipe thì dán lỗi và dừng). Bù lại, schema của
+cả 14 tool đã được sinh trực tiếp qua `mcp._tool_manager` (mục 6.2) và toàn bộ test unit pass.
+Kiểm E2E qua stdio (tool_matrix, blackbox) cần chạy ở phiên không bị chặn pipe.
+
+
 
