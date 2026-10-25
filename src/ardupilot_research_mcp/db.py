@@ -62,19 +62,28 @@ CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(
 );
 
 CREATE TABLE IF NOT EXISTS params (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    name_raw        TEXT NOT NULL,
+    name_suffix     TEXT NOT NULL,
+    display_name    TEXT,
+    description     TEXT,
     vehicle         TEXT NOT NULL,
     version         TEXT NOT NULL,
-    name            TEXT NOT NULL,
-    unit            TEXT,
+    units           TEXT,
     range           TEXT,
     default_value   TEXT,
-    reboot_required INTEGER,
     enum_values     TEXT,
-    bitmask         INTEGER,
+    bitmask         TEXT,
+    reboot_required INTEGER,
+    user_level      TEXT,
     source_id       TEXT,
-    chunk_id        INTEGER,
-    PRIMARY KEY (vehicle, version, name)
+    path            TEXT,
+    line_start      INTEGER,
+    line_end        INTEGER,
+    cite_hash       TEXT,
+    UNIQUE (name_raw, vehicle, version)
 );
+CREATE INDEX IF NOT EXISTS params_suffix ON params(name_suffix);
 
 CREATE TABLE IF NOT EXISTS mavlink_msgs (
     msgid     INTEGER NOT NULL,

@@ -75,9 +75,25 @@ async def main() -> int:
                 if getattr(chunk, "isError", False):
                     failures += 1
 
-            negative = await session.call_tool("lookup_param", {"name_or_pattern": "RC_OPTIONS"})
-            print(f"\n[lookup_param] isError={getattr(negative, 'isError', None)} "
-                  f"-> {text_of(negative)[:300]}")
+            param = await session.call_tool("lookup_param", {"name_or_pattern": "RC_OPTIONS"})
+            param_payload = json.loads(text_of(param))
+            if isinstance(param_payload.get("result"), dict):
+                param_payload = param_payload["result"]
+            print(f"\n[lookup_param] found={param_payload.get('found')} "
+                  f"resolved_by={param_payload.get('resolved_by')} "
+                  f"candidate={param_payload.get('candidates')}")
+            if getattr(param, "isError", False) or not param_payload.get("found"):
+                failures += 1
+
+            bits = await session.call_tool("decode_bitmask",
+                                           {"param": "RC_OPTIONS", "value": "0x2000"})
+            bits_payload = json.loads(text_of(bits))
+            if isinstance(bits_payload.get("result"), dict):
+                bits_payload = bits_payload["result"]
+            print(f"[decode_bitmask] found={bits_payload.get('found')} "
+                  f"set_bits={bits_payload.get('set_bits')}")
+            if getattr(bits, "isError", False) or not bits_payload.get("found"):
+                failures += 1
     print(f"\nsmoke_failures={failures}")
     return 1 if failures else 0
 

@@ -5,8 +5,11 @@ marked UNVERIFIED / NOT RUN.
 
 ## Current state
 
-- **Server exists and speaks MCP over stdio** (4 of 14 tools). Handshake verified with a real
-  client: `server=ardupilot-research version=1.30.0 protocol=2025-11-25`.
+- **Server exists and speaks MCP over stdio** (6 of 14 tools): search_docs, get_chunk,
+  lookup_param, decode_bitmask, list_sources, index_status.
+- **Parameter table built from source metadata**: 241 rows (24 with `@Bitmask`), every row linked
+  to the chunk that declares it. RC_OPTIONS resolves to `_OPTIONS` in `RC_Channels_VarInfo.h`
+  and decodes bit 13 = "Use 420kbaud for ELRS protocol".
 - **Corpus:** 7 sources pinned → 4 939 documents → **63 808 chunks** → `data/index.sqlite`.
   ardupilot now also carries `libraries/RC_Channel` and `libraries/AP_Arming` (parameter and
   arming-check definitions were missing and made an RC_OPTIONS question unanswerable).
@@ -18,27 +21,37 @@ marked UNVERIFIED / NOT RUN.
 ## Gates run this round (raw)
 
 ```
+handshake: server=ardupilot-research version=1.30.0 protocol=2025-11-25
+tools(6): ['search_docs', 'get_chunk', 'lookup_param', 'decode_bitmask', 'list_sources', 'index_status']
+[lookup_param]   found=True resolved_by=suffix candidate=['_OPTIONS', 'OPTIONS']
+[decode_bitmask] found=True set_bits=[{'bit': 13, 'name': 'Use 420kbaud for ELRS protocol'}]
+smoke_failures=0
+37 passed in 21.05s
+```
+
+```
+build_params: {"version": "Copter-4.7.2", "parsed_blocks": 232, "linked": 216,
+               "unlinked": 16, "bitmask_params": 26, "params_in_table": 241}
+params by vehicle: {'ArduCopter': 129, 'shared': 112}
+```
+
+```
 set=golden.yaml questions=30 k=5
 recall@5 = 30/30 = 1.000
 precision@1 = 21/30 = 0.700
 MRR = 0.811
 ```
 
-Tuning path (each step measured, no guessing): baseline 0.633 / 0.300 / 0.436
-→ path words added to the search-only column, identifier LIKE pass, heading boost,
-file-named-after-parameter boost, glossary terms, and `libraries/RC_Channel` +
-`libraries/AP_Arming` added to the ardupilot include list → 1.000 / 0.700 / 0.811.
+Tuning path (each step measured): baseline 0.633 / 0.300 / 0.436 → path words in the search-only
+column, identifier LIKE pass, heading boost, file-named-after-parameter boost, glossary terms,
+and `libraries/RC_Channel` + `libraries/AP_Arming` added to the ardupilot include list →
+1.000 / 0.700 / 0.811.
 
-Two "misses" were wrong expectations, not retrieval failures, and the evidence is in the
-corpus: `crsf.md` is the CRC8 spec page, and `common/source/docs/common-rc-options.rst` is the
-dedicated RC_OPTIONS page (it exists and contains the parameter twice). The golden file now
-accepts every verified target instead of a single guessed path.
+The 18 unlinked `@Param` blocks in AP_GPS are `@Legacy` documentation-only entries with no
+var_info declaration; skipping them is correct. `ArduCopter/Parameters.cpp` uses `GSCALAR`
+wrappers, so the parser detects the owning declaration by the quoted parameter name rather than
+by macro name (that fix took the file from 44/92 to 86/92 blocks).
 
-```
-RC_OPTIONS query: rank 1 = ardupilot_wiki/common/source/docs/common-rc-options.rst (score -24.58)
-out-of-corpus "how do I bake sourdough bread" -> found:false
-31 passed in 21.34s
-```
 
 
 
@@ -56,14 +69,15 @@ out-of-corpus "how do I bake sourdough bread" -> found:false
 
 ## Known gaps / UNVERIFIED
 
-- **10 of 14 tools missing**: lookup_param, decode_bitmask, find_source, board_info,
-  mavlink_message, troubleshoot, get_script, decode_crsf_frame, check_intelhex_line,
-  parse_ihex_summary. `troubleshoot` safety outputs are therefore **NOT RUN**.
-- **Params and MAVLink tables are empty** (`params`, `mavlink_msgs`, `mavlink_enums` = 0 rows):
-  parameter metadata generation and MAVLink XML parsing are not built yet.
-- **Held-out evaluation NOT RUN** (by design: it is evaluated once, when the server is complete).
+- **8 of 14 tools missing**: find_source, board_info, mavlink_message, troubleshoot, get_script,
+  decode_crsf_frame, check_intelhex_line, parse_ihex_summary. `troubleshoot` safety outputs are
+  therefore **NOT RUN**.
+- **MAVLink tables empty** (`mavlink_msgs`, `mavlink_enums` = 0): XML not parsed yet.
+- **Held-out evaluation NOT RUN** (by design: once, when the server is complete).
 - **Mutation testing ≥90 % NOT RUN**; **README + client registration UNVERIFIED**.
 - **T2 (issues/PR), T3 (forum), `local-project`** not ingested.
+- The param table covers only the libraries present in the corpus (241 rows); a parameter defined
+  in a library outside the include list returns `found:false` with real candidates.
 - Mechanical note: a `git`-based audit needs the shallow clones under `research/cache/git/`
   (gitignored); without them the audit reports `no-clone`.
 
