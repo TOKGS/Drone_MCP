@@ -12,7 +12,7 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 
 | nhánh | sub đã spawn? | trạng thái | commit cuối | đã merge? | ghi chú |
 |---|---|---|---|---|---|
-| A (lỗi 3→1→2) | **rồi** (`fix-a`) | đang chạy: A-3 xong phần code (index 123→182 MB, params 230→5089), đang làm A-1/A-2 | `0adbb0e` | **chưa** | 2 hồi quy do corpus mở rộng: golden P@1 0.767→0.733 (G22), `test_out_of_corpus...` fail |
+| A (lỗi 3→1→2) | **rồi** (`fix-a`) | DONE (3 lỗi FIXED) — **CHỜ lead quyết định merge** vì 2 hồi quy | `c385640` | **chưa** | params 230→5089 · citation 3891→0 · default 4703 raw / 3003 số · index 183,5 MB · golden P@1 0.767→0.733 · `test_out_of_corpus` fail |
 | B (lỗi 4) | **rồi** (`fix-b`) | DONE — FIXED | `dc5bcc0` (merge `67f4e80`) | **rồi** | 99 passed · audit: 5/5 refusal, mỗi refusal 1 citation mục đích |
 | C (lỗi 5+7) | **rồi** (`fix-c`) | DONE — FIXED (E2E tool_matrix chưa chạy: sandbox chặn pipe) | `22b9fa8` (merge `a36790b`) | **rồi** | 117 passed · golden 1.000/0.767/0.865 · fidelity PASS |
 | D (lỗi 6) | **rồi** (`fix-d`) | DONE — FIXED | `fb981a1` (merge `e1f2f9d`) | **rồi** | 84 passed · fidelity 0 mismatch · golden 1.000/0.767/0.865 |
