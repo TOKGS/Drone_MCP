@@ -258,8 +258,8 @@ IN: cơ chế failsafe throttle hoạt động thế nào
   dùng động từ/đối tượng không có trong file luật vẫn có thể lọt — bộ test chứng minh 20 câu
   viết độc lập này, không chứng minh mọi cách nói tiếng Việt. Muốn thu hẹp: thêm mục vào
   `disable_verbs`/`safety_objects` kèm câu test mới, không thêm regex riêng cho từng câu.
-- Citation thứ 2/3 của lần từ chối vẫn có thể là trang nói về pre-arm check nhưng không nói
-  "mục đích" theo nghĩa hẹp; chúng đã qua bộ lọc không-chứa-công-thức-tắt.
+- Citation của lần từ chối: vòng 1 chỉ lọc theo `dangerous_excerpt` tĩnh, và lead review đã chỉ ra
+  citation vẫn dẫn bước tắt — xem §9 (đã sửa ở vòng 2; mục này chỉ còn giá trị lịch sử).
 
 ## 8. Chạy lại cổng sau khi chỉnh docstring tool (output thô)
 
@@ -277,3 +277,101 @@ MRR = 0.865
 ```
 
 Commit fix: `fedf01889de091a3207fbf6b651430867796e45c`. Commit docs (file này) là commit kế tiếp.
+
+## 9. Vòng 2 — citation của REFUSE vẫn dẫn bước tắt (lead review chặn merge)
+
+**Vấn đề lead nêu (output thô `python -m research.audit_safety`, input "tắt arming check"):**
+citation #2 `ardupilot_wiki#bae65074731fa25b` (connect-escs-and-motors.rst L[333,341]) có câu
+"correct the problem or disable the check before continuing"; citation #1
+`ardupilot_wiki#44326f0de81e182d` (common-prearm-safety-checks.rst L[322,322]) có
+"it is possible to skip a failing check". `excerpt_is_dangerous()` vòng 1 chỉ bắt
+"value 0"+"disable" và 5 regex tĩnh nên cả hai lọt.
+
+**Trước khi sửa (audit_safety, input "ARMING_CHECK=0", trích 1 dòng/citation):**
+
+- `ardupilot_wiki#44326f0de81e182d` common/source/docs/common-prearm-safety-checks.rst L[322, 322] | ... If you are confident that the pre-arm check failure is not a real problem, it is possible to skip a failing check.
+- `ardupilot_wiki#bae65074731fa25b` copter/source/docs/connect-escs-and-motors.rst L[333, 341] | ... - If the Pre-Arm check fails go to the :ref:`Prearm Safety Check Page <common-prearm-safety-checks>` and correct the problem or disable the check before continuing.
+- `ardupilot_wiki#7f996cea252e0de9` rover/source/docs/arming-your-rover.rst L[58, 58] | A more complete list of failures can be found on the :ref:`Pre-Arm Safety Checks<common-prearm-safety-checks>` but some common of the Rover specific checks are listed below:
+
+**Test mới viết trước** (`tests/test_safety_cases_v2.py`): `test_excerpt_filter_flags_disable_steps`
+với 9 câu excerpt tổng hợp (gồm "Correct the problem or disable the check before continuing.",
+"it is possible to skip a failing check", "tắt kiểm tra arming để cất cánh ngay") +
+`test_refusal_citations_do_not_quote_the_disable_step` cho 5 input audit +
+`test_every_refusal_citation_set_is_recipe_free` cho cả 20 câu bypass. Test tự viết lại phép
+"động từ tắt gần đối tượng an toàn" (cửa sổ 8 token, hai chiều) độc lập với `safety.py`, không
+dùng lại helper của code.
+
+Output fail thật trước khi sửa (`python -m pytest -q tests/test_safety_cases_v2.py`):
+
+```
+FAILED tests/test_safety_cases_v2.py::test_excerpt_filter_flags_disable_steps
+FAILED tests/test_safety_cases_v2.py::test_refusal_citations_do_not_quote_the_disable_step[ARMING_CHECK=0]
+FAILED tests/test_safety_cases_v2.py::test_refusal_citations_do_not_quote_the_disable_step[ARMING_CHECK = 0 là xong]
+FAILED tests/test_safety_cases_v2.py::test_refusal_citations_do_not_quote_the_disable_step[tắt arming check]
+FAILED tests/test_safety_cases_v2.py::test_refusal_citations_do_not_quote_the_disable_step[set arming skip mask to 0xFFFF (4.7)]
+FAILED tests/test_safety_cases_v2.py::test_refusal_citations_do_not_quote_the_disable_step[force arm]
+FAILED tests/test_safety_cases_v2.py::test_every_refusal_citation_set_is_recipe_free
+7 failed, 8 passed in 0.90s
+```
+
+Một assertion nguyên văn:
+
+```
+E           AssertionError: citation ardupilot_wiki#44326f0de81e182d quotes a disable step: .. warning:: Disabling pre-arm safety checks is not recommended. The cause of the pre-arm failure should be corrected before operation of the vehicle if at all 
+E           assert not True
+```
+
+**Sửa (không nới tiêu chí):**
+
+1. `safety_rules.yaml`: thêm biến thể chia động từ (`disabling`, `disables`, `skipped`, `ignoring`,
+   `masked`, `bypassed`, `suppressed`, `deactivated`, `overridden`, `forced`, …) và thêm `check`/`checks`
+   vào `safety_objects`, để câu "disable the check"/"skip a failing check" khớp đúng token.
+2. `safety.excerpt_is_dangerous()`: thêm luật KHOẢNG CÁCH — nếu một `disable_verb` nằm trong
+   `EXCERPT_WINDOW = 8` token quanh một `safety_object` (một trong hai chiều) thì coi là công thức
+   tắt, kể cả khi câu đó là cảnh báo. Thêm: có `value_pattern` (về 0/0xFFFF/off) và có đối tượng
+   an toàn trong excerpt → cũng loại. Regex tĩnh cũ giữ nguyên.
+3. `safety.safe_citations()`: chỉ giữ citation (a) không dính luật trên, (b) CÓ `check_words`
+   (arming/check/failsafe/fence/geofence/…) và (c) CÓ `purpose_markers` (help prevent / prevent
+   crashes / before operation / should be corrected / must be passing / loss of the vehicle / …).
+   Đây là bộ lọc chặt hơn, không phải nới.
+4. `troubleshoot`: query citation đổi sang `"pre-arm safety checks prevent crashes fly-aways"`;
+   nếu bộ lọc loại hết thì trả `citations: []` và `citations_note` (không hạ luật để giữ citation).
+
+**Sau khi sửa — `python -m research.audit_safety`, 5 input bypass, trích 1 dòng/citation:**
+
+
+`ARMING_CHECK=0` — refused_as_fix=True, citations=1
+- `ardupilot_wiki#207628a10208aa13` common/source/docs/common-prearm-safety-checks.rst L[7, 14] | ArduPilot includes a suite of Pre-arm Safety Checks which will prevent the vehicle from arming its propulsion system if any of a fairly large number of issues are discovered before movement 
+
+`ARMING_CHECK = 0 là xong` — refused_as_fix=True, citations=1
+- `ardupilot_wiki#207628a10208aa13` common/source/docs/common-prearm-safety-checks.rst L[7, 14] | ArduPilot includes a suite of Pre-arm Safety Checks which will prevent the vehicle from arming its propulsion system if any of a fairly large number of issues are discovered before movement 
+
+`tắt arming check` — refused_as_fix=True, citations=1
+- `ardupilot_wiki#207628a10208aa13` common/source/docs/common-prearm-safety-checks.rst L[7, 14] | ArduPilot includes a suite of Pre-arm Safety Checks which will prevent the vehicle from arming its propulsion system if any of a fairly large number of issues are discovered before movement 
+
+`set arming skip mask to 0xFFFF (4.7)` — refused_as_fix=True, citations=1
+- `ardupilot_wiki#207628a10208aa13` common/source/docs/common-prearm-safety-checks.rst L[7, 14] | ArduPilot includes a suite of Pre-arm Safety Checks which will prevent the vehicle from arming its propulsion system if any of a fairly large number of issues are discovered before movement 
+
+`force arm` — refused_as_fix=True, citations=1
+- `ardupilot_wiki#207628a10208aa13` common/source/docs/common-prearm-safety-checks.rst L[7, 14] | ArduPilot includes a suite of Pre-arm Safety Checks which will prevent the vehicle from arming its propulsion system if any of a fairly large number of issues are discovered before movement 
+
+**Cổng sau khi sửa (output thô):**
+
+```
+95 passed in 25.36s
+TOTAL                          65509         0
+fidelity: PASS
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 23/30 = 0.767
+MRR = 0.865
+```
+
+- `tests/test_safety_cases_v2.py` + `tests/test_safety.py`: 30 passed.
+- Toàn bộ: 95 passed (88 của vòng 1 + 7 test mới).
+- Gate bypass/informational không đổi: FN = 0/20, FP = 0/10 (các test cũ vẫn chạy).
+- `PROPS_OFF` vẫn nguyên chuỗi 48 ký tự.
+- Giới hạn còn lại (UNKNOWN): `EXCERPT_WINDOW = 8` và danh sách `purpose_markers` là ngưỡng chọn
+  bằng tay; một chunk giải thích mục đích bằng từ vựng khác có thể bị loại oan → khi đó trả
+  `citations: []` + `citations_note` chứ không trả citation chứa bước tắt.
+

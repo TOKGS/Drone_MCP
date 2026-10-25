@@ -24,6 +24,10 @@ CONFIRM_TEMPLATE = "CONFIRM: {action} on {board} with props off."
 
 RULES_PATH = Path(__file__).with_name("safety_rules.yaml")
 
+# How many tokens may separate a turn-off verb from a safety object in a citation excerpt before
+# the sentence stops being "the disabling recipe".
+EXCERPT_WINDOW = 8
+
 REFUSAL_VI = (
     "Không đưa ra cách tắt/bỏ qua kiểm tra an toàn như một giải pháp. "
     "Hãy sửa nguyên nhân mà pre-arm check báo, hoặc chẩn đoán bằng SITL trước."
@@ -45,6 +49,8 @@ class _Rules:
     objects: tuple[tuple[str, str], ...]
     info: tuple[tuple[str, str], ...]
     hardware: tuple[tuple[str, str], ...]
+    check_words: tuple[tuple[str, str], ...]
+    purpose: tuple[tuple[str, str], ...]
     params: tuple[re.Pattern[str], ...]
     values: tuple[re.Pattern[str], ...]
     excerpts: tuple[re.Pattern[str], ...]
@@ -76,6 +82,8 @@ def _rules() -> _Rules:
         objects=_phrase_table(data["safety_objects"]),
         info=_phrase_table(data["info_markers"]),
         hardware=_phrase_table(data["hardware_markers"]),
+        check_words=_phrase_table(data["check_words"]),
+        purpose=_phrase_table(data["purpose_markers"]),
         params=tuple(re.compile(p, re.I) for p in data["safety_params"]),
         values=tuple(re.compile(p, re.I) for p in data["value_patterns"]),
         excerpts=tuple(re.compile(p, re.I) for p in data["dangerous_excerpt"]),
@@ -89,6 +97,19 @@ def _phrase_hits(tokens: list[str], table: tuple[tuple[str, str], ...]) -> list[
         if phrase_tokens and (" " + phrase_tokens + " ") in padded:
             hits.append(phrase)
     return list(dict.fromkeys(hits))
+
+
+def _phrase_positions(tokens: list[str],
+                      table: tuple[tuple[str, str], ...]) -> list[tuple[int, int]]:
+    """Token spans of every phrase in the table, so proximity can be measured."""
+    spans = []
+    for _, phrase_tokens in table:
+        parts = phrase_tokens.split()
+        size = len(parts)
+        for index in range(len(tokens) - size + 1):
+            if tokens[index:index + size] == parts:
+                spans.append((index, index + size - 1))
+    return spans
 
 
 def _regex_hits(folded: str, patterns: tuple[re.Pattern[str], ...]) -> list[str]:
@@ -146,12 +167,38 @@ def excerpt_is_dangerous(text: str) -> bool:
     low = (text or "").lower()
     if "value 0" in low and "disable" in low:
         return True
-    return any(pattern.search(low) for pattern in _rules().excerpts)
+    rules = _rules()
+    if any(pattern.search(low) for pattern in rules.excerpts):
+        return True
+    # Proximity rule: a turn-off verb close to a safety object is a recipe, even inside a warning
+    # ("it is possible to skip a failing check"). Same vocabulary as the request gate.
+    tokens = _tokens(fold(text))
+    objects = _phrase_positions(tokens, rules.objects)
+    for verb_start, verb_end in _phrase_positions(tokens, rules.verbs):
+        for obj_start, obj_end in objects:
+            if min(abs(verb_start - obj_start), abs(verb_end - obj_end)) <= EXCERPT_WINDOW:
+                return True
+    return bool(objects and _regex_hits(fold(text), rules.values))
 
 
 def safe_citations(results: list[dict], limit: int = 3) -> list[dict]:
     """Keep only citations that explain the purpose of a check, never the disabling recipe."""
-    return [item for item in results if not excerpt_is_dangerous(item.get("excerpt"))][:limit]
+    rules = _rules()
+    kept = []
+    for item in results:
+        excerpt = item.get("excerpt") or ""
+        if excerpt_is_dangerous(excerpt):
+            continue
+        tokens = _tokens(fold(excerpt))
+        # Purpose-only: talk about a check AND say why it exists. A chunk that merely uses
+        # "safety"/"battery" is off-topic for a refusal.
+        if not (_phrase_hits(tokens, rules.check_words)
+                and _phrase_hits(tokens, rules.purpose)):
+            continue
+        kept.append(item)
+        if len(kept) >= limit:
+            break
+    return kept
 
 
 def safety_block(action: str = "<action>", board: str = "<board>",

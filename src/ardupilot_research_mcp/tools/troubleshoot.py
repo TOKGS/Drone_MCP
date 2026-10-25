@@ -33,10 +33,16 @@ def troubleshoot(con: sqlite3.Connection, symptom: str, context: str | None = No
         effective = verdict if verdict.dangerous else dangerous_context
         refusal = safety.refusal_payload(effective, lang="vi")
         # Cite why the check exists, never the disabling recipe: the gate must not hand back
-        # the very step it refuses.
-        refusal["citations"] = safety.safe_citations(
-            retrieval.search(con, "pre-arm safety check purpose warning",
+        # the very step it refuses. If every candidate excerpt also quotes a turn-off step,
+        # return none and say so instead of relaxing the filter.
+        citations = safety.safe_citations(
+            retrieval.search(con, "pre-arm safety checks prevent crashes fly-aways",
                              scope="docs", limit=8)["results"])
+        refusal["citations"] = citations
+        if not citations:
+            refusal["citations_note"] = (
+                "No indexed excerpt explains the purpose of the check without also quoting a "
+                "disabling step, so no citation is returned.")
         return refusal
 
     searches = [retrieval.search(con, text, scope="docs", limit=MAX_EVIDENCE),
