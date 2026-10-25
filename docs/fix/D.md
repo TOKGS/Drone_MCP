@@ -87,3 +87,106 @@ FAILED tests/test_decoders.py::test_decode_crsf_frame_hex_is_capped_at_4096_char
 3 failed, 8 passed in 1.55s
 [exit code: 1]
 ```
+
+## 4. Bước (2) — sửa nguyên nhân gốc
+
+`src/ardupilot_research_mcp/decoders/crsf.py`:
+
+```python
+def c_div(a: int, b: int) -> int:
+    """Integer division truncating toward zero, as C does: c_div(-2460, 8) == -307, //  gives -308."""
+    quotient = abs(a) // abs(b)
+    return -quotient if (a < 0) != (b < 0) else quotient
+
+
+def ticks_to_us(ticks: int) -> int:
+    # crsf_spec/crsf.md: #define TICKS_TO_US(x)  ((x - 992) * 5 / 8 + 1500)
+    return c_div((ticks - 992) * 5, 8) + 1500
+```
+
+`src/ardupilot_research_mcp/tools/decode_crsf_frame.py`:
+
+- thêm `frames_found` (= số frame hoàn chỉnh, cùng giá trị `frame_count` đã có);
+- `all_crc_valid = all(...) if complete else None` — `None` khi 0 frame thay vì `all([]) = True`;
+- `warning: "no CRSF frames found"` khi 0 frame;
+- `truncated_tail_bytes = len(data) - offset` của frame cụt đầu tiên (chỉ thêm khi có);
+- `found = bool(complete)` (trước là `bool(frames)`: khung cụt rỗng vẫn trả found=true, mâu thuẫn
+  với `warning`);
+- tham số `hex: Annotated[str, Field(max_length=4096)]` → JSON schema có `maxLength: 4096`,
+  và kiểm tra runtime trả lỗi gọn `hex string too long: N characters (max 4096)`.
+
+Lý do 4096: frame CRSF tối đa 64 byte = 128 ký tự hex; 4096 đủ cho một loạt frame nhưng chặn
+đầu vào 100k ký tự bị quét.
+
+Trong lúc làm, dùng hằng số module trong `Field(max_length=MAX_HEX_CHARS)` thì fail (raw output):
+
+```text
+E               pydantic.errors.PydanticUserError: `decode_crsf_frameArguments` is not fully defined; you should define `MAX_HEX_CHARS`, then call `decode_crsf_frameArguments.model_rebuild()`.
+```
+
+Nguyên nhân: `from __future__ import annotations` biến chú thích thành chuỗi, mà wrapper
+`guarded_pure` (ở `tools/_base.py`, nhánh C sở hữu, KHÔNG sửa) đặt `__signature__` của nó nên
+pydantic phân giải tên trong globals của `_base`, nơi không có `MAX_HEX_CHARS`. Cách xử lý trong
+phạm vi nhánh D: dùng literal `4096` trong annotation, giữ hằng số `MAX_HEX_CHARS` cho phần
+kiểm tra runtime, kèm comment "keep in sync".
+
+## 5. Bước (3) — test mới pass
+
+Lệnh: `python -m pytest tests/test_decoders.py -q`. Output thô:
+
+```text
+...........                                                              [100%]
+11 passed in 1.78s
+```
+
+## 6. Bước (4) — cổng hồi quy
+
+`python -m pytest -q`:
+
+```text
+........................................................................ [ 85%]
+............                                                             [100%]
+84 passed in 25.66s
+```
+
+(Baseline 80 passed; 80 + 4 test mới = 84. Không sửa test cũ nào: test cũ trong
+`tests/test_decoders.py` không pin `all_crc_valid` cho trường hợp 0 frame, nên không phải đổi.)
+
+`python scripts/fidelity_scan.py`:
+
+```text
+crsf_spec         code             7         0
+crsf_spec         markdown       150         0
+edgetx            code           681         0
+expresslrs        block           22         0
+expresslrs        code          4834         0
+mavlink           block          432         0
+----------------------------------------------
+TOTAL                          65509         0
+fidelity: PASS
+```
+
+`python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only`:
+
+```text
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 23/30 = 0.767
+MRR = 0.865
+```
+
+Không hồi quy: recall@5 = 1.000, P@1 = 0.767 (bằng baseline), fidelity mismatch = 0.
+
+## 7. Ghi chú / giới hạn đã biết
+
+- `frames_found` đếm frame hoàn chỉnh (không tính entry `error` cho frame cụt); được định nghĩa
+  bằng `frame_count` hiện có nên hai trường luôn bằng nhau — giữ `frame_count` để không phá
+  client cũ.
+- Chuỗi 100000 ký tự hex bị chặn bởi `maxLength`/kiểm tra runtime trước khi parse, nên test cho
+  ca đó kiểm lỗi "too long"; ca "0 frame sau khi hex hợp lệ" được kiểm riêng bằng `00ff10` và
+  `frame[:10]`.
+- `truncated_tail_bytes` chỉ xuất hiện khi thật có đuôi cụt; các payload khác giữ nguyên.
+- Import `pydantic` (transitive dependency của `mcp==1.30.0`) chỉ dùng cho `Field(max_length=...)`.
+
+- Với client MCP, chuỗi >4096 ký tự bị chặn ngay ở tầng validate schema (`maxLength`); thông báo
+  tiếng Anh gọn `hex string too long...` là cho đường gọi hàm trực tiếp (test, script).

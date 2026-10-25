@@ -33,8 +33,15 @@ def crc8_dvb_s2(data: bytes) -> int:
     return crc
 
 
+def c_div(a: int, b: int) -> int:
+    """Integer division truncating toward zero, as C does: c_div(-2460, 8) == -307, //  gives -308."""
+    quotient = abs(a) // abs(b)
+    return -quotient if (a < 0) != (b < 0) else quotient
+
+
 def ticks_to_us(ticks: int) -> int:
-    return (ticks - 992) * 5 // 8 + 1500
+    # crsf_spec/crsf.md: #define TICKS_TO_US(x)  ((x - 992) * 5 / 8 + 1500)
+    return c_div((ticks - 992) * 5, 8) + 1500
 
 
 def unpack_channels(payload: bytes) -> list[dict]:

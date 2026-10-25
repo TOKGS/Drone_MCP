@@ -158,15 +158,14 @@ def test_crsf_tool_zero_frames_and_truncated_tail() -> None:
     assert tail["frames_found"] == 1 and tail["all_crc_valid"] is True
     assert tail["truncated_tail_bytes"] == 9
 
-    garbage = decode_crsf_frame("f" * 100_000)
-    assert garbage["frames_found"] == 0
-    assert garbage["all_crc_valid"] is None
-    assert garbage["warning"] == "no CRSF frames found"
-    assert garbage.get("truncated_tail_bytes") is None
+    garbage = decode_crsf_frame("f" * 100_000)     # over the 4096-char cap: rejected before parsing
+    assert garbage["found"] is False and garbage["frames_found"] == 0
+    assert "4096" in garbage["error"]
 
     zero = decode_crsf_frame("00ff10")
     assert zero["frames_found"] == 0 and zero["all_crc_valid"] is None
     assert zero["warning"] == "no CRSF frames found"
+    assert zero.get("truncated_tail_bytes") is None
 
     for bad_input, hint in (("", "no hex"), ("zz", "no hex"), ("abc", "odd number")):
         error = decode_crsf_frame(bad_input)
