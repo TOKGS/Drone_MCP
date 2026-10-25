@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "ardupilot-research": {
+      "type": "stdio",
+      "command": "C:\\Users\\<YOU>\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "args": [
+        "-m",
+        "ardupilot_research_mcp.server"
+      ],
+      "env": {
+        "PYTHONPATH": "D:\\path\\to\\ardupilot-research-mcp\\src",
+        "ARM_DATA_DIR": "D:\\path\\to\\ardupilot-research-mcp\\data",
+        "ARM_REPO_ROOT": "D:\\path\\to\\ardupilot-research-mcp"
+      }
+    }
+  }
+}

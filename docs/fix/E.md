@@ -385,3 +385,41 @@ không phải từ phiên này):
 | `claude -p --mcp-config .mcp.json --strict-mcp-config` | tái lập `status:"failed"` | Có (1 lần, để tái lập) |
 | probe `cmd /c echo` | `status:"failed"`, không có file → không spawn | Có (2 lần, để chắc) |
 | `claude mcp list` | Pending approval, không spawn | Không cần nữa |
+
+## 8. Output thô bổ sung (cho `docs/client-setup.md`)
+
+`claude mcp add --help` (2.1.308) — để viết đúng cú pháp đăng ký:
+
+```
+Usage: claude mcp add [options] <name> <commandOrUrl> [args...]
+  -e, --env <env...>           Set environment variables (e.g. -e KEY=value)
+  -s, --scope <scope>          Configuration scope (local, user, or project) (default: "local")
+  -t, --transport <transport>  Transport type (stdio, sse, http). Defaults to stdio if not specified.
+exit=0
+```
+
+`opencode --version` — không chạy nổi trong sandbox, nên phần OpenCode là UNVERIFIED:
+
+```
+opencode.exe : PlatformError: Unknown: FileSystem.open (C:\Users\ADMIN\.local\share\opencode\log\opencode.log)
++   & "$basedir/node_modules/@opencode/cli/bin/opencode.exe"   $args
+    at Ol (B:/~BUN/root/chunk-qt0mynck.js:2:1151)
+    at guarded (internal:shared:112:26) {
+  [cause]: Error: EPERM: operation not permitted, open 'C:\Users\ADMIN\.local\share\opencode\log\opencode.log'
+exit=1
+```
+
+`lookup_param` gọi in-process (không qua client) — payload "đúng trông như thế nào" cho mục kiểm thử tay:
+
+```
+$ python -c "import json; from ardupilot_research_mcp.tools.lookup_param import lookup_param; print(json.dumps(lookup_param(name_or_pattern='RC_OPTIONS'), ensure_ascii=False)[:900])"
+{"found": true, "query": "RC_OPTIONS", "vehicle": "ArduCopter", "version_filter": null, "resolved_by": "suffix", "params": [{"citation": {"cite_id": "ardupilot#11fb2497e2a89d95", ... "path": "libraries/RC_Channel/RC_Channels_VarInfo.h", "lines": [84, 117], ...}}]}
+exit=0
+```
+
+## 9. Trạng thái lỗi 8
+
+**UNKNOWN** (nguyên nhân lịch sử) + **đã tái lập trong sandbox với nguyên nhân đo được là "không spawn được
+tiến trình con"**. Không có handshake thật từ client → không tuyên bố sửa. Việc còn lại của lead: chạy §6b
+ngoài sandbox và dán output.
+
