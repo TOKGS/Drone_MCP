@@ -317,3 +317,38 @@ def test_golden_questions_keep_a_corpus_anchor(con) -> None:
     for question in golden["questions"]:
         payload = query.search(con, question["q"], scope=question.get("scope", "all"), limit=5)
         assert payload["found"] is True, (question["id"], question["q"], payload["note"])
+
+
+# --- fix/F, F-2: simulator-only code must not outrank operational code and docs -------------
+
+SIMULATOR_QUERIES = [
+    "ELRS packet rate đọc ở đâu?",
+    "how does the buzzer work",
+]
+
+
+def test_simulator_code_does_not_win_the_top_spot(con) -> None:
+    for text in SIMULATOR_QUERIES:
+        payload = query.search(con, text, limit=5)
+        paths = [item["path"] for item in payload["results"]]
+        assert payload["found"] is True, text
+        assert not paths[0].startswith("libraries/SITL/"), (text, paths)
+
+
+def test_golden_precision_and_recall_hold(con) -> None:
+    sys.path.insert(0, str(REPO))
+    from research.eval_retrieval import is_hit  # noqa: PLC0415 - repo root, not the package
+
+    golden = yaml.safe_load((REPO / "tests" / "golden.yaml").read_text(encoding="utf-8"))
+    questions = golden["questions"]
+    recall = 0
+    precision = 0
+    for question in questions:
+        payload = query.search(con, question["q"], scope=question.get("scope", "all"), limit=5)
+        results = payload["results"]
+        first = next((rank for rank, item in enumerate(results, 1)
+                      if is_hit(item, question)), None)
+        recall += 1 if first and first <= 5 else 0
+        precision += 1 if first == 1 else 0
+    assert recall == len(questions), f"recall@5 = {recall}/{len(questions)}"
+    assert precision / len(questions) >= 0.767, f"precision@1 = {precision}/{len(questions)}"

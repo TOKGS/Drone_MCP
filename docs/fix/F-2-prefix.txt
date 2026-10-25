@@ -1,0 +1,48 @@
+﻿FF                                                                       [100%]
+================================== FAILURES ===================================
+________________ test_simulator_code_does_not_win_the_top_spot ________________
+
+con = <sqlite3.Connection object at 0x0000020BA2DE0400>
+
+    def test_simulator_code_does_not_win_the_top_spot(con) -> None:
+        for text in SIMULATOR_QUERIES:
+            payload = query.search(con, text, limit=5)
+            paths = [item["path"] for item in payload["results"]]
+            assert payload["found"] is True, text
+>           assert not paths[0].startswith("libraries/SITL/"), (text, paths)
+E           AssertionError: ('ELRS packet rate đọc ở đâu?', ['libraries/SITL/SIM_ELRS.cpp', 'libraries/SITL/SIM_ELRS.h', 'docs/faq.md', 'src/src/tx_main.cpp', 'docs/software/user-defines.md'])
+E           assert not True
+E            +  where True = <built-in method startswith of str object at 0x0000020BA2F918E0>('libraries/SITL/')
+E            +    where <built-in method startswith of str object at 0x0000020BA2F918E0> = 'libraries/SITL/SIM_ELRS.cpp'.startswith
+
+tests\test_query.py:335: AssertionError
+____________________ test_golden_precision_and_recall_hold ____________________
+
+con = <sqlite3.Connection object at 0x0000020BA2DE35B0>
+
+    def test_golden_precision_and_recall_hold(con) -> None:
+        sys.path.insert(0, str(REPO))
+        from research.eval_retrieval import is_hit  # noqa: PLC0415 - repo root, not the package
+    
+        golden = yaml.safe_load((REPO / "tests" / "golden.yaml").read_text(encoding="utf-8"))
+        questions = golden["questions"]
+        recall = 0
+        precision = 0
+        for question in questions:
+            payload = query.search(con, question["q"], scope=question.get("scope", "all"), limit=5)
+            results = payload["results"]
+            first = next((rank for rank, item in enumerate(results, 1)
+                          if is_hit(item, question)), None)
+            recall += 1 if first and first <= 5 else 0
+            precision += 1 if first == 1 else 0
+        assert recall == len(questions), f"recall@5 = {recall}/{len(questions)}"
+>       assert precision / len(questions) >= 0.767, f"precision@1 = {precision}/{len(questions)}"
+E       AssertionError: precision@1 = 22/30
+E       assert (22 / 30) >= 0.767
+E        +  where 30 = len([{'id': 'G01', 'lang': 'vi', 'q': 'CRC8 của CRSF dùng đa thức nào?', 'scope': 'all', ...}, {'id': 'G02', 'lang': 'en',...ope': 'all', ...}, {'id': 'G06', 'lang': 'vi', 'q': 'hwdef.dat khai báo UART như thế nào?', 'scope': 'code', ...}, ...])
+
+tests\test_query.py:354: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_query.py::test_simulator_code_does_not_win_the_top_spot - A...
+FAILED tests/test_query.py::test_golden_precision_and_recall_hold - Assertion...
+2 failed, 25 deselected in 3.19s

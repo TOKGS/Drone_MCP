@@ -131,3 +131,28 @@ fidelity: PASS
 ```
 Log đầy đủ: `docs/fix/F-1-green.txt`. P@1 vẫn 0.733 (hồi quy còn lại của F-2, chưa sửa ở bước này).
 
+## 3. F-2 — Bước 1: test trước, chụp output fail
+
+Test thêm vào `tests/test_query.py`:
+- `test_simulator_code_does_not_win_the_top_spot`: 2 câu mà code `libraries/SITL/` đang chiếm top-1
+  ("ELRS packet rate đọc ở đâu?", "how does the buzzer work") — top-1 không được nằm dưới
+  `libraries/SITL/`.
+- `test_golden_precision_and_recall_hold`: tự tính recall@5 / precision@1 trên `tests/golden.yaml`
+  bằng chính `research.eval_retrieval.is_hit`, đòi recall 30/30 và P@1 >= 0.767.
+
+```
+python -m pytest tests/test_query.py -q -k "simulator or golden_precision"
+    assert recall == len(questions), f"recall@5 = {recall}/{len(questions)}"
+>   assert precision / len(questions) >= 0.767, f"precision@1 = {precision}/{len(questions)}"
+E   AssertionError: precision@1 = 22/30
+E   assert (22 / 30) >= 0.767
+
+tests\test_query.py:354: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_query.py::test_simulator_code_does_not_win_the_top_spot - A...
+FAILED tests/test_query.py::test_golden_precision_and_recall_hold - Assertion...
+2 failed, 25 deselected in 3.19s
+```
+File output đầy đủ: `docs/fix/F-2-prefix.txt`.
+
+
