@@ -24,6 +24,6 @@ from ardupilot_research_mcp.tools import _base  # noqa: E402
 
 @pytest.fixture(autouse=True)
 def _reset_runaway_guard():
-    _base.GUARD._calls.clear()
+    _base.GUARD.reset()
     yield
-    _base.GUARD._calls.clear()
+    _base.GUARD.reset()

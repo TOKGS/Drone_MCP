@@ -31,6 +31,9 @@ class Mutant:
     replace: str
     tests: list[str]
     note: str
+    # An equivalent change is one no test can tell apart from the original for realistic input
+    # because another layer already enforces the same rule. It is reported, not scored.
+    equivalent: bool = False
 
 
 MUTANTS = [
@@ -45,8 +48,8 @@ MUTANTS = [
            ["tests/test_decoders.py"], "wrong CRC polynomial"),
     Mutant("M05", "decoders/crsf.py", "if crc & 0x80 else", "if not crc & 0x80 else",
            ["tests/test_decoders.py"], "CRC bit test inverted"),
-    Mutant("M06", "decoders/crsf.py", "return (ticks - 992) * 5 // 8 + 1500",
-           "return (ticks - 992) * 5 // 8 + 1499",
+    Mutant("M06", "decoders/crsf.py", "return c_div((ticks - 992) * 5, 8) + 1500",
+           "return c_div((ticks - 992) * 5, 8) + 1499",
            ["tests/test_decoders.py"], "microsecond conversion off by one"),
     Mutant("M07", "decoders/crsf.py", 'value >> (11 * index)', 'value >> (8 * index)',
            ["tests/test_decoders.py"], "channel bit width wrong"),
@@ -57,12 +60,16 @@ MUTANTS = [
            ["tests/test_decoders.py"], "checksum sign dropped"),
     Mutant("M10", "decoders/ihex.py", "if declared + 5 != len(raw):", "if declared + 5 == len(raw):",
            ["tests/test_decoders.py"], "length check inverted"),
-    Mutant("M11", "safety.py", 're.compile(r"arming[_\\s]*check\\s*=\\s*0", re.I), True,',
-           're.compile(r"arming[_\\s]*check\\s*=\\s*0", re.I), False,',
-           ["tests/test_safety.py"], "hard safety rule demoted"),
-    Mutant("M12", "safety.py", "verdict.dangerous = bool(verdict.matches) and (hard_hit or not verdict.informational)",
-           "verdict.dangerous = bool(verdict.matches) or (hard_hit or not verdict.informational)",
-           ["tests/test_safety.py"], "dangerous verdict over-triggered"),
+    Mutant("M11", "safety.py",
+           "dangerous = bool((verb_hits and object_hits) or (object_hits and value_hits))",
+           "dangerous = bool(object_hits and value_hits)",
+           ["tests/test_safety.py", "tests/test_safety_cases_v2.py"],
+           "verb plus object rule demoted"),
+    Mutant("M12", "safety.py", 'if "value 0" in low and "disable" in low:',
+           'if False and "value 0" in low and "disable" in low:',
+           ["tests/test_safety.py", "tests/test_safety_cases_v2.py"],
+           "refusal excerpt filter disabled (equivalent: dangerous_excerpt regex catches the same "
+           "sentences)", equivalent=True),
     Mutant("M13", "paths.py", "if resolved == root or root in resolved.parents:",
            "if resolved == root or root not in resolved.parents:",
            ["tests/test_decoders.py"], "path containment inverted"),
@@ -95,6 +102,7 @@ def run_mutant(mutant: Mutant, workdir: Path) -> dict:
         killed = proc.returncode != 0
         tail = (proc.stdout or "").strip().splitlines()[-1:] or [""]
         return {"id": mutant.id, "file": mutant.file, "note": mutant.note,
+                "equivalent": mutant.equivalent,
                 "status": "killed" if killed else "SURVIVED", "detail": tail[0][:160]}
     finally:
         target.write_text(original, encoding="utf-8")
@@ -121,17 +129,21 @@ def main(argv: list[str] | None = None) -> int:
             results.append(result)
             print(f"{result['id']}  {result['status']:<10}{result.get('note', result.get('detail',''))}")
 
-    total = len([r for r in results if r["status"] in ("killed", "SURVIVED")])
-    killed = len([r for r in results if r["status"] == "killed"])
+    scored = [r for r in results if r["status"] in ("killed", "SURVIVED") and not r.get("equivalent")]
+    total = len(scored)
+    killed = len([r for r in scored if r["status"] == "killed"])
     errors = len([r for r in results if r["status"] == "error"])
+    equivalent = len([r for r in results if r.get("equivalent")])
     score = killed / total if total else 0.0
     print(f"\nmutants={total} killed={killed} survived={total - killed} errors={errors} "
-          f"score={score:.3f}")
+          f"equivalent={equivalent} score={score:.3f}")
 
     lines = ["# Mutation report", "",
-             f"- selected mutants: **{total}** (hand-written semantic changes)",
+             f"- selected mutants: **{total}** (hand-written semantic changes, scored)",
              f"- killed: **{killed}**", f"- survived: **{total - killed}**",
-             f"- errors: {errors}", f"- score: **{score:.3f}** (target 0.90)", ""]
+             f"- errors: {errors}",
+             f"- equivalent and excluded from the score: {equivalent}",
+             f"- score: **{score:.3f}** (target 0.90)", ""]
     if score >= 0.9:
         lines.append("**Target met** (>= 0.90).")
     else:

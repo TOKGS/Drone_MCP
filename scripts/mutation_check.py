@@ -25,9 +25,11 @@ def main() -> int:
         print("mutation report missing; treating as NOT RUN")
         return 2
     data = json.loads(report.read_text(encoding="utf-8"))
-    survivors = [item["id"] for item in data["results"] if item["status"] == "SURVIVED"]
+    survivors = [item["id"] for item in data["results"]
+                 if item["status"] == "SURVIVED" and not item.get("equivalent")]
+    equivalent = [item["id"] for item in data["results"] if item.get("equivalent")]
     print(f"\nkilled={data['killed']}/{data['total']} score={data['score']:.3f} "
-          f"target=0.90 survivors={survivors or 'none'}")
+          f"target=0.90 survivors={survivors or 'none'} equivalent={equivalent or 'none'}")
     return 0 if data["score"] >= 0.9 else 1
 
 

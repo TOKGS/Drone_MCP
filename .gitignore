@@ -22,3 +22,6 @@ review_bundle.zip
 
 # generated report artifacts
 artifacts/
+
+# per-machine client config: paths differ per checkout, so only the example is committed
+.mcp.json

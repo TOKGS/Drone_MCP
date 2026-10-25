@@ -72,3 +72,11 @@ def test_troubleshoot_refuses_or_answers(text: str, _dangerous: bool) -> None:
         assert payload.get("refused_as_fix") is not True
         assert payload.get("found") is True
         assert payload["evidence"], "an informational arming question must return evidence"
+
+def test_excerpt_that_zeroes_a_feature_is_treated_as_a_recipe():
+    """A refusal must not quote a sentence that explains how to turn a feature off. The proximity
+    rule only sees a verb next to a safety word, so the "Value 0 ... disable" shape needs its own
+    check; without it a neutral sentence about zeroing slips through."""
+    assert safety.excerpt_is_dangerous("Value 0 will disable the feature entirely.")
+    assert not safety.excerpt_is_dangerous(
+        "The failsafe monitors throttle and triggers when the signal is lost.")

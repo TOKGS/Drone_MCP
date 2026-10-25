@@ -217,6 +217,33 @@ def _corpus_anchor(con: sqlite3.Connection, query: str,
     return weight, weight / len(content)
 
 
+def _boundary_hits(text: str, tokens: set[str]) -> int:
+    """Count query tokens that appear as whole words in a chunk.
+
+    BM25 also counts a term inside a longer identifier, so "CRC8" scores for "Command_CRC8" and a
+    side note about a different checksum can outrank the definition itself. Treating `_` as a word
+    character keeps the definition and the passing mention apart when picking a chunk.
+    """
+    lowered = (text or "").lower()
+    hits = 0
+    for token in tokens:
+        if len(token) < 3:
+            continue
+        if re.search(rf"(?<![a-z0-9_]){re.escape(token.lower())}(?![a-z0-9_])", lowered):
+            hits += 1
+    return hits
+
+
+def _heading_extra(heading_path: str, tokens: set[str]) -> int:
+    """Content words in a chunk's own heading that the query never mentioned.
+
+    A chunk under "Direct Commands" answers a question about that sub-topic, not about the frame
+    in general, so when two chunks of one document score the same the narrower heading loses.
+    """
+    words = re.findall(r"[a-z0-9]{4,}", (heading_path or "").lower())
+    return sum(1 for word in words if word not in tokens)
+
+
 def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
            version: str | None = None, tier_max: str = "T1", limit: int = 8) -> dict:
     expanded, applied = expand_query(query)
@@ -317,8 +344,14 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         by_path.setdefault(row["path"], []).append((score, row))
 
     results = []
+    query_tokens = {token.lower() for token in tokens}
     for items in sorted(by_path.values(), key=lambda group: group[0][0]):
-        score, row = min(items, key=lambda item: item[0])
+        # Among the chunks of the document that ranked first, prefer the one that spells the query
+        # words as words, then the one without a narrower heading, then the better bm25 score.
+        score, row = min(items, key=lambda item: (-_boundary_hits(item[1]["text"], query_tokens),
+                                                 _heading_extra(item[1]["heading_path"],
+                                                                query_tokens),
+                                                 item[0]))
         citation = cite.build_citation(con, cite.make_cite_id(row["source_id"], row["cite_hash"]))
         citation["excerpt"] = textsanitize.sanitize_excerpt(citation["excerpt"])
         citation["score"] = round(score, 4)

@@ -13,7 +13,7 @@ nguyên văn, hoặc nói `found:false`.
 
 ```
 python -m ardupilot_research_mcp.server     # MCP stdio, 14 tool
-python -m pytest -q                         # 134 passed
+python -m pytest -q                         # 141 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP`. Package `ardupilot-research-mcp` v0.1.0, Python 3.10 trở lên.
@@ -429,10 +429,12 @@ Rồi hỏi: *"tra RC_OPTIONS và cho biết bit nào bật ELRS 420kbaud"*. Câ
 ## Test và cổng kiểm
 
 ```powershell
-python -m pytest -q                                     # 134 passed
+python -m pytest -q                                     # 141 passed
 python scripts\check_traceability.py                    # yêu cầu, test, kết quả, failing=0
 python scripts\fidelity_scan.py                         # 86 262 chunk, 0 mismatch, PASS
 python scripts\check_param_citations.py                 # 5 089 tham số, 0 vi phạm
+python scripts\check_readmes.py                         # hai README: không còn dấu hiệu văn AI, số liệu khớp
+python scripts\bench.py                                 # p50/p95 của search theo ngân sách
 python -m research.verify_citations                     # khoảng dòng và URL ghim, PASS
 python -m research.audit_safety                         # sáu input an toàn bắt buộc
 python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
@@ -444,7 +446,7 @@ python scripts\mutation_check.py                        # điểm mutation
 
 | Cổng | Kết quả |
 |---|---|
-| `pytest -q` | 134 passed, 0 failed, 0 skipped |
+| `pytest -q` | 141 passed, 1 skipped |
 | `fidelity_scan.py` | 86 262 chunk, 0 mismatch, PASS |
 | `check_param_citations.py` | 5 089 kiểm, 0 vi phạm |
 | `check_traceability.py` | 22 yêu cầu, failing=0 |
@@ -452,9 +454,15 @@ python scripts\mutation_check.py                        # điểm mutation
 | bộ an toàn, 30 câu | 0 false negative, 0 false positive |
 | golden, dev và tinh chỉnh được | recall@5 1.000, P@1 0.767, MRR 0.859 |
 | held-out v3, blind và đóng băng | recall@5 0.933, P@1 0.833, MRR 0.868 |
-| mutation | 0.917, giết 11 trên 12 mutant áp dụng được, 3 mutant cũ và 1 survivor có ghi lại |
+| mutation | 1.000, giết 14 trên 14 mutant tính điểm, 1 mutant tương đương được tách riêng |
+
+Mutant M12 được xếp là tương đương thay vì tính điểm: mệnh đề "Value 0 ... disable"
+trong bộ lọc excerpt trùng tác dụng với các mẫu `dangerous_excerpt` trong `safety_rules.yaml`,
+nên không test nào phân biệt được nó với bản gốc.
 | blackbox run2, 108 case đóng băng | 92 pass, 16 fail, 0 hồi quy so với run1 |
 | tất định của khâu chấm | 5 script chạy hai lần, output byte-identical |
+| `check_readmes.py` | PASS |
+| `bench.py` | search p50 58,5 ms, p95 186 ms, ngân sách 400 ms, PASS |
 
 `tests/conftest.py` reset guard tốc độ giữa các test. Guard sản phẩm vẫn giữ 60 lần gọi mỗi phút.
 
@@ -485,28 +493,21 @@ so sánh 108 dòng kèm output thô ở `docs/blackbox/run2/comparison.md`.
 
 Năm script chấm điểm cũng được chạy hai lần trên cùng raw và cho kết quả byte-identical, nên verdict
 92 trên 16 không phụ thuộc thứ tự chạy hay thời điểm (`docs/blackbox/run2/determinism.md`).
+Việc chọn chunk trong document thắng giờ ưu tiên khớp nguyên từ và chunk không có heading hẹp
+hơn, nên C1 từ chỗ gần trúng thành trích đúng đoạn `0xD5`.
 
 ## Tái lập
 
 ```powershell
 python -m venv .venv; .\.venv\Scripts\Activate.ps1; pip install -e .
-python -m research.fetch tags
-python -m research.fetch download
-python -m ardupilot_research_mcp.ingest.cli --all --rebuild-index
-python -m research.build_params
-python -m research.build_mavlink
-python -m pytest -q
-python scripts\check_traceability.py
-python scripts\fidelity_scan.py
-python scripts\check_param_citations.py
+python -m research.build_all --gates         # fetch, extract, ingest, params, mavlink, rồi các cổng
 python -m research.eval_retrieval --set tests/heldout_v3.yaml --aggregate-only
-python scripts\smoke_stdio.py
+python scripts\smoke_stdio.py               # cần pipe stdio, chạy ngoài sandbox
+python -m research.build_all --prune-cache   # tuỳ chọn: xoá archive đã tải
 ```
 
-Một vướng đã biết: `python -m research.extract` chạy riêng thì exit 1 ở `local-project` vì nguồn này
-không có tarball theo thiết kế. Bảy nguồn ghim đã được extract trước khi lỗi đó xảy ra, và
-`ingest --all` bỏ qua `local-project` kèm thông báo. Dùng dòng `ingest --all --rebuild-index` ở trên,
-hoặc truyền `--source <id>` để chạy extractor cho một nguồn.
+`build_all` chạy từng stage thành tiến trình riêng và dừng ở lỗi đầu tiên, nên thông báo lỗi chỉ ra
+stage. `--dry-run` in lệnh mà không chạy, `--prune-cache` xoá 2,7 GB archive khi index đã có.
 
 ## Bố cục
 
@@ -565,8 +566,9 @@ Chưa kiểm chứng:
 
 Hạn chế đã biết:
 
-- Xếp hạng trượt 4 case đóng băng (`C1`, `C4`, `C10`, `C11`). Đúng file có trong index nhưng không
-  lọt top năm với cách diễn đạt đó, và ranking không được tinh chỉnh theo từng câu.
+- Xếp hạng trượt 3 case đóng băng (`C4`, `C10`, `C11`). Đúng file có trong index nhưng không lọt
+  top năm với cách diễn đạt đó. `C1` đã sửa: chunk thắng giờ là định nghĩa (`0xD5`), không phải đoạn
+  Command frame (`0xBA`) dùng chung các từ đó.
 - Hai tham số `SERIAL1_PROTOCOL` và `LOG_BITMASK` tìm thấy nhưng default vẫn unresolved vì chuỗi
   macro không có một giá trị duy nhất. Case đòi default bằng số cho chúng thì fail.
 - 509 khối `@Param` unresolved và 142 khối unlinked nằm trong `docs/fix/A-unresolved.txt`.
@@ -578,12 +580,12 @@ Hạn chế đã biết:
 - `local-project` index file của bạn, không pin và không URL, và không bao giờ lẫn vào số recall.
 - `heldout_locked` được 0.433, dưới mức 0.8. Tập đó đã công bố là không công bằng và không dùng làm
   bằng chứng.
-- `python -m research.extract` exit 1 ở nguồn `local-project` không có tarball.
-- Chưa có file `LICENSE`. License khai MIT trong `pyproject.toml`, thêm file nếu bạn muốn MIT.
+- Test link escape (`tests/test_hardening.py`) bị skip trên account không tạo được symlink thư mục,
+  nên khả năng thoát qua junction chưa được chứng minh trên máy này.
 
 ## Giấy phép và nguồn gốc
 
-Code của server là MIT, khai trong `pyproject.toml`.
+Code của server là MIT, trong file `LICENSE` (và khai trong `pyproject.toml`).
 
 Corpus không được phân phối lại. `data/` và `research/cache/` nằm trong gitignore, excerpt trả về bị
 cắt ở 600 ký tự, mang license của nguồn và URL ghim, nên một đoạn trích vẫn truy được về file gốc.
@@ -599,7 +601,7 @@ Binary, ảnh, font, archive, file `.hex` và `.apj` không vào corpus, và `LI
 
 v0.1.0, lượt hoàn chỉnh đầu tiên, 2026-10-25.
 
-- 14 tool qua stdio, chỉ đọc và offline, 134 test, 86 262 chunk không lệch fidelity.
+- 14 tool qua stdio, chỉ đọc và offline, 141 test, 86 262 chunk không lệch fidelity.
 - Bảng tham số dựng lại từ metadata ghim: 230 thành 5 089 tham số, vi phạm citation 3 891 thành 0,
   default 0 thành 4 703 raw với 3 003 quy được.
 - Cổng an toàn viết lại thành dữ liệu với khớp song ngữ đã chuẩn hoá dấu: false negative từ 3 trên 11
@@ -611,6 +613,13 @@ v0.1.0, lượt hoàn chỉnh đầu tiên, 2026-10-25.
 - Chạy lại blackbox độc lập trên 108 case đóng băng: 92 pass, không hồi quy, khâu chấm tất định.
 - Wiring client đã chứng minh trong phiên Claude Code thật: server connected, 14 tool được liệt kê,
   user scope báo `√ Connected`.
+- Mutation harness trỏ lại đúng code hiện tại, một mutant tương đương được phân loại thay vì tính
+  điểm, và bộ lọc stopword đã có test.
+- `research.build_all` gom build về một lối vào, `research.extract` không còn fail ở lớp local, và
+  `scripts/bench.py` canh độ trễ.
+- CI chạy unit test, cổng README và traceability trên Windows lẫn Ubuntu; một job hàng tuần dựng
+  index rồi chạy các cổng đã công bố.
+- Thêm `LICENSE`, và `.mcp.json` trở lại là file theo máy (chỉ commit `.mcp.json.example`).
 
 Sổ lỗi, quyết định và chi phí ở `docs/FIX_REPORT.md`, nhật ký từng lỗi ở `docs/fix/`.
 

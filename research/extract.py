@@ -148,6 +148,11 @@ def main(argv: list[str] | None = None) -> int:
     for source in conf["sources"]:
         if args.only and args.only != source["id"]:
             continue
+        # The local overlay has no tarball by design; ingest reads it from data/local, so
+        # extraction skips it instead of failing the build.
+        if source.get("ref_kind") == "local":
+            print(f"{source['id']:<16} skipped (local source, no tarball; ingest reads data/local)")
+            continue
         tarball = cache / f"{source['id']}.tar.gz"
         if source["id"] in meta and meta[source["id"]].get("sha256"):
             source = dict(source)

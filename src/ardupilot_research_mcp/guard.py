@@ -25,6 +25,11 @@ class Guard:
         self.max_output_bytes = max_output_bytes
         self._calls: deque[float] = deque()
 
+    def reset(self) -> None:
+        """Forget recorded calls. Used by tests; the server never calls it, so the 60/min limit
+        still holds for a real client session."""
+        self._calls.clear()
+
     def check(self) -> None:
         now = time.time()
         while self._calls and now - self._calls[0] > 60.0:

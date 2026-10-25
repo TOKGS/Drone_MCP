@@ -1,0 +1,58 @@
+﻿name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * 1"      # weekly, so a broken pin is noticed without a push
+
+jobs:
+  unit:
+    # Fast job: no corpus, no index. Tests that need them skip themselves.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ["3.11"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pytest -q
+      - run: python scripts/check_readmes.py
+      - run: python scripts/check_traceability.py
+
+  build-and-gate:
+    # Slow job: builds the index from the pinned archives, then runs the documented gates.
+    # Runs weekly and on demand, not on every push.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install -e ".[dev]"
+      - uses: actions/cache@v4
+        with:
+          path: |
+            research/cache
+            data/index.sqlite
+          key: corpus-${{ hashFiles('sources.yaml') }}
+      - run: python -m research.build_all --gates
+      - run: python -m research.eval_retrieval --set tests/heldout_v3.yaml --aggregate-only
+      - run: python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
+      - run: python -m research.verify_citations
+      - run: python scripts/mutation_check.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gates
+          path: |
+            docs/mutation-report.md
+            docs/mutation-report.json

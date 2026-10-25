@@ -414,4 +414,14 @@ async def run() -> int:
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--out", default=None,
+                        help="directory for raw output (default: docs/blackbox/raw). The run "
+                             "refuses to overwrite an existing directory, so a second run needs "
+                             "--out or a removed directory.")
+    cli = parser.parse_args()
+    if cli.out:
+        RAW = Path(cli.out).resolve()
     sys.exit(asyncio.run(run()))

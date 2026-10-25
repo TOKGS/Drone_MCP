@@ -14,7 +14,7 @@ either carry a `cite_id`, a pinned permalink, an exact line range and a verbatim
 
 ```
 python -m ardupilot_research_mcp.server     # stdio MCP server, 14 tools
-python -m pytest -q                         # 134 passed
+python -m pytest -q                         # 141 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP`. Package `ardupilot-research-mcp` v0.1.0, Python 3.10 or newer.
@@ -371,7 +371,8 @@ claude mcp add --scope project ardupilot-research …            # then run `cla
 claude -p "<question>" --mcp-config .\.mcp.json --strict-mcp-config
 ```
 
-The project file looks like this:
+The project file is per-machine, so it is gitignored; the committed template is
+`.mcp.json.example`. It looks like this:
 
 ```json
 {
@@ -444,10 +445,12 @@ PATH, `PYTHONPATH`, cwd, environment variables and the `cmd /c` wrapper.
 ## Tests and gates
 
 ```powershell
-python -m pytest -q                                     # 134 passed
+python -m pytest -q                                     # 141 passed
 python scripts\check_traceability.py                    # requirement to test to result, failing=0
 python scripts\fidelity_scan.py                         # 86 262 chunks, 0 mismatch, PASS
 python scripts\check_param_citations.py                 # 5 089 parameters, 0 violations
+python scripts\check_readmes.py                         # both READMEs: no AI tells, numbers agree
+python scripts\bench.py                                 # search p50/p95 against a budget
 python -m research.verify_citations                     # line ranges and pinned URLs, PASS
 python -m research.audit_safety                         # the six required safety inputs
 python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
@@ -459,7 +462,7 @@ Last measured on the merged tree with the index rebuilt from scratch:
 
 | Gate | Result |
 |---|---|
-| `pytest -q` | 134 passed, 0 failed, 0 skipped |
+| `pytest -q` | 141 passed, 1 skipped |
 | `fidelity_scan.py` | 86 262 chunks, 0 mismatch, PASS |
 | `check_param_citations.py` | 5 089 checked, 0 violations |
 | `check_traceability.py` | 22 requirements, failing=0 |
@@ -467,9 +470,11 @@ Last measured on the merged tree with the index rebuilt from scratch:
 | safety corpus, 30 cases | 0 false negatives, 0 false positives |
 | golden set, dev and tunable | recall@5 1.000, P@1 0.767, MRR 0.859 |
 | held-out v3, blind and frozen | recall@5 0.933, P@1 0.833, MRR 0.868 |
-| mutation | 0.917, with 11 of 12 applicable mutants killed, 3 stale mutants and 1 survivor recorded |
+| mutation | 1.000, 14 scored mutants killed, 1 equivalent mutant excluded and flagged |
 | blackbox run2, 108 frozen cases | 92 pass, 16 fail, 0 regressions against run1 |
 | scoring determinism | 5 scripts run twice, byte-identical output |
+| `check_readmes.py` | PASS |
+| `bench.py` | search p50 58.5 ms, p95 186 ms, budget 400 ms, PASS |
 
 `tests/conftest.py` resets the in-process rate guard between tests. The guard still enforces 60 calls
 per minute in production.
@@ -508,23 +513,15 @@ results, so the 92/16 verdict does not depend on run order or timing
 
 ```powershell
 python -m venv .venv; .\.venv\Scripts\Activate.ps1; pip install -e .
-python -m research.fetch tags
-python -m research.fetch download
-python -m ardupilot_research_mcp.ingest.cli --all --rebuild-index
-python -m research.build_params
-python -m research.build_mavlink
-python -m pytest -q
-python scripts\check_traceability.py
-python scripts\fidelity_scan.py
-python scripts\check_param_citations.py
+python -m research.build_all --gates         # fetch, extract, ingest, params, mavlink, then the gates
 python -m research.eval_retrieval --set tests/heldout_v3.yaml --aggregate-only
-python scripts\smoke_stdio.py
+python scripts\smoke_stdio.py               # needs stdio pipes, so run it outside a sandbox
+python -m research.build_all --prune-cache   # optional: delete the downloaded archives
 ```
 
-One known snag: `python -m research.extract` as a standalone command exits 1 on `local-project`,
-which has no tarball by design. The seven pinned sources are extracted before that failure, and
-`ingest --all` skips `local-project` with a message. Use the `ingest --all --rebuild-index` line
-above, or pass `--source <id>` to run the extractor for one source.
+`build_all` runs each stage as its own process and stops at the first failure, so the error names the
+stage. `--dry-run` prints the commands without running them, and `--prune-cache` removes the 2.7 GB
+of archives once the index exists.
 
 ## Layout
 
@@ -583,8 +580,9 @@ Still unverified:
 
 Known limitations:
 
-- Ranking misses 4 frozen blackbox cases (`C1`, `C4`, `C10`, `C11`). The right file is indexed but
-  does not reach the top five for those phrasings, and ranking was not tuned per question.
+- Ranking misses 3 frozen blackbox cases (`C4`, `C10`, `C11`). The right file is indexed but does
+  not reach the top five for those phrasings. `C1` is fixed: the winning chunk is now the definition
+  (`0xD5`), not the Command-frame paragraph (`0xBA`) that shared its words.
 - Two parameters, `SERIAL1_PROTOCOL` and `LOG_BITMASK`, are found but their default stays unresolved
   because the macro chain is not single-valued. A case that demands a numeric default for them fails.
 - 509 unresolved `@Param` blocks and 142 unlinked blocks are listed in `docs/fix/A-unresolved.txt`.
@@ -597,13 +595,12 @@ Known limitations:
 - `local-project` indexes your own files with no pin and no URL, and stays out of every recall number.
 - `heldout_locked` scores 0.433, below the 0.8 bar. That set is documented as unfair and is not used
   as evidence.
-- `python -m research.extract` exits 1 on the tarball-less `local-project` source.
-- There is no `LICENSE` file yet. The license is declared as MIT in `pyproject.toml`; add the file if
-  MIT is what you want.
+- The link-escape test (`tests/test_hardening.py`) skips on accounts that cannot create
+directory symlinks, so junction traversal is unproven on this machine.
 
 ## Licenses and provenance
 
-The server code is MIT, declared in `pyproject.toml`.
+The server code is MIT, in `LICENSE` (and declared in `pyproject.toml`).
 
 The corpus is not redistributed. `data/` and `research/cache/` are gitignored, and returned excerpts
 are capped at 600 characters, carry the source license and the pinned URL, so a quote stays traceable
@@ -620,7 +617,7 @@ Binaries, images, fonts, archives, `.hex` and `.apj` files never enter the corpu
 
 v0.1.0, first complete pass, 2026-10-25.
 
-- 14 tools over stdio, read-only and offline, 134 tests, 86 262 chunks with no fidelity mismatch.
+- 14 tools over stdio, read-only and offline, 141 tests, 86 262 chunks with no fidelity mismatch.
 - Parameter table rebuilt from pinned metadata: 230 to 5 089 parameters, citation violations 3 891 to
   0, defaults 0 to 4 703 raw with 3 003 resolved.
 - Safety gate rewritten as data with folded bilingual matching: false negatives went from 3 of 11 to
@@ -635,6 +632,15 @@ v0.1.0, first complete pass, 2026-10-25.
   scoring pass.
 - Client wiring proven in a real Claude Code session: server connected, 14 tools listed, user scope
   reporting `√ Connected`.
+- Chunk selection inside a winning document now prefers whole-word matches and the chunk without a
+  narrower heading, which turns C1 from a near-miss into a correct quote.
+- Mutation harness re-pointed at the current code, an equivalent mutant classified instead of scored,
+  and the stopword filter is now covered by a test.
+- `research.build_all` gives the build one entry point, `research.extract` no longer fails on the
+  local overlay, and `scripts/bench.py` guards latency.
+- CI runs the unit suite, the README gate and traceability on Windows and Ubuntu; a weekly job builds
+  the index and runs the documented gates.
+- `LICENSE` added, and `.mcp.json` is per-machine again (only `.mcp.json.example` is committed).
 
 The defect ledger, decisions and costs are in `docs/FIX_REPORT.md`, with per-defect logs under
 `docs/fix/`.

@@ -354,3 +354,36 @@ def test_golden_precision_and_recall_hold(con) -> None:
     # The published master figure is the rounded 0.767 (= 23/30); compare at that precision.
     assert round(precision / len(questions), 3) >= 0.767, \
         f"precision@1 = {precision}/{len(questions)}"
+
+def test_winning_chunk_is_the_definition_not_the_near_duplicate():
+    """A document can hold two near-identical paragraphs; the excerpt must be the one the query
+    asks about. crsf.md states the frame CRC polynomial (0xD5) and, much later, the Command frame
+    polynomial (0xBA). Before the chunk picker looked at word boundaries and heading width, the
+    Command paragraph won on BM25 term overlap and the citation quoted 0xBA for a question about
+    the frame CRC.
+    """
+    con = db.connect()
+    payload = query.search(con, "CRC8 polynomial CRSF", limit=5)
+    spec = next(item for item in payload["results"] if item["path"].endswith("crsf.md"))
+    assert "0xD5" in spec["excerpt"]
+    assert "0xBA" not in spec["excerpt"]
+
+
+def test_boundary_hits_ignore_matches_inside_longer_identifiers():
+    tokens = {"crc8", "polynomial"}
+    assert query._boundary_hits("CRC8 implementation with polynom = (0xD5)", tokens) == 1
+    assert query._boundary_hits("uint8_t Command_CRC8; // CRC POLYNOM = 0xBA", tokens) == 0
+
+
+def test_heading_tokens_absent_from_the_query_count_as_narrower():
+    tokens = {"crc8", "crsf"}
+    assert query._heading_extra("CRC", tokens) == 0
+    assert query._heading_extra("Extended Frame Types > 0x32 Direct Commands", tokens) >= 1
+
+def test_stopwords_never_reach_the_index_query():
+    """The stopword filter is what stops "how do I ..." from matching half the corpus, so the
+    tokeniser must drop those words rather than pass them to FTS."""
+    tokens = query._tokens("how do I disable the failsafe in this vehicle")
+    for stopword in ("how", "the", "this", "in"):
+        assert stopword not in tokens
+    assert "failsafe" in tokens
