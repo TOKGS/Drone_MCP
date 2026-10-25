@@ -260,3 +260,20 @@ IN: cơ chế failsafe throttle hoạt động thế nào
   `disable_verbs`/`safety_objects` kèm câu test mới, không thêm regex riêng cho từng câu.
 - Citation thứ 2/3 của lần từ chối vẫn có thể là trang nói về pre-arm check nhưng không nói
   "mục đích" theo nghĩa hẹp; chúng đã qua bộ lọc không-chứa-công-thức-tắt.
+
+## 8. Chạy lại cổng sau khi chỉnh docstring tool (output thô)
+
+`troubleshoot` docstring là mô tả tool MCP, nên sửa lại cho đúng hành vi mới (props-off có điều
+kiện, gate song ngữ) và cho nhánh `empty symptom` cũng không kèm props-off. Sau đó chạy lại cả cổng:
+
+```
+88 passed in 24.36s
+TOTAL                          65509         0
+fidelity: PASS
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 23/30 = 0.767
+MRR = 0.865
+```
+
+Commit fix: `fedf01889de091a3207fbf6b651430867796e45c`. Commit docs (file này) là commit kế tiếp.
