@@ -54,3 +54,17 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
   `data/index.sqlite` master và `wt-C` đều = index của A (183,5 MB, params 5089, chunks 86262).
 - Nhánh F giao lại cho `fix-c` (chủ sở hữu `query.py`/`scope.yaml`), nhánh `fix/F` tạo từ `master`
   ngay trong `wt-C` (index mới đã có sẵn ở đó). Ngân sách 60 bước.
+
+## Bước cuối — HOÀN TẤT
+
+- Merge đủ 6 nhánh: D `e1f2f9d` · E `4d5ba12` · B `67f4e80` · C `a36790b` · A `f169cd5` · F `61b1d71`.
+- Dựng lại index MỘT lần trên master (`research.extract` → `ingest --all --rebuild-index` →
+  `build_params` → `build_mavlink`), log: `docs/fix/rebuild-log.txt`. Kết quả: 7356 doc · 86 262 chunk ·
+  5089 params · 182,3 MB; `check_param_citations` 0 vi phạm.
+- Gates cuối: pytest **133 passed** · fidelity **86262/0 PASS** · traceability `failing=0` ·
+  golden `1.000/0.767/0.859` · heldout_v3 `0.933/0.833/0.868` · safety tự đo `FN=0 FP=0` trên 30 câu.
+- Run2 (đúng 1 lần, commit `f1002a6`) + verifier độc lập `verify-run2`: run1 80/28 → **run2 92/16**,
+  **0 hồi quy**, 12 cải thiện. Báo cáo: `docs/blackbox/run2/comparison.md`.
+- Báo cáo tổng: `docs/FIX_REPORT.md`. Không có ngưỡng nào bị hạ; `tests/golden.yaml`,
+  `tests/heldout_*.yaml`, `tests/blackbox_cases.md`, `docs/blackbox/raw/` không bị sửa.
+
