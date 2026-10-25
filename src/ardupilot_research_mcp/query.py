@@ -148,13 +148,15 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         scored.append((score, row))
     scored.sort(key=lambda item: item[0])
 
-    results = []
-    per_path: dict[str, int] = {}
+    # Rank DOCUMENTS, not chunks: a long page can put five chunks in the top five and hide the
+    # file the caller actually needs. Keep the best chunk per document, best documents first.
+    by_path: dict[str, list[tuple[float, sqlite3.Row]]] = {}
     for score, row in scored:
-        count = per_path.get(row["path"], 0)
-        if count >= 2:
-            continue
-        per_path[row["path"]] = count + 1
+        by_path.setdefault(row["path"], []).append((score, row))
+
+    results = []
+    for items in sorted(by_path.values(), key=lambda group: group[0][0]):
+        score, row = min(items, key=lambda item: item[0])
         citation = cite.build_citation(con, cite.make_cite_id(row["source_id"], row["cite_hash"]))
         citation["excerpt"] = textsanitize.sanitize_excerpt(citation["excerpt"])
         citation["score"] = round(score, 4)

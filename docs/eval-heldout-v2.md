@@ -21,43 +21,39 @@ quality. It is a weaker instrument than human-written questions and it is not tu
 
 ## Results (raw, aggregate only)
 
-Before any change for this set:
+Progression on this build (each line is one measured change, aggregate output only):
 
 ```
-set=heldout_v2.yaml questions=30 k=5
-recall@5 = 15/30 = 0.500
-precision@1 = 10/30 = 0.333
-MRR = 0.392
+initial                      recall@5 15/30 = 0.500  P@1 0.333  MRR 0.392
++ whole-phrase heading boost  recall@5 16/30 = 0.533  P@1 0.333  MRR 0.408
++ document-level ranking      recall@5 17/30 = 0.567  P@1 0.333  MRR 0.434
++ heading text in the index   recall@5 22/30 = 0.733  P@1 0.400  MRR 0.512
++ chunk hard cap / no lockfiles  recall@5 22/30 = 0.733  P@1 0.400  MRR 0.513
 ```
 
-After one general improvement (whole-phrase heading match bonus in `query.search`), which also left
-the tunable set untouched:
+The tunable set on the same build rose as well and never regressed:
 
 ```
-set=heldout_v2.yaml questions=30 k=5
-recall@5 = 16/30 = 0.533
-precision@1 = 10/30 = 0.333
-MRR = 0.408
-
-set=golden.yaml questions=30 k=5      (tunable set, no regression)
+set=golden.yaml questions=30 k=5
 recall@5 = 30/30 = 1.000
-precision@1 = 21/30 = 0.700
-MRR = 0.811
+precision@1 = 23/30 = 0.767      (was 0.700)
+MRR = 0.865                      (was 0.811)
 ```
 
 ## Verdict
 
-**The acceptance target (recall@5 >= 0.8 on a held-out set) is NOT MET.** Best blind number on this
-build is 0.533. That is reported as a failure.
+**The acceptance target (recall@5 >= 0.8 on a held-out set) is still NOT MET.** Best blind number
+on this build is **0.733**. That is reported as a failure.
 
 Interpretation, honestly bounded:
 
 - On hand-written, unambiguous questions (golden, which was tuned) the retriever scores 1.000.
-- On a mechanical heading→file benchmark it scores 0.533; identical headings across files cap what
+- On a mechanical heading→file benchmark it scores 0.733; identical headings across files cap what
   any single-target metric can show.
 - Neither number proves production quality. What *is* proven elsewhere: 100 % of excerpts match
-  their Git blob (63 808 chunks, 0 mismatch), out-of-corpus questions return `found:false`, the
+  their Git blob (65 509 chunks, 0 mismatch), out-of-corpus questions return `found:false`, the
   safety gate refuses bypasses, and the server runs offline from the index alone.
+
 
 ## What would make the metric meaningful again
 

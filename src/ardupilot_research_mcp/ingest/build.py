@@ -13,6 +13,10 @@ from .. import cite, config, textsanitize
 from . import chunk as chunker
 
 TEXT_SNIFF_BYTES = 4096
+
+# Website assets are not firmware knowledge: a CSS rule can outrank a doc page for a heading
+# query. They are skipped by suffix (JSON keeps legit data such as motor diagrams).
+SKIP_SUFFIXES = (".css", ".js", ".mjs", ".scss", ".less", ".svg", ".html", ".htm", ".map")
 MAX_LINE_CHARS = 1000          # generated/minified file guard
 MIN_CHUNK_CHARS = 10           # drop single-token noise blocks
 BOILERPLATE = {
@@ -24,6 +28,9 @@ BOILERPLATE = {
     # They are generated metadata, not documentation. Extend this list if another repo
     # marks a path `export-subst` in .gitattributes.
     "version", "version.txt", ".git_archival.txt",
+    # lockfiles: dependency pins, not knowledge, and often a single multi-megabyte blob
+    "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "cargo.lock",
+    "poetry.lock", "uv.lock", "composer.lock", "gemfile.lock",
 }
 DOC_SUFFIXES = (".md", ".rst", ".txt")
 
@@ -102,6 +109,9 @@ def ingest_source(con: sqlite3.Connection, source: dict, root: Path, *,
         if basename in BOILERPLATE:
             stats["filtered"] += 1
             continue
+        if path.suffix.lower() in SKIP_SUFFIXES:
+            stats["filtered"] += 1
+            continue
         data = path.read_bytes()
         sha = hashlib.sha256(data).hexdigest()
         if resume and known.get(rel) == sha:
@@ -126,6 +136,7 @@ def ingest_source(con: sqlite3.Connection, source: dict, root: Path, *,
                 continue
         pieces = [piece for piece in chunker.chunk_for_path(rel, text)
                   if len(piece.text.strip()) >= MIN_CHUNK_CHARS]
+        pieces = _split_oversized(pieces, text.splitlines())
         if not pieces:
             continue
         con.execute("BEGIN IMMEDIATE")
@@ -143,10 +154,11 @@ def ingest_source(con: sqlite3.Connection, source: dict, root: Path, *,
                   piece.line_start, piece.line_end, piece.sha256,
                   cite.compute_cite_hash(source_id, rel, piece.line_start, piece.line_end,
                                          piece.sha256),
-                  # Path words are prepended for ranking only: "copter/source/docs/
-                  # radio-failsafe.rst" then matches a query about radio failsafe, while the
-                  # cited text stays untouched.
-                  _path_words(rel) + "\n" + textsanitize.distill_for_search(rel, piece.text))
+                  # Path words and the section heading are prepended for ranking only:
+                  # "copter/source/docs/radio-failsafe.rst" and its heading then match a query
+                  # about radio failsafe, while the cited text stays untouched.
+                  _path_words(rel) + "\n" + (piece.heading_path or "") + "\n"
+                  + textsanitize.distill_for_search(rel, piece.text))
                  for ord_, piece in enumerate(pieces)])
             con.execute("COMMIT")
         except Exception:
@@ -158,6 +170,34 @@ def ingest_source(con: sqlite3.Connection, source: dict, root: Path, *,
 
     stats["elapsed_s"] = round(time.perf_counter() - started, 1)
     return stats
+
+
+def _split_oversized(pieces: list, all_lines: list[str]) -> list:
+    """Hard-cap any piece a chunker emitted whole (large XML/JSON blocks were up to 226 KB).
+
+    Splitting re-reads the piece's own line span from the file, so every sub-piece keeps the exact
+    line range the citation check verifies against `git show`.
+    """
+    out = []
+    for piece in pieces:
+        if len(piece.text) <= chunker.SIZE_HARD_CAP:
+            out.append(piece)
+            continue
+        span = all_lines[piece.line_start - 1:piece.line_end]
+        start = 0
+        while start < len(span):
+            end, size = start, 0
+            while end < len(span) and (size == 0 or
+                                       size + len(span[end]) + 1 <= chunker.SIZE_HARD_CAP):
+                size += len(span[end]) + 1
+                end += 1
+            text = "\n".join(span[start:end]).strip("\n")
+            if len(text.strip()) >= MIN_CHUNK_CHARS:
+                out.append(chunker.Chunk(
+                    text=text, heading_path=piece.heading_path, anchor=piece.anchor,
+                    line_start=piece.line_start + start, line_end=piece.line_start + end - 1))
+            start = end
+    return out
 
 
 def load_manifest(source_id: str) -> dict | None:

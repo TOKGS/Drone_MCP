@@ -111,11 +111,15 @@ def vehicle_of(rel_path: str) -> str:
 
 
 def upsert(con, record: dict, source_id: str, version: str, rel_path: str) -> bool:
+    # Prefer the chunk that fully contains the metadata block; a block that straddles a
+    # hard-cap split still links to the chunk holding its first line, so it keeps a citation.
     chunk = con.execute(
         "SELECT c.cite_hash FROM chunks c JOIN documents d ON d.id = c.document_id"
-        " WHERE d.source_id = ? AND d.path = ? AND c.line_start <= ? AND c.line_end >= ?"
-        " ORDER BY c.line_start LIMIT 1",
-        (source_id, rel_path, record["line_start"], record["line_end"])).fetchone()
+        " WHERE d.source_id = ? AND d.path = ?"
+        "   AND c.line_start <= ? AND c.line_end >= ?"
+        " ORDER BY (c.line_start > ?) ASC, c.line_start LIMIT 1",
+        (source_id, rel_path, record["line_end"], record["line_start"],
+         record["line_start"])).fetchone()
     if chunk is None:
         return False
     raw = record["name_raw"]

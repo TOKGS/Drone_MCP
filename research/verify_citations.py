@@ -48,9 +48,9 @@ def main() -> int:
 
     unpinned = []
     quote_failures = 0
-    for row in con.execute("SELECT c.id, d.source_id FROM chunks c"
+    for row in con.execute("SELECT c.cite_hash, d.source_id FROM chunks c"
                            " JOIN documents d ON d.id=c.document_id ORDER BY c.id LIMIT 500"):
-        citation = cite.build_citation(con, cite.make_cite_id(row["source_id"], row["id"]))
+        citation = cite.build_citation(con, cite.make_cite_id(row["source_id"], row["cite_hash"]))
         if "/blob/main/" in citation["url"] or "/blob/master/" in citation["url"]:
             unpinned.append(citation["url"])
         if not cite.verify_quote(con, citation["cite_id"], citation["excerpt"]):
