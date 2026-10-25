@@ -23,9 +23,17 @@ from ardupilot_research_mcp import db, query  # noqa: E402
 
 
 def expectations(question: dict) -> list[dict]:
-    """Accept both the v1 single target and the v2 `expect` list."""
+    """Accept every set format in the repo without touching the frozen files.
+
+    * v1 (held-out):  expect_source + expect_path_contains
+    * v2 (golden):    expect: [{source, path}, ...]
+    * v0 fallback:    source + path
+    """
     if "expect" in question:
         return question["expect"]
+    if "expect_source" in question:
+        return [{"source": question["expect_source"],
+                 "path": question.get("expect_path_contains") or "."}]
     return [{"source": question["source"], "path": question.get("path") or "."}]
 
 

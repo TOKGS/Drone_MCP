@@ -5,9 +5,14 @@ marked UNVERIFIED / NOT RUN.
 
 ## Current state
 
-- **Server speaks MCP over stdio** (13 of 14 tools): search_docs, get_chunk, lookup_param,
-  decode_bitmask, find_source, board_info, mavlink_message, troubleshoot, decode_crsf_frame,
-  check_intelhex_line, parse_ihex_summary, list_sources, index_status.
+- **Server speaks MCP over stdio, all 14 tools registered**: search_docs, get_chunk,
+  lookup_param, decode_bitmask, find_source, board_info, mavlink_message, troubleshoot,
+  get_script, decode_crsf_frame, check_intelhex_line, parse_ihex_summary, list_sources,
+  index_status. 4 original example scripts ship in `examples/`, each with real cite_ids.
+- **Held-out measured once: recall@5 = 0.367 / precision@1 = 0.267 / MRR = 0.298 — FAILS the
+  0.8 target.** Raw output and the honest breakdown are in `docs/eval-heldout.md`: most misses are
+  frozen-expectation defects (the retriever returned the dedicated page and the expectation named
+  another file), two are real defects. The set is now burned for tuning.
 - **Tables:** 63 808 chunks · 214 params (26 with @Bitmask) · **397 MAVLink messages + 2367 enum
   entries** parsed from the pinned XML · index ≈ 120 MB.
 - **Decoders are corpus-derived, not recalled**: CRC8 poly 0xD5 (`crsf_protocol.h` L9), CRC
@@ -33,29 +38,26 @@ marked UNVERIFIED / NOT RUN.
 
 ```
 handshake: server=ardupilot-research version=1.30.0 protocol=2025-11-25
-tools(13): ['search_docs','get_chunk','lookup_param','decode_bitmask','find_source','board_info',
-            'mavlink_message','troubleshoot','decode_crsf_frame','check_intelhex_line',
-            'parse_ihex_summary','list_sources','index_status']
-[mavlink_message] found=True id=30 name=ATTITUDE fields=7
-[board_info] found=True mcu=['STM32H7xx','STM32H757xx']
-             serial_order=['OTG1','USART2','USART3','UART4','UART8','UART7','OTG2']
+tools(14): ['search_docs','get_chunk','lookup_param','decode_bitmask','find_source','board_info',
+            'mavlink_message','troubleshoot','get_script','decode_crsf_frame',
+            'check_intelhex_line','parse_ihex_summary','list_sources','index_status']
 smoke_failures=0
-63 passed in 21.60s
+73 passed in 22.37s
+
+self-test OK: CRC8 0xD5, 16x11-bit channels, us conversion
+self-test OK: checksum good/bad, data bytes, EOF detection
+_OPTIONS = 8192 (0x2000)
+  bit 13 SET: Use 420kbaud for ELRS protocol
+
+HELD-OUT (single run, frozen hash verified before the run):
+set=heldout_locked.yaml questions=30 k=5
+recall@5 = 11/30 = 0.367
+precision@1 = 8/30 = 0.267
+MRR = 0.298
 ```
 
-```
-build_mavlink: {"xml_files": 19, "messages": 397, "enums": 2367,
-                "messages_with_citation": 397,
-                "mavlink_version": "eec8824212c1fe8c5d8f5181fcfdef54ee219b63"}
-build_params : {"parsed_blocks": 232, "linked": 216, "unlinked": 16, "in_table": 214}
-```
-
-Two defects fixed: `board_info` matched a board's `README.md` because paths were ordered by
-length (README is shorter than `hwdef.dat`) — it now ranks the definition file first; and it
-reported no `SERIAL_ORDER` for CubeOrangePlus because that key lives in the included
-`../CubeOrange/hwdef.inc` — includes are now followed one level inside the index and reported in
-`included_files`. The param count fell 241 → 214 because this index was rebuilt from scratch and
-the table is keyed by (name_raw, vehicle, version), so cross-file duplicates collapse.
+The harness had to adapt to the frozen file's schema (`expect_source` / `expect_path_contains`);
+the file itself was not touched and its SHA-256 still matches `docs/heldout.sha256`.
 
 
 
@@ -74,15 +76,16 @@ the table is keyed by (name_raw, vehicle, version), so cross-file duplicates col
 
 ## Known gaps / UNVERIFIED
 
-- **1 of 14 tools missing**: get_script (the `examples/` scripts and their cite_id headers).
-- **Held-out evaluation NOT RUN** (by design: once, when the server is complete).
-- **Mutation testing ≥90 % NOT RUN**; **README + client registration UNVERIFIED**.
+- **Held-out acceptance NOT MET (0.367 < 0.8)** — see `docs/eval-heldout.md`. The set is burned;
+  a new frozen set is needed for a clean measurement.
+- **README + client registration UNVERIFIED** (not written yet).
+- **Mutation testing ≥90 % NOT RUN**.
 - **T2 (issues/PR), T3 (forum), `local-project`** not ingested.
-- The param table covers only the libraries present in the corpus (214 rows); a parameter defined
-  in a library outside the include list returns `found:false` with real candidates.
+- Real retrieval defects to fix (general, not question-specific): web assets
+  (`src/html/**`, `.css`, `.js`) are indexed and pollute results; English identifier-heavy queries
+  over-weight code over docs.
+- The param table covers only the libraries present in the corpus (214 rows).
 - `board_info` follows one level of `include`; a deeper chain would need another pass.
-- A refusal's citations may include a wiki excerpt that itself mentions `blob/master` in its text;
-  our own citation URLs are always pinned (checked by `tests/test_cite.py`).
 - Mechanical note: a `git`-based audit needs the shallow clones under `research/cache/git/`
   (gitignored); without them the audit reports `no-clone`.
 
