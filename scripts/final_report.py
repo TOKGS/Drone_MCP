@@ -189,9 +189,15 @@ def main() -> int:
                    "p1": num(r"precision@1 = \S+ = ([\d.]+)", v3_result["stdout"]),
                    "mrr": num(r"MRR = ([\d.]+)", v3_result["stdout"])}
 
+    # the mutation run rewrites its own tracked report files; restore them afterwards so the
+    # repository stays clean for the next report run (numbers are read before restoring)
+    mutation_files = [REPO / "docs" / "mutation-report.json", REPO / "docs" / "mutation-report.md"]
+    mutation_snapshot = {path: path.read_bytes() for path in mutation_files if path.exists()}
     report.command("mutation", run([PY, "scripts/mutation_check.py"]))
     mutation_json = REPO / "docs" / "mutation-report.json"
     mutation = json.loads(mutation_json.read_text(encoding="utf-8")) if mutation_json.exists() else {}
+    for path, data in mutation_snapshot.items():
+        path.write_bytes(data)
     report.command("coverage", run([PY, "-m", "coverage", "report", "-m"]),
                    "FAILs when the coverage package is not installed")
 
