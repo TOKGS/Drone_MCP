@@ -1,0 +1,200 @@
+F.FFFFFFFF                                                               [100%]
+================================== FAILURES ===================================
+________________ test_query_length_limit_is_checked_before_sql ________________
+
+no_rate_limit = None
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000026DDC51D690>
+
+    def test_query_length_limit_is_checked_before_sql(no_rate_limit, monkeypatch) -> None:
+        def boom(*_args, **_kwargs):
+            raise AssertionError("the database must not be touched for an oversized query")
+    
+        monkeypatch.setattr(_base.db, "connect", boom)
+>       payload = search_docs.search_docs(query="x" * (QUERY_LIMIT + 1))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_query.py:211: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\ardupilot_research_mcp\tools\_base.py:31: in wrapper
+    con: sqlite3.Connection = db.connect()
+                              ^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_args = (), _kwargs = {}
+
+    def boom(*_args, **_kwargs):
+>       raise AssertionError("the database must not be touched for an oversized query")
+E       AssertionError: the database must not be touched for an oversized query
+
+tests\test_query.py:208: AssertionError
+___________ test_huge_query_is_refused_without_a_sql_error[100000] ____________
+
+size = 100000, no_rate_limit = None
+
+    @pytest.mark.parametrize("size", [100_000, 1_000_000])
+    def test_huge_query_is_refused_without_a_sql_error(size, no_rate_limit) -> None:
+        payload = search_docs.search_docs(query="f" * size)
+        assert payload["found"] is False
+>       assert payload["error"] == "query too long (max 2000 chars)"
+               ^^^^^^^^^^^^^^^^
+E       KeyError: 'error'
+
+tests\test_query.py:225: KeyError
+___________ test_huge_query_is_refused_without_a_sql_error[1000000] ___________
+
+size = 1000000, no_rate_limit = None
+
+    @pytest.mark.parametrize("size", [100_000, 1_000_000])
+    def test_huge_query_is_refused_without_a_sql_error(size, no_rate_limit) -> None:
+        payload = search_docs.search_docs(query="f" * size)
+        assert payload["found"] is False
+>       assert payload["error"] == "query too long (max 2000 chars)"
+               ^^^^^^^^^^^^^^^^
+E       KeyError: 'error'
+
+tests\test_query.py:225: KeyError
+______________ test_unexpected_search_error_is_masked_and_logged ______________
+
+no_rate_limit = None
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000026DDC4EEA10>
+capsys = <_pytest.capture.CaptureFixture object at 0x0000026DDC4EE990>
+
+    def test_unexpected_search_error_is_masked_and_logged(no_rate_limit, monkeypatch, capsys) -> None:
+        def boom(*_args, **_kwargs):
+            raise sqlite3.OperationalError("LIKE or GLOB pattern too complex")
+    
+        monkeypatch.setattr("ardupilot_research_mcp.query.search", boom)
+>       payload = search_docs.search_docs(query="failsafe")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_query.py:236: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\ardupilot_research_mcp\tools\_base.py:33: in wrapper
+    payload = fn(con, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+src\ardupilot_research_mcp\tools\search_docs.py:23: in search_docs
+    return retrieval.search(con, query, scope=scope, version=version,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_args = (<sqlite3.Connection object at 0x0000026DDC4DB4C0>, 'failsafe')
+_kwargs = {'scope': 'all', 'version': None, 'tier_max': 'T1', 'limit': 8}
+
+    def boom(*_args, **_kwargs):
+>       raise sqlite3.OperationalError("LIKE or GLOB pattern too complex")
+E       sqlite3.OperationalError: LIKE or GLOB pattern too complex
+
+tests\test_query.py:233: OperationalError
+_ test_other_tools_apply_their_limits[<lambda>-cite_id too long (max 128 chars)] _
+
+call = <function <lambda> at 0x0000026DDC5C53A0>
+expected = 'cite_id too long (max 128 chars)', no_rate_limit = None
+
+    @pytest.mark.parametrize("call,expected", [
+        (lambda: get_chunk.get_chunk(cite_id="x" * 129), "cite_id too long (max 128 chars)"),
+        (lambda: lookup_param.lookup_param(name_or_pattern="x" * 129),
+         "name_or_pattern too long (max 128 chars)"),
+        (lambda: parse_ihex_summary.parse_ihex_summary(path="x" * 1025),
+         "path too long (max 1024 chars)"),
+        (lambda: check_intelhex_line.check_intelhex_line(line="x" * 601),
+         "line too long (max 600 chars)"),
+    ])
+    def test_other_tools_apply_their_limits(call, expected, no_rate_limit) -> None:
+        payload = call()
+        assert payload["found"] is False
+>       assert payload["error"] == expected
+E       assert "bad cite_id ...urce>#<hash>'" == 'cite_id too ...ax 128 chars)'
+E         
+E         - cite_id too long (max 128 chars)
+E         + bad cite_id 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'; expected '<source>#<hash>'
+
+tests\test_query.py:258: AssertionError
+_ test_other_tools_apply_their_limits[<lambda>-name_or_pattern too long (max 128 chars)] _
+
+call = <function <lambda> at 0x0000026DDC5C5440>
+expected = 'name_or_pattern too long (max 128 chars)', no_rate_limit = None
+
+    @pytest.mark.parametrize("call,expected", [
+        (lambda: get_chunk.get_chunk(cite_id="x" * 129), "cite_id too long (max 128 chars)"),
+        (lambda: lookup_param.lookup_param(name_or_pattern="x" * 129),
+         "name_or_pattern too long (max 128 chars)"),
+        (lambda: parse_ihex_summary.parse_ihex_summary(path="x" * 1025),
+         "path too long (max 1024 chars)"),
+        (lambda: check_intelhex_line.check_intelhex_line(line="x" * 601),
+         "line too long (max 600 chars)"),
+    ])
+    def test_other_tools_apply_their_limits(call, expected, no_rate_limit) -> None:
+        payload = call()
+        assert payload["found"] is False
+>       assert payload["error"] == expected
+               ^^^^^^^^^^^^^^^^
+E       KeyError: 'error'
+
+tests\test_query.py:258: KeyError
+_ test_other_tools_apply_their_limits[<lambda>-path too long (max 1024 chars)] _
+
+call = <function <lambda> at 0x0000026DDC5C54E0>
+expected = 'path too long (max 1024 chars)', no_rate_limit = None
+
+    @pytest.mark.parametrize("call,expected", [
+        (lambda: get_chunk.get_chunk(cite_id="x" * 129), "cite_id too long (max 128 chars)"),
+        (lambda: lookup_param.lookup_param(name_or_pattern="x" * 129),
+         "name_or_pattern too long (max 128 chars)"),
+        (lambda: parse_ihex_summary.parse_ihex_summary(path="x" * 1025),
+         "path too long (max 1024 chars)"),
+        (lambda: check_intelhex_line.check_intelhex_line(line="x" * 601),
+         "line too long (max 600 chars)"),
+    ])
+    def test_other_tools_apply_their_limits(call, expected, no_rate_limit) -> None:
+        payload = call()
+        assert payload["found"] is False
+>       assert payload["error"] == expected
+E       AssertionError: assert 'file not fou...xxxxxxxxxxxxx' == 'path too lon...x 1024 chars)'
+E         
+E         - path too long (max 1024 chars)
+E         + file not found: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+tests\test_query.py:258: AssertionError
+_ test_other_tools_apply_their_limits[<lambda>-line too long (max 600 chars)] _
+
+call = <function <lambda> at 0x0000026DDC5C5580>
+expected = 'line too long (max 600 chars)', no_rate_limit = None
+
+    @pytest.mark.parametrize("call,expected", [
+        (lambda: get_chunk.get_chunk(cite_id="x" * 129), "cite_id too long (max 128 chars)"),
+        (lambda: lookup_param.lookup_param(name_or_pattern="x" * 129),
+         "name_or_pattern too long (max 128 chars)"),
+        (lambda: parse_ihex_summary.parse_ihex_summary(path="x" * 1025),
+         "path too long (max 1024 chars)"),
+        (lambda: check_intelhex_line.check_intelhex_line(line="x" * 601),
+         "line too long (max 600 chars)"),
+    ])
+    def test_other_tools_apply_their_limits(call, expected, no_rate_limit) -> None:
+        payload = call()
+>       assert payload["found"] is False
+E       assert True is False
+
+tests\test_query.py:257: AssertionError
+___________________ test_tool_schemas_advertise_max_length ____________________
+
+    def test_tool_schemas_advertise_max_length() -> None:
+        from mcp.server.fastmcp.tools.base import Tool
+    
+        schema = Tool.from_function(search_docs.search_docs).parameters
+>       assert schema["properties"]["query"]["maxLength"] == QUERY_LIMIT
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'maxLength'
+
+tests\test_query.py:266: KeyError
+=========================== short test summary info ===========================
+FAILED tests/test_query.py::test_query_length_limit_is_checked_before_sql - A...
+FAILED tests/test_query.py::test_huge_query_is_refused_without_a_sql_error[100000]
+FAILED tests/test_query.py::test_huge_query_is_refused_without_a_sql_error[1000000]
+FAILED tests/test_query.py::test_unexpected_search_error_is_masked_and_logged
+FAILED tests/test_query.py::test_other_tools_apply_their_limits[<lambda>-cite_id too long (max 128 chars)]
+FAILED tests/test_query.py::test_other_tools_apply_their_limits[<lambda>-name_or_pattern too long (max 128 chars)]
+FAILED tests/test_query.py::test_other_tools_apply_their_limits[<lambda>-path too long (max 1024 chars)]
+FAILED tests/test_query.py::test_other_tools_apply_their_limits[<lambda>-line too long (max 600 chars)]
+FAILED tests/test_query.py::test_tool_schemas_advertise_max_length - KeyError...
+9 failed, 1 passed, 12 deselected in 1.91s

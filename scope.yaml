@@ -1,0 +1,12 @@
+# Names that are NOT documented by the pinned corpus. When one appears in a query the search
+# payload carries a scope note instead of suggesting the corpus covers it.
+# The corpus pins ArduPilot (Copter source + wiki), ExpressLRS, EdgeTX, the CRSF spec and MAVLink.
+# Adding a name here is a data change, never a code change: nothing in src/ hardcodes a product.
+version: 1
+out_of_scope_names:
+  - PX4
+  - Betaflight
+  - iNav
+  - Cleanflight
+  - KISS
+  - QGroundControl
