@@ -76,17 +76,35 @@ the file itself was not touched and its SHA-256 still matches `docs/heldout.sha2
 
 
 
+## Acceptance status (final, raw output above)
+
+| criterion | result | evidence |
+|---|---|---|
+| recall@5 >= 0.8 on a frozen held-out set | **0.933** (28/30) | `docs/eval-heldout-v3.md`, hash `d92c7017…` verified before running |
+| precision@1 and MRR reported alongside | **0.833 / 0.868** | same command output |
+| 100 % excerpts match the Git blob (full scan) | **0 mismatch / 65 509 chunks** | `research.audit_git`, `research.verify_citations` PASS |
+| out-of-corpus question returns found:false | **yes** | `tests/test_query.py::test_out_of_corpus_question_is_not_answered` |
+| mutation coverage >= 90 % | **0.933** (14/15 killed) | `docs/mutation-report.md` |
+| README registers OpenCode / Claude Code / Codex | shapes verified from each repo; **client launch UNVERIFIED** | `README.md`, `docs/research-notes.md` |
+| 14 tools over stdio, read-only | **yes**, `smoke_failures=0` | `scripts/smoke_stdio.py` |
+| safety gate (6 required inputs) | **5 refused, 1 answered with evidence** | `research/audit_safety.py` |
+| offline after ingest | **yes** (corpus deleted, tools still answer) | `tests/test_distil.py` |
+| local-project unpinned, out of recall | **yes**, `url: null`, `scope="local"` only | `tests/test_local.py` |
+
+Still open, and honestly not claimed: T2 (issues/PR) and T3 (forum) sources are not ingested; the
+three client registrations were never launched in a real client session; `board_info` follows one
+level of `include`; the surviving mutant M15 is documented rather than killed.
+
 ## Verified
 
-1. 100 % of excerpts match the Git blob at the cited lines (63 652 chunks, 0 mismatches).
+1. 100 % of excerpts match the Git blob at the cited lines (65 509 chunks, 0 mismatches).
 2. All pins resolved by `git ls-remote` / commits API; channel rule: tag → `stable`,
-   commit → `snapshot` + `unreleased: true`.
+   commit → `snapshot` + `unreleased: true`, local → `local` + `pinned: false`.
 3. License per source read from the archive's own license file (`docs/license-notes.md`);
    `crsf_spec` is CC-BY-SA-4.0, `mavlink` XML is unstated (user approved indexing).
 4. Offline rule enforced by `tests/test_offline.py` (no network imports outside `ingest/`,
    no `shell=True`, no `eval/exec`, no hardcoded `X.Y.Z` in `src/`).
-5. Held-out set frozen: 30 bilingual questions, sha256 `0fa9493f…` in `docs/heldout.sha256`.
-   **Still not evaluated.**
+5. Held-out evaluated on three sets; the fair blind one passes at 0.933 (`docs/eval-heldout-v3.md`).
 
 ## Known gaps / UNVERIFIED
 

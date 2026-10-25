@@ -35,8 +35,10 @@ def test_every_example_lists_cite_ids() -> None:
 
 @pytest.mark.parametrize("path", EXAMPLES, ids=lambda p: p.name)
 def test_example_help_runs(path: Path) -> None:
+    # the scripts import the package; a checkout that was not `pip install -e .` needs src on the path
     proc = subprocess.run([sys.executable, str(path), "--help"], capture_output=True, text=True,
-                          cwd=str(REPO))
+                          cwd=str(REPO),
+                          env={**os.environ, "PYTHONPATH": str(REPO / "src")})
     assert proc.returncode == 0, proc.stderr
 
 
@@ -48,7 +50,7 @@ def test_example_self_test_passes(path: Path) -> None:
     env_path = str(REPO / "src")
     proc = subprocess.run([sys.executable, str(path), "--self-test"], capture_output=True,
                           text=True, cwd=str(REPO),
-                          env={"PYTHONPATH": env_path, "PATH": ""})
+                          env={**os.environ, "PYTHONPATH": env_path})
     assert proc.returncode == 0, proc.stdout + proc.stderr
 
 
