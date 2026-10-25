@@ -12,7 +12,8 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 
 | nhánh | sub đã spawn? | trạng thái | commit cuối | đã merge? | ghi chú |
 |---|---|---|---|---|---|
-| A (lỗi 3→1→2) | **rồi** (`fix-a`) | DONE (3 lỗi FIXED) — **CHỜ lead quyết định merge** vì 2 hồi quy | `c385640` | **chưa** | params 230→5089 · citation 3891→0 · default 4703 raw / 3003 số · index 183,5 MB · golden P@1 0.767→0.733 · `test_out_of_corpus` fail |
+| A (lỗi 3→1→2) | **rồi** (`fix-a`) | DONE — FIXED | `31f6027` (merge `f169cd5`) | **rồi** | params 230→5089 · citation 3891→0 · default 4703 raw / 3003 số · index 183,5 MB |
+| F (hồi quy A) | **rồi** (`fix-c` nhận, nhánh `fix/F` trong `wt-C`) | đang chạy: out-of-corpus gate + hạ hạng `libraries/SITL/**` | — | chưa | mục tiêu: `test_out_of_corpus` PASS lại, P@1 ≥ 0,767, recall 1.000, heldout_v3 ≥ 0,933 |
 | B (lỗi 4) | **rồi** (`fix-b`) | DONE — FIXED | `dc5bcc0` (merge `67f4e80`) | **rồi** | 99 passed · audit: 5/5 refusal, mỗi refusal 1 citation mục đích |
 | C (lỗi 5+7) | **rồi** (`fix-c`) | DONE — FIXED (E2E tool_matrix chưa chạy: sandbox chặn pipe) | `22b9fa8` (merge `a36790b`) | **rồi** | 117 passed · golden 1.000/0.767/0.865 · fidelity PASS |
 | D (lỗi 6) | **rồi** (`fix-d`) | DONE — FIXED | `fb981a1` (merge `e1f2f9d`) | **rồi** | 84 passed · fidelity 0 mismatch · golden 1.000/0.767/0.865 |
@@ -44,3 +45,12 @@ Cập nhật sau MỖI bước. Nếu mất ngữ cảnh: đọc file này trư�
 - Cho phép A thử trong write-scope của mình: loại `libraries/SITL/**` (simulator-only) khỏi corpus và
   ĐO lại golden P@1 + test ngoài kho; giữ nếu P@1 về >= 0.767 và recall@5 = 1.000, ngược lại revert.
 - A phải giải thích params 230 -> 5089 (trùng lặp tiền tố theo xe hay không) trước khi merge.
+
+## Bước 10 (sau khi người dùng cho phép sửa `query.py`)
+
+- Merge fix/A: `f169cd5`. Master lúc này: pytest `1 failed, 127 passed` (đúng test out-of-corpus),
+  fidelity `86262 / 0 PASS`, golden `1.000 / 0.733 / 0.837` — 2 hồi quy ĐÃ BIẾT, đang sửa ở nhánh F.
+- Đồng bộ dữ liệu: corpus master = hợp của corpus cũ + corpus A (7 561 file / 114,9 MB);
+  `data/index.sqlite` master và `wt-C` đều = index của A (183,5 MB, params 5089, chunks 86262).
+- Nhánh F giao lại cho `fix-c` (chủ sở hữu `query.py`/`scope.yaml`), nhánh `fix/F` tạo từ `master`
+  ngay trong `wt-C` (index mới đã có sẵn ở đó). Ngân sách 60 bước.
