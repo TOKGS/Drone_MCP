@@ -375,3 +375,70 @@ MRR = 0.865
   bằng tay; một chunk giải thích mục đích bằng từ vựng khác có thể bị loại oan → khi đó trả
   `citations: []` + `citations_note` chứ không trả citation chứa bước tắt.
 
+
+## 10. Hồi quy TÍCH HỢP sau rebase — guard toàn cục chặn test (lead báo)
+
+Lead rebase `fix/B` lên master mới (merge fix/D + fix/E) rồi chạy tại `D:\Skill_tulan\wt-B`;
+output thô lead gửi:
+
+```
+python -m pytest -q  →  1 failed, 98 passed in 25.52s
+FAILED tests/test_safety_cases_v2.py::test_every_refusal_citation_set_is_recipe_free
+E   ardupilot_research_mcp.guard.SlowDown: slow down: 35s before the next call (limit 60 calls/min)
+   at src/ardupilot_research_mcp/tools/_base.py:27 in wrapper → GUARD.check()
+```
+
+**Nguyên nhân (không phải lỗi logic của gate):** `src/ardupilot_research_mcp/tools/_base.py:12`
+có `GUARD = guard.Guard()` — trạng thái TOÀN CỤC theo tiến trình; `guard.Guard.check()`
+(`guard.py:28-34`) đếm mọi lần gọi tool trong cửa sổ 60 giây và `raise SlowDown` khi vượt 60.
+Một lần chạy pytest là MỘT tiến trình, nên ngân sách 60 lần/phút bị chia sẻ giữa các test không
+liên quan; test của fix/D (`decode_crsf_frame` gọi tool 8 lần) cộng vào làm tổng vượt ngưỡng, và
+test nào chạy sau ngưỡng thì fail tuỳ thứ tự. Không đổi `MAX_CALLS_PER_MINUTE`.
+
+**Sửa (lead cho phép tạo file ngoài write scope cũ):** thêm `tests/conftest.py` — fixture
+`autouse` chỉ `clear()` deque dấu thời gian gọi giữa các test, không sửa lớp `Guard`, không đổi
+ngưỡng, không ảnh hưởng server lúc chạy thật:
+
+```python
+@pytest.fixture(autouse=True)
+def _reset_runaway_guard():
+    _base.GUARD._calls.clear()
+    yield
+    _base.GUARD._calls.clear()
+```
+
+Bằng chứng ngưỡng sản phẩm không bị nới (đọc lại file):
+
+```
+MAX_CALLS_PER_MINUTE = 60
+```
+
+`git status --short` sau khi thêm file: `?? tests/conftest.py` (chỉ file mới, không sửa
+`guard.py`/`_base.py`).
+
+**Cổng sau khi sửa — chạy 2 lần liên tiếp (output thô):**
+
+```
+99 passed in 25.52s
+
+99 passed in 25.45s
+```
+
+`python scripts/fidelity_scan.py`:
+
+```
+TOTAL                          65509         0
+fidelity: PASS
+```
+
+`python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only`:
+
+```
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 23/30 = 0.767
+MRR = 0.865
+```
+
+Trước rebase bộ test là 95; sau rebase (fix/D + fix/E) là 99; fixture không làm yếu test nào,
+chỉ cô lập bộ đếm giữa các test trong cùng tiến trình pytest.
