@@ -2,12 +2,15 @@
 
 from __future__ import annotations
 
+import asyncio
 import os
+import random
 import sys
 import tempfile
 from pathlib import Path
 
 import pytest
+from mcp.server.fastmcp import FastMCP
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(os.environ.get("ARM_SRC", REPO / "src"))))
@@ -68,6 +71,118 @@ def test_decode_tool_reports_frames_and_bad_input() -> None:
     assert payload["found"] is True and payload["all_crc_valid"] is True
     assert payload["frames"][0]["channels"][0]["us"] == 1500
     assert decode_crsf_frame("zz").get("found") is False
+
+
+# --- CRSF reference encoder/decoder written here on purpose: these tests must not import the
+# --- implementation they check.  Spec: pinned crsf_spec/crsf.md, TICKS_TO_US(x) below.
+
+def ref_crc8(data: bytes) -> int:
+    """CRC8, polynomial x7+x6+x4+x2+x0 (0xD5), init 0, over Type+Payload."""
+    crc = 0
+    for byte in data:
+        crc ^= byte
+        for _ in range(8):
+            crc = ((crc << 1) ^ 0xD5) & 0xFF if crc & 0x80 else (crc << 1) & 0xFF
+    return crc
+
+
+def ref_c_div(a: int, b: int) -> int:
+    """C integer division truncates toward zero: -2460 / 8 == -307, while Python // gives -308."""
+    quotient = abs(a) // abs(b)
+    return -quotient if (a < 0) != (b < 0) else quotient
+
+
+def ref_ticks_to_us(ticks: int) -> int:
+    # #define TICKS_TO_US(x)  ((x - 992) * 5 / 8 + 1500)
+    return ref_c_div((ticks - 992) * 5, 8) + 1500
+
+
+def ref_pack_channels(ticks: list[int]) -> bytes:
+    value = 0
+    for index, tick in enumerate(ticks):
+        value |= (tick & 0x7FF) << (11 * index)
+    return value.to_bytes(22, "little")
+
+
+def ref_crsf_frame(ticks: list[int], frame_type: int = 0x16) -> bytes:
+    body = bytes([frame_type]) + ref_pack_channels(ticks)
+    return bytes([0xC8, len(body) + 1]) + body + bytes([ref_crc8(body)])
+
+
+def test_crsf_reference_vectors_are_independent_of_the_implementation() -> None:
+    assert ref_ticks_to_us(172) == 988
+    assert ref_ticks_to_us(992) == 1500
+    assert ref_ticks_to_us(1811) == 2011
+    assert ref_c_div(-2460, 8) == -307      # ticks=500: C gives 1193 us, not floor's 1192
+
+
+def test_crsf_tool_reports_frames_crc_and_us_with_c_semantics() -> None:
+    rng = random.Random(20240607)
+    ticks = [rng.randint(172, 1811) for _ in range(16)]
+    frame = ref_crsf_frame(ticks)
+
+    payload = decode_crsf_frame(frame.hex())
+    assert payload["found"] is True
+    assert payload["frames_found"] == 1
+    assert payload["all_crc_valid"] is True
+    channels = payload["frames"][0]["channels"]
+    assert [ch["ticks"] for ch in channels] == ticks
+    assert [ch["us"] for ch in channels] == [ref_ticks_to_us(t) for t in ticks]
+
+    three = decode_crsf_frame((frame * 3).hex())
+    assert three["frames_found"] == 3 and three["all_crc_valid"] is True
+    assert len(three["frames"]) == 3
+
+    noisy = decode_crsf_frame((bytes([0x00, 0x7F, 0x12]) + frame).hex())
+    assert noisy["frames_found"] == 1 and noisy["all_crc_valid"] is True
+
+    corrupted = bytearray(frame)
+    corrupted[5] ^= 0x01                     # one payload bit flipped -> CRC8 no longer matches
+    bad = decode_crsf_frame(bytes(corrupted).hex())
+    assert bad["frames_found"] == 1
+    assert bad["all_crc_valid"] is False
+    assert bad["frames"][0]["crc_valid"] is False
+
+
+def test_crsf_tool_zero_frames_and_truncated_tail() -> None:
+    ticks = [172, 992, 1811] + [992] * 13
+    frame = ref_crsf_frame(ticks)
+
+    cut = decode_crsf_frame(frame[:10].hex())
+    assert cut["frames_found"] == 0
+    assert cut["all_crc_valid"] is None
+    assert cut["warning"] == "no CRSF frames found"
+    assert cut["truncated_tail_bytes"] == 10
+
+    tail = decode_crsf_frame((frame + frame[:9]).hex())
+    assert tail["frames_found"] == 1 and tail["all_crc_valid"] is True
+    assert tail["truncated_tail_bytes"] == 9
+
+    garbage = decode_crsf_frame("f" * 100_000)
+    assert garbage["frames_found"] == 0
+    assert garbage["all_crc_valid"] is None
+    assert garbage["warning"] == "no CRSF frames found"
+    assert garbage.get("truncated_tail_bytes") is None
+
+    zero = decode_crsf_frame("00ff10")
+    assert zero["frames_found"] == 0 and zero["all_crc_valid"] is None
+    assert zero["warning"] == "no CRSF frames found"
+
+    for bad_input, hint in (("", "no hex"), ("zz", "no hex"), ("abc", "odd number")):
+        error = decode_crsf_frame(bad_input)
+        assert error["found"] is False and hint in error["error"]
+        assert error["frames_found"] == 0
+
+
+def test_decode_crsf_frame_hex_is_capped_at_4096_characters() -> None:
+    too_long = decode_crsf_frame("c8" * 2500)      # 5000 hex chars, over the cap
+    assert too_long["found"] is False
+    assert "4096" in too_long["error"]
+
+    server = FastMCP("schema-probe")
+    server.add_tool(decode_crsf_frame)
+    schema = asyncio.run(server.list_tools())[0].inputSchema
+    assert schema["properties"]["hex"]["maxLength"] == 4096
 
 
 HEX_VALID = ":10010000214601360121470136007EFE09D2190140"
