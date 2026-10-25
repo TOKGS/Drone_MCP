@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import json
 import os
 import re
+import sqlite3
 import sys
 from pathlib import Path
 
@@ -14,6 +16,8 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(os.environ.get("ARM_SRC", REPO / "src"))))
 
 from ardupilot_research_mcp import config, db, query  # noqa: E402
+from ardupilot_research_mcp.tools import _base, check_intelhex_line, get_chunk  # noqa: E402
+from ardupilot_research_mcp.tools import lookup_param, parse_ihex_summary, search_docs  # noqa: E402
 
 pytestmark = pytest.mark.skipif(not config.index_exists(), reason="index not built")
 
@@ -23,6 +27,14 @@ def con():
     connection = db.connect()
     yield connection
     connection.close()
+
+
+@pytest.fixture()
+def no_rate_limit():
+    """The per-process guard allows 60 tool calls/min; tests call tools directly."""
+    _base.GUARD._calls.clear()
+    yield
+    _base.GUARD._calls.clear()
 
 
 def test_out_of_corpus_question_is_not_answered() -> None:
@@ -186,3 +198,70 @@ def test_golden_questions_get_no_scope_note(con) -> None:
                                              payload["scope_notes"])
 
 
+# --- fix/C, lỗi 7: length limits before SQL, and internal errors never leak --------------
+
+QUERY_LIMIT = 2000
+
+
+def test_query_length_limit_is_checked_before_sql(no_rate_limit, monkeypatch) -> None:
+    def boom(*_args, **_kwargs):
+        raise AssertionError("the database must not be touched for an oversized query")
+
+    monkeypatch.setattr(_base.db, "connect", boom)
+    payload = search_docs.search_docs(query="x" * (QUERY_LIMIT + 1))
+    assert payload == {"found": False, "error": "query too long (max 2000 chars)",
+                       "max_length": QUERY_LIMIT}
+
+
+def test_query_at_the_limit_still_runs(no_rate_limit) -> None:
+    payload = search_docs.search_docs(query="a" * QUERY_LIMIT)
+    assert "too long" not in json.dumps(payload, ensure_ascii=False)
+
+
+@pytest.mark.parametrize("size", [100_000, 1_000_000])
+def test_huge_query_is_refused_without_a_sql_error(size, no_rate_limit) -> None:
+    payload = search_docs.search_docs(query="f" * size)
+    assert payload["found"] is False
+    assert payload["error"] == "query too long (max 2000 chars)"
+    assert payload["max_length"] == QUERY_LIMIT
+    body = json.dumps(payload, ensure_ascii=False).lower()
+    assert "sqlite" not in body and "error_id" not in body
+
+
+def test_unexpected_search_error_is_masked_and_logged(no_rate_limit, monkeypatch, capsys) -> None:
+    def boom(*_args, **_kwargs):
+        raise sqlite3.OperationalError("LIKE or GLOB pattern too complex")
+
+    monkeypatch.setattr("ardupilot_research_mcp.query.search", boom)
+    payload = search_docs.search_docs(query="failsafe")
+    assert payload["found"] is False
+    assert payload["error"] == "internal error"
+    assert payload["error_id"]
+    body = json.dumps(payload, ensure_ascii=False)
+    for leak in ("sqlite", "LIKE", "GLOB", "OperationalError"):
+        assert leak not in body, leak
+    assert payload["error_id"] in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("call,expected", [
+    (lambda: get_chunk.get_chunk(cite_id="x" * 129), "cite_id too long (max 128 chars)"),
+    (lambda: lookup_param.lookup_param(name_or_pattern="x" * 129),
+     "name_or_pattern too long (max 128 chars)"),
+    (lambda: parse_ihex_summary.parse_ihex_summary(path="x" * 1025),
+     "path too long (max 1024 chars)"),
+    (lambda: check_intelhex_line.check_intelhex_line(line="x" * 601),
+     "line too long (max 600 chars)"),
+])
+def test_other_tools_apply_their_limits(call, expected, no_rate_limit) -> None:
+    payload = call()
+    assert payload["found"] is False
+    assert payload["error"] == expected
+    assert payload["max_length"] > 0
+
+
+def test_tool_schemas_advertise_max_length() -> None:
+    from mcp.server.fastmcp.tools.base import Tool
+
+    schema = Tool.from_function(search_docs.search_docs).parameters
+    assert schema["properties"]["query"]["maxLength"] == QUERY_LIMIT
+    assert schema["properties"]["version"]["maxLength"] == 128

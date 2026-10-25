@@ -152,3 +152,36 @@ Theo brief, không chỉnh ranking để cứu các case C của blackbox; chún
 Cả ba không bị ảnh hưởng bởi thay đổi lỗi 5 (không có glossary key, không có tên/phiên bản ngoài
 kho, `_match_ratio` của chúng cao nên không bị gắn cờ).
 
+## 5. Lỗi 7 — Bước 1: test trước, chạy, chụp output fail
+
+Test thêm vào `tests/test_query.py`: query 1 MB, 100 KB, đúng ngưỡng 2000, vượt 1 ký tự; validate
+trước khi chạm SQL (monkeypatch `_base.db.connect` ném lỗi nếu bị gọi); che lỗi nội bộ
+(monkeypatch `ardupilot_research_mcp.query.search` ném
+`sqlite3.OperationalError("LIKE or GLOB pattern too complex")`, đòi payload không chứa
+"sqlite"/"LIKE"/"GLOB"/"OperationalError" và `error_id` xuất hiện trên stderr); giới hạn của
+`get_chunk.cite_id`, `lookup_param.name_or_pattern`, `parse_ihex_summary.path`,
+`check_intelhex_line.line`; schema `tools/list` phải khai `maxLength`.
+
+```
+python -m pytest tests/test_query.py -q -k "limit or huge or masked or tools_apply or schemas"
+>       assert schema["properties"]["query"]["maxLength"] == QUERY_LIMIT
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'maxLength'
+
+tests\test_query.py:266: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_query.py::test_query_length_limit_is_checked_before_sql - A...
+FAILED tests/test_query.py::test_huge_query_is_refused_without_a_sql_error[100000]
+FAILED tests/test_query.py::test_huge_query_is_refused_without_a_sql_error[1000000]
+FAILED tests/test_query.py::test_unexpected_search_error_is_masked_and_logged
+FAILED tests/test_query.py::test_other_tools_apply_their_limits[<lambda>-cite_id too long (max 128 chars)]
+FAILED tests/test_query.py::test_other_tools_apply_their_limits[<lambda>-name_or_pattern too long (max 128 chars)]
+FAILED tests/test_query.py::test_other_tools_apply_their_limits[<lambda>-path too long (max 1024 chars)]
+FAILED tests/test_query.py::test_other_tools_apply_their_limits[<lambda>-line too long (max 600 chars)]
+FAILED tests/test_query.py::test_tool_schemas_advertise_max_length - KeyError...
+9 failed, 1 passed, 12 deselected in 1.91s
+[exit code: 1]
+```
+File output đầy đủ: `docs/fix/C-7-prefix.txt`.
+
+
