@@ -107,3 +107,14 @@ def test_every_row_cites_its_own_param_line() -> None:
     finally:
         con.close()
     assert not offenders, f"{len(offenders)} citations show another block: {offenders[:10]}"
+
+
+def test_source_check_skips_when_the_corpus_is_absent(tmp_path, monkeypatch) -> None:
+    """A fresh clone has no data/corpus (gitignored): the source-file check must skip, not fail.
+
+    The index is shipped/copied separately, so `index_exists()` is true while the extracted
+    sources are missing. Reading them at that point is an environment gap, not a defect.
+    """
+    monkeypatch.setattr(config, "corpus_root", lambda: tmp_path / "corpus")
+    with pytest.raises(pytest.skip.Exception):
+        test_citation_lines_cover_the_parameter_block()
