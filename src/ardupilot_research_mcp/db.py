@@ -86,11 +86,13 @@ CREATE TABLE IF NOT EXISTS params (
 CREATE INDEX IF NOT EXISTS params_suffix ON params(name_suffix);
 
 CREATE TABLE IF NOT EXISTS mavlink_msgs (
-    msgid     INTEGER NOT NULL,
-    name      TEXT NOT NULL,
-    source_id TEXT,
-    xml_path  TEXT,
-    chunk_id  INTEGER,
+    msgid       INTEGER NOT NULL,
+    name        TEXT NOT NULL,
+    description TEXT,
+    fields      TEXT,
+    source_id   TEXT,
+    xml_path    TEXT,
+    cite_hash   TEXT,
     PRIMARY KEY (msgid, name)
 );
 
@@ -99,9 +101,10 @@ CREATE TABLE IF NOT EXISTS mavlink_enums (
     entry_name TEXT NOT NULL,
     value      INTEGER,
     bitmask    INTEGER,
+    description TEXT,
     source_id  TEXT,
     xml_path   TEXT,
-    chunk_id   INTEGER,
+    cite_hash  TEXT,
     PRIMARY KEY (enum_name, entry_name)
 );
 

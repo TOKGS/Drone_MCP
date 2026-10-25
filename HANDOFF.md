@@ -5,9 +5,11 @@ marked UNVERIFIED / NOT RUN.
 
 ## Current state
 
-- **Server speaks MCP over stdio** (11 of 14 tools): search_docs, get_chunk, lookup_param,
-  decode_bitmask, find_source, troubleshoot, decode_crsf_frame, check_intelhex_line,
-  parse_ihex_summary, list_sources, index_status.
+- **Server speaks MCP over stdio** (13 of 14 tools): search_docs, get_chunk, lookup_param,
+  decode_bitmask, find_source, board_info, mavlink_message, troubleshoot, decode_crsf_frame,
+  check_intelhex_line, parse_ihex_summary, list_sources, index_status.
+- **Tables:** 63 808 chunks · 214 params (26 with @Bitmask) · **397 MAVLink messages + 2367 enum
+  entries** parsed from the pinned XML · index ≈ 120 MB.
 - **Decoders are corpus-derived, not recalled**: CRC8 poly 0xD5 (`crsf_protocol.h` L9), CRC
   coverage "Type and Payload, not sync/length" (`crsf.md` L188), 0x16 = 16 × 11-bit channels in
   22 bytes with `(ticks-992)*5/8+1500` (`crsf.md` L521-527). Intel HEX checksum is the two's
@@ -31,24 +33,29 @@ marked UNVERIFIED / NOT RUN.
 
 ```
 handshake: server=ardupilot-research version=1.30.0 protocol=2025-11-25
-tools(11): ['search_docs','get_chunk','lookup_param','decode_bitmask','find_source',
-            'troubleshoot','decode_crsf_frame','check_intelhex_line','parse_ihex_summary',
-            'list_sources','index_status']
-[decode_crsf_frame] found=True crc_ok=True type=Link statistics
-[find_source]       found=True path=libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp lines=[1, 19]
+tools(13): ['search_docs','get_chunk','lookup_param','decode_bitmask','find_source','board_info',
+            'mavlink_message','troubleshoot','decode_crsf_frame','check_intelhex_line',
+            'parse_ihex_summary','list_sources','index_status']
+[mavlink_message] found=True id=30 name=ATTITUDE fields=7
+[board_info] found=True mcu=['STM32H7xx','STM32H757xx']
+             serial_order=['OTG1','USART2','USART3','UART4','UART8','UART7','OTG2']
 smoke_failures=0
-58 passed in 21.99s
+63 passed in 21.60s
 ```
 
-Decoder vectors come from the corpus itself: `crc8(b"\x01") == 0xD5` matches the spec's CRC
-table (`0x00, 0xD5, 0x7F, 0xAA …`), a frame built with that CRC parses as CRC-valid and one
-corrupted byte is reported invalid, 11-bit channel pack/unpack round-trips, and the canonical
-Intel HEX data record `:10010000…0140` validates while a one-nibble edit does not.
+```
+build_mavlink: {"xml_files": 19, "messages": 397, "enums": 2367,
+                "messages_with_citation": 397,
+                "mavlink_version": "eec8824212c1fe8c5d8f5181fcfdef54ee219b63"}
+build_params : {"parsed_blocks": 232, "linked": 216, "unlinked": 16, "in_table": 214}
+```
 
-Three defects fixed: `paths.py` used a relative import beyond the package; decoder tools were
-wrongly gated on an existing index (they are pure computation, now `guarded_pure`); and the
-governor's `FileLock` raised `PermissionError` when a concurrent Windows process unlinked the lock
-file mid-open — it now retries exactly like "busy" (this was a real multi-process flake).
+Two defects fixed: `board_info` matched a board's `README.md` because paths were ordered by
+length (README is shorter than `hwdef.dat`) — it now ranks the definition file first; and it
+reported no `SERIAL_ORDER` for CubeOrangePlus because that key lives in the included
+`../CubeOrange/hwdef.inc` — includes are now followed one level inside the index and reported in
+`included_files`. The param count fell 241 → 214 because this index was rebuilt from scratch and
+the table is keyed by (name_raw, vehicle, version), so cross-file duplicates collapse.
 
 
 
@@ -67,13 +74,13 @@ file mid-open — it now retries exactly like "busy" (this was a real multi-proc
 
 ## Known gaps / UNVERIFIED
 
-- **3 of 14 tools missing**: board_info, mavlink_message, get_script.
-- **MAVLink tables empty** (`mavlink_msgs`, `mavlink_enums` = 0): XML not parsed yet.
+- **1 of 14 tools missing**: get_script (the `examples/` scripts and their cite_id headers).
 - **Held-out evaluation NOT RUN** (by design: once, when the server is complete).
 - **Mutation testing ≥90 % NOT RUN**; **README + client registration UNVERIFIED**.
 - **T2 (issues/PR), T3 (forum), `local-project`** not ingested.
-- The param table covers only the libraries present in the corpus (241 rows); a parameter defined
+- The param table covers only the libraries present in the corpus (214 rows); a parameter defined
   in a library outside the include list returns `found:false` with real candidates.
+- `board_info` follows one level of `include`; a deeper chain would need another pass.
 - A refusal's citations may include a wiki excerpt that itself mentions `blob/master` in its text;
   our own citation URLs are always pinned (checked by `tests/test_cite.py`).
 - Mechanical note: a `git`-based audit needs the shallow clones under `research/cache/git/`

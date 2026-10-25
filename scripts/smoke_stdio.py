@@ -120,6 +120,26 @@ async def main() -> int:
                   f"path={first.get('path')} lines={first.get('lines')}")
             if getattr(source, "isError", False) or not source_payload.get("found"):
                 failures += 1
+
+            mav = await session.call_tool("mavlink_message", {"name_or_id": "ATTITUDE"})
+            mav_payload = json.loads(text_of(mav))
+            if isinstance(mav_payload.get("result"), dict):
+                mav_payload = mav_payload["result"]
+            print(f"[mavlink_message] found={mav_payload.get('found')} "
+                  f"id={mav_payload.get('msgid')} name={mav_payload.get('name')} "
+                  f"fields={len(mav_payload.get('fields') or [])}")
+            if getattr(mav, "isError", False) or not mav_payload.get("found"):
+                failures += 1
+
+            board = await session.call_tool("board_info", {"board_name": "CubeOrangePlus"})
+            board_payload = json.loads(text_of(board))
+            if isinstance(board_payload.get("result"), dict):
+                board_payload = board_payload["result"]
+            facts = board_payload.get("facts") or {}
+            print(f"[board_info] found={board_payload.get('found')} mcu={facts.get('mcu')} "
+                  f"serial_order={facts.get('serial_order')}")
+            if getattr(board, "isError", False) or not board_payload.get("found"):
+                failures += 1
     print(f"\nsmoke_failures={failures}")
     return 1 if failures else 0
 
