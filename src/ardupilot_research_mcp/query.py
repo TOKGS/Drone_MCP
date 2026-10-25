@@ -48,6 +48,11 @@ SCOPE_SOURCES = {
     "forum": [],
 }
 TIER_ORDER = {"T1": 0, "T2": 1, "T3": 2}
+# Simulator-only code models the vehicle, it is not evidence of how the vehicle behaves. Rank it
+# below operational code and documentation instead of letting a model win a real question; the
+# gap to the next result is typically 4-5 bm25 points (G22 ELRS, buzzer).
+SIMULATOR_PATH_PREFIX = "libraries/SITL/"
+SIMULATOR_PENALTY = 5.0
 # Query words that carry no retrieval signal: without this, "how do I bake bread" matched
 # half the corpus and an out-of-corpus question wrongly returned found:true.
 STOPWORDS = {
@@ -300,6 +305,8 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         # words scattered through prose, so reward the chunk whose own heading carries every token.
         if path_tokens and heading_hits == len(path_tokens):
             score -= 5.0
+        if row["path"].startswith(SIMULATOR_PATH_PREFIX):
+            score += SIMULATOR_PENALTY
         scored.append((score, row))
     scored.sort(key=lambda item: item[0])
 

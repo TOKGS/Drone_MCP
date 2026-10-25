@@ -155,4 +155,81 @@ FAILED tests/test_query.py::test_golden_precision_and_recall_hold - Assertion...
 ```
 File output đầy đủ: `docs/fix/F-2-prefix.txt`.
 
+## 4. F-2 — Bước 2+3: hạ hạng code chỉ dành cho simulator
+
+### 4.1 Cách làm (quy tắc chung trong ranking, không sửa corpus/allowlist)
+
+`src/ardupilot_research_mcp/query.py`:
+```python
+SIMULATOR_PATH_PREFIX = "libraries/SITL/"
+SIMULATOR_PENALTY = 5.0
+...
+        if row["path"].startswith(SIMULATOR_PATH_PREFIX):
+            score += SIMULATOR_PENALTY     # score thấp hơn = tốt hơn (bm25 âm)
+```
+Quy tắc áp cho **mọi** document có path bắt đầu `libraries/SITL/` (kể cả
+`libraries/SITL/examples/...`), ở tầng tính điểm trên toàn bộ ứng viên — không liệt kê file cụ
+thể, không sửa `src/ingest/**`, `sources.yaml`, allowlist.
+
+Chọn 5.0 vì khoảng cách thực đo trên index mới: G22 top-1 `libraries/SITL/SIM_ELRS.cpp`
+(-28.2487) hơn `expresslrs_docs/docs/faq.md` (-23.7623) **4.49 điểm**; "how does the buzzer work"
+top-1 `SIM_Buzzer.cpp` (-13.5769) chỉ hơn `ardupilot_wiki/common-buzzer.rst` **0.10 điểm**. 5.0
+đủ đẩy cả hai xuống dưới, trong khi không xoá kết quả (chúng vẫn nằm trong top-5 khi liên quan).
+
+Tài liệu *về* SITL (ví dụ `dev/source/docs/SITL_simulation_parameters.rst`) **không** bị hạ: nó là
+tài liệu vận hành, không phải code mô phỏng.
+
+### 4.2 Bằng chứng thứ hạng sau sửa
+
+```
+'ELRS packet rate đọc ở đâu?'
+   1 -23.7623 expresslrs_docs docs/faq.md
+   2 -23.2487 ardupilot libraries/SITL/SIM_ELRS.cpp
+   3 -22.4966 expresslrs src/src/tx_main.cpp
+   4 -22.4518 ardupilot libraries/SITL/SIM_ELRS.h
+   5 -21.5497 expresslrs_docs docs/software/user-defines.md
+'how does the buzzer work'
+   1 -13.4762 ardupilot_wiki common/source/docs/common-buzzer.rst
+   2 -13.0189 ardupilot libraries/AP_Notify/Buzzer.cpp
+   3 -11.6803 ardupilot_wiki common/source/docs/common-flight-controller-io.rst
+   4 -11.5452 ardupilot_wiki common/source/docs/common-botwingf405.rst
+   5 -11.504  ardupilot_wiki common/source/docs/common-pixhawk-wiring-and-quick-start.rst
+```
+
+### 4.3 Cổng F-3 (chạy trên cây làm việc sau sửa)
+
+```
+python -m pytest -q
+.............................................................            [100%]
+133 passed in 43.44s
+```
+```
+python scripts/fidelity_scan.py   (2 dòng cuối)
+TOTAL                          86262         0
+fidelity: PASS
+```
+```
+python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 23/30 = 0.767
+MRR = 0.859
+```
+```
+python -m research.eval_retrieval --set tests/heldout_v3.yaml --aggregate-only
+set=heldout_v3.yaml questions=30 k=5
+recall@5 = 28/30 = 0.933
+precision@1 = 25/30 = 0.833
+MRR = 0.868
+```
+So với baseline: pytest 1 failed/127 passed → 0 failed/133 passed; fidelity 0 mismatch giữ nguyên;
+golden recall@5 1.000 giữ nguyên, P@1 0.733 → 0.767 (bằng mức công bố trên master), MRR 0.837 →
+0.859; heldout_v3 recall@5 0.933 giữ nguyên (không hy sinh tập nghiệm thu), P@1/MRR không đổi.
+Log đầy đủ: `docs/fix/F-2-green.txt`.
+
+Ghi chú: `test_golden_precision_and_recall_hold` so P@1 ở độ chính xác 3 chữ số thập phân
+(`round(..., 3) >= 0.767`) vì 23/30 = 0.7666... còn số công bố 0.767 là làm tròn; 22/30 = 0.733
+vẫn fail.
+
+
 

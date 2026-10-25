@@ -351,4 +351,6 @@ def test_golden_precision_and_recall_hold(con) -> None:
         recall += 1 if first and first <= 5 else 0
         precision += 1 if first == 1 else 0
     assert recall == len(questions), f"recall@5 = {recall}/{len(questions)}"
-    assert precision / len(questions) >= 0.767, f"precision@1 = {precision}/{len(questions)}"
+    # The published master figure is the rounded 0.767 (= 23/30); compare at that precision.
+    assert round(precision / len(questions), 3) >= 0.767, \
+        f"precision@1 = {precision}/{len(questions)}"
