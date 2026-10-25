@@ -1,0 +1,59 @@
+{
+  "case": "G2_11",
+  "note": "same content as the C/D hit for ardupilot#5464a2453091b155",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#5464a2453091b155"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1011,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#5464a2453091b155"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#5464a2453091b155\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"arming-checks.lua\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L366-L386\",\n  \"path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n  \"lines\": [\n    366,\n    386\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n  \"excerpt\": \"        i = i + 1\\n    until rally_location == nil\\n\\n    return true\\nend\\n\\n-- fail if there is a fence on the board, it must be enabled\\nlocal function geofence_present_enabled()\\n    if not fence_present() then\\n        return true\\n    end\\n    if (FENCE_ENABLE:get() == 1) or (FENCE_AUTOENABLE:get() > 0) then\\n        return true\\n    end\\n    return false\\nend\\n\\n-- Arming checks can be deleted if not required, or set the parameter to MAV_SEVERITY.NONE to avoid changing the script\\n-- or new arming checks added. The position/number of the check should not be changed. If you delete a check, do not renumber\",\n  \"untrusted\": true,\n  \"text\": \"        i = i + 1\\n    until rally_location == nil\\n\\n    return true\\nend\\n\\n-- fail if there is a fence on the board, it must be enabled\\nlocal function geofence_present_enabled()\\n    if not fence_present() then\\n        return true\\n    end\\n    if (FENCE_ENABLE:get() == 1) or (FENCE_AUTOENABLE:get() > 0) then\\n        return true\\n    end\\n    return false\\nend\\n\\n-- Arming checks can be deleted if not required, or set the parameter to MAV_SEVERITY.NONE to avoid changing the script\\n-- or new arming checks added. The position/number of the check should not be changed. If you delete a check, do not renumber the rest.\\n-- First add checks that can apply to all vehicles.\\nlocal arming_checks = {}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#5464a2453091b155",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "arming-checks.lua",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L366-L386",
+        "path": "libraries/AP_Scripting/applets/arming-checks.lua",
+        "lines": [
+          366,
+          386
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "libraries/AP_Scripting/applets/arming-checks.lua",
+        "excerpt": "        i = i + 1\n    until rally_location == nil\n\n    return true\nend\n\n-- fail if there is a fence on the board, it must be enabled\nlocal function geofence_present_enabled()\n    if not fence_present() then\n        return true\n    end\n    if (FENCE_ENABLE:get() == 1) or (FENCE_AUTOENABLE:get() > 0) then\n        return true\n    end\n    return false\nend\n\n-- Arming checks can be deleted if not required, or set the parameter to MAV_SEVERITY.NONE to avoid changing the script\n-- or new arming checks added. The position/number of the check should not be changed. If you delete a check, do not renumber",
+        "untrusted": true,
+        "text": "        i = i + 1\n    until rally_location == nil\n\n    return true\nend\n\n-- fail if there is a fence on the board, it must be enabled\nlocal function geofence_present_enabled()\n    if not fence_present() then\n        return true\n    end\n    if (FENCE_ENABLE:get() == 1) or (FENCE_AUTOENABLE:get() > 0) then\n        return true\n    end\n    return false\nend\n\n-- Arming checks can be deleted if not required, or set the parameter to MAV_SEVERITY.NONE to avoid changing the script\n-- or new arming checks added. The position/number of the check should not be changed. If you delete a check, do not renumber the rest.\n-- First add checks that can apply to all vehicles.\nlocal arming_checks = {}",
+        "served_from": "index"
+      }
+    }
+  }
+}

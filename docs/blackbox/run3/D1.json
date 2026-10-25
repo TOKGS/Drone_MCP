@@ -1,0 +1,158 @@
+{
+  "case": "D1",
+  "note": "out-of-corpus: found:false or an explicit scope/version caveat",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "PX4 EKF2 tuning parameters",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 57,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "PX4 EKF2 tuning parameters",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 68.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"PX4 EKF2 tuning parameters\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#4940f0312d23df27\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"ekf2-estimation-system.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/ekf2-estimation-system.rst#L294-L304\",\n      \"path\": \"dev/source/docs/ekf2-estimation-system.rst\",\n      \"lines\": [\n        294,\n        304\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"EKF2 Log Data > Tuning Parameters\",\n      \"excerpt\": \"The EKF2 parameters have been tuned to provide a compromise between\\naccuracy and robustness to sensor errors. it is likely that further\\nimprovements in performance are available with further tuning.\\n\\nIf you have a question regarding tuning of the filer, please post `on the forums <https://discuss.ardupilot.org/>`__ along with your\\nlog file and mention the term EKF2 in your post title.\\n\\nThe parameters for the new EKF start with the prefix EK2\\\\_ and are\\nlisted below\\n\\n**EK2_ENABLE**\",\n      \"untrusted\": true,\n      \"score\": -46.5544\n    },\n    {\n      \"cite_id\": \"ardupilot#42489bf2f5dd007a\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"Parameters.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L469-L469\",\n      \"path\": \"ArduCopter/Parameters.cpp\",\n      \"lines\": [\n        469,\n        469\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduCopter/Parameters.cpp\",\n      \"excerpt\": \"    GOBJECTN(ahrs.EKF2, NavEKF2, \\\"EK2_\\\", NavEKF2),\",\n      \"untrusted\": true,\n      \"score\": -9.5\n    },\n    {\n      \"cite_id\": \"ardupilot#bd03ee2ed0da6668\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"Parameters.h\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.h#L1-L99\",\n      \"path\": \"ArduCopter/Parameters.h\",\n      \"lines\": [\n        1,\n        99\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduCopter/Parameters.h\",\n      \"excerpt\": \"#pragma once\\n\\n#define AP_PARAM_VEHICLE_NAME copter\\n\\n#include <AP_Common/AP_Common.h>\\n#include \\\"RC_Channel_Copter.h\\\"\\n#include <AP_Proximity/AP_Proximity.h>\\n\\nclass ModeRTL;\\n\\n#if MODE_FOLLOW_ENABLED\\n # include <AP_Follow/AP_Follow.h>\\n#endif\\n#if WEATHERVANE_ENABLED\\n #include <AC_AttitudeControl/AC_WeatherVane.h>\\n#endif\\n\\n// Global parameter class.\\n//\\nclass Parameters {\\npublic:\\n    // The version of the layout as described by the parameter enum.\\n    //\\n    // When changing the parameter enum in an incompatible fashion, this\\n    // value should be incremented by one.\\n    //\\n    // The increment will \",\n      \"untrusted\": true,\n      \"score\": -9.5\n    },\n    {\n      \"cite_id\": \"ardupilot#d6cf1846bdce1614\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/AntennaTracker/ReleaseNotes.txt#L2062-L2073\",\n      \"path\": \"AntennaTracker/ReleaseNotes.txt\",\n      \"lines\": [\n        2062,\n        2073\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"No changes from 4.5.0-beta4\",\n      \"excerpt\": \"New Autopilots supported\\n - YJUAV_A6Ultra\\n - AnyLeaf H7\\n\\n- do relay parameter conversion for parachute parameters if ever has been used\\n- broaden acceptance criteria for GPS yaw measurement for moving baseline yaw\\n\\n------------------------------------------------------------------\\nAntennaTracker 4.5.0 beta1 22-Feb-2024\\nChanges from 4.2.0\\n1) Innumerable system-level improvements; see Copter and Plane release notes\\n2) fix EKF2/EKF3 parameters\",\n      \"untrusted\": true,\n      \"score\": -6.0\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot_wiki#4940f0312d23df27\",\n    \"ardupilot#42489bf2f5dd007a\",\n    \"ardupilot#bd03ee2ed0da6668\",\n    \"ardupilot#d6cf1846bdce1614\",\n    \"ardupilot#87574cd2a02a866d\"\n  ],\n  \"scope_notes\": [\n    \"kho chỉ có tài liệu ArduPilot Copter đã ghim, ExpressLRS, EdgeTX, CRSF, MAVLink; không có PX4\"\n  ],\n  \"confidence\": \"low\",\n  \"note\": null,\n  \"result_count\": 4\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "PX4 EKF2 tuning parameters",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot_wiki#4940f0312d23df27",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "ekf2-estimation-system.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/ekf2-estimation-system.rst#L294-L304",
+            "path": "dev/source/docs/ekf2-estimation-system.rst",
+            "lines": [
+              294,
+              304
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "EKF2 Log Data > Tuning Parameters",
+            "excerpt": "The EKF2 parameters have been tuned to provide a compromise between\naccuracy and robustness to sensor errors. it is likely that further\nimprovements in performance are available with further tuning.\n\nIf you have a question regarding tuning of the filer, please post `on the forums <https://discuss.ardupilot.org/>`__ along with your\nlog file and mention the term EKF2 in your post title.\n\nThe parameters for the new EKF start with the prefix EK2\\_ and are\nlisted below\n\n**EK2_ENABLE**",
+            "untrusted": true,
+            "score": -46.5544
+          },
+          {
+            "cite_id": "ardupilot#42489bf2f5dd007a",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "Parameters.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L469-L469",
+            "path": "ArduCopter/Parameters.cpp",
+            "lines": [
+              469,
+              469
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduCopter/Parameters.cpp",
+            "excerpt": "    GOBJECTN(ahrs.EKF2, NavEKF2, \"EK2_\", NavEKF2),",
+            "untrusted": true,
+            "score": -9.5
+          },
+          {
+            "cite_id": "ardupilot#bd03ee2ed0da6668",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "Parameters.h",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.h#L1-L99",
+            "path": "ArduCopter/Parameters.h",
+            "lines": [
+              1,
+              99
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduCopter/Parameters.h",
+            "excerpt": "#pragma once\n\n#define AP_PARAM_VEHICLE_NAME copter\n\n#include <AP_Common/AP_Common.h>\n#include \"RC_Channel_Copter.h\"\n#include <AP_Proximity/AP_Proximity.h>\n\nclass ModeRTL;\n\n#if MODE_FOLLOW_ENABLED\n # include <AP_Follow/AP_Follow.h>\n#endif\n#if WEATHERVANE_ENABLED\n #include <AC_AttitudeControl/AC_WeatherVane.h>\n#endif\n\n// Global parameter class.\n//\nclass Parameters {\npublic:\n    // The version of the layout as described by the parameter enum.\n    //\n    // When changing the parameter enum in an incompatible fashion, this\n    // value should be incremented by one.\n    //\n    // The increment will ",
+            "untrusted": true,
+            "score": -9.5
+          },
+          {
+            "cite_id": "ardupilot#d6cf1846bdce1614",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/AntennaTracker/ReleaseNotes.txt#L2062-L2073",
+            "path": "AntennaTracker/ReleaseNotes.txt",
+            "lines": [
+              2062,
+              2073
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "No changes from 4.5.0-beta4",
+            "excerpt": "New Autopilots supported\n - YJUAV_A6Ultra\n - AnyLeaf H7\n\n- do relay parameter conversion for parachute parameters if ever has been used\n- broaden acceptance criteria for GPS yaw measurement for moving baseline yaw\n\n------------------------------------------------------------------\nAntennaTracker 4.5.0 beta1 22-Feb-2024\nChanges from 4.2.0\n1) Innumerable system-level improvements; see Copter and Plane release notes\n2) fix EKF2/EKF3 parameters",
+            "untrusted": true,
+            "score": -6.0
+          }
+        ],
+        "candidates": [
+          "ardupilot_wiki#4940f0312d23df27",
+          "ardupilot#42489bf2f5dd007a",
+          "ardupilot#bd03ee2ed0da6668",
+          "ardupilot#d6cf1846bdce1614",
+          "ardupilot#87574cd2a02a866d"
+        ],
+        "scope_notes": [
+          "kho chỉ có tài liệu ArduPilot Copter đã ghim, ExpressLRS, EdgeTX, CRSF, MAVLink; không có PX4"
+        ],
+        "confidence": "low",
+        "note": null,
+        "result_count": 4
+      }
+    }
+  }
+}

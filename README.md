@@ -476,7 +476,7 @@ Last measured on the merged tree with the index rebuilt from scratch:
 | golden set, dev and tunable | recall@5 1.000, P@1 0.767, MRR 0.859 |
 | held-out v3, blind and frozen | recall@5 0.933, P@1 0.833, MRR 0.868 |
 | mutation | 1.000, 14 scored mutants killed, 1 equivalent mutant excluded and flagged |
-| blackbox run2, 108 frozen cases | 92 pass, 16 fail, 0 regressions against run1 |
+| blackbox, 108 frozen cases | run2 92 pass / 16 fail, run3 93 / 15 after the chunk fix, 0 regressions, 3 repeats byte-identical |
 | scoring determinism | 5 scripts run twice, byte-identical output |
 | `check_readmes.py` | PASS |
 | `bench.py` | search p50 58.5 ms, p95 186 ms, budget 400 ms, PASS |
@@ -502,13 +502,16 @@ for scoring. Hashes are in `docs/heldout*.sha256`, and the evaluator refuses to 
 
 An independent tester froze 108 tool-level cases (`tests/blackbox_cases.md`, SHA-256
 `1b53e69…dcaf27`), ran them over one stdio session, and wrote `docs/blackbox/REPORT.md`, which scored
-80 pass and 28 fail. After the fix round in `docs/FIX_REPORT.md`, the same frozen cases ran once more
-into `docs/blackbox/run2/`: 92 pass and 16 fail, with no case going from pass to fail and 12 fixed.
+80 pass and 28 fail. After the fix round in `docs/FIX_REPORT.md` the same cases ran again into
+`docs/blackbox/run2/`: 92 pass, 16 fail, 12 fixed, none going from pass to fail.
 
-The 16 remaining splits into 6 tool defects and 10 cases whose frozen expectation was wrong (a hex
-string missing a nibble, a parameter that does not exist at the tag, expectations that treat a
-`source_id` as part of a path). The 108-row comparison with raw output is in
-`docs/blackbox/run2/comparison.md`.
+The chunk-picker change then fixed the last retrieval misquote, so the suite ran a third time, three
+repeats in a row: 93 pass, 15 fail, still no regression, and all 110 payloads identical across the
+repeats. `docs/blackbox/run3/comparison.md` has the tally and the 17 payloads that differ from run2.
+
+The 15 remaining splits into 5 tool defects and 10 cases whose frozen expectation was wrong (a hex
+string missing a nibble, parameters that do not exist at the tag, expectations that treat a
+`source_id` as part of a path).
 
 The five scoring scripts were also run twice on the same raw output and produced byte-identical
 results, so the 92/16 verdict does not depend on run order or timing
@@ -633,8 +636,8 @@ v0.1.0, first complete pass, 2026-10-25.
 - `decode_crsf_frame` reports `frames_found`, returns `all_crc_valid:null` with zero frames, reports
   `truncated_tail_bytes`, and converts microseconds with C-style truncating division, so tick 172
   gives 988.
-- Independent blackbox rerun over the frozen 108 cases: 92 pass, no regressions, with a deterministic
-  scoring pass.
+- Independent blackbox reruns over the frozen 108 cases: 92 pass at run2, 93 at run3, no regressions,
+  and three repeats with identical payloads.
 - Client wiring proven in two real clients: Claude Code connects and lists 14 tools (user scope
   reports `√ Connected`), and an OpenCode session with a free model issued a `lookup_param` call and
   answered from the citation.

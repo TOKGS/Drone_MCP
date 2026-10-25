@@ -1,0 +1,181 @@
+{
+  "case": "C3",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "CRSF RC channels packed 11 bits",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 47,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "CRSF RC channels packed 11 bits",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 91.9,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"CRSF RC channels packed 11 bits\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"crsf_spec#8e7ae35ba90eeafb\",\n      \"source_id\": \"crsf_spec\",\n      \"repo\": \"tbs-fpv/tbs-crsf-spec\",\n      \"ref\": \"a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"crsf.md\",\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L36-L46\",\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        36,\n        46\n      ],\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-4.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n      \"heading_path\": \"Table of Contents\",\n      \"excerpt\": \"  - [0x11 Barometer](#0x11-barometer)\\n  - [0x12 Magnetometer](#0x12-magnetometer)\\n  - [0x13 Accel Gyro](#0x13-accel-gyro)\\n  - [0x14 Link Statistics](#0x14-link-statistics)\\n  - [0x15 Link Statistics Repeater](#0x15-link-statistics-repeater)\\n  - [0x16 RC Channels Packed Payload](#0x16-rc-channels-packed-payload)\\n  - [0x17 Subset RC Channels Packed](#0x17-subset-rc-channels-packed)\\n  - [0x18 RC Channels Packed 11-bits (Unused)](#0x18-rc-channels-packed-11-bits-unused)\\n  - [0x19 - 0x1B Reserved Crossfire](#0x19---0x1b-reserved-crossfire)\\n  - [0x1C Link Statistics RX](#0x1c-link-statistics-rx)\\n  - \",\n      \"untrusted\": true,\n      \"score\": -40.097\n    },\n    {\n      \"cite_id\": \"ardupilot#84faa083fcae8409\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RCProtocol_CRSF.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L476-L544\",\n      \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"lines\": [\n        476,\n        544\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"excerpt\": \"    return rc_active;\\n}\\n\\n/*\\n  decode channels from the standard 11bit format (used by CRSF, SBUS, FPort and FPort2)\\n  must be used on multiples of 8 channels\\n*/\\nvoid AP_RCProtocol_CRSF::decode_variable_bit_channels(const uint8_t* payload, uint8_t frame_length, uint8_t nchannels, uint16_t *values)\\n{\\n    const SubsetChannelsFrame* channel_data = (const SubsetChannelsFrame*)payload;\\n\\n    // get the channel resolution settings\\n    uint8_t channelBits;\\n    uint16_t channelMask;\\n    float channelScale;\\n\\n    switch (channel_data->res_configuration) {\\n    case CRSF_SUBSET_RC_RES_CONF_10B:\\n        chan\",\n      \"untrusted\": true,\n      \"score\": -44.711\n    },\n    {\n      \"cite_id\": \"expresslrs#b47cb542705a9b97\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_protocol.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L200-L217\",\n      \"path\": \"src/include/crsf_protocol.h\",\n      \"lines\": [\n        200,\n        217\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/include/crsf_protocol.h\",\n      \"excerpt\": \"    unsigned ch15 : 11;\\n} PACKED crsf_channels_t;\\n\\n/**\\n * Bits used in the byte following crsf_channels_t in the ExpressLRS extended CHANNELS_PACKED packet\\n */\\n#define CRSF_CHANNELS_STATUS_ARMED              bit(0)    // Armed status in Arm using Switch mode\\n#define CRSF_CHANNELS_STATUS_ARMING_MODE_CH5    bit(1)    // Arm using CH5 if bit is set\\n\\ntypedef struct deviceInformationPacket_s\\n{\\n    uint32_t serialNo;\\n    uint32_t hardwareVer;\\n    uint32_t softwareVer;\\n    uint8_t fieldCnt;          //number of field of params this device has\\n    uint8_t parameterVersion;\\n} PACKED deviceInformationPa\",\n      \"untrusted\": true,\n      \"score\": -43.7513\n    },\n    {\n      \"cite_id\": \"expresslrs#2c512913b65f46e3\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"TXModuleEndpoint.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/tx-crsf/TXModuleEndpoint.cpp#L87-L160\",\n      \"path\": \"src/lib/tx-crsf/TXModuleEndpoint.cpp\",\n      \"lines\": [\n        87,\n        160\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/lib/tx-crsf/TXModuleEndpoint.cpp\",\n      \"excerpt\": \"        parameterUpdateReq(extMessage->orig_addr, packetType, extMessage->payload[0], extMessage->payload + 1);\\n    }\\n}\\n\\nvoid TXModuleEndpoint::RcPacketToChannelsData(const crsf_header_t *message) // data is packed as 11 bits per channel\\n{\\n    const auto payload = (uint8_t *)message + sizeof(crsf_header_t);\\n    constexpr unsigned srcBits = 11;\\n    constexpr unsigned dstBits = 11;\\n    constexpr unsigned inputChannelMask = (1 << srcBits) - 1;\\n    constexpr unsigned precisionShift = dstBits - srcBits;\\n\\n    uint32_t localChannelData[CRSF_NUM_CHANNELS];\\n\\n    // code from BetaFlight rx/crsf.cpp / bi\",\n      \"untrusted\": true,\n      \"score\": -34.9112\n    },\n    {\n      \"cite_id\": \"ardupilot#a09db9505d598077\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_helper.lua\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/modules/crsf_helper.lua#L53-L67\",\n      \"path\": \"libraries/AP_Scripting/modules/crsf_helper.lua\",\n      \"lines\": [\n        53,\n        67\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Scripting/modules/crsf_helper.lua\",\n      \"excerpt\": \"    return string.pack(\\\">BzzBBBBz\\\", CRSF_PARAM_TYPE.TEXT_SELECTION, name, options_str, zero_based_idx, min_val, max_val, zero_based_idx, unit or \\\"\\\")\\nend\\n\\n-- Creates a CRSF menu number item (as float)\\nlocal function create_number_entry(name, value, min, max, default, dpoint, step, unit)\\n    -- Per CRSF spec, float values are sent as INT32 with a decimal point indicator.\\n    local scale = 10^(dpoint or 0)\\n    local packed_value = math.floor(value * scale + 0.5)\\n    local packed_min = math.floor(min * scale + 0.5)\\n    local packed_max = math.floor(max * scale + 0.5)\\n    local packed_default = mat\",\n      \"untrusted\": true,\n      \"score\": -32.9471\n    }\n  ],\n  \"candidates\": [\n    \"crsf_spec#8e7ae35ba90eeafb\",\n    \"ardupilot#84faa083fcae8409\",\n    \"expresslrs#b47cb542705a9b97\",\n    \"expresslrs#2c512913b65f46e3\",\n    \"ardupilot#a09db9505d598077\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "CRSF RC channels packed 11 bits",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "crsf_spec#8e7ae35ba90eeafb",
+            "source_id": "crsf_spec",
+            "repo": "tbs-fpv/tbs-crsf-spec",
+            "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "crsf.md",
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L36-L46",
+            "path": "crsf.md",
+            "lines": [
+              36,
+              46
+            ],
+            "version": "CRSF spec@a73f7dc",
+            "ingested_at": "2026-10-25T20:13:33+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-4.0",
+            "retrieved_at": "2026-10-25T20:13:33+0700",
+            "heading_path": "Table of Contents",
+            "excerpt": "  - [0x11 Barometer](#0x11-barometer)\n  - [0x12 Magnetometer](#0x12-magnetometer)\n  - [0x13 Accel Gyro](#0x13-accel-gyro)\n  - [0x14 Link Statistics](#0x14-link-statistics)\n  - [0x15 Link Statistics Repeater](#0x15-link-statistics-repeater)\n  - [0x16 RC Channels Packed Payload](#0x16-rc-channels-packed-payload)\n  - [0x17 Subset RC Channels Packed](#0x17-subset-rc-channels-packed)\n  - [0x18 RC Channels Packed 11-bits (Unused)](#0x18-rc-channels-packed-11-bits-unused)\n  - [0x19 - 0x1B Reserved Crossfire](#0x19---0x1b-reserved-crossfire)\n  - [0x1C Link Statistics RX](#0x1c-link-statistics-rx)\n  - ",
+            "untrusted": true,
+            "score": -40.097
+          },
+          {
+            "cite_id": "ardupilot#84faa083fcae8409",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RCProtocol_CRSF.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L476-L544",
+            "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "lines": [
+              476,
+              544
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "excerpt": "    return rc_active;\n}\n\n/*\n  decode channels from the standard 11bit format (used by CRSF, SBUS, FPort and FPort2)\n  must be used on multiples of 8 channels\n*/\nvoid AP_RCProtocol_CRSF::decode_variable_bit_channels(const uint8_t* payload, uint8_t frame_length, uint8_t nchannels, uint16_t *values)\n{\n    const SubsetChannelsFrame* channel_data = (const SubsetChannelsFrame*)payload;\n\n    // get the channel resolution settings\n    uint8_t channelBits;\n    uint16_t channelMask;\n    float channelScale;\n\n    switch (channel_data->res_configuration) {\n    case CRSF_SUBSET_RC_RES_CONF_10B:\n        chan",
+            "untrusted": true,
+            "score": -44.711
+          },
+          {
+            "cite_id": "expresslrs#b47cb542705a9b97",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_protocol.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L200-L217",
+            "path": "src/include/crsf_protocol.h",
+            "lines": [
+              200,
+              217
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/include/crsf_protocol.h",
+            "excerpt": "    unsigned ch15 : 11;\n} PACKED crsf_channels_t;\n\n/**\n * Bits used in the byte following crsf_channels_t in the ExpressLRS extended CHANNELS_PACKED packet\n */\n#define CRSF_CHANNELS_STATUS_ARMED              bit(0)    // Armed status in Arm using Switch mode\n#define CRSF_CHANNELS_STATUS_ARMING_MODE_CH5    bit(1)    // Arm using CH5 if bit is set\n\ntypedef struct deviceInformationPacket_s\n{\n    uint32_t serialNo;\n    uint32_t hardwareVer;\n    uint32_t softwareVer;\n    uint8_t fieldCnt;          //number of field of params this device has\n    uint8_t parameterVersion;\n} PACKED deviceInformationPa",
+            "untrusted": true,
+            "score": -43.7513
+          },
+          {
+            "cite_id": "expresslrs#2c512913b65f46e3",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "TXModuleEndpoint.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/tx-crsf/TXModuleEndpoint.cpp#L87-L160",
+            "path": "src/lib/tx-crsf/TXModuleEndpoint.cpp",
+            "lines": [
+              87,
+              160
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/lib/tx-crsf/TXModuleEndpoint.cpp",
+            "excerpt": "        parameterUpdateReq(extMessage->orig_addr, packetType, extMessage->payload[0], extMessage->payload + 1);\n    }\n}\n\nvoid TXModuleEndpoint::RcPacketToChannelsData(const crsf_header_t *message) // data is packed as 11 bits per channel\n{\n    const auto payload = (uint8_t *)message + sizeof(crsf_header_t);\n    constexpr unsigned srcBits = 11;\n    constexpr unsigned dstBits = 11;\n    constexpr unsigned inputChannelMask = (1 << srcBits) - 1;\n    constexpr unsigned precisionShift = dstBits - srcBits;\n\n    uint32_t localChannelData[CRSF_NUM_CHANNELS];\n\n    // code from BetaFlight rx/crsf.cpp / bi",
+            "untrusted": true,
+            "score": -34.9112
+          },
+          {
+            "cite_id": "ardupilot#a09db9505d598077",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_helper.lua",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/modules/crsf_helper.lua#L53-L67",
+            "path": "libraries/AP_Scripting/modules/crsf_helper.lua",
+            "lines": [
+              53,
+              67
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Scripting/modules/crsf_helper.lua",
+            "excerpt": "    return string.pack(\">BzzBBBBz\", CRSF_PARAM_TYPE.TEXT_SELECTION, name, options_str, zero_based_idx, min_val, max_val, zero_based_idx, unit or \"\")\nend\n\n-- Creates a CRSF menu number item (as float)\nlocal function create_number_entry(name, value, min, max, default, dpoint, step, unit)\n    -- Per CRSF spec, float values are sent as INT32 with a decimal point indicator.\n    local scale = 10^(dpoint or 0)\n    local packed_value = math.floor(value * scale + 0.5)\n    local packed_min = math.floor(min * scale + 0.5)\n    local packed_max = math.floor(max * scale + 0.5)\n    local packed_default = mat",
+            "untrusted": true,
+            "score": -32.9471
+          }
+        ],
+        "candidates": [
+          "crsf_spec#8e7ae35ba90eeafb",
+          "ardupilot#84faa083fcae8409",
+          "expresslrs#b47cb542705a9b97",
+          "expresslrs#2c512913b65f46e3",
+          "ardupilot#a09db9505d598077"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

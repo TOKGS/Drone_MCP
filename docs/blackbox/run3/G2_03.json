@@ -1,0 +1,59 @@
+{
+  "case": "G2_03",
+  "note": "same content as the C/D hit for expresslrs_docs#a6fe567910933155",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "expresslrs_docs#a6fe567910933155"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1003,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "expresslrs_docs#a6fe567910933155"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.4,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"expresslrs_docs#a6fe567910933155\",\n  \"source_id\": \"expresslrs_docs\",\n  \"repo\": \"ExpressLRS/Docs\",\n  \"ref\": \"5ed656b6ebc7a38b6012297cf40fe5bc87232bed\",\n  \"channel\": \"snapshot\",\n  \"unreleased\": true,\n  \"pinned\": true,\n  \"title\": \"init-rate.md\",\n  \"url\": \"https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/info/init-rate.md#L1-L6\",\n  \"path\": \"docs/info/init-rate.md\",\n  \"lines\": [\n    1,\n    6\n  ],\n  \"version\": \"ELRS Docs@5ed656b (2026-10-12)\",\n  \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n  \"heading_path\": \"\",\n  \"excerpt\": \"---\\ntemplate: main.html\\ndescription: ExpressLRS Init Rate or the Packet Rate that the receiver will start checking for the Sync Packet.\\n---\\n\\n![Info Banner](https://raw.githubusercontent.com/ExpressLRS/ExpressLRS-Hardware/master/img/information.png)\",\n  \"untrusted\": true,\n  \"text\": \"---\\ntemplate: main.html\\ndescription: ExpressLRS Init Rate or the Packet Rate that the receiver will start checking for the Sync Packet.\\n---\\n\\n![Info Banner](https://raw.githubusercontent.com/ExpressLRS/ExpressLRS-Hardware/master/img/information.png)\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "expresslrs_docs#a6fe567910933155",
+        "source_id": "expresslrs_docs",
+        "repo": "ExpressLRS/Docs",
+        "ref": "5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+        "channel": "snapshot",
+        "unreleased": true,
+        "pinned": true,
+        "title": "init-rate.md",
+        "url": "https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/info/init-rate.md#L1-L6",
+        "path": "docs/info/init-rate.md",
+        "lines": [
+          1,
+          6
+        ],
+        "version": "ELRS Docs@5ed656b (2026-10-12)",
+        "ingested_at": "2026-10-25T20:13:33+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:33+0700",
+        "heading_path": "",
+        "excerpt": "---\ntemplate: main.html\ndescription: ExpressLRS Init Rate or the Packet Rate that the receiver will start checking for the Sync Packet.\n---\n\n![Info Banner](https://raw.githubusercontent.com/ExpressLRS/ExpressLRS-Hardware/master/img/information.png)",
+        "untrusted": true,
+        "text": "---\ntemplate: main.html\ndescription: ExpressLRS Init Rate or the Packet Rate that the receiver will start checking for the Sync Packet.\n---\n\n![Info Banner](https://raw.githubusercontent.com/ExpressLRS/ExpressLRS-Hardware/master/img/information.png)",
+        "served_from": "index"
+      }
+    }
+  }
+}

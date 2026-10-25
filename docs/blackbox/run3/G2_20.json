@@ -1,0 +1,59 @@
+{
+  "case": "G2_20",
+  "note": "same content as the C/D hit for ardupilot#3c7f21ff1b03742a",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#3c7f21ff1b03742a"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1020,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#3c7f21ff1b03742a"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.2,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#3c7f21ff1b03742a\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"AP_Arming.cpp\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L1849-L1939\",\n  \"path\": \"libraries/AP_Arming/AP_Arming.cpp\",\n  \"lines\": [\n    1849,\n    1939\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"libraries/AP_Arming/AP_Arming.cpp\",\n  \"excerpt\": \"    return false;\\n}\\n#endif  // AP_ARMING_CRASHDUMP_ACK_ENABLED\\n\\nbool AP_Arming::mandatory_checks(bool report)\\n{\\n    bool ret = true;\\n#if AP_OPENDRONEID_ENABLED\\n    ret &= opendroneid_checks(report);\\n#endif\\n    ret &= rc_in_calibration_check(report);\\n    ret &= serial_protocol_checks(report);\\n    return ret;\\n}\\n\\n//returns true if arming occurred successfully\\nbool AP_Arming::arm(AP_Arming::Method method, const bool do_arming_checks)\\n{\\n    if (armed) { //already armed\\n        return false;\\n    }\\n\\n    if (method == Method::RUDDER) {\\n        switch (get_rudder_arming_type()) {\\n        case AP_Arming\",\n  \"untrusted\": true,\n  \"text\": \"    return false;\\n}\\n#endif  // AP_ARMING_CRASHDUMP_ACK_ENABLED\\n\\nbool AP_Arming::mandatory_checks(bool report)\\n{\\n    bool ret = true;\\n#if AP_OPENDRONEID_ENABLED\\n    ret &= opendroneid_checks(report);\\n#endif\\n    ret &= rc_in_calibration_check(report);\\n    ret &= serial_protocol_checks(report);\\n    return ret;\\n}\\n\\n//returns true if arming occurred successfully\\nbool AP_Arming::arm(AP_Arming::Method method, const bool do_arming_checks)\\n{\\n    if (armed) { //already armed\\n        return false;\\n    }\\n\\n    if (method == Method::RUDDER) {\\n        switch (get_rudder_arming_type()) {\\n        case AP_Arming::RudderArming::IS_DISABLED:\\n            //parameter disallows rudder arming/disabling\\n            return false;\\n        case AP_Arming::RudderArming::ARMONLY:\\n        case AP_Arming::RudderArming::ARMDISARM:\\n            break;\\n        }\\n    }\\n\\n    running_arming_checks = true;  // so we show Arm: rather than Disarm: in messages\\n\\n    if ((!do_arming_checks && mandatory_checks(true)) || (pre_arm_checks(true) && arm_checks(method))) {\\n        armed = true;\\n        last_arm_time_us = AP_HAL::micros64();\\n\\n        _last_arm_method = method;\\n\\n#if HAL_LOGGING_ENABLED\\n        Log_Write_Arm(!do_arming_checks, method); // note Log_Write_Armed takes forced not do_arming_checks\\n#endif\\n\\n    } else {\\n#if HAL_LOGGING_ENABLED\\n        AP::logger().arming_failure();\\n#endif\\n        armed = false;\\n    }\\n\\n    running_arming_checks = false;\\n\\n    if (armed && do_arming_checks && should_skip_all_checks()) {\\n        GCS_SEND_TEXT(MAV_SEVERITY_WARNING, \\\"Warning: Arming Checks Disabled\\\");\\n    }\\n    \\n#if HAL_GYROFFT_ENABLED\\n    // make sure the FFT subsystem is enabled if arming checks have been disabled\\n    AP_GyroFFT *fft = AP::fft();\\n    if (fft != nullptr) {\\n        fft->prepare_for_arming();\\n    }\\n#endif\\n\\n#if AP_TERRAIN_AVAILABLE\\n    if (armed) {\\n        // tell terrain we have just armed, so it can setup\\n        // a reference location for terrain adjustment\\n        auto *terrain = AP::terrain();\\n        if (terrain != nullptr) {\\n            terrain->set_reference_location();\\n        }\\n    }\\n#endif\\n\\n#if AP_FENCE_ENABLED\\n    if (armed) {\\n        auto *fence = AP::fence();\\n        if (fence != nullptr) {\\n            fence->auto_enable_fence_on_arming();\\n        }\\n    }\\n#endif\\n#if defined(HAL_ARM_GPIO_PIN)\\n    update_arm_gpio();\\n#endif\\n    return armed;\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#3c7f21ff1b03742a",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "AP_Arming.cpp",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L1849-L1939",
+        "path": "libraries/AP_Arming/AP_Arming.cpp",
+        "lines": [
+          1849,
+          1939
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "libraries/AP_Arming/AP_Arming.cpp",
+        "excerpt": "    return false;\n}\n#endif  // AP_ARMING_CRASHDUMP_ACK_ENABLED\n\nbool AP_Arming::mandatory_checks(bool report)\n{\n    bool ret = true;\n#if AP_OPENDRONEID_ENABLED\n    ret &= opendroneid_checks(report);\n#endif\n    ret &= rc_in_calibration_check(report);\n    ret &= serial_protocol_checks(report);\n    return ret;\n}\n\n//returns true if arming occurred successfully\nbool AP_Arming::arm(AP_Arming::Method method, const bool do_arming_checks)\n{\n    if (armed) { //already armed\n        return false;\n    }\n\n    if (method == Method::RUDDER) {\n        switch (get_rudder_arming_type()) {\n        case AP_Arming",
+        "untrusted": true,
+        "text": "    return false;\n}\n#endif  // AP_ARMING_CRASHDUMP_ACK_ENABLED\n\nbool AP_Arming::mandatory_checks(bool report)\n{\n    bool ret = true;\n#if AP_OPENDRONEID_ENABLED\n    ret &= opendroneid_checks(report);\n#endif\n    ret &= rc_in_calibration_check(report);\n    ret &= serial_protocol_checks(report);\n    return ret;\n}\n\n//returns true if arming occurred successfully\nbool AP_Arming::arm(AP_Arming::Method method, const bool do_arming_checks)\n{\n    if (armed) { //already armed\n        return false;\n    }\n\n    if (method == Method::RUDDER) {\n        switch (get_rudder_arming_type()) {\n        case AP_Arming::RudderArming::IS_DISABLED:\n            //parameter disallows rudder arming/disabling\n            return false;\n        case AP_Arming::RudderArming::ARMONLY:\n        case AP_Arming::RudderArming::ARMDISARM:\n            break;\n        }\n    }\n\n    running_arming_checks = true;  // so we show Arm: rather than Disarm: in messages\n\n    if ((!do_arming_checks && mandatory_checks(true)) || (pre_arm_checks(true) && arm_checks(method))) {\n        armed = true;\n        last_arm_time_us = AP_HAL::micros64();\n\n        _last_arm_method = method;\n\n#if HAL_LOGGING_ENABLED\n        Log_Write_Arm(!do_arming_checks, method); // note Log_Write_Armed takes forced not do_arming_checks\n#endif\n\n    } else {\n#if HAL_LOGGING_ENABLED\n        AP::logger().arming_failure();\n#endif\n        armed = false;\n    }\n\n    running_arming_checks = false;\n\n    if (armed && do_arming_checks && should_skip_all_checks()) {\n        GCS_SEND_TEXT(MAV_SEVERITY_WARNING, \"Warning: Arming Checks Disabled\");\n    }\n    \n#if HAL_GYROFFT_ENABLED\n    // make sure the FFT subsystem is enabled if arming checks have been disabled\n    AP_GyroFFT *fft = AP::fft();\n    if (fft != nullptr) {\n        fft->prepare_for_arming();\n    }\n#endif\n\n#if AP_TERRAIN_AVAILABLE\n    if (armed) {\n        // tell terrain we have just armed, so it can setup\n        // a reference location for terrain adjustment\n        auto *terrain = AP::terrain();\n        if (terrain != nullptr) {\n            terrain->set_reference_location();\n        }\n    }\n#endif\n\n#if AP_FENCE_ENABLED\n    if (armed) {\n        auto *fence = AP::fence();\n        if (fence != nullptr) {\n            fence->auto_enable_fence_on_arming();\n        }\n    }\n#endif\n#if defined(HAL_ARM_GPIO_PIN)\n    update_arm_gpio();\n#endif\n    return armed;\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

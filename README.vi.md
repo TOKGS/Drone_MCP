@@ -464,7 +464,7 @@ python scripts\mutation_check.py                        # điểm mutation
 Mutant M12 được xếp là tương đương thay vì tính điểm: mệnh đề "Value 0 ... disable"
 trong bộ lọc excerpt trùng tác dụng với các mẫu `dangerous_excerpt` trong `safety_rules.yaml`,
 nên không test nào phân biệt được nó với bản gốc.
-| blackbox run2, 108 case đóng băng | 92 pass, 16 fail, 0 hồi quy so với run1 |
+| blackbox, 108 case đóng băng | run2 92 pass / 16 fail, run3 93 / 15 sau khi sửa chọn chunk, 0 hồi quy, 3 lần chạy payload giống nhau |
 | tất định của khâu chấm | 5 script chạy hai lần, output byte-identical |
 | `check_readmes.py` | PASS |
 | `bench.py` | search p50 58,5 ms, p95 186 ms, ngân sách 400 ms, PASS |
@@ -489,11 +489,15 @@ tính điểm. Hash ở `docs/heldout*.sha256`, evaluator từ chối chạy n�
 
 Một người kiểm thử độc lập đóng băng 108 case mức tool (`tests/blackbox_cases.md`, SHA-256
 `1b53e69…dcaf27`), chạy qua một phiên stdio và viết `docs/blackbox/REPORT.md`, kết quả 80 pass và 28
-fail. Sau vòng sửa lỗi trong `docs/FIX_REPORT.md`, đúng bộ case đó chạy lại một lần vào
-`docs/blackbox/run2/`: 92 pass và 16 fail, không case nào từ pass thành fail, 12 case được sửa.
+fail. Sau vòng sửa lỗi trong `docs/FIX_REPORT.md`, đúng bộ case đó chạy lại vào `docs/blackbox/run2/`:
+92 pass, 16 fail, không case nào từ pass thành fail, 12 case được sửa.
 
-16 case còn lại chia thành 6 lỗi tool và 10 case có kỳ vọng đóng băng sai (một chuỗi hex thiếu
-nibble, một tham số không tồn tại ở tag, và những kỳ vọng coi `source_id` như phần của path). Bảng
+Sau khi sửa bước chọn chunk, bộ đó chạy lần thứ ba, ba lần liên tiếp: 93 pass, 15 fail, vẫn không hồi
+quy, và cả 110 payload giống nhau giữa ba lần. Bảng điểm và 17 payload khác run2 nằm ở
+`docs/blackbox/run3/comparison.md`.
+
+15 case còn lại chia thành 5 lỗi tool và 10 case có kỳ vọng đóng băng sai (một chuỗi hex thiếu
+nibble, tham số không tồn tại ở tag, và những kỳ vọng coi `source_id` như phần của path). Bảng
 so sánh 108 dòng kèm output thô ở `docs/blackbox/run2/comparison.md`.
 
 Năm script chấm điểm cũng được chạy hai lần trên cùng raw và cho kết quả byte-identical, nên verdict
@@ -615,7 +619,8 @@ v0.1.0, lượt hoàn chỉnh đầu tiên, 2026-10-25.
   ngoài kho trả `found:false`, và trừ điểm code simulator khi xếp hạng.
 - `decode_crsf_frame` báo `frames_found`, trả `all_crc_valid:null` khi không có frame, báo
   `truncated_tail_bytes`, và quy micro giây bằng phép chia cắt về 0 kiểu C, nên tick 172 cho 988.
-- Chạy lại blackbox độc lập trên 108 case đóng băng: 92 pass, không hồi quy, khâu chấm tất định.
+- Chạy lại blackbox độc lập trên 108 case đóng băng: 92 pass ở run2, 93 ở run3, không hồi quy, ba
+  lần chạy cho payload giống nhau.
 - Wiring client đã chứng minh trong hai client thật: Claude Code kết nối và liệt kê 14 tool (user
   scope báo `√ Connected`), và một phiên OpenCode với model miễn phí đã gọi `lookup_param` rồi trả lời
   từ citation.

@@ -1,0 +1,229 @@
+{
+  "case": "F_UNICODE",
+  "note": "emoji + Vietnamese: no crash",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "🚁 tín hiệu CRSF bị mất 😀"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 83,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "🚁 tín hiệu CRSF bị mất 😀"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 73.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"🚁 tín hiệu CRSF bị mất 😀\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"expresslrs#36cc06e0835691be\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_protocol.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L89-L126\",\n      \"path\": \"src/include/crsf_protocol.h\",\n      \"lines\": [\n        89,\n        126\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/include/crsf_protocol.h\",\n      \"excerpt\": \"    CRSF_FRAMETYPE_ARDUPILOT_RESP = 0x80,\\n} crsf_frame_type_e;\\n\\ntypedef enum : uint8_t {\\n    CRSF_COMMAND_SUBCMD_RX = 0x10\\n} crsf_command_e;\\n\\ntypedef enum : uint8_t {\\n    CRSF_COMMAND_SUBCMD_RX_BIND = 0x01,\\n    CRSF_COMMAND_MODEL_SELECT_ID = 0x05,\\n    CRSF_HANDSET_SUBCMD_TIMING = 0x10,\\n} crsf_subcommand_e;\\n\\nenum {\\n    CRSF_FRAME_TX_MSP_FRAME_SIZE = 58,\\n    CRSF_FRAME_RX_MSP_FRAME_SIZE = 8,\\n    CRSF_FRAME_ORIGIN_DEST_SIZE = 2,\\n};\\n\\ntypedef enum : uint8_t\\n{\\n    CRSF_ADDRESS_BROADCAST = 0x00,\\n    CRSF_ADDRESS_USB = 0x10,\\n    CRSF_ADDRESS_BLUETOOTH_WIFI = 0x12,\\n    CRSF_ADDRESS_TBS_CORE_PNP_PRO = 0\",\n      \"untrusted\": true,\n      \"score\": -29.3188\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#9f2398beafc0908f\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-future-wiki-changes.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-future-wiki-changes.rst#L58-L60\",\n      \"path\": \"common/source/docs/common-future-wiki-changes.rst\",\n      \"lines\": [\n        58,\n        60\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"New Features\",\n      \"excerpt\": \"- MAVLink 2.1 32-bit system IDs: MAV_SYSID, MAV_GCS_SYSID(_HI), FOLL_SYSID and MNTx_SYSID_DFLT accept values up to 4294967295, and SD-card Lua MAVLink modules must be updated, see https://github.com/ArduPilot/ardupilot_wiki/pull/8149\\n- CRSF/ELRS on an F4/F7 UART without RX DMA now gives a repeating GCS warning while disarmed, see https://github.com/ArduPilot/ardupilot_wiki/pull/8151\\n- Duplicate RCx_OPTION and mode channel/RCx_OPTION conflicts are now reported as pre-arm failures while disarmed, even with no RC input, and are only skipped by the ARMING_SKIPCHK RC bit, see https://github.com/Ard\",\n      \"untrusted\": true,\n      \"score\": -16.5796\n    },\n    {\n      \"cite_id\": \"expresslrs#a4f74f644518dbbd\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_switches.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/test/test_ota/test_switches.cpp#L59-L88\",\n      \"path\": \"src/test/test_ota/test_switches.cpp\",\n      \"lines\": [\n        59,\n        88\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/test/test_ota/test_switches.cpp\",\n      \"excerpt\": \"    TEST_ASSERT_EQUAL(CRSF_CHANNEL_VALUE_2000, Crsf_to_Uint10_to_Crsf(CRSF_CHANNEL_VALUE_2000));\\n    TEST_ASSERT_EQUAL(CRSF_CHANNEL_VALUE_STD_MAX,  Crsf_to_Uint10_to_Crsf(CRSF_CHANNEL_VALUE_STD_MAX));\\n}\\n\\nvoid test_crsfToBit()\\n{\\n    TEST_ASSERT_EQUAL(0, CRSF_to_BIT(CRSF_CHANNEL_VALUE_1000));\\n    TEST_ASSERT_EQUAL(1, CRSF_to_BIT(CRSF_CHANNEL_VALUE_2000));\\n}\\n\\nvoid test_bitToCrsf()\\n{\\n    TEST_ASSERT_EQUAL(CRSF_CHANNEL_VALUE_1000, BIT_to_CRSF(0));\\n    TEST_ASSERT_EQUAL(CRSF_CHANNEL_VALUE_2000, BIT_to_CRSF(1));\\n}\\n\\nvoid test_crsfToN()\\n{\\n    TEST_ASSERT_EQUAL(0, CRSF_to_N(CRSF_CHANNEL_VALUE_STD_MIN, 6\",\n      \"untrusted\": true,\n      \"score\": -14.7314\n    },\n    {\n      \"cite_id\": \"ardupilot#6aaf132b9c2880bd\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RangeFinder_VL53L1X.h\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RangeFinder/AP_RangeFinder_VL53L1X.h#L579-L610\",\n      \"path\": \"libraries/AP_RangeFinder/AP_RangeFinder_VL53L1X.h\",\n      \"lines\": [\n        579,\n        610\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_RangeFinder/AP_RangeFinder_VL53L1X.h\",\n      \"excerpt\": \"        PATCH__OFFSET_4                                                            = 0x047E,\\n        PATCH__OFFSET_4_HI                                                         = 0x047E,\\n        PATCH__OFFSET_4_LO                                                         = 0x047F,\\n        PATCH__OFFSET_5                                                            = 0x0480,\\n        PATCH__OFFSET_5_HI                                                         = 0x0480,\\n        PATCH__OFFSET_5_LO                                                         = 0x0481,\\n        PATCH__OFFSET_6                   \",\n      \"untrusted\": true,\n      \"score\": -12.9496\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#985d491107cab2d4\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"fpv-plane.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/fpv-plane.rst#L113-L131\",\n      \"path\": \"plane/source/docs/fpv-plane.rst\",\n      \"lines\": [\n        113,\n        131\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Basic FPV Plane > Setup\",\n      \"excerpt\": \"SW1  -  SW2  -  Mode\\n  \\nHi   -  Hi   -  Auto\\n  \\nHi   -  Mid  -  AutoTune (then Loiter after autotuning)\\n  \\nHi   -  Lo   -  Manual\\n  \\nLo   -  Hi   -  Cruise\\n  \\nLo   -  Mid  -  Stabilize (or FBWA)\\n  \\nLo   -  Lo   -  Manual (low on SW2 ALWAYS drives Manual - that's your bailout!)\\n\\nSet these up in the Flight Modes subtab under SETUP -> Mandatory Hardware.\\n\\nAfter initial flights and tuning, you can change modes to whatever are desired.\\n\\n-  Accel Calibration\",\n      \"untrusted\": true,\n      \"score\": -12.5792\n    },\n    {\n      \"cite_id\": \"ardupilot#86b4d47f4d98bda1\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"div1000.h\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/div1000.h#L1-L26\",\n      \"path\": \"libraries/AP_Math/div1000.h\",\n      \"lines\": [\n        1,\n        26\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Math/div1000.h\",\n      \"excerpt\": \"/*\\n  return 64 bit x / 1000\\n  faster than the normal gcc implementation using by about 3x\\n  With thanks to https://0x414b.com/2021/04/16/arm-division.html\\n  and https://stackoverflow.com/questions/74765410/multiply-two-uint64-ts-and-store-result-to-uint64-t-doesnt-seem-to-work\\n*/\\nstatic inline uint64_t uint64_div1000(uint64_t x)\\n{\\n    x >>= 3U;\\n    uint64_t a_lo = (uint32_t)x;\\n    uint64_t a_hi = x >> 32;\\n    const uint64_t b_lo = 0xe353f7cfU;\\n    const uint64_t b_hi = 0x20c49ba5U;\\n\\n    uint64_t a_x_b_hi = a_hi * b_hi;\\n    uint64_t a_x_b_mid = a_hi * b_lo;\\n    uint64_t b_x_a_mid = b_hi * a_lo;\",\n      \"untrusted\": true,\n      \"score\": -12.1717\n    },\n    {\n      \"cite_id\": \"ardupilot#5b7d6a3151e5263c\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"blheli_4way_protocol.h\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_BLHeli/blheli_4way_protocol.h#L76-L94\",\n      \"path\": \"libraries/AP_BLHeli/blheli_4way_protocol.h\",\n      \"lines\": [\n        76,\n        94\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_BLHeli/blheli_4way_protocol.h\",\n      \"excerpt\": \"// PARAM: uint8_t ADRESS_Hi + ADRESS_Lo + BuffLen[0..255]\\n// RETURN: PARAM: uint8_t ADRESS_Hi + ADRESS_Lo + BUffLen + Buffer[0..255] ACK\\n\\n// Write to Buffer for Device Memory of connected Device // Buffer Len is Max 256 Bytes\\n// BuffLen = 0 means 256 Bytes\\n#define cmd_DeviceWrite 0x3B    // ';' write\\n// PARAM: uint8_t ADRESS_Hi + ADRESS_Lo + BUffLen + Buffer[0..255]\\n// RETURN: ACK\\n\\n// Set C2CK low infinite ) permanent Reset state\\n#define cmd_DeviceC2CK_LOW 0x3C // '<'\\n// RETURN: ACK\\n\\n// Read to Buffer from Device Memory of connected Device //Buffer Len is Max 256 Bytes\\n// BuffLen = 0 means 256\",\n      \"untrusted\": true,\n      \"score\": -11.536\n    }\n  ],\n  \"candidates\": [\n    \"expresslrs#36cc06e0835691be\",\n    \"ardupilot_wiki#9f2398beafc0908f\",\n    \"expresslrs#a4f74f644518dbbd\",\n    \"ardupilot#6aaf132b9c2880bd\",\n    \"ardupilot_wiki#985d491107cab2d4\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 7\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "🚁 tín hiệu CRSF bị mất 😀",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "expresslrs#36cc06e0835691be",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_protocol.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L89-L126",
+            "path": "src/include/crsf_protocol.h",
+            "lines": [
+              89,
+              126
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/include/crsf_protocol.h",
+            "excerpt": "    CRSF_FRAMETYPE_ARDUPILOT_RESP = 0x80,\n} crsf_frame_type_e;\n\ntypedef enum : uint8_t {\n    CRSF_COMMAND_SUBCMD_RX = 0x10\n} crsf_command_e;\n\ntypedef enum : uint8_t {\n    CRSF_COMMAND_SUBCMD_RX_BIND = 0x01,\n    CRSF_COMMAND_MODEL_SELECT_ID = 0x05,\n    CRSF_HANDSET_SUBCMD_TIMING = 0x10,\n} crsf_subcommand_e;\n\nenum {\n    CRSF_FRAME_TX_MSP_FRAME_SIZE = 58,\n    CRSF_FRAME_RX_MSP_FRAME_SIZE = 8,\n    CRSF_FRAME_ORIGIN_DEST_SIZE = 2,\n};\n\ntypedef enum : uint8_t\n{\n    CRSF_ADDRESS_BROADCAST = 0x00,\n    CRSF_ADDRESS_USB = 0x10,\n    CRSF_ADDRESS_BLUETOOTH_WIFI = 0x12,\n    CRSF_ADDRESS_TBS_CORE_PNP_PRO = 0",
+            "untrusted": true,
+            "score": -29.3188
+          },
+          {
+            "cite_id": "ardupilot_wiki#9f2398beafc0908f",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-future-wiki-changes.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-future-wiki-changes.rst#L58-L60",
+            "path": "common/source/docs/common-future-wiki-changes.rst",
+            "lines": [
+              58,
+              60
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "New Features",
+            "excerpt": "- MAVLink 2.1 32-bit system IDs: MAV_SYSID, MAV_GCS_SYSID(_HI), FOLL_SYSID and MNTx_SYSID_DFLT accept values up to 4294967295, and SD-card Lua MAVLink modules must be updated, see https://github.com/ArduPilot/ardupilot_wiki/pull/8149\n- CRSF/ELRS on an F4/F7 UART without RX DMA now gives a repeating GCS warning while disarmed, see https://github.com/ArduPilot/ardupilot_wiki/pull/8151\n- Duplicate RCx_OPTION and mode channel/RCx_OPTION conflicts are now reported as pre-arm failures while disarmed, even with no RC input, and are only skipped by the ARMING_SKIPCHK RC bit, see https://github.com/Ard",
+            "untrusted": true,
+            "score": -16.5796
+          },
+          {
+            "cite_id": "expresslrs#a4f74f644518dbbd",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_switches.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/test/test_ota/test_switches.cpp#L59-L88",
+            "path": "src/test/test_ota/test_switches.cpp",
+            "lines": [
+              59,
+              88
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/test/test_ota/test_switches.cpp",
+            "excerpt": "    TEST_ASSERT_EQUAL(CRSF_CHANNEL_VALUE_2000, Crsf_to_Uint10_to_Crsf(CRSF_CHANNEL_VALUE_2000));\n    TEST_ASSERT_EQUAL(CRSF_CHANNEL_VALUE_STD_MAX,  Crsf_to_Uint10_to_Crsf(CRSF_CHANNEL_VALUE_STD_MAX));\n}\n\nvoid test_crsfToBit()\n{\n    TEST_ASSERT_EQUAL(0, CRSF_to_BIT(CRSF_CHANNEL_VALUE_1000));\n    TEST_ASSERT_EQUAL(1, CRSF_to_BIT(CRSF_CHANNEL_VALUE_2000));\n}\n\nvoid test_bitToCrsf()\n{\n    TEST_ASSERT_EQUAL(CRSF_CHANNEL_VALUE_1000, BIT_to_CRSF(0));\n    TEST_ASSERT_EQUAL(CRSF_CHANNEL_VALUE_2000, BIT_to_CRSF(1));\n}\n\nvoid test_crsfToN()\n{\n    TEST_ASSERT_EQUAL(0, CRSF_to_N(CRSF_CHANNEL_VALUE_STD_MIN, 6",
+            "untrusted": true,
+            "score": -14.7314
+          },
+          {
+            "cite_id": "ardupilot#6aaf132b9c2880bd",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RangeFinder_VL53L1X.h",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RangeFinder/AP_RangeFinder_VL53L1X.h#L579-L610",
+            "path": "libraries/AP_RangeFinder/AP_RangeFinder_VL53L1X.h",
+            "lines": [
+              579,
+              610
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_RangeFinder/AP_RangeFinder_VL53L1X.h",
+            "excerpt": "        PATCH__OFFSET_4                                                            = 0x047E,\n        PATCH__OFFSET_4_HI                                                         = 0x047E,\n        PATCH__OFFSET_4_LO                                                         = 0x047F,\n        PATCH__OFFSET_5                                                            = 0x0480,\n        PATCH__OFFSET_5_HI                                                         = 0x0480,\n        PATCH__OFFSET_5_LO                                                         = 0x0481,\n        PATCH__OFFSET_6                   ",
+            "untrusted": true,
+            "score": -12.9496
+          },
+          {
+            "cite_id": "ardupilot_wiki#985d491107cab2d4",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "fpv-plane.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/fpv-plane.rst#L113-L131",
+            "path": "plane/source/docs/fpv-plane.rst",
+            "lines": [
+              113,
+              131
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Basic FPV Plane > Setup",
+            "excerpt": "SW1  -  SW2  -  Mode\n  \nHi   -  Hi   -  Auto\n  \nHi   -  Mid  -  AutoTune (then Loiter after autotuning)\n  \nHi   -  Lo   -  Manual\n  \nLo   -  Hi   -  Cruise\n  \nLo   -  Mid  -  Stabilize (or FBWA)\n  \nLo   -  Lo   -  Manual (low on SW2 ALWAYS drives Manual - that's your bailout!)\n\nSet these up in the Flight Modes subtab under SETUP -> Mandatory Hardware.\n\nAfter initial flights and tuning, you can change modes to whatever are desired.\n\n-  Accel Calibration",
+            "untrusted": true,
+            "score": -12.5792
+          },
+          {
+            "cite_id": "ardupilot#86b4d47f4d98bda1",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "div1000.h",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/div1000.h#L1-L26",
+            "path": "libraries/AP_Math/div1000.h",
+            "lines": [
+              1,
+              26
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Math/div1000.h",
+            "excerpt": "/*\n  return 64 bit x / 1000\n  faster than the normal gcc implementation using by about 3x\n  With thanks to https://0x414b.com/2021/04/16/arm-division.html\n  and https://stackoverflow.com/questions/74765410/multiply-two-uint64-ts-and-store-result-to-uint64-t-doesnt-seem-to-work\n*/\nstatic inline uint64_t uint64_div1000(uint64_t x)\n{\n    x >>= 3U;\n    uint64_t a_lo = (uint32_t)x;\n    uint64_t a_hi = x >> 32;\n    const uint64_t b_lo = 0xe353f7cfU;\n    const uint64_t b_hi = 0x20c49ba5U;\n\n    uint64_t a_x_b_hi = a_hi * b_hi;\n    uint64_t a_x_b_mid = a_hi * b_lo;\n    uint64_t b_x_a_mid = b_hi * a_lo;",
+            "untrusted": true,
+            "score": -12.1717
+          },
+          {
+            "cite_id": "ardupilot#5b7d6a3151e5263c",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "blheli_4way_protocol.h",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_BLHeli/blheli_4way_protocol.h#L76-L94",
+            "path": "libraries/AP_BLHeli/blheli_4way_protocol.h",
+            "lines": [
+              76,
+              94
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_BLHeli/blheli_4way_protocol.h",
+            "excerpt": "// PARAM: uint8_t ADRESS_Hi + ADRESS_Lo + BuffLen[0..255]\n// RETURN: PARAM: uint8_t ADRESS_Hi + ADRESS_Lo + BUffLen + Buffer[0..255] ACK\n\n// Write to Buffer for Device Memory of connected Device // Buffer Len is Max 256 Bytes\n// BuffLen = 0 means 256 Bytes\n#define cmd_DeviceWrite 0x3B    // ';' write\n// PARAM: uint8_t ADRESS_Hi + ADRESS_Lo + BUffLen + Buffer[0..255]\n// RETURN: ACK\n\n// Set C2CK low infinite ) permanent Reset state\n#define cmd_DeviceC2CK_LOW 0x3C // '<'\n// RETURN: ACK\n\n// Read to Buffer from Device Memory of connected Device //Buffer Len is Max 256 Bytes\n// BuffLen = 0 means 256",
+            "untrusted": true,
+            "score": -11.536
+          }
+        ],
+        "candidates": [
+          "expresslrs#36cc06e0835691be",
+          "ardupilot_wiki#9f2398beafc0908f",
+          "expresslrs#a4f74f644518dbbd",
+          "ardupilot#6aaf132b9c2880bd",
+          "ardupilot_wiki#985d491107cab2d4"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 7
+      }
+    }
+  }
+}

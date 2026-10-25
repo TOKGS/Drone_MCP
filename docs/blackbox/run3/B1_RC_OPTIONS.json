@@ -1,0 +1,148 @@
+{
+  "case": "B1_RC_OPTIONS",
+  "note": "found + description/default must match the pinned tag",
+  "tool": "lookup_param",
+  "arguments": {
+    "name_or_pattern": "RC_OPTIONS"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 32,
+    "method": "tools/call",
+    "params": {
+      "name": "lookup_param",
+      "arguments": {
+        "name_or_pattern": "RC_OPTIONS"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 50.4,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"RC_OPTIONS\",\n  \"vehicle\": \"ArduCopter\",\n  \"version_filter\": null,\n  \"resolved_by\": \"exact\",\n  \"params\": [\n    {\n      \"citation\": {\n        \"cite_id\": \"ardupilot#11fb2497e2a89d95\",\n        \"source_id\": \"ardupilot\",\n        \"repo\": \"ArduPilot/ardupilot\",\n        \"ref\": \"Copter-4.7.2\",\n        \"channel\": \"stable\",\n        \"unreleased\": false,\n        \"pinned\": true,\n        \"title\": \"RC_Channels_VarInfo.h\",\n        \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/RC_Channel/RC_Channels_VarInfo.h#L84-L117\",\n        \"path\": \"libraries/RC_Channel/RC_Channels_VarInfo.h\",\n        \"lines\": [\n          84,\n          117\n        ],\n        \"version\": \"Copter-4.7.2\",\n        \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n        \"tier\": \"T1\",\n        \"license\": \"GPL-3.0\",\n        \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n        \"heading_path\": \"libraries/RC_Channel/RC_Channels_VarInfo.h\",\n        \"excerpt\": \"    // @Param: _OPTIONS\\n    // @DisplayName: RC options\\n    // @Description: RC input options\\n    // @User: Advanced\\n    // @Bitmask: 0:Ignore RC Receiver, 1:Ignore MAVLink Overrides, 2:Ignore Receiver Failsafe bit but allow other RC failsafes if setup, 3:FPort Pad, 4:Log RC input bytes, 5:Arming check throttle for 0 input, 6:Skip the arming check for neutral Roll/Pitch/Yaw sticks, 7:Allow Switch reverse, 8:Use passthrough for CRSF telemetry, 9:Suppress CRSF mode/rate message for ELRS systems,10:Enable multiple receiver support, 11:Use Link Quality for RSSI with CRSF, 12:Annotate CRSF flight m\",\n        \"untrusted\": true,\n        \"excerpt_starts_at_line\": 92\n      },\n      \"name\": \"RC_OPTIONS\",\n      \"name_raw\": \"_OPTIONS\",\n      \"name_suffix\": \"OPTIONS\",\n      \"prefix\": \"RC\",\n      \"prefix_origin\": \"ArduCopter/Parameters.cpp:692\",\n      \"display_name\": \"RC options\",\n      \"description\": \"RC input options\",\n      \"vehicle\": \"shared\",\n      \"version\": \"Copter-4.7.2\",\n      \"units\": null,\n      \"range\": null,\n      \"default_raw\": \"(uint32_t)RC_Channels::Option::ARMING_CHECK_THROTTLE\",\n      \"default\": 32.0,\n      \"default_resolved\": true,\n      \"reboot_required\": false,\n      \"values\": null,\n      \"bitmask\": [\n        {\n          \"bit\": 0,\n          \"name\": \"Ignore RC Receiver\"\n        },\n        {\n          \"bit\": 1,\n          \"name\": \"Ignore MAVLink Overrides\"\n        },\n        {\n          \"bit\": 2,\n          \"name\": \"Ignore Receiver Failsafe bit but allow other RC failsafes if setup\"\n        },\n        {\n          \"bit\": 3,\n          \"name\": \"FPort Pad\"\n        },\n        {\n          \"bit\": 4,\n          \"name\": \"Log RC input bytes\"\n        },\n        {\n          \"bit\": 5,\n          \"name\": \"Arming check throttle for 0 input\"\n        },\n        {\n          \"bit\": 6,\n          \"name\": \"Skip the arming check for neutral Roll/Pitch/Yaw sticks\"\n        },\n        {\n          \"bit\": 7,\n          \"name\": \"Allow Switch reverse\"\n        },\n        {\n          \"bit\": 8,\n          \"name\": \"Use passthrough for CRSF telemetry\"\n        },\n        {\n          \"bit\": 9,\n          \"name\": \"Suppress CRSF mode/rate message for ELRS systems\"\n        },\n        {\n          \"bit\": 10,\n          \"name\": \"Enable multiple receiver support\"\n        },\n        {\n          \"bit\": 11,\n          \"name\": \"Use Link Quality for RSSI with CRSF\"\n        },\n        {\n          \"bit\": 12,\n          \"name\": \"Annotate CRSF flight mode with * on disarm\"\n        },\n        {\n          \"bit\": 13,\n          \"name\": \"Use 420kbaud for ELRS protocol\"\n        }\n      ],\n      \"resolved_by\": \"exact\"\n    }\n  ],\n  \"candidates\": [\n    \"RC_OPTIONS\"\n  ],\n  \"note\": null\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "RC_OPTIONS",
+        "vehicle": "ArduCopter",
+        "version_filter": null,
+        "resolved_by": "exact",
+        "params": [
+          {
+            "citation": {
+              "cite_id": "ardupilot#11fb2497e2a89d95",
+              "source_id": "ardupilot",
+              "repo": "ArduPilot/ardupilot",
+              "ref": "Copter-4.7.2",
+              "channel": "stable",
+              "unreleased": false,
+              "pinned": true,
+              "title": "RC_Channels_VarInfo.h",
+              "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/RC_Channel/RC_Channels_VarInfo.h#L84-L117",
+              "path": "libraries/RC_Channel/RC_Channels_VarInfo.h",
+              "lines": [
+                84,
+                117
+              ],
+              "version": "Copter-4.7.2",
+              "ingested_at": "2026-10-25T20:13:02+0700",
+              "tier": "T1",
+              "license": "GPL-3.0",
+              "retrieved_at": "2026-10-25T20:13:02+0700",
+              "heading_path": "libraries/RC_Channel/RC_Channels_VarInfo.h",
+              "excerpt": "    // @Param: _OPTIONS\n    // @DisplayName: RC options\n    // @Description: RC input options\n    // @User: Advanced\n    // @Bitmask: 0:Ignore RC Receiver, 1:Ignore MAVLink Overrides, 2:Ignore Receiver Failsafe bit but allow other RC failsafes if setup, 3:FPort Pad, 4:Log RC input bytes, 5:Arming check throttle for 0 input, 6:Skip the arming check for neutral Roll/Pitch/Yaw sticks, 7:Allow Switch reverse, 8:Use passthrough for CRSF telemetry, 9:Suppress CRSF mode/rate message for ELRS systems,10:Enable multiple receiver support, 11:Use Link Quality for RSSI with CRSF, 12:Annotate CRSF flight m",
+              "untrusted": true,
+              "excerpt_starts_at_line": 92
+            },
+            "name": "RC_OPTIONS",
+            "name_raw": "_OPTIONS",
+            "name_suffix": "OPTIONS",
+            "prefix": "RC",
+            "prefix_origin": "ArduCopter/Parameters.cpp:692",
+            "display_name": "RC options",
+            "description": "RC input options",
+            "vehicle": "shared",
+            "version": "Copter-4.7.2",
+            "units": null,
+            "range": null,
+            "default_raw": "(uint32_t)RC_Channels::Option::ARMING_CHECK_THROTTLE",
+            "default": 32.0,
+            "default_resolved": true,
+            "reboot_required": false,
+            "values": null,
+            "bitmask": [
+              {
+                "bit": 0,
+                "name": "Ignore RC Receiver"
+              },
+              {
+                "bit": 1,
+                "name": "Ignore MAVLink Overrides"
+              },
+              {
+                "bit": 2,
+                "name": "Ignore Receiver Failsafe bit but allow other RC failsafes if setup"
+              },
+              {
+                "bit": 3,
+                "name": "FPort Pad"
+              },
+              {
+                "bit": 4,
+                "name": "Log RC input bytes"
+              },
+              {
+                "bit": 5,
+                "name": "Arming check throttle for 0 input"
+              },
+              {
+                "bit": 6,
+                "name": "Skip the arming check for neutral Roll/Pitch/Yaw sticks"
+              },
+              {
+                "bit": 7,
+                "name": "Allow Switch reverse"
+              },
+              {
+                "bit": 8,
+                "name": "Use passthrough for CRSF telemetry"
+              },
+              {
+                "bit": 9,
+                "name": "Suppress CRSF mode/rate message for ELRS systems"
+              },
+              {
+                "bit": 10,
+                "name": "Enable multiple receiver support"
+              },
+              {
+                "bit": 11,
+                "name": "Use Link Quality for RSSI with CRSF"
+              },
+              {
+                "bit": 12,
+                "name": "Annotate CRSF flight mode with * on disarm"
+              },
+              {
+                "bit": 13,
+                "name": "Use 420kbaud for ELRS protocol"
+              }
+            ],
+            "resolved_by": "exact"
+          }
+        ],
+        "candidates": [
+          "RC_OPTIONS"
+        ],
+        "note": null
+      }
+    }
+  }
+}

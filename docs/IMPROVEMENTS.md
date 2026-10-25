@@ -22,6 +22,7 @@ query "CRC8 polynomial CRSF"
   after : crsf_spec/crsf.md rank 3, excerpt contains 0xD5 and not 0xBA
 golden    recall@5 1.000  P@1 0.767  MRR 0.859   (unchanged)
 heldout_v3 recall@5 0.933  P@1 0.833  MRR 0.868   (unchanged)
+blackbox  run2 92/16  ->  run3 93/15, three repeats with identical payloads
 ```
 
 Three frozen blackbox cases still miss (`C4`, `C10`, `C11`). Fixing those needs a wider retrieval set

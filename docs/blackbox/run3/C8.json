@@ -1,0 +1,181 @@
+{
+  "case": "C8",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "arming checks",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 52,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "arming checks",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 31.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"arming checks\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot#892f2d5280446f4f\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"arming-checks.md\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.md#L3-L7\",\n      \"path\": \"libraries/AP_Scripting/applets/arming-checks.md\",\n      \"lines\": [\n        3,\n        7\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"arming-checks\",\n      \"excerpt\": \"This script implements user defined pre-arm and arming checks. Checks\\ncan be warnings or errors. Warnings don't prevent arming but will display\\non the ground station, whereas errors will prevent arming.\\n\\nAdditional arming checks can be added by adding a method that returns true/false (true = arming ok), and defining the check, including the parameter it uses in the method arming_checks().\",\n      \"untrusted\": true,\n      \"score\": -29.0741\n    },\n    {\n      \"cite_id\": \"ardupilot#5464a2453091b155\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"arming-checks.lua\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L366-L386\",\n      \"path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n      \"lines\": [\n        366,\n        386\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n      \"excerpt\": \"        i = i + 1\\n    until rally_location == nil\\n\\n    return true\\nend\\n\\n-- fail if there is a fence on the board, it must be enabled\\nlocal function geofence_present_enabled()\\n    if not fence_present() then\\n        return true\\n    end\\n    if (FENCE_ENABLE:get() == 1) or (FENCE_AUTOENABLE:get() > 0) then\\n        return true\\n    end\\n    return false\\nend\\n\\n-- Arming checks can be deleted if not required, or set the parameter to MAV_SEVERITY.NONE to avoid changing the script\\n-- or new arming checks added. The position/number of the check should not be changed. If you delete a check, do not renumber\",\n      \"untrusted\": true,\n      \"score\": -27.7389\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#f79818175f587926\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"arming-your-plane.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/arming-your-plane.rst#L57-L60\",\n      \"path\": \"plane/source/docs/arming-your-plane.rst\",\n      \"lines\": [\n        57,\n        60\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Arming Checks\",\n      \"excerpt\": \"Before allowing arming the autopilot checks a set of conditions. All\\nconditions must pass for arming to be allowed. If any condition fails\\nthen a message explaining what failed is set to the GCS. Any or all of the \\nPre-Arming Checks can be disabled, but it is not recommended. See the :ref:`common-prearm-safety-checks` topic for more information.\",\n      \"untrusted\": true,\n      \"score\": -26.9137\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#2b4535bb8e911dd1\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"arming.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/mavproxy/source/docs/uav_configuration/arming.rst#L50-L58\",\n      \"path\": \"mavproxy/source/docs/uav_configuration/arming.rst\",\n      \"lines\": [\n        50,\n        58\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Arming Checks\",\n      \"excerpt\": \"The individual arming checks can be enabled or disabled as per:\\n\\n.. code:: bash\\n\\n    arm check X\\n    arm uncheck X\\n    \\nWhere X can be: all, baro, compass, gps, ins, params, rc, voltage, battery, airspeed, \\nlogging, switch, gps_config, mission, rangefinder, system\",\n      \"untrusted\": true,\n      \"score\": -26.2706\n    },\n    {\n      \"cite_id\": \"ardupilot#3c7f21ff1b03742a\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_Arming.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L1849-L1939\",\n      \"path\": \"libraries/AP_Arming/AP_Arming.cpp\",\n      \"lines\": [\n        1849,\n        1939\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Arming/AP_Arming.cpp\",\n      \"excerpt\": \"    return false;\\n}\\n#endif  // AP_ARMING_CRASHDUMP_ACK_ENABLED\\n\\nbool AP_Arming::mandatory_checks(bool report)\\n{\\n    bool ret = true;\\n#if AP_OPENDRONEID_ENABLED\\n    ret &= opendroneid_checks(report);\\n#endif\\n    ret &= rc_in_calibration_check(report);\\n    ret &= serial_protocol_checks(report);\\n    return ret;\\n}\\n\\n//returns true if arming occurred successfully\\nbool AP_Arming::arm(AP_Arming::Method method, const bool do_arming_checks)\\n{\\n    if (armed) { //already armed\\n        return false;\\n    }\\n\\n    if (method == Method::RUDDER) {\\n        switch (get_rudder_arming_type()) {\\n        case AP_Arming\",\n      \"untrusted\": true,\n      \"score\": -20.2512\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot#892f2d5280446f4f\",\n    \"ardupilot#5464a2453091b155\",\n    \"ardupilot_wiki#f79818175f587926\",\n    \"ardupilot_wiki#2b4535bb8e911dd1\",\n    \"ardupilot#3c7f21ff1b03742a\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "arming checks",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot#892f2d5280446f4f",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "arming-checks.md",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.md#L3-L7",
+            "path": "libraries/AP_Scripting/applets/arming-checks.md",
+            "lines": [
+              3,
+              7
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "arming-checks",
+            "excerpt": "This script implements user defined pre-arm and arming checks. Checks\ncan be warnings or errors. Warnings don't prevent arming but will display\non the ground station, whereas errors will prevent arming.\n\nAdditional arming checks can be added by adding a method that returns true/false (true = arming ok), and defining the check, including the parameter it uses in the method arming_checks().",
+            "untrusted": true,
+            "score": -29.0741
+          },
+          {
+            "cite_id": "ardupilot#5464a2453091b155",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "arming-checks.lua",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L366-L386",
+            "path": "libraries/AP_Scripting/applets/arming-checks.lua",
+            "lines": [
+              366,
+              386
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Scripting/applets/arming-checks.lua",
+            "excerpt": "        i = i + 1\n    until rally_location == nil\n\n    return true\nend\n\n-- fail if there is a fence on the board, it must be enabled\nlocal function geofence_present_enabled()\n    if not fence_present() then\n        return true\n    end\n    if (FENCE_ENABLE:get() == 1) or (FENCE_AUTOENABLE:get() > 0) then\n        return true\n    end\n    return false\nend\n\n-- Arming checks can be deleted if not required, or set the parameter to MAV_SEVERITY.NONE to avoid changing the script\n-- or new arming checks added. The position/number of the check should not be changed. If you delete a check, do not renumber",
+            "untrusted": true,
+            "score": -27.7389
+          },
+          {
+            "cite_id": "ardupilot_wiki#f79818175f587926",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "arming-your-plane.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/arming-your-plane.rst#L57-L60",
+            "path": "plane/source/docs/arming-your-plane.rst",
+            "lines": [
+              57,
+              60
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Arming Checks",
+            "excerpt": "Before allowing arming the autopilot checks a set of conditions. All\nconditions must pass for arming to be allowed. If any condition fails\nthen a message explaining what failed is set to the GCS. Any or all of the \nPre-Arming Checks can be disabled, but it is not recommended. See the :ref:`common-prearm-safety-checks` topic for more information.",
+            "untrusted": true,
+            "score": -26.9137
+          },
+          {
+            "cite_id": "ardupilot_wiki#2b4535bb8e911dd1",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "arming.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/mavproxy/source/docs/uav_configuration/arming.rst#L50-L58",
+            "path": "mavproxy/source/docs/uav_configuration/arming.rst",
+            "lines": [
+              50,
+              58
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Arming Checks",
+            "excerpt": "The individual arming checks can be enabled or disabled as per:\n\n.. code:: bash\n\n    arm check X\n    arm uncheck X\n    \nWhere X can be: all, baro, compass, gps, ins, params, rc, voltage, battery, airspeed, \nlogging, switch, gps_config, mission, rangefinder, system",
+            "untrusted": true,
+            "score": -26.2706
+          },
+          {
+            "cite_id": "ardupilot#3c7f21ff1b03742a",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_Arming.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L1849-L1939",
+            "path": "libraries/AP_Arming/AP_Arming.cpp",
+            "lines": [
+              1849,
+              1939
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Arming/AP_Arming.cpp",
+            "excerpt": "    return false;\n}\n#endif  // AP_ARMING_CRASHDUMP_ACK_ENABLED\n\nbool AP_Arming::mandatory_checks(bool report)\n{\n    bool ret = true;\n#if AP_OPENDRONEID_ENABLED\n    ret &= opendroneid_checks(report);\n#endif\n    ret &= rc_in_calibration_check(report);\n    ret &= serial_protocol_checks(report);\n    return ret;\n}\n\n//returns true if arming occurred successfully\nbool AP_Arming::arm(AP_Arming::Method method, const bool do_arming_checks)\n{\n    if (armed) { //already armed\n        return false;\n    }\n\n    if (method == Method::RUDDER) {\n        switch (get_rudder_arming_type()) {\n        case AP_Arming",
+            "untrusted": true,
+            "score": -20.2512
+          }
+        ],
+        "candidates": [
+          "ardupilot#892f2d5280446f4f",
+          "ardupilot#5464a2453091b155",
+          "ardupilot_wiki#f79818175f587926",
+          "ardupilot_wiki#2b4535bb8e911dd1",
+          "ardupilot#3c7f21ff1b03742a"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

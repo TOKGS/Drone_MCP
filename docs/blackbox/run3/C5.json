@@ -1,0 +1,131 @@
+{
+  "case": "C5",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "RC_CHANNELS_OVERRIDE",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 49,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "RC_CHANNELS_OVERRIDE",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 262.5,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"RC_CHANNELS_OVERRIDE\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#67d980fae2058e1d\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"mavlink-rcinput.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/mavlink-rcinput.rst#L158-L162\",\n      \"path\": \"dev/source/docs/mavlink-rcinput.rst\",\n      \"lines\": [\n        158,\n        162\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"RC Input (aka Pilot Input) > RC_CHANNELS_OVERRIDE\",\n      \"excerpt\": \"| ``message RC_CHANNELS_OVERRIDE 0 0 1800 1500 1500 1500 0 0 0 0``                    | Set ch1 (roll) to 1800 (e.g. roll right)                 |\\n+-------------------------------------------------------------------------------------+----------------------------------------------------------+\\n| ``message RC_CHANNELS_OVERRIDE 0 0 1500 1200 1500 1500 0 0 0 0``                    | Set ch2 (pitch) to 1200 (e.g. pitch forward)             |\\n+-------------------------------------------------------------------------------------+----------------------------------------------------------+\\n| ``message \",\n      \"untrusted\": true,\n      \"score\": -27.0497\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#8a7a1139f96ffc71\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"mavlink-other-commands.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/mavlink-other-commands.rst#L61-L67\",\n      \"path\": \"dev/source/docs/mavlink-other-commands.rst\",\n      \"lines\": [\n        61,\n        67\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Other commands\",\n      \"excerpt\": \"- `RADIO <https://mavlink.io/en/messages/ardupilotmega.html#RADIO>`__\\n- `RADIO_STATUS <https://mavlink.io/en/messages/common.html#RADIO_STATUS>`__\\n- `RALLY_FETCH_POINT <https://mavlink.io/en/messages/ardupilotmega.html#RALLY_FETCH_POINT>`__\\n- `RALLY_POINT <https://mavlink.io/en/messages/ardupilotmega.html#RALLY_POINT>`__\\n- `RC_CHANNELS_OVERRIDE <https://mavlink.io/en/messages/common.html#RC_CHANNELS_OVERRIDE>`__\\n- `REQUEST_DATA_STREAM <https://mavlink.io/en/messages/common.html#REQUEST_DATA_STREAM>`__\\n- `REMOTE_LOG_BLOCK_STATUS <https://mavlink.io/en/messages/ardupilotmega.html#REMOTE_LOG_BLOC\",\n      \"untrusted\": true,\n      \"score\": -17.0419\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#267db3dc3e0b1137\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"ArduSub_MAVLink_Messages.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/sub/source/docs/ArduSub_MAVLink_Messages.rst#L101-L103\",\n      \"path\": \"sub/source/docs/ArduSub_MAVLink_Messages.rst\",\n      \"lines\": [\n        101,\n        103\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Incoming Messages\",\n      \"excerpt\": \"  #176,  `RALLY_FETCH_POINT <https://mavlink.io/en/messages/ardupilotmega.html#RALLY_FETCH_POINT>`_, `GCS_MAVLink/GCS_Common.cpp <https://github.com/ArduPilot/ardupilot/tree/master/libraries/GCS_MAVLink/GCS_Common.cpp>`_, ardupilotmega\\n  #175,  `RALLY_POINT <https://mavlink.io/en/messages/ardupilotmega.html#RALLY_POINT>`_, `GCS_MAVLink/GCS_Common.cpp <https://github.com/ArduPilot/ardupilot/tree/master/libraries/GCS_MAVLink/GCS_Common.cpp>`_, ardupilotmega\\n  #70,  `RC_CHANNELS_OVERRIDE <https://mavlink.io/en/messages/common.html#RC_CHANNELS_OVERRIDE>`_, `ArduSub/GCS_Mavlink.cpp <https://github.\",\n      \"untrusted\": true,\n      \"score\": -16.4943\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot_wiki#67d980fae2058e1d\",\n    \"ardupilot_wiki#8a7a1139f96ffc71\",\n    \"ardupilot_wiki#267db3dc3e0b1137\",\n    \"ardupilot_wiki#5ec5fa793339c242\",\n    \"ardupilot_wiki#5db0ce2906be6d3a\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 3\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "RC_CHANNELS_OVERRIDE",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot_wiki#67d980fae2058e1d",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "mavlink-rcinput.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/mavlink-rcinput.rst#L158-L162",
+            "path": "dev/source/docs/mavlink-rcinput.rst",
+            "lines": [
+              158,
+              162
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "RC Input (aka Pilot Input) > RC_CHANNELS_OVERRIDE",
+            "excerpt": "| ``message RC_CHANNELS_OVERRIDE 0 0 1800 1500 1500 1500 0 0 0 0``                    | Set ch1 (roll) to 1800 (e.g. roll right)                 |\n+-------------------------------------------------------------------------------------+----------------------------------------------------------+\n| ``message RC_CHANNELS_OVERRIDE 0 0 1500 1200 1500 1500 0 0 0 0``                    | Set ch2 (pitch) to 1200 (e.g. pitch forward)             |\n+-------------------------------------------------------------------------------------+----------------------------------------------------------+\n| ``message ",
+            "untrusted": true,
+            "score": -27.0497
+          },
+          {
+            "cite_id": "ardupilot_wiki#8a7a1139f96ffc71",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "mavlink-other-commands.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/mavlink-other-commands.rst#L61-L67",
+            "path": "dev/source/docs/mavlink-other-commands.rst",
+            "lines": [
+              61,
+              67
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Other commands",
+            "excerpt": "- `RADIO <https://mavlink.io/en/messages/ardupilotmega.html#RADIO>`__\n- `RADIO_STATUS <https://mavlink.io/en/messages/common.html#RADIO_STATUS>`__\n- `RALLY_FETCH_POINT <https://mavlink.io/en/messages/ardupilotmega.html#RALLY_FETCH_POINT>`__\n- `RALLY_POINT <https://mavlink.io/en/messages/ardupilotmega.html#RALLY_POINT>`__\n- `RC_CHANNELS_OVERRIDE <https://mavlink.io/en/messages/common.html#RC_CHANNELS_OVERRIDE>`__\n- `REQUEST_DATA_STREAM <https://mavlink.io/en/messages/common.html#REQUEST_DATA_STREAM>`__\n- `REMOTE_LOG_BLOCK_STATUS <https://mavlink.io/en/messages/ardupilotmega.html#REMOTE_LOG_BLOC",
+            "untrusted": true,
+            "score": -17.0419
+          },
+          {
+            "cite_id": "ardupilot_wiki#267db3dc3e0b1137",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "ArduSub_MAVLink_Messages.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/sub/source/docs/ArduSub_MAVLink_Messages.rst#L101-L103",
+            "path": "sub/source/docs/ArduSub_MAVLink_Messages.rst",
+            "lines": [
+              101,
+              103
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Incoming Messages",
+            "excerpt": "  #176,  `RALLY_FETCH_POINT <https://mavlink.io/en/messages/ardupilotmega.html#RALLY_FETCH_POINT>`_, `GCS_MAVLink/GCS_Common.cpp <https://github.com/ArduPilot/ardupilot/tree/master/libraries/GCS_MAVLink/GCS_Common.cpp>`_, ardupilotmega\n  #175,  `RALLY_POINT <https://mavlink.io/en/messages/ardupilotmega.html#RALLY_POINT>`_, `GCS_MAVLink/GCS_Common.cpp <https://github.com/ArduPilot/ardupilot/tree/master/libraries/GCS_MAVLink/GCS_Common.cpp>`_, ardupilotmega\n  #70,  `RC_CHANNELS_OVERRIDE <https://mavlink.io/en/messages/common.html#RC_CHANNELS_OVERRIDE>`_, `ArduSub/GCS_Mavlink.cpp <https://github.",
+            "untrusted": true,
+            "score": -16.4943
+          }
+        ],
+        "candidates": [
+          "ardupilot_wiki#67d980fae2058e1d",
+          "ardupilot_wiki#8a7a1139f96ffc71",
+          "ardupilot_wiki#267db3dc3e0b1137",
+          "ardupilot_wiki#5ec5fa793339c242",
+          "ardupilot_wiki#5db0ce2906be6d3a"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 3
+      }
+    }
+  }
+}

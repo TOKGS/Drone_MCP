@@ -1,0 +1,43 @@
+{
+  "case": "F_STAR",
+  "note": "no crash, <10s",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "*"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 78,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "*"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 15.7,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": false,\n  \"query\": \"*\",\n  \"results\": [],\n  \"candidates\": [],\n  \"scope_notes\": [],\n  \"confidence\": \"low\",\n  \"note\": \"query has no searchable tokens\",\n  \"result_count\": 0\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": false,
+        "query": "*",
+        "results": [],
+        "candidates": [],
+        "scope_notes": [],
+        "confidence": "low",
+        "note": "query has no searchable tokens",
+        "result_count": 0
+      }
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "case": "B1_FS_THR_ENABLE",
+  "note": "found + description/default must match the pinned tag",
+  "tool": "lookup_param",
+  "arguments": {
+    "name_or_pattern": "FS_THR_ENABLE"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 30,
+    "method": "tools/call",
+    "params": {
+      "name": "lookup_param",
+      "arguments": {
+        "name_or_pattern": "FS_THR_ENABLE"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 52.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"FS_THR_ENABLE\",\n  \"vehicle\": \"ArduCopter\",\n  \"version_filter\": null,\n  \"resolved_by\": \"exact\",\n  \"params\": [\n    {\n      \"citation\": {\n        \"cite_id\": \"ardupilot#aff614bd8d1d5b3d\",\n        \"source_id\": \"ardupilot\",\n        \"repo\": \"ArduPilot/ardupilot\",\n        \"ref\": \"Copter-4.7.2\",\n        \"channel\": \"stable\",\n        \"unreleased\": false,\n        \"pinned\": true,\n        \"title\": \"Parameters.cpp\",\n        \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L95-L145\",\n        \"path\": \"ArduCopter/Parameters.cpp\",\n        \"lines\": [\n          95,\n          145\n        ],\n        \"version\": \"Copter-4.7.2\",\n        \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n        \"tier\": \"T1\",\n        \"license\": \"GPL-3.0\",\n        \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n        \"heading_path\": \"ArduCopter/Parameters.cpp\",\n        \"excerpt\": \"    // @Param: FS_THR_ENABLE\\n    // @DisplayName: Throttle Failsafe Enable\\n    // @Description: The throttle failsafe allows you to configure a software failsafe activated by a setting on the throttle input channel\\n    // @Values:  0:Disabled,1:Enabled always RTL,2:Enabled Continue with Mission in Auto Mode (Removed in 4.0+),3:Enabled always Land,4:Enabled always SmartRTL or RTL,5:Enabled always SmartRTL or Land,6:Enabled Auto DO_LAND_START/DO_RETURN_PATH_START or RTL,7:Enabled always Brake or Land\\n    // @User: Standard\\n    GSCALAR(failsafe_throttle,  \\\"FS_THR_ENABLE\\\",   FS_THR_ENABLED_ALWAYS_\",\n        \"untrusted\": true,\n        \"excerpt_starts_at_line\": 124\n      },\n      \"name\": \"FS_THR_ENABLE\",\n      \"name_raw\": \"FS_THR_ENABLE\",\n      \"name_suffix\": \"FS_THR_ENABLE\",\n      \"prefix\": \"\",\n      \"prefix_origin\": \"ArduCopter/Parameters.cpp:1\",\n      \"display_name\": \"Throttle Failsafe Enable\",\n      \"description\": \"The throttle failsafe allows you to configure a software failsafe activated by a setting on the throttle input channel\",\n      \"vehicle\": \"ArduCopter\",\n      \"version\": \"Copter-4.7.2\",\n      \"units\": null,\n      \"range\": null,\n      \"default_raw\": \"FS_THR_ENABLED_ALWAYS_RTL\",\n      \"default\": 1.0,\n      \"default_resolved\": true,\n      \"reboot_required\": false,\n      \"values\": null,\n      \"bitmask\": null,\n      \"resolved_by\": \"exact\"\n    }\n  ],\n  \"candidates\": [\n    \"FS_THR_ENABLE\"\n  ],\n  \"note\": null\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "FS_THR_ENABLE",
+        "vehicle": "ArduCopter",
+        "version_filter": null,
+        "resolved_by": "exact",
+        "params": [
+          {
+            "citation": {
+              "cite_id": "ardupilot#aff614bd8d1d5b3d",
+              "source_id": "ardupilot",
+              "repo": "ArduPilot/ardupilot",
+              "ref": "Copter-4.7.2",
+              "channel": "stable",
+              "unreleased": false,
+              "pinned": true,
+              "title": "Parameters.cpp",
+              "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L95-L145",
+              "path": "ArduCopter/Parameters.cpp",
+              "lines": [
+                95,
+                145
+              ],
+              "version": "Copter-4.7.2",
+              "ingested_at": "2026-10-25T20:13:02+0700",
+              "tier": "T1",
+              "license": "GPL-3.0",
+              "retrieved_at": "2026-10-25T20:13:02+0700",
+              "heading_path": "ArduCopter/Parameters.cpp",
+              "excerpt": "    // @Param: FS_THR_ENABLE\n    // @DisplayName: Throttle Failsafe Enable\n    // @Description: The throttle failsafe allows you to configure a software failsafe activated by a setting on the throttle input channel\n    // @Values:  0:Disabled,1:Enabled always RTL,2:Enabled Continue with Mission in Auto Mode (Removed in 4.0+),3:Enabled always Land,4:Enabled always SmartRTL or RTL,5:Enabled always SmartRTL or Land,6:Enabled Auto DO_LAND_START/DO_RETURN_PATH_START or RTL,7:Enabled always Brake or Land\n    // @User: Standard\n    GSCALAR(failsafe_throttle,  \"FS_THR_ENABLE\",   FS_THR_ENABLED_ALWAYS_",
+              "untrusted": true,
+              "excerpt_starts_at_line": 124
+            },
+            "name": "FS_THR_ENABLE",
+            "name_raw": "FS_THR_ENABLE",
+            "name_suffix": "FS_THR_ENABLE",
+            "prefix": "",
+            "prefix_origin": "ArduCopter/Parameters.cpp:1",
+            "display_name": "Throttle Failsafe Enable",
+            "description": "The throttle failsafe allows you to configure a software failsafe activated by a setting on the throttle input channel",
+            "vehicle": "ArduCopter",
+            "version": "Copter-4.7.2",
+            "units": null,
+            "range": null,
+            "default_raw": "FS_THR_ENABLED_ALWAYS_RTL",
+            "default": 1.0,
+            "default_resolved": true,
+            "reboot_required": false,
+            "values": null,
+            "bitmask": null,
+            "resolved_by": "exact"
+          }
+        ],
+        "candidates": [
+          "FS_THR_ENABLE"
+        ],
+        "note": null
+      }
+    }
+  }
+}

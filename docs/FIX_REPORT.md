@@ -242,3 +242,20 @@ final answer: 32          (mỗi bước "cost":0)
 Transcript thô: `docs/blackbox/h/opencode_stream.jsonl`. Cấu hình + lệnh: `docs/client-setup.md` §7.
 Vì vậy case H chuyển từ NOT RUN sang PASS, và lỗi 8 chuyển từ PARTIAL sang FIXED: nguyên nhân gốc là
 cách đăng ký (project scope chờ duyệt), không phải server.
+
+
+### (g.5) run3 — chạy lại 108 case ba lần sau vòng cải tiến
+
+Sau khi sửa bước chọn chunk (`docs/IMPROVEMENTS.md`), bộ case đóng băng chạy lại ba lần tại commit
+`ea0a9d4`:
+
+```
+lần 1, 2, 3: 110 lần gọi, 116 file, cùng index 182,3 MB
+payload giống nhau giữa ba lần: 110/110
+điểm run3: 93 pass / 15 fail   (run2: 92 / 16), hồi quy: 0
+C1: fail -> pass (excerpt chứa 0xD5, không còn 0xBA)
+E: refused 11/11, info answered 4/4 · G1 20 mẫu · G2 20/20
+```
+
+Chi tiết + 17 payload khác run2: `docs/blackbox/run3/comparison.md`; raw và output 5 script chấm:
+`docs/blackbox/run3/`.

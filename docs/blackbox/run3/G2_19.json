@@ -1,0 +1,59 @@
+{
+  "case": "G2_19",
+  "note": "same content as the C/D hit for ardupilot#bd03ee2ed0da6668",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#bd03ee2ed0da6668"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1019,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#bd03ee2ed0da6668"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 7.5,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#bd03ee2ed0da6668\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"Parameters.h\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.h#L1-L99\",\n  \"path\": \"ArduCopter/Parameters.h\",\n  \"lines\": [\n    1,\n    99\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"ArduCopter/Parameters.h\",\n  \"excerpt\": \"#pragma once\\n\\n#define AP_PARAM_VEHICLE_NAME copter\\n\\n#include <AP_Common/AP_Common.h>\\n#include \\\"RC_Channel_Copter.h\\\"\\n#include <AP_Proximity/AP_Proximity.h>\\n\\nclass ModeRTL;\\n\\n#if MODE_FOLLOW_ENABLED\\n # include <AP_Follow/AP_Follow.h>\\n#endif\\n#if WEATHERVANE_ENABLED\\n #include <AC_AttitudeControl/AC_WeatherVane.h>\\n#endif\\n\\n// Global parameter class.\\n//\\nclass Parameters {\\npublic:\\n    // The version of the layout as described by the parameter enum.\\n    //\\n    // When changing the parameter enum in an incompatible fashion, this\\n    // value should be incremented by one.\\n    //\\n    // The increment will \",\n  \"untrusted\": true,\n  \"text\": \"#pragma once\\n\\n#define AP_PARAM_VEHICLE_NAME copter\\n\\n#include <AP_Common/AP_Common.h>\\n#include \\\"RC_Channel_Copter.h\\\"\\n#include <AP_Proximity/AP_Proximity.h>\\n\\nclass ModeRTL;\\n\\n#if MODE_FOLLOW_ENABLED\\n # include <AP_Follow/AP_Follow.h>\\n#endif\\n#if WEATHERVANE_ENABLED\\n #include <AC_AttitudeControl/AC_WeatherVane.h>\\n#endif\\n\\n// Global parameter class.\\n//\\nclass Parameters {\\npublic:\\n    // The version of the layout as described by the parameter enum.\\n    //\\n    // When changing the parameter enum in an incompatible fashion, this\\n    // value should be incremented by one.\\n    //\\n    // The increment will prevent old parameters from being used incorrectly\\n    // by newer code.\\n    //\\n    static const uint16_t        k_format_version = 120;\\n\\n    // Parameter identities.\\n    //\\n    // The enumeration defined here is used to ensure that every parameter\\n    // or parameter group has a unique ID number.  This number is used by\\n    // AP_Param to store and locate parameters in EEPROM.\\n    //\\n    // Note that entries without a number are assigned the next number after\\n    // the entry preceding them. When adding new entries, ensure that they\\n    // don't overlap.\\n    //\\n    // Try to group related variables together, and assign them a set\\n    // range in the enumeration. Place these groups in numerical order\\n    // at the end of the enumeration.\\n    //\\n    // WARNING: Care should be taken when editing this enumeration as the\\n    //          AP_Param load/save code depends on the values here to identify\\n    //          variables saved in EEPROM.\\n    //\\n    //\\n    enum {\\n        // Layout version number, always key zero.\\n        //\\n        k_param_format_version = 0,\\n        k_param_software_type, // deprecated\\n        k_param_ins_old,                        // *** Deprecated, remove with next eeprom number change\\n        k_param_ins,                            // libraries/AP_InertialSensor variables\\n        k_param_NavEKF2_old, // deprecated - remove\\n        k_param_NavEKF2,\\n        k_param_g2, // 2nd block of parameters\\n        k_param_NavEKF3,\\n        k_param_can_mgr,\\n        k_param_osd,\\n\\n        // simulation\\n        k_param_sitl = 10,\\n\\n        // barometer object (needed for SITL)\\n        k_param_barometer,\\n\\n        // scheduler object (for debugging)\\n        k_param_scheduler,\\n\\n        // relay object\\n        k_param_relay,\\n\\n        // (old) EPM object\\n        k_param_epm_unused,\\n\\n        // BoardConfig object\\n        k_param_BoardConfig,\\n\\n        // GPS object\\n        k_param_gps,\\n\\n        // Parachute object\\n        k_param_parachute,\\n\\n        // Landing gear object\\n        k_param_landinggear,    // 18\\n\\n        // Input Management object\\n        k_param_input_manager,  // 19\\n\\n        // Misc\\n        //\\n        k_param_log_bitmask_old = 20,           // Deprecated\\n        k_param_log_last_filenumber,            // *** Deprecated - remove\\n                                                // with next eeprom number\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#bd03ee2ed0da6668",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "Parameters.h",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.h#L1-L99",
+        "path": "ArduCopter/Parameters.h",
+        "lines": [
+          1,
+          99
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "ArduCopter/Parameters.h",
+        "excerpt": "#pragma once\n\n#define AP_PARAM_VEHICLE_NAME copter\n\n#include <AP_Common/AP_Common.h>\n#include \"RC_Channel_Copter.h\"\n#include <AP_Proximity/AP_Proximity.h>\n\nclass ModeRTL;\n\n#if MODE_FOLLOW_ENABLED\n # include <AP_Follow/AP_Follow.h>\n#endif\n#if WEATHERVANE_ENABLED\n #include <AC_AttitudeControl/AC_WeatherVane.h>\n#endif\n\n// Global parameter class.\n//\nclass Parameters {\npublic:\n    // The version of the layout as described by the parameter enum.\n    //\n    // When changing the parameter enum in an incompatible fashion, this\n    // value should be incremented by one.\n    //\n    // The increment will ",
+        "untrusted": true,
+        "text": "#pragma once\n\n#define AP_PARAM_VEHICLE_NAME copter\n\n#include <AP_Common/AP_Common.h>\n#include \"RC_Channel_Copter.h\"\n#include <AP_Proximity/AP_Proximity.h>\n\nclass ModeRTL;\n\n#if MODE_FOLLOW_ENABLED\n # include <AP_Follow/AP_Follow.h>\n#endif\n#if WEATHERVANE_ENABLED\n #include <AC_AttitudeControl/AC_WeatherVane.h>\n#endif\n\n// Global parameter class.\n//\nclass Parameters {\npublic:\n    // The version of the layout as described by the parameter enum.\n    //\n    // When changing the parameter enum in an incompatible fashion, this\n    // value should be incremented by one.\n    //\n    // The increment will prevent old parameters from being used incorrectly\n    // by newer code.\n    //\n    static const uint16_t        k_format_version = 120;\n\n    // Parameter identities.\n    //\n    // The enumeration defined here is used to ensure that every parameter\n    // or parameter group has a unique ID number.  This number is used by\n    // AP_Param to store and locate parameters in EEPROM.\n    //\n    // Note that entries without a number are assigned the next number after\n    // the entry preceding them. When adding new entries, ensure that they\n    // don't overlap.\n    //\n    // Try to group related variables together, and assign them a set\n    // range in the enumeration. Place these groups in numerical order\n    // at the end of the enumeration.\n    //\n    // WARNING: Care should be taken when editing this enumeration as the\n    //          AP_Param load/save code depends on the values here to identify\n    //          variables saved in EEPROM.\n    //\n    //\n    enum {\n        // Layout version number, always key zero.\n        //\n        k_param_format_version = 0,\n        k_param_software_type, // deprecated\n        k_param_ins_old,                        // *** Deprecated, remove with next eeprom number change\n        k_param_ins,                            // libraries/AP_InertialSensor variables\n        k_param_NavEKF2_old, // deprecated - remove\n        k_param_NavEKF2,\n        k_param_g2, // 2nd block of parameters\n        k_param_NavEKF3,\n        k_param_can_mgr,\n        k_param_osd,\n\n        // simulation\n        k_param_sitl = 10,\n\n        // barometer object (needed for SITL)\n        k_param_barometer,\n\n        // scheduler object (for debugging)\n        k_param_scheduler,\n\n        // relay object\n        k_param_relay,\n\n        // (old) EPM object\n        k_param_epm_unused,\n\n        // BoardConfig object\n        k_param_BoardConfig,\n\n        // GPS object\n        k_param_gps,\n\n        // Parachute object\n        k_param_parachute,\n\n        // Landing gear object\n        k_param_landinggear,    // 18\n\n        // Input Management object\n        k_param_input_manager,  // 19\n\n        // Misc\n        //\n        k_param_log_bitmask_old = 20,           // Deprecated\n        k_param_log_last_filenumber,            // *** Deprecated - remove\n                                                // with next eeprom number",
+        "served_from": "index"
+      }
+    }
+  }
+}

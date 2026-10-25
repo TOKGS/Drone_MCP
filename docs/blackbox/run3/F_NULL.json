@@ -1,0 +1,154 @@
+{
+  "case": "F_NULL",
+  "note": "null char: no crash",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "CRSF\u0000crc"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 84,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "CRSF\u0000crc"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 78.6,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"CRSF\\u0000crc\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"expresslrs#5b5607ef92329b49\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_protocol.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L483-L506\",\n      \"path\": \"src/include/crsf_protocol.h\",\n      \"lines\": [\n        483,\n        506\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/include/crsf_protocol.h\",\n      \"excerpt\": \"        return val * 240 + 391;\\n    }\\n}\\n\\n// Returns 1 if val is greater than CRSF_CHANNEL_VALUE_MID\\nstatic inline uint8_t ICACHE_RAM_ATTR CRSF_to_BIT(uint16_t val)\\n{\\n    return (val > CRSF_CHANNEL_VALUE_MID) ? 1 : 0;\\n}\\n\\n// Convert a bit into either the CRSF value for 1000 or 2000\\nstatic inline uint16_t ICACHE_RAM_ATTR BIT_to_CRSF(uint8_t val)\\n{\\n    return (val) ? CRSF_CHANNEL_VALUE_2000 : CRSF_CHANNEL_VALUE_1000;\\n}\\n\\nstatic inline uint8_t ICACHE_RAM_ATTR CalcCRCMsp(uint8_t *data, int length)\\n{\\n    uint8_t crc = 0;\\n    for (uint8_t i = 0; i < length; ++i) {\\n        crc = crc ^ *data++;\\n    }\\n   \",\n      \"untrusted\": true,\n      \"score\": -36.5405\n    },\n    {\n      \"cite_id\": \"expresslrs#67c6a6bbdeb1a94f\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"CRSFRouter.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CrsfProtocol/CRSFRouter.cpp#L135-L173\",\n      \"path\": \"src/lib/CrsfProtocol/CRSFRouter.cpp\",\n      \"lines\": [\n        135,\n        173\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/lib/CrsfProtocol/CRSFRouter.cpp\",\n      \"excerpt\": \"    memcpy(packet + 6, payload, payloadLength);\\n    packet[6 + payloadLength] = CalcCRCMsp(packet + 1, payloadLength + 5); // crc = flags + function + length + payload\\n}\\n\\nvoid CRSFRouter::AddMspMessage(const mspPacket_t *packet, const crsf_addr_e destination, const crsf_addr_e origin)\\n{\\n    // This allows up to 54 bytes of payload in addition to the CRSF header/CRC and MSP header/CRC\\n    const uint8_t totalBufferLen = CRSF_FRAME_NOT_COUNTED_BYTES + CRSF_FRAME_LENGTH_EXT_TYPE_CRC + ENCAPSULATED_MSP_HEADER_CRC_LEN + packet->payloadSize;\\n    if (totalBufferLen > CRSF_MAX_PACKET_LEN)\\n    {\\n       \",\n      \"untrusted\": true,\n      \"score\": -37.2139\n    },\n    {\n      \"cite_id\": \"ardupilot#9345259ec64dd06e\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RCProtocol_CRSF.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L335-L384\",\n      \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"lines\": [\n        335,\n        384\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"excerpt\": \"    _use_lq_for_rssi = rc().option_is_enabled(RC_Channels::Option::USE_CRSF_LQ_AS_RSSI);\\n#endif\\n}\\n\\n// write out a frame of any type\\nvoid AP_RCProtocol_CRSF::write_frame(Frame* frame)\\n{\\n    AP_HAL::UARTDriver *uart = get_current_UART();\\n\\n    if (!uart) {\\n        return;\\n    }\\n    // calculate crc\\n    uint8_t crc = crc8_dvb_s2(0, frame->type);\\n    for (uint8_t i = 0; i < frame->length - 2; i++) {\\n        crc = crc8_dvb_s2(crc, frame->payload[i]);\\n    }\\n    frame->payload[frame->length - 2] = crc;\\n\\n    uart->write((uint8_t*)frame, frame->length + 2);\\n    uart->flush();\\n\\n#if defined(CRSF_DEBUG) ||\",\n      \"untrusted\": true,\n      \"score\": -36.0181\n    },\n    {\n      \"cite_id\": \"expresslrs#09e4a70a391a73e3\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"CRSFParser.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CrsfProtocol/CRSFParser.cpp#L1-L67\",\n      \"path\": \"src/lib/CrsfProtocol/CRSFParser.cpp\",\n      \"lines\": [\n        1,\n        67\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/lib/CrsfProtocol/CRSFParser.cpp\",\n      \"excerpt\": \"#include \\\"CRSFParser.h\\\"\\n#include \\\"CRSFRouter.h\\\"\\n\\n#include \\\"crsf_protocol.h\\\"\\n\\nvoid CRSFParser::processBytes(CRSFConnector *origin, const uint8_t *inputBytes, const uint16_t size, const std::function<void(const crsf_header_t *)>& foundMessage)\\n{\\n    for (uint16_t i = 0; i < size; ++i)\\n    {\\n        processByte(origin, inputBytes[i], foundMessage);\\n    }\\n}\\n\\nbool CRSFParser::processByte(CRSFConnector *origin, const uint8_t inputByte, const std::function<void(const crsf_header_t *)>& foundMessage)\\n{\\n    switch(telemetry_state) {\\n        case TELEMETRY_IDLE:\\n            // Telemetry from Betaflight/\",\n      \"untrusted\": true,\n      \"score\": -35.5254\n    }\n  ],\n  \"candidates\": [\n    \"expresslrs#5b5607ef92329b49\",\n    \"expresslrs#67c6a6bbdeb1a94f\",\n    \"ardupilot#9345259ec64dd06e\",\n    \"expresslrs#09e4a70a391a73e3\",\n    \"expresslrs#59c3fed83cc7ab82\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 4\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "CRSF\u0000crc",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "expresslrs#5b5607ef92329b49",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_protocol.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L483-L506",
+            "path": "src/include/crsf_protocol.h",
+            "lines": [
+              483,
+              506
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/include/crsf_protocol.h",
+            "excerpt": "        return val * 240 + 391;\n    }\n}\n\n// Returns 1 if val is greater than CRSF_CHANNEL_VALUE_MID\nstatic inline uint8_t ICACHE_RAM_ATTR CRSF_to_BIT(uint16_t val)\n{\n    return (val > CRSF_CHANNEL_VALUE_MID) ? 1 : 0;\n}\n\n// Convert a bit into either the CRSF value for 1000 or 2000\nstatic inline uint16_t ICACHE_RAM_ATTR BIT_to_CRSF(uint8_t val)\n{\n    return (val) ? CRSF_CHANNEL_VALUE_2000 : CRSF_CHANNEL_VALUE_1000;\n}\n\nstatic inline uint8_t ICACHE_RAM_ATTR CalcCRCMsp(uint8_t *data, int length)\n{\n    uint8_t crc = 0;\n    for (uint8_t i = 0; i < length; ++i) {\n        crc = crc ^ *data++;\n    }\n   ",
+            "untrusted": true,
+            "score": -36.5405
+          },
+          {
+            "cite_id": "expresslrs#67c6a6bbdeb1a94f",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "CRSFRouter.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CrsfProtocol/CRSFRouter.cpp#L135-L173",
+            "path": "src/lib/CrsfProtocol/CRSFRouter.cpp",
+            "lines": [
+              135,
+              173
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/lib/CrsfProtocol/CRSFRouter.cpp",
+            "excerpt": "    memcpy(packet + 6, payload, payloadLength);\n    packet[6 + payloadLength] = CalcCRCMsp(packet + 1, payloadLength + 5); // crc = flags + function + length + payload\n}\n\nvoid CRSFRouter::AddMspMessage(const mspPacket_t *packet, const crsf_addr_e destination, const crsf_addr_e origin)\n{\n    // This allows up to 54 bytes of payload in addition to the CRSF header/CRC and MSP header/CRC\n    const uint8_t totalBufferLen = CRSF_FRAME_NOT_COUNTED_BYTES + CRSF_FRAME_LENGTH_EXT_TYPE_CRC + ENCAPSULATED_MSP_HEADER_CRC_LEN + packet->payloadSize;\n    if (totalBufferLen > CRSF_MAX_PACKET_LEN)\n    {\n       ",
+            "untrusted": true,
+            "score": -37.2139
+          },
+          {
+            "cite_id": "ardupilot#9345259ec64dd06e",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RCProtocol_CRSF.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L335-L384",
+            "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "lines": [
+              335,
+              384
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "excerpt": "    _use_lq_for_rssi = rc().option_is_enabled(RC_Channels::Option::USE_CRSF_LQ_AS_RSSI);\n#endif\n}\n\n// write out a frame of any type\nvoid AP_RCProtocol_CRSF::write_frame(Frame* frame)\n{\n    AP_HAL::UARTDriver *uart = get_current_UART();\n\n    if (!uart) {\n        return;\n    }\n    // calculate crc\n    uint8_t crc = crc8_dvb_s2(0, frame->type);\n    for (uint8_t i = 0; i < frame->length - 2; i++) {\n        crc = crc8_dvb_s2(crc, frame->payload[i]);\n    }\n    frame->payload[frame->length - 2] = crc;\n\n    uart->write((uint8_t*)frame, frame->length + 2);\n    uart->flush();\n\n#if defined(CRSF_DEBUG) ||",
+            "untrusted": true,
+            "score": -36.0181
+          },
+          {
+            "cite_id": "expresslrs#09e4a70a391a73e3",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "CRSFParser.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CrsfProtocol/CRSFParser.cpp#L1-L67",
+            "path": "src/lib/CrsfProtocol/CRSFParser.cpp",
+            "lines": [
+              1,
+              67
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/lib/CrsfProtocol/CRSFParser.cpp",
+            "excerpt": "#include \"CRSFParser.h\"\n#include \"CRSFRouter.h\"\n\n#include \"crsf_protocol.h\"\n\nvoid CRSFParser::processBytes(CRSFConnector *origin, const uint8_t *inputBytes, const uint16_t size, const std::function<void(const crsf_header_t *)>& foundMessage)\n{\n    for (uint16_t i = 0; i < size; ++i)\n    {\n        processByte(origin, inputBytes[i], foundMessage);\n    }\n}\n\nbool CRSFParser::processByte(CRSFConnector *origin, const uint8_t inputByte, const std::function<void(const crsf_header_t *)>& foundMessage)\n{\n    switch(telemetry_state) {\n        case TELEMETRY_IDLE:\n            // Telemetry from Betaflight/",
+            "untrusted": true,
+            "score": -35.5254
+          }
+        ],
+        "candidates": [
+          "expresslrs#5b5607ef92329b49",
+          "expresslrs#67c6a6bbdeb1a94f",
+          "ardupilot#9345259ec64dd06e",
+          "expresslrs#09e4a70a391a73e3",
+          "expresslrs#59c3fed83cc7ab82"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 4
+      }
+    }
+  }
+}

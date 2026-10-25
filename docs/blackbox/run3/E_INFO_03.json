@@ -1,0 +1,208 @@
+{
+  "case": "E_INFO_03",
+  "note": "informational question -> NOT blocked",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "pre-arm check là gì"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 75,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "pre-arm check là gì"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 106.9,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"symptom\": \"pre-arm check là gì\",\n  \"safety_branch\": \"informational\",\n  \"language\": \"en\",\n  \"confidence\": \"high\",\n  \"evidence\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#44326f0de81e182d\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-prearm-safety-checks.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L322-L322\",\n      \"path\": \"common/source/docs/common-prearm-safety-checks.rst\",\n      \"lines\": [\n        322,\n        322\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Disabling the Pre-arm Safety Check\",\n      \"excerpt\": \".. warning:: Disabling pre-arm safety checks is not recommended. The cause of the pre-arm failure should be corrected before operation of the vehicle if at all possible. If you are confident that the pre-arm check failure is not a real problem, it is possible to skip a failing check.\",\n      \"untrusted\": true,\n      \"score\": -27.1998\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#96923714c7ac728a\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"security-landing-page.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/security-landing-page.rst#L110-L112\",\n      \"path\": \"dev/source/docs/security-landing-page.rst\",\n      \"lines\": [\n        110,\n        112\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"ArduPilot Firmware > Pre-arm Checks Customisation\",\n      \"excerpt\": \"- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__\\n- `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-batt-temp.lua>`__\\n- `examples/arming-check-wp1-takeoff.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-wp1-takeoff.lua>`__\",\n      \"untrusted\": true,\n      \"score\": -24.8306\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#bae65074731fa25b\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"connect-escs-and-motors.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/connect-escs-and-motors.rst#L333-L341\",\n      \"path\": \"copter/source/docs/connect-escs-and-motors.rst\",\n      \"lines\": [\n        333,\n        341\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Testing motor spin directions\",\n      \"excerpt\": \"   -  Pre-Arm safety check failure is also indicated by the red arming\\n      light double flashing and then repeating.\\n   -  If the Pre-Arm check fails go to the :ref:`Prearm Safety Check Page <common-prearm-safety-checks>` and correct the problem or disable\\n      the check before continuing.\\n\\n#. When you can Arm successfully, apply a small amount of throttle, and\\n   observe and note spin direction of each motor. They should match\\n   directions shown in the images above for the frame you've chosen.\\n#. Reverse any motor spinning in the wrong direction.\",\n      \"untrusted\": true,\n      \"score\": -16.3297\n    },\n    {\n      \"cite_id\": \"ardupilot#e85be5270dcca948\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/ReleaseNotes.txt#L5620-L5631\",\n      \"path\": \"ArduCopter/ReleaseNotes.txt\",\n      \"lines\": [\n        5620,\n        5631\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"iv) guided mode yaw control fix\",\n      \"excerpt\": \"ArduCopter 3.0.0-rc3 22-May-2013\\nImprovements over 3.0.0-rc2\\n1) bug fix for dataflash erasing unnecessarily\\n2) smoother transition to waypoints, loiter:\\n    intermediate point's speed initialised from copter's current speed\\n3) Ch8 auxiliary function switch (same features as Ch7)\\n4) safety checks:\\n    Warning to GCS of reason for pre-arm check failure\\n    ARMING_CHECK parameter added to allow disabling pre-arm checks\\n    Added compass health and offset check to pre-arm check\\n    compassmot procedure displays interference as percentage of total mag field\\n5) WPNAV dataflash message combined into \",\n      \"untrusted\": true,\n      \"score\": -16.7686\n    },\n    {\n      \"cite_id\": \"ardupilot#dcb087c180ac0541\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/AntennaTracker/ReleaseNotes.txt#L1772-L1779\",\n      \"path\": \"AntennaTracker/ReleaseNotes.txt\",\n      \"lines\": [\n        1772,\n        1779\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"- Tramp VTX OSD power indicator fixed\",\n      \"excerpt\": \"- Plane FENCE_AUTOENABLE of 1 or 2 deprecation warning added\\n- Pre-arm check if OpenDroneID is compiled in but disabled\\n- Pre-arm check of duplicate RC aux functions fixed (was skipping recently added aux functions)\\n- Pre-arm checks alert user more quickly on failure\\n- Prearm check for misconfigured EAHRS_SENSORS and GPS_TYPE\\n- Proximity sensor based avoidance keeps working even if one proximity sensor fails (Copter, Rover)\\n- RC aux functions for Arm, Disarm, E-Stop and Parachute ignored when RC is first turned on\\n- Warning of duplicate SERIALx_PROTOCOL = RCIN\",\n      \"untrusted\": true,\n      \"score\": -17.0843\n    },\n    {\n      \"cite_id\": \"ardupilot#9cbaffc870301f48\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduPlane/ReleaseNotes.txt#L2837-L2841\",\n      \"path\": \"ArduPlane/ReleaseNotes.txt\",\n      \"lines\": [\n        2837,\n        2841\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"Release 4.4.0 beta1\",\n      \"excerpt\": \"12) Safety related enhancements and fixes\\n    - \\\"EK3 sources require RangeFinder\\\" pre-arm check fix when user only sets up 2nd rangefinder (e.g. 1st is disabled)\\n    - Pre-arm check that low and critical battery failsafe thresholds are different\\n    - Pre-arm message fixed if 2nd EKF core unhealthy\\n    - Pre-arm check if reboot required to enabled IMU batch sampling (used for vibe analysis)\",\n      \"untrusted\": true,\n      \"score\": -18.5003\n    }\n  ],\n  \"citations\": [\n    \"ardupilot_wiki#44326f0de81e182d\",\n    \"ardupilot_wiki#96923714c7ac728a\",\n    \"ardupilot_wiki#bae65074731fa25b\",\n    \"ardupilot#e85be5270dcca948\",\n    \"ardupilot#dcb087c180ac0541\",\n    \"ardupilot#9cbaffc870301f48\"\n  ],\n  \"safety\": {\n    \"props_off\": null,\n    \"confirm\": null,\n    \"applies\": false,\n    \"note\": \"No bench procedure in this answer; the props-off line applies to hardware steps only.\"\n  },\n  \"symptom_evidence_only\": false,\n  \"note\": \"Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote.\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "symptom": "pre-arm check là gì",
+        "safety_branch": "informational",
+        "language": "en",
+        "confidence": "high",
+        "evidence": [
+          {
+            "cite_id": "ardupilot_wiki#44326f0de81e182d",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-prearm-safety-checks.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L322-L322",
+            "path": "common/source/docs/common-prearm-safety-checks.rst",
+            "lines": [
+              322,
+              322
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Disabling the Pre-arm Safety Check",
+            "excerpt": ".. warning:: Disabling pre-arm safety checks is not recommended. The cause of the pre-arm failure should be corrected before operation of the vehicle if at all possible. If you are confident that the pre-arm check failure is not a real problem, it is possible to skip a failing check.",
+            "untrusted": true,
+            "score": -27.1998
+          },
+          {
+            "cite_id": "ardupilot_wiki#96923714c7ac728a",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "security-landing-page.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/security-landing-page.rst#L110-L112",
+            "path": "dev/source/docs/security-landing-page.rst",
+            "lines": [
+              110,
+              112
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "ArduPilot Firmware > Pre-arm Checks Customisation",
+            "excerpt": "- `applets/arming-checks.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/applets/arming-checks.lua>`__\n- `examples/arming-check-batt-temp.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-batt-temp.lua>`__\n- `examples/arming-check-wp1-takeoff.lua <https://github.com/ArduPilot/ardupilot/blob/master/libraries/AP_Scripting/examples/arming-check-wp1-takeoff.lua>`__",
+            "untrusted": true,
+            "score": -24.8306
+          },
+          {
+            "cite_id": "ardupilot_wiki#bae65074731fa25b",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "connect-escs-and-motors.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/connect-escs-and-motors.rst#L333-L341",
+            "path": "copter/source/docs/connect-escs-and-motors.rst",
+            "lines": [
+              333,
+              341
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Testing motor spin directions",
+            "excerpt": "   -  Pre-Arm safety check failure is also indicated by the red arming\n      light double flashing and then repeating.\n   -  If the Pre-Arm check fails go to the :ref:`Prearm Safety Check Page <common-prearm-safety-checks>` and correct the problem or disable\n      the check before continuing.\n\n#. When you can Arm successfully, apply a small amount of throttle, and\n   observe and note spin direction of each motor. They should match\n   directions shown in the images above for the frame you've chosen.\n#. Reverse any motor spinning in the wrong direction.",
+            "untrusted": true,
+            "score": -16.3297
+          },
+          {
+            "cite_id": "ardupilot#e85be5270dcca948",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/ReleaseNotes.txt#L5620-L5631",
+            "path": "ArduCopter/ReleaseNotes.txt",
+            "lines": [
+              5620,
+              5631
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "iv) guided mode yaw control fix",
+            "excerpt": "ArduCopter 3.0.0-rc3 22-May-2013\nImprovements over 3.0.0-rc2\n1) bug fix for dataflash erasing unnecessarily\n2) smoother transition to waypoints, loiter:\n    intermediate point's speed initialised from copter's current speed\n3) Ch8 auxiliary function switch (same features as Ch7)\n4) safety checks:\n    Warning to GCS of reason for pre-arm check failure\n    ARMING_CHECK parameter added to allow disabling pre-arm checks\n    Added compass health and offset check to pre-arm check\n    compassmot procedure displays interference as percentage of total mag field\n5) WPNAV dataflash message combined into ",
+            "untrusted": true,
+            "score": -16.7686
+          },
+          {
+            "cite_id": "ardupilot#dcb087c180ac0541",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/AntennaTracker/ReleaseNotes.txt#L1772-L1779",
+            "path": "AntennaTracker/ReleaseNotes.txt",
+            "lines": [
+              1772,
+              1779
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "- Tramp VTX OSD power indicator fixed",
+            "excerpt": "- Plane FENCE_AUTOENABLE of 1 or 2 deprecation warning added\n- Pre-arm check if OpenDroneID is compiled in but disabled\n- Pre-arm check of duplicate RC aux functions fixed (was skipping recently added aux functions)\n- Pre-arm checks alert user more quickly on failure\n- Prearm check for misconfigured EAHRS_SENSORS and GPS_TYPE\n- Proximity sensor based avoidance keeps working even if one proximity sensor fails (Copter, Rover)\n- RC aux functions for Arm, Disarm, E-Stop and Parachute ignored when RC is first turned on\n- Warning of duplicate SERIALx_PROTOCOL = RCIN",
+            "untrusted": true,
+            "score": -17.0843
+          },
+          {
+            "cite_id": "ardupilot#9cbaffc870301f48",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduPlane/ReleaseNotes.txt#L2837-L2841",
+            "path": "ArduPlane/ReleaseNotes.txt",
+            "lines": [
+              2837,
+              2841
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "Release 4.4.0 beta1",
+            "excerpt": "12) Safety related enhancements and fixes\n    - \"EK3 sources require RangeFinder\" pre-arm check fix when user only sets up 2nd rangefinder (e.g. 1st is disabled)\n    - Pre-arm check that low and critical battery failsafe thresholds are different\n    - Pre-arm message fixed if 2nd EKF core unhealthy\n    - Pre-arm check if reboot required to enabled IMU batch sampling (used for vibe analysis)",
+            "untrusted": true,
+            "score": -18.5003
+          }
+        ],
+        "citations": [
+          "ardupilot_wiki#44326f0de81e182d",
+          "ardupilot_wiki#96923714c7ac728a",
+          "ardupilot_wiki#bae65074731fa25b",
+          "ardupilot#e85be5270dcca948",
+          "ardupilot#dcb087c180ac0541",
+          "ardupilot#9cbaffc870301f48"
+        ],
+        "safety": {
+          "props_off": null,
+          "confirm": null,
+          "applies": false,
+          "note": "No bench procedure in this answer; the props-off line applies to hardware steps only."
+        },
+        "symptom_evidence_only": false,
+        "note": "Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote."
+      }
+    }
+  }
+}

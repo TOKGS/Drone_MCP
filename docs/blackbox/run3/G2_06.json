@@ -1,0 +1,59 @@
+{
+  "case": "G2_06",
+  "note": "same content as the C/D hit for expresslrs#b47cb542705a9b97",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "expresslrs#b47cb542705a9b97"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1006,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "expresslrs#b47cb542705a9b97"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.5,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"expresslrs#b47cb542705a9b97\",\n  \"source_id\": \"expresslrs\",\n  \"repo\": \"ExpressLRS/ExpressLRS\",\n  \"ref\": \"4.1.0\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"crsf_protocol.h\",\n  \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L200-L217\",\n  \"path\": \"src/include/crsf_protocol.h\",\n  \"lines\": [\n    200,\n    217\n  ],\n  \"version\": \"ExpressLRS 4.1.0\",\n  \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n  \"heading_path\": \"src/include/crsf_protocol.h\",\n  \"excerpt\": \"    unsigned ch15 : 11;\\n} PACKED crsf_channels_t;\\n\\n/**\\n * Bits used in the byte following crsf_channels_t in the ExpressLRS extended CHANNELS_PACKED packet\\n */\\n#define CRSF_CHANNELS_STATUS_ARMED              bit(0)    // Armed status in Arm using Switch mode\\n#define CRSF_CHANNELS_STATUS_ARMING_MODE_CH5    bit(1)    // Arm using CH5 if bit is set\\n\\ntypedef struct deviceInformationPacket_s\\n{\\n    uint32_t serialNo;\\n    uint32_t hardwareVer;\\n    uint32_t softwareVer;\\n    uint8_t fieldCnt;          //number of field of params this device has\\n    uint8_t parameterVersion;\\n} PACKED deviceInformationPa\",\n  \"untrusted\": true,\n  \"text\": \"    unsigned ch15 : 11;\\n} PACKED crsf_channels_t;\\n\\n/**\\n * Bits used in the byte following crsf_channels_t in the ExpressLRS extended CHANNELS_PACKED packet\\n */\\n#define CRSF_CHANNELS_STATUS_ARMED              bit(0)    // Armed status in Arm using Switch mode\\n#define CRSF_CHANNELS_STATUS_ARMING_MODE_CH5    bit(1)    // Arm using CH5 if bit is set\\n\\ntypedef struct deviceInformationPacket_s\\n{\\n    uint32_t serialNo;\\n    uint32_t hardwareVer;\\n    uint32_t softwareVer;\\n    uint8_t fieldCnt;          //number of field of params this device has\\n    uint8_t parameterVersion;\\n} PACKED deviceInformationPacket_t;\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "expresslrs#b47cb542705a9b97",
+        "source_id": "expresslrs",
+        "repo": "ExpressLRS/ExpressLRS",
+        "ref": "4.1.0",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "crsf_protocol.h",
+        "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L200-L217",
+        "path": "src/include/crsf_protocol.h",
+        "lines": [
+          200,
+          217
+        ],
+        "version": "ExpressLRS 4.1.0",
+        "ingested_at": "2026-10-25T20:13:30+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:30+0700",
+        "heading_path": "src/include/crsf_protocol.h",
+        "excerpt": "    unsigned ch15 : 11;\n} PACKED crsf_channels_t;\n\n/**\n * Bits used in the byte following crsf_channels_t in the ExpressLRS extended CHANNELS_PACKED packet\n */\n#define CRSF_CHANNELS_STATUS_ARMED              bit(0)    // Armed status in Arm using Switch mode\n#define CRSF_CHANNELS_STATUS_ARMING_MODE_CH5    bit(1)    // Arm using CH5 if bit is set\n\ntypedef struct deviceInformationPacket_s\n{\n    uint32_t serialNo;\n    uint32_t hardwareVer;\n    uint32_t softwareVer;\n    uint8_t fieldCnt;          //number of field of params this device has\n    uint8_t parameterVersion;\n} PACKED deviceInformationPa",
+        "untrusted": true,
+        "text": "    unsigned ch15 : 11;\n} PACKED crsf_channels_t;\n\n/**\n * Bits used in the byte following crsf_channels_t in the ExpressLRS extended CHANNELS_PACKED packet\n */\n#define CRSF_CHANNELS_STATUS_ARMED              bit(0)    // Armed status in Arm using Switch mode\n#define CRSF_CHANNELS_STATUS_ARMING_MODE_CH5    bit(1)    // Arm using CH5 if bit is set\n\ntypedef struct deviceInformationPacket_s\n{\n    uint32_t serialNo;\n    uint32_t hardwareVer;\n    uint32_t softwareVer;\n    uint8_t fieldCnt;          //number of field of params this device has\n    uint8_t parameterVersion;\n} PACKED deviceInformationPacket_t;",
+        "served_from": "index"
+      }
+    }
+  }
+}

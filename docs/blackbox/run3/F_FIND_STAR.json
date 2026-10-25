@@ -1,0 +1,205 @@
+{
+  "case": "F_FIND_STAR",
+  "note": "no crash",
+  "tool": "find_source",
+  "arguments": {
+    "symbol_or_file": "*"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 87,
+    "method": "tools/call",
+    "params": {
+      "name": "find_source",
+      "arguments": {
+        "symbol_or_file": "*"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 191.7,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"*\",\n  \"mode\": \"symbol\",\n  \"repo_filter\": null,\n  \"hits\": [\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        121,\n        127\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L121-L127\",\n      \"cite_id\": \"crsf_spec#6c2227bb05924043\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Acronyms\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        135,\n        135\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L135-L135\",\n      \"cite_id\": \"crsf_spec#f3edbec7e1a4b922\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Hardware > Single-Wire Half-Duplex UART\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        139,\n        139\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L139-L139\",\n      \"cite_id\": \"crsf_spec#47f40881a50ea507\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Hardware > Dual-Wire Full-Duplex UART\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        149,\n        149\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L149-L149\",\n      \"cite_id\": \"crsf_spec#a8c82afb2e61e831\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Frame Construction > Structure\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        167,\n        176\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L167-L176\",\n      \"cite_id\": \"crsf_spec#13d0f89cd8ddaf8e\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Frame Construction > Frame Details\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        208,\n        220\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L208-L220\",\n      \"cite_id\": \"crsf_spec#ae94e98020ed8f1b\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"CRC\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        224,\n        256\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L224-L256\",\n      \"cite_id\": \"crsf_spec#f30918ad8924ed88\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Device Addresses\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        337,\n        351\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L337-L351\",\n      \"cite_id\": \"crsf_spec#a2038bec54559d8e\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Broadcast Frame Types > 0x09 Barometric Altitude & Vertical Speed\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        364,\n        380\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L364-L380\",\n      \"cite_id\": \"crsf_spec#ab2f994a4cf7b36c\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Broadcast Frame Types > 0x09 Barometric Altitude & Vertical Speed\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        386,\n        388\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L386-L388\",\n      \"cite_id\": \"crsf_spec#a793f51e3238fc8e\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Broadcast Frame Types > 0x0A Airspeed\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        455,\n        459\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L455-L459\",\n      \"cite_id\": \"crsf_spec#e2b2887c168aeb96\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Broadcast Frame Types > 0x12 Magnetometer\"\n    },\n    {\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        489,\n        501\n      ],\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L489-L501\",\n      \"cite_id\": \"crsf_spec#ea5a74a75edc76b0\",\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"channel\": \"snapshot\",\n      \"tier\": \"T1\",\n      \"heading_path\": \"Broadcast Frame Types > 0x14 Link Statistics\"\n    }\n  ],\n  \"candidates\": [\n    \"crsf_spec#6c2227bb05924043 crsf.md:121\",\n    \"crsf_spec#f3edbec7e1a4b922 crsf.md:135\",\n    \"crsf_spec#47f40881a50ea507 crsf.md:139\",\n    \"crsf_spec#a8c82afb2e61e831 crsf.md:149\",\n    \"crsf_spec#13d0f89cd8ddaf8e crsf.md:167\"\n  ],\n  \"note\": null\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "*",
+        "mode": "symbol",
+        "repo_filter": null,
+        "hits": [
+          {
+            "path": "crsf.md",
+            "lines": [
+              121,
+              127
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L121-L127",
+            "cite_id": "crsf_spec#6c2227bb05924043",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Acronyms"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              135,
+              135
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L135-L135",
+            "cite_id": "crsf_spec#f3edbec7e1a4b922",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Hardware > Single-Wire Half-Duplex UART"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              139,
+              139
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L139-L139",
+            "cite_id": "crsf_spec#47f40881a50ea507",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Hardware > Dual-Wire Full-Duplex UART"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              149,
+              149
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L149-L149",
+            "cite_id": "crsf_spec#a8c82afb2e61e831",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Frame Construction > Structure"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              167,
+              176
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L167-L176",
+            "cite_id": "crsf_spec#13d0f89cd8ddaf8e",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Frame Construction > Frame Details"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              208,
+              220
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L208-L220",
+            "cite_id": "crsf_spec#ae94e98020ed8f1b",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "CRC"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              224,
+              256
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L224-L256",
+            "cite_id": "crsf_spec#f30918ad8924ed88",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Device Addresses"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              337,
+              351
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L337-L351",
+            "cite_id": "crsf_spec#a2038bec54559d8e",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Broadcast Frame Types > 0x09 Barometric Altitude & Vertical Speed"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              364,
+              380
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L364-L380",
+            "cite_id": "crsf_spec#ab2f994a4cf7b36c",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Broadcast Frame Types > 0x09 Barometric Altitude & Vertical Speed"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              386,
+              388
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L386-L388",
+            "cite_id": "crsf_spec#a793f51e3238fc8e",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Broadcast Frame Types > 0x0A Airspeed"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              455,
+              459
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L455-L459",
+            "cite_id": "crsf_spec#e2b2887c168aeb96",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Broadcast Frame Types > 0x12 Magnetometer"
+          },
+          {
+            "path": "crsf.md",
+            "lines": [
+              489,
+              501
+            ],
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L489-L501",
+            "cite_id": "crsf_spec#ea5a74a75edc76b0",
+            "version": "CRSF spec@a73f7dc",
+            "channel": "snapshot",
+            "tier": "T1",
+            "heading_path": "Broadcast Frame Types > 0x14 Link Statistics"
+          }
+        ],
+        "candidates": [
+          "crsf_spec#6c2227bb05924043 crsf.md:121",
+          "crsf_spec#f3edbec7e1a4b922 crsf.md:135",
+          "crsf_spec#47f40881a50ea507 crsf.md:139",
+          "crsf_spec#a8c82afb2e61e831 crsf.md:149",
+          "crsf_spec#13d0f89cd8ddaf8e crsf.md:167"
+        ],
+        "note": null
+      }
+    }
+  }
+}

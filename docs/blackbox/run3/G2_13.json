@@ -1,0 +1,59 @@
+{
+  "case": "G2_13",
+  "note": "same content as the C/D hit for crsf_spec#3fc62acc09010b9a",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "crsf_spec#3fc62acc09010b9a"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1013,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "crsf_spec#3fc62acc09010b9a"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.6,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"crsf_spec#3fc62acc09010b9a\",\n  \"source_id\": \"crsf_spec\",\n  \"repo\": \"tbs-fpv/tbs-crsf-spec\",\n  \"ref\": \"a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92\",\n  \"channel\": \"snapshot\",\n  \"unreleased\": true,\n  \"pinned\": true,\n  \"title\": \"crsf.md\",\n  \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L188-L192\",\n  \"path\": \"crsf.md\",\n  \"lines\": [\n    188,\n    192\n  ],\n  \"version\": \"CRSF spec@a73f7dc\",\n  \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"CC-BY-SA-4.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n  \"heading_path\": \"CRC\",\n  \"excerpt\": \"CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).\\n\\nCRC8 implementation with polynom = x7+ x6+ x4+ x2+ x0 (0xD5)\\n\\ncode example:\",\n  \"untrusted\": true,\n  \"text\": \"CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).\\n\\nCRC8 implementation with polynom = x7+ x6+ x4+ x2+ x0 (0xD5)\\n\\ncode example:\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "crsf_spec#3fc62acc09010b9a",
+        "source_id": "crsf_spec",
+        "repo": "tbs-fpv/tbs-crsf-spec",
+        "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+        "channel": "snapshot",
+        "unreleased": true,
+        "pinned": true,
+        "title": "crsf.md",
+        "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L188-L192",
+        "path": "crsf.md",
+        "lines": [
+          188,
+          192
+        ],
+        "version": "CRSF spec@a73f7dc",
+        "ingested_at": "2026-10-25T20:13:33+0700",
+        "tier": "T1",
+        "license": "CC-BY-SA-4.0",
+        "retrieved_at": "2026-10-25T20:13:33+0700",
+        "heading_path": "CRC",
+        "excerpt": "CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).\n\nCRC8 implementation with polynom = x7+ x6+ x4+ x2+ x0 (0xD5)\n\ncode example:",
+        "untrusted": true,
+        "text": "CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).\n\nCRC8 implementation with polynom = x7+ x6+ x4+ x2+ x0 (0xD5)\n\ncode example:",
+        "served_from": "index"
+      }
+    }
+  }
+}
