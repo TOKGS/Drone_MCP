@@ -67,3 +67,88 @@ E           KeyError: 'scope_notes'
 
 tests\test_query.py:185: KeyError
 ```
+
+## 3. Lỗi 5 — Bước 2+3: sửa nguyên nhân gốc
+
+### 3.1 Thay đổi
+
+`src/ardupilot_research_mcp/query.py`:
+- `expand_query`: tách query và khoá từ điển bằng `TOKEN = re.compile(r"\w+", re.UNICODE)` rồi so
+  khớp `_contains_phrase` (chuỗi token liên tiếp). Không còn `if vi in lowered`.
+- `load_scope` đọc `scope.yaml` (dữ liệu, không hardcode trong `src/`).
+- `scope_notes(query, results, labels=None, applied=None, con=None)` trả danh sách ghi chú:
+  1. tên sản phẩm ngoài kho (khớp theo biên từ, không phân biệt hoa thường) → note
+     "kho chỉ có tài liệu ArduPilot Copter đã ghim, ExpressLRS, EdgeTX, CRSF, MAVLink;
+     không có <tên>";
+  2. số phiên bản `X.Y`/`X.Y.Z` trong query không khớp bất kỳ nhãn nào đọc từ bảng `sources`
+     (cột `version_label`, fallback `ref`) → note nêu các phiên bản đang ghim. Regex
+     `VERSION = re.compile(r"(?<![\w.])(\d+\.\d+(?:\.\d+)?)(?!\w)")` — lookahead `(?!\w)` để
+     "3.3V"/"2.4GHz" (số đo phần cứng) không bị coi là số phiên bản;
+  3. khớp yếu: `_match_ratio` = tỉ lệ token nội dung (ASCII word + thuật ngữ glossary, bỏ
+     stopword) của query xuất hiện theo biên từ trong path + heading_path + **toàn bộ text** của
+     top-3 chunk (excerpt bị cắt 600 ký tự nên không đủ tin cậy) → dưới ngưỡng thì note
+     "khớp yếu, có thể ngoài kho".
+- `search()` gắn `scope_notes` và `confidence` (`"low"` nếu có note hoặc không có kết quả,
+  `"high"` nếu sạch).
+
+`scope.yaml` (mới): `out_of_scope_names: [PX4, Betaflight, iNav, Cleanflight, KISS,
+QGroundControl]`. Đã đối chiếu index: `documents.path` chứa `qground` = 0 file; PX4/Betaflight/
+iNav chỉ được *nhắc* trong tài liệu ArduPilot (18/2/3 file) chứ không có tài liệu của chúng.
+Không đưa "Mission Planner" vào vì corpus có 28 tài liệu Mission Planner trong wiki ArduPilot.
+
+### 3.2 Ngưỡng khớp yếu: 0.25 và lý do
+
+Đo `_match_ratio` trên dev set `tests/golden.yaml` (30 câu, top-3 chunk đầy đủ):
+
+| Tập | Giá trị đo | Kết luận |
+|---|---|---|
+| 30 câu golden (trong kho) | thấp nhất **0.33** (G08, G19); phần lớn 0.5-1.0 | ngưỡng phải ≤ 0.33 |
+| câu ngoài kho không chung từ vựng ("giá ethereum hôm nay", "công thức nấu phở bò", "thời tiết Hà Nội ngày mai", "giá vàng hôm nay", "cách làm bánh mì", "đội hình bóng đá tối nay") | **0.00** (2 câu không có token nội dung ASCII → 0.0) | ngưỡng > 0.0 |
+
+Chọn **0.25**: thấp hơn mức thấp nhất của golden (0.33) một khoảng an toàn, cao hơn các câu ngoài
+kho không chung từ vựng (0.00). Không dùng case D1–D5 của blackbox để chọn ngưỡng.
+
+**Hạn chế đã biết của ngưỡng:** heuristic là trùng từ vựng, nên câu ngoài kho *có chung từ* với
+kho (ví dụ "how to train a puppy" 0.33-0.5 nhờ "train"/"pid"/"mission") không bị cờ khớp yếu;
+chúng vẫn được xử lý bởi danh sách tên sản phẩm hoặc bởi `found:false` của FTS. Ghi nhận, không
+nới ngưỡng để tránh gắn cờ nhầm câu trong kho.
+
+### 3.3 Kết quả (output thô)
+
+```
+python -m pytest tests/test_query.py -q -k "glossary or foreign or version or weak or in_scope or golden"
+........                                                                 [100%]
+8 passed, 4 deselected in 4.06s
+```
+```
+python -m pytest -q
+........................................................................ [ 81%]
+................                                                         [100%]
+88 passed in 27.12s
+```
+```
+python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 23/30 = 0.767
+MRR = 0.865
+```
+```
+python scripts/fidelity_scan.py   (2 dòng cuối)
+TOTAL                          65509         0
+fidelity: PASS
+```
+Không hồi quy: golden recall@5 giữ 1.000, P@1 giữ 0.767, MRR giữ 0.865, test cũ 80/80 pass.
+
+## 4. Known limitation của lỗi 5 (KHÔNG sửa xếp hạng)
+
+Theo brief, không chỉnh ranking để cứu các case C của blackbox; chúng được ghi nhận là hạn chế:
+- **C4** (query kiểu "where does ArduPilot parse CRSF"): tài liệu/wiki đứng trên code ArduPilot vì
+  BM25 không ưu tiên đúng file code khi câu hỏi có nhiều từ chung.
+- **C10** (query kiểu "SERIAL port protocol RC input"): top-5 thiếu trang tham số SERIALx_/
+  AP_RCProtocol tương ứng — lỗ hổng phủ index/ranking, không phải lỗi glossary.
+- **C11** (query kiểu "EdgeTX CRSF telemetry"): kết quả nghiêng về code CRSF chung thay vì file
+  EdgeTX; thứ hạng theo BM25, không sửa.
+Cả ba không bị ảnh hưởng bởi thay đổi lỗi 5 (không có glossary key, không có tên/phiên bản ngoài
+kho, `_match_ratio` của chúng cao nên không bị gắn cờ).
+
