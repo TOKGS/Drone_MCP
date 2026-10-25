@@ -139,7 +139,12 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
                            if token.lower().replace("_", "-") in row["path"].lower())
         score -= 1.5 * sum(1 for token in path_tokens if token in row["path"].lower())
         heading = (row["heading_path"] or "").lower()
-        score -= 2.0 * sum(1 for token in path_tokens if token in heading)
+        heading_hits = sum(1 for token in path_tokens if token in heading)
+        score -= 2.0 * heading_hits
+        # A whole-phrase heading match ("Radio Failsafe") is much stronger evidence than the same
+        # words scattered through prose, so reward the chunk whose own heading carries every token.
+        if path_tokens and heading_hits == len(path_tokens):
+            score -= 5.0
         scored.append((score, row))
     scored.sort(key=lambda item: item[0])
 

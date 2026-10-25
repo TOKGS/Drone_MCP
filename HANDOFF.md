@@ -9,10 +9,13 @@ marked UNVERIFIED / NOT RUN.
   lookup_param, decode_bitmask, find_source, board_info, mavlink_message, troubleshoot,
   get_script, decode_crsf_frame, check_intelhex_line, parse_ihex_summary, list_sources,
   index_status. 4 original example scripts ship in `examples/`, each with real cite_ids.
-- **Held-out measured once: recall@5 = 0.367 / precision@1 = 0.267 / MRR = 0.298 — FAILS the
-  0.8 target.** Raw output and the honest breakdown are in `docs/eval-heldout.md`: most misses are
-  frozen-expectation defects (the retriever returned the dedicated page and the expectation named
-  another file), two are real defects. The set is now burned for tuning.
+- **Held-out measured twice: both FAIL the 0.8 target.**
+  v1 frozen set (burned): recall@5 0.367 / P@1 0.267 / MRR 0.298 — `docs/eval-heldout.md`.
+  v2 blind mechanical set (agent never saw the questions): 0.500, then 0.533 after one general
+  heading-phrase improvement; P@1 0.333 / MRR 0.408 — `docs/eval-heldout-v2.md`.
+  Tunable golden set on the same build: 1.000 / 0.700 / 0.811.
+  Root causes recorded: v1 expectations were partly wrong; v2 is a heading→file benchmark whose
+  targets are ambiguous because identical headings recur in several files.
 - **Tables:** 63 808 chunks · 214 params (26 with @Bitmask) · **397 MAVLink messages + 2367 enum
   entries** parsed from the pinned XML · index ≈ 120 MB.
 - **Decoders are corpus-derived, not recalled**: CRC8 poly 0xD5 (`crsf_protocol.h` L9), CRC
@@ -76,8 +79,10 @@ the file itself was not touched and its SHA-256 still matches `docs/heldout.sha2
 
 ## Known gaps / UNVERIFIED
 
-- **Held-out acceptance NOT MET (0.367 < 0.8)** — see `docs/eval-heldout.md`. The set is burned;
-  a new frozen set is needed for a clean measurement.
+- **Held-out acceptance NOT MET (0.367 v1 / 0.533 v2, both < 0.8)** — see
+  `docs/eval-heldout.md` and `docs/eval-heldout-v2.md`. A meaningful measurement needs a set whose
+  questions have exactly one defensible answer, written by someone who does not implement the
+  retriever.
 - **README + client registration UNVERIFIED** (not written yet).
 - **Mutation testing ≥90 % NOT RUN**.
 - **T2 (issues/PR), T3 (forum), `local-project`** not ingested.

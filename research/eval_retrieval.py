@@ -52,6 +52,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--set", default=str(REPO / "tests" / "golden.yaml"))
     parser.add_argument("--k", type=int, default=5)
     parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--aggregate-only", action="store_true",
+                        help="print metrics only (used for the blind held-out set)")
     args = parser.parse_args(argv)
 
     data = yaml.safe_load(Path(args.set).read_text(encoding="utf-8"))
@@ -91,11 +93,11 @@ def main(argv: list[str] | None = None) -> int:
     print(f"recall@{args.k} = {recalls}/{total} = {recalls / total:.3f}")
     print(f"precision@1 = {precisions}/{total} = {precisions / total:.3f}")
     print(f"MRR = {reciprocal / total:.3f}")
-    if args.verbose:
+    if args.verbose and not args.aggregate_only:
         print()
         for question_id, lang, note in rows:
             print(f"  {question_id:<5}{lang:<4}{note}")
-    if misses:
+    if misses and not args.aggregate_only:
         print(f"\nmisses ({len(misses)}):")
         for miss in misses:
             print(f"  - {miss}")

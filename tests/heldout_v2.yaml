@@ -1,0 +1,185 @@
+version: 2
+generated_by: research.make_heldout_v2
+seed: 20261025
+protocol: mechanical sample of indexed headings; agent never inspects questions
+questions:
+- id: V2-01
+  lang: en
+  q: Where is Camera Switch documented?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-stellarf4.rst
+- id: V2-02
+  lang: vi
+  q: Radio System Selection được mô tả ở đâu?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-rc-systems.rst
+- id: V2-03
+  lang: en
+  q: What do the docs say about TVBS (Thrust Vectored Belly Sitter)?
+  expect:
+  - source: ardupilot_wiki
+    path: plane/source/docs/guide-tailsitter.rst
+- id: V2-04
+  lang: vi
+  q: Tuning Large MultiCopters được mô tả ở đâu?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-imu-fft-advanced-setup.rst
+- id: V2-05
+  lang: en
+  q: Explain Connecting the servo to an autopilot in ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-gripper-servo.rst
+- id: V2-06
+  lang: vi
+  q: Companion Computer Setup được mô tả ở đâu?
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/ros-rviz.rst
+- id: V2-07
+  lang: en
+  q: What do the docs say about ROS installation?
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/using-last_letter-as-an-external-sitl-simulator.rst
+- id: V2-08
+  lang: vi
+  q: self.reboot_sitl() được mô tả ở đâu?
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/autotest-tests.rst
+- id: V2-09
+  lang: en
+  q: Where is What will happen documented?
+  expect:
+  - source: ardupilot_wiki
+    path: sub/source/docs/internal-leak-failsafe.rst
+- id: V2-10
+  lang: vi
+  q: Tài liệu nói gì về ThePeach FCC-R1?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-thepeach-r1.rst
+- id: V2-11
+  lang: en
+  q: What do the docs say about Specifications?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-blitzh743wing.rst
+- id: V2-12
+  lang: vi
+  q: Tài liệu nói gì về Second flight?
+  expect:
+  - source: ardupilot_wiki
+    path: plane/source/docs/starting-up-and-calibrating-arduplane.rst
+- id: V2-13
+  lang: en
+  q: Explain Before you start in ArduPilot.
+  expect:
+  - source: expresslrs_docs
+    path: docs/hardware/special-targets/diy-rx.md
+- id: V2-14
+  lang: vi
+  q: Giải thích Minimum altitude (Copter only) trong ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-simple-object-avoidance.rst
+- id: V2-15
+  lang: en
+  q: Explain Mode1 and Mode2 Transmitters in ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-radio-control-calibration.rst
+- id: V2-16
+  lang: vi
+  q: 'Tài liệu nói gì về Step 2: Enable Backpack Telemetry in ELRS LUA Script?'
+  expect:
+  - source: expresslrs_docs
+    path: docs/software/backpack-telemetry.md
+- id: V2-17
+  lang: en
+  q: Explain Connect Motors in ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-erle-brain2-wiring-quick-start.rst
+- id: V2-18
+  lang: vi
+  q: Tài liệu nói gì về Automatic calibration?
+  expect:
+  - source: ardupilot_wiki
+    path: plane/source/docs/calibrating-an-airspeed-sensor.rst
+- id: V2-19
+  lang: en
+  q: What do the docs say about Preconditions?
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/setting-up-sitl-using-vagrant.rst
+- id: V2-20
+  lang: vi
+  q: Configuring your Flight Controller được mô tả ở đâu?
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/receivers/hmes900.md
+- id: V2-21
+  lang: en
+  q: Explain Connect video camera in ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-edge-quick-start.rst
+- id: V2-22
+  lang: vi
+  q: Tài liệu nói gì về Specifications?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-ark-dist-mr.rst
+- id: V2-23
+  lang: en
+  q: Explain CAN1, CAN2 ports in ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-pixsurveya2-ind.rst
+- id: V2-24
+  lang: vi
+  q: The Cube Purple Overview được mô tả ở đâu?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-thecubepurple-overview.rst
+- id: V2-25
+  lang: en
+  q: Explain DataFlash logging in ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-realsense-depth-camera.rst
+- id: V2-26
+  lang: vi
+  q: Giải thích EKF_VEL_DELAY trong ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: dev/source/docs/extended-kalman-filter.rst
+- id: V2-27
+  lang: en
+  q: Where is Powering the plane documented?
+  expect:
+  - source: ardupilot_wiki
+    path: plane/source/docs/archived-apm2x-wiring-quickstart.rst
+- id: V2-28
+  lang: vi
+  q: Giải thích Battery Monitoring trong ArduPilot.
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-brahmaf4.rst
+- id: V2-29
+  lang: en
+  q: What do the docs say about Other Data?
+  expect:
+  - source: expresslrs_docs
+    path: docs/info/privacy-policy.md
+- id: V2-30
+  lang: vi
+  q: Tài liệu nói gì về CAN port?
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-qiotek-zealot.rst
