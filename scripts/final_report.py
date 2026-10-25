@@ -86,6 +86,14 @@ def parse(pattern: str, text: str, cast=str):
     return cast(match.group(1)) if match else None
 
 
+def num(pattern: str, text: str):
+    value = parse(pattern, text)
+    try:
+        return float(value) if value is not None else None
+    except ValueError:
+        return None
+
+
 def main() -> int:
     report = Report()
     head_sha = run(["git", "rev-parse", "HEAD"])["stdout"].strip()
@@ -134,9 +142,9 @@ def main() -> int:
     fidelity = run([PY, "scripts/fidelity_scan.py"])
     report.command("fidelity", fidelity,
                    "all chunks grouped by source and chunker; compares against data/corpus files")
-    fidelity_total = (parse(r"TOTAL\s+(\d+)\s+(\d+)", fidelity["stdout"]) or None)
-    fidelity_chunks, fidelity_bad = (int(fidelity_total.group(1)), int(fidelity_total.group(2))) \
-        if re.search(r"TOTAL\s+(\d+)\s+(\d+)", fidelity["stdout"]) else (None, None)
+    fidelity_match = re.search(r"TOTAL\s+(\d+)\s+(\d+)", fidelity["stdout"])
+    fidelity_chunks, fidelity_bad = ((int(fidelity_match.group(1)), int(fidelity_match.group(2)))
+                                     if fidelity_match else (None, None))
 
     report.emit("## Evaluations")
     report.emit()
@@ -152,9 +160,9 @@ def main() -> int:
             continue
         result = run([PY, "-m", "research.eval_retrieval", "--set", path, "--aggregate-only"])
         report.command(key, result)
-        evals[key] = {"status": "RUN", "recall": parse(r"recall@5 = \S+ = ([\d.]+)", result["stdout"]),
-                      "p1": parse(r"precision@1 = \S+ = ([\d.]+)", result["stdout"]),
-                      "mrr": parse(r"MRR = ([\d.]+)", result["stdout"])}
+        evals[key] = {"status": "RUN", "recall": num(r"recall@5 = \S+ = ([\d.]+)", result["stdout"]),
+                      "p1": num(r"precision@1 = \S+ = ([\d.]+)", result["stdout"]),
+                      "mrr": num(r"MRR = ([\d.]+)", result["stdout"])}
 
     heldout = REPO / "tests" / "heldout_locked.yaml"
     recorded = (REPO / "docs" / "heldout.sha256").read_text(encoding="utf-8").split()[0]
@@ -170,16 +178,16 @@ def main() -> int:
                           "tests/heldout_locked.yaml", "--aggregate-only"])
     report.command("heldout", heldout_result)
     evals["heldout"] = {"status": "RUN",
-                        "recall": parse(r"recall@5 = \S+ = ([\d.]+)", heldout_result["stdout"]),
-                        "p1": parse(r"precision@1 = \S+ = ([\d.]+)", heldout_result["stdout"]),
-                        "mrr": parse(r"MRR = ([\d.]+)", heldout_result["stdout"])}
+                        "recall": num(r"recall@5 = \S+ = ([\d.]+)", heldout_result["stdout"]),
+                        "p1": num(r"precision@1 = \S+ = ([\d.]+)", heldout_result["stdout"]),
+                        "mrr": num(r"MRR = ([\d.]+)", heldout_result["stdout"])}
     v3_result = run([PY, "-m", "research.eval_retrieval", "--set", "tests/heldout_v3.yaml",
                      "--aggregate-only"])
     report.command("v3", v3_result, "the fair instrument used for the acceptance target")
     evals["v3"] = {"status": "RUN",
-                   "recall": parse(r"recall@5 = \S+ = ([\d.]+)", v3_result["stdout"]),
-                   "p1": parse(r"precision@1 = \S+ = ([\d.]+)", v3_result["stdout"]),
-                   "mrr": parse(r"MRR = ([\d.]+)", v3_result["stdout"])}
+                   "recall": num(r"recall@5 = \S+ = ([\d.]+)", v3_result["stdout"]),
+                   "p1": num(r"precision@1 = \S+ = ([\d.]+)", v3_result["stdout"]),
+                   "mrr": num(r"MRR = ([\d.]+)", v3_result["stdout"])}
 
     report.command("mutation", run([PY, "scripts/mutation_check.py"]))
     mutation_json = REPO / "docs" / "mutation-report.json"
@@ -331,12 +339,14 @@ for item in found:
 
     # ------------------------------------------------------------ summary sections
     def line_of(key: str) -> str:
-        span = report.spans.get(key)
-        return f"L{span[0]}–L{span[1]}" if span else "n/a"
+        # placeholder: the raw section is appended after the summary, so the offset is only known
+        # once the front matter is complete (resolved at assembly time below).
+        return f"@@L:{key}@@" if key in report.spans else "n/a"
 
     verdict_recall = evals.get("v3", {}).get("recall")
     verdict_heldout = evals.get("heldout", {}).get("recall")
     mutation_score = mutation.get("score")
+    score_text = f"{mutation_score:.3f}" if isinstance(mutation_score, float) else str(mutation_score)
     py_version = run([PY, "--version"])["stdout"].strip()
 
     summary = [
@@ -349,7 +359,7 @@ for item in found:
         f"(heldout_v3) and {verdict_heldout} on the original frozen set (heldout_locked).",
         f"4. Target excerpt fidelity 100 %: measured {fidelity_chunks} chunks with "
         f"{fidelity_bad} mismatches ({'PASS' if fidelity_bad == 0 else 'FAIL'}).",
-        f"5. Target mutation >= 0.90: measured {mutation_score} "
+        f"5. Target mutation >= 0.90: measured {score_text} "
         f"({mutation.get('killed')}/{mutation.get('total')}); tests {passed} passed / {failed} failed.",
         f"6. Confidence: medium — fidelity, safety, offline and protocol results are machine-checked "
         f"here, but the recall number comes from a set this session generated and the client "
@@ -371,7 +381,7 @@ for item in found:
         f"| 100 % excerpts == Git blob (all chunks) | {fidelity_chunks} chunks / {fidelity_bad} "
         f"mismatches | {line_of('fidelity')} | {'PASS' if fidelity_bad == 0 else 'FAIL'} |",
         f"| out-of-corpus question -> found:false | covered by tests | {line_of('pytest')} | PASS |",
-        f"| mutation >= 90 % | {mutation_score} | {line_of('mutation')} | "
+        f"| mutation >= 90 % | {score_text} | {line_of('mutation')} | "
         f"{'PASS' if (mutation_score or 0) >= 0.9 else 'FAIL'} |",
         f"| README registers OpenCode / Claude Code / Codex | shapes transcribed from repo docs; "
         f"launch UNVERIFIED | n/a | PARTIAL |",
@@ -418,27 +428,43 @@ for item in found:
         trace.append(f"| {name} | {citation} | {tested} | {hostile} |")
     trace.append("")
 
+    def from_doc(relative: str, pattern: str):
+        path = REPO / relative
+        if not path.exists():
+            return None
+        return parse(pattern, path.read_text(encoding="utf-8"))
+
+    before_v1 = from_doc("docs/eval-heldout.md", r"recall@5 = \S+ = ([\d.]+)")
+    before_v2 = from_doc("docs/eval-heldout-v2.md", r"initial\s+recall@5 \d+/\d+ = ([\d.]+)")
+    before_tests = from_doc("HANDOFF.md", r"(\d+) passed in")
+    before_fidelity = from_doc("HANDOFF.md", r"total mismatch = (\d+)")
+
     before_after = [
         "## Before / after (previous checkpoint → this run)", "",
-        "| metric | before | after | source |",
+        "Every 'before' cell is parsed from a committed report in this repo (named in the cell); a "
+        "missing parse shows 'not recorded'.", "",
+        "| metric | before (parsed from repo docs) | after | raw output |",
         "|---|---|---|---|",
-        f"| chunks | not recorded in one place (63 652 at the round-9 checkpoint, stated in HANDOFF "
-        f"history only) | {fidelity_chunks} | {line_of('fidelity')} |",
-        f"| fidelity mismatches | 0 (stated at round 9) | {fidelity_bad} | {line_of('fidelity')} |",
-        f"| recall@5 (heldout_locked) | 0.367 (first run, documented in docs/eval-heldout.md) | "
+        f"| chunks | not recorded in a machine-readable artifact | {fidelity_chunks} | "
+        f"{line_of('fidelity')} |",
+        f"| fidelity mismatches | {before_fidelity if before_fidelity is not None else 'not recorded'} "
+        f"(HANDOFF.md) | {fidelity_bad} | {line_of('fidelity')} |",
+        f"| recall@5 (heldout_locked) | {before_v1 or 'not recorded'} (docs/eval-heldout.md) | "
         f"{verdict_heldout} | {line_of('heldout')} |",
-        f"| recall@5 (blind v2) | 0.500 → 0.733 across rounds (docs/eval-heldout-v2.md) | n/a (set "
-        f"superseded) | n/a |",
-        f"| recall@5 (blind v3, unambiguous) | not measured before | {verdict_recall} | {line_of('v3')} |",
-        f"| precision@1 / MRR (golden) | 0.300 / 0.436 (baseline) → 0.700 / 0.811 | "
+        f"| recall@5 (blind v2) | {before_v2 or 'not recorded'} (docs/eval-heldout-v2.md, first run) | "
+        f"n/a (set superseded) | n/a |",
+        f"| recall@5 (blind v3, unambiguous) | not measured before this run | {verdict_recall} | "
+        f"{line_of('v3')} |",
+        f"| precision@1 / MRR (golden) | not recorded separately | "
         f"{evals.get('golden', {}).get('p1')} / {evals.get('golden', {}).get('mrr')} | "
         f"{line_of('golden')} |",
-        f"| tests | 31 (round 4) → 58 → 73 → 80 | {passed} | {line_of('pytest')} |",
+        f"| tests | {before_tests or 'not recorded'} passed (HANDOFF.md) | {passed} | "
+        f"{line_of('pytest')} |",
         f"| coverage | not measured (coverage package absent) | NOT RUN | {line_of('coverage')} |",
-        f"| mutation score | NOT RUN until round 12 | {mutation_score} | {line_of('mutation')} |",
+        f"| mutation score | not recorded before this run | {score_text} | {line_of('mutation')} |",
         "",
-        "Cells marked 'not recorded' or 'NOT RUN' are honest gaps: no raw artifact in this repo "
-        "captures those earlier numbers.",
+        "Cells marked 'not recorded' are honest gaps: no raw artifact in this repo captures those "
+        "earlier numbers.",
         "",
     ]
 
@@ -449,9 +475,7 @@ for item in found:
         "| mutation harness reported 15/15 survivors | tests inserted the real `src` ahead of the "
         "mutant copy | tests honour `ARM_SRC`; harness sets it (`research/mutation.py`) |",
         "| `board_info('CubeOrangePlus')` returned no facts | paths ordered by length picked "
-        "`README.md` over `hwdef.dat` | definition file ranked first; then include-following |
-        "| `SERIAL_ORDER` missing for CubeOrangePlus | the key lives in `../CubeOrange/hwdef.inc` | "
-        "one level of `include` followed, reported in `included_files` |",
+        "`README.md` over `hwdef.dat` | definition file ranked first; then include-following |",
         "| `RC_OPTIONS` resolved to AP_Arming's `OPTIONS` | two params share the suffix | prefix→path "
         "ranking (`order_suffix_matches`) |",
         "| `--rebuild-index` lost 3 param citations | `@Param` block straddled a chunk split | "
@@ -549,8 +573,13 @@ for item in found:
     body = (summary + acceptance + trace + before_after + bugs + unverified + deviations
             + limits + reproduce + ["---", "", "## Raw command output", ""]
             + report.lines)
+    text = "\n".join(body)
+    # resolve the line references now that the front matter length is known
+    offset = len(body) - len(report.lines)
+    for key, (start, end) in report.spans.items():
+        text = text.replace(f"@@L:{key}@@", f"L{start + offset - 1}–L{end + offset - 1}")
     out = REPO / "FINAL_REPORT.md"
-    out.write_text("\n".join(body) + "\n", encoding="utf-8")
+    out.write_text(text + "\n", encoding="utf-8")
 
     # ------------------------------------------------------------ review bundle
     bundle = REPO / "review_bundle"
