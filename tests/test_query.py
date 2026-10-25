@@ -174,11 +174,14 @@ def test_pinned_version_is_not_flagged(con) -> None:
     assert payload["scope_notes"] == [], (number, payload["scope_notes"])
 
 
-def test_unrelated_topics_get_a_weak_match_note(con) -> None:
+def test_unrelated_topics_are_refused_not_weakly_answered(con) -> None:
+    # F-1 made this stricter: unrelated topics now stop at the corpus-anchor gate instead of
+    # returning found:true results flagged as a weak match.
     for text in UNRELATED_TOPICS:
         payload = query.search(con, text, limit=3)
-        assert "khớp yếu, có thể ngoài kho" in (payload.get("scope_notes") or []), (
-            text, payload.get("scope_notes"))
+        assert payload["found"] is False, text
+        assert payload["results"] == [], text
+        assert "out of scope" in payload["note"], (text, payload["note"])
         assert payload["confidence"] == "low", text
 
 
