@@ -1,0 +1,59 @@
+{
+  "case": "G2_11",
+  "note": "same content as the C/D hit for ardupilot#d0751d183ad205ea",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#d0751d183ad205ea"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1011,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#d0751d183ad205ea"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 7.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#d0751d183ad205ea\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"arming-checks.lua\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L434-L434\",\n  \"path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n  \"lines\": [\n    434,\n    434\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n  \"excerpt\": \"    // @Param: ARM_RTL_CLIMB\",\n  \"untrusted\": true,\n  \"text\": \"    // @Param: ARM_RTL_CLIMB\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#d0751d183ad205ea",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "arming-checks.lua",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L434-L434",
+        "path": "libraries/AP_Scripting/applets/arming-checks.lua",
+        "lines": [
+          434,
+          434
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "libraries/AP_Scripting/applets/arming-checks.lua",
+        "excerpt": "    // @Param: ARM_RTL_CLIMB",
+        "untrusted": true,
+        "text": "    // @Param: ARM_RTL_CLIMB",
+        "served_from": "index"
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "case": "G2_09",
+  "note": "same content as the C/D hit for ardupilot#9345259ec64dd06e",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#9345259ec64dd06e"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1009,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#9345259ec64dd06e"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 7.7,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#9345259ec64dd06e\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"AP_RCProtocol_CRSF.cpp\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L335-L384\",\n  \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n  \"lines\": [\n    335,\n    384\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n  \"excerpt\": \"    _use_lq_for_rssi = rc().option_is_enabled(RC_Channels::Option::USE_CRSF_LQ_AS_RSSI);\\n#endif\\n}\\n\\n// write out a frame of any type\\nvoid AP_RCProtocol_CRSF::write_frame(Frame* frame)\\n{\\n    AP_HAL::UARTDriver *uart = get_current_UART();\\n\\n    if (!uart) {\\n        return;\\n    }\\n    // calculate crc\\n    uint8_t crc = crc8_dvb_s2(0, frame->type);\\n    for (uint8_t i = 0; i < frame->length - 2; i++) {\\n        crc = crc8_dvb_s2(crc, frame->payload[i]);\\n    }\\n    frame->payload[frame->length - 2] = crc;\\n\\n    uart->write((uint8_t*)frame, frame->length + 2);\\n    uart->flush();\\n\\n#if defined(CRSF_DEBUG) ||\",\n  \"untrusted\": true,\n  \"text\": \"    _use_lq_for_rssi = rc().option_is_enabled(RC_Channels::Option::USE_CRSF_LQ_AS_RSSI);\\n#endif\\n}\\n\\n// write out a frame of any type\\nvoid AP_RCProtocol_CRSF::write_frame(Frame* frame)\\n{\\n    AP_HAL::UARTDriver *uart = get_current_UART();\\n\\n    if (!uart) {\\n        return;\\n    }\\n    // calculate crc\\n    uint8_t crc = crc8_dvb_s2(0, frame->type);\\n    for (uint8_t i = 0; i < frame->length - 2; i++) {\\n        crc = crc8_dvb_s2(crc, frame->payload[i]);\\n    }\\n    frame->payload[frame->length - 2] = crc;\\n\\n    uart->write((uint8_t*)frame, frame->length + 2);\\n    uart->flush();\\n\\n#if defined(CRSF_DEBUG) || defined(CRSF_DEBUG_PARAMS)\\n#ifdef CRSF_DEBUG_PARAMS\\n    switch (frame->type) {\\n        case AP_CRSF_Protocol::CRSF_FRAMETYPE_PARAMETER_SETTINGS_ENTRY:\\n        case AP_CRSF_Protocol::CRSF_FRAMETYPE_PARAMETER_READ:\\n        case AP_CRSF_Protocol::CRSF_FRAMETYPE_PARAMETER_WRITE:\\n        case AP_CRSF_Protocol::CRSF_FRAMETYPE_COMMAND:\\n#endif\\n\\n        hal.console->printf(\\\"CRSF: writing %s:\\\", get_frame_type(frame->type, frame->payload[0]));\\n        for (uint8_t i = 0; i < frame->length + 2; i++) {\\n            uint8_t val = ((uint8_t*)frame)[i];\\n#ifdef CRSF_DEBUG_CHARS\\n            if (val >= 32 && val <= 126) {\\n                hal.console->printf(\\\" 0x%x '%c'\\\", val, (char)val);\\n            } else {\\n#endif\\n                hal.console->printf(\\\" 0x%x\\\", val);\\n#ifdef CRSF_DEBUG_CHARS\\n            }\\n#endif\\n        }\\n        hal.console->printf(\\\"\\\\n\\\");\\n#ifdef CRSF_DEBUG_PARAMS\\n    }\\n#endif\\n#endif // defined(CRSF_DEBUG) || defined(CRSF_DEBUG_PARAMS)\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#9345259ec64dd06e",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "AP_RCProtocol_CRSF.cpp",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L335-L384",
+        "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+        "lines": [
+          335,
+          384
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+        "excerpt": "    _use_lq_for_rssi = rc().option_is_enabled(RC_Channels::Option::USE_CRSF_LQ_AS_RSSI);\n#endif\n}\n\n// write out a frame of any type\nvoid AP_RCProtocol_CRSF::write_frame(Frame* frame)\n{\n    AP_HAL::UARTDriver *uart = get_current_UART();\n\n    if (!uart) {\n        return;\n    }\n    // calculate crc\n    uint8_t crc = crc8_dvb_s2(0, frame->type);\n    for (uint8_t i = 0; i < frame->length - 2; i++) {\n        crc = crc8_dvb_s2(crc, frame->payload[i]);\n    }\n    frame->payload[frame->length - 2] = crc;\n\n    uart->write((uint8_t*)frame, frame->length + 2);\n    uart->flush();\n\n#if defined(CRSF_DEBUG) ||",
+        "untrusted": true,
+        "text": "    _use_lq_for_rssi = rc().option_is_enabled(RC_Channels::Option::USE_CRSF_LQ_AS_RSSI);\n#endif\n}\n\n// write out a frame of any type\nvoid AP_RCProtocol_CRSF::write_frame(Frame* frame)\n{\n    AP_HAL::UARTDriver *uart = get_current_UART();\n\n    if (!uart) {\n        return;\n    }\n    // calculate crc\n    uint8_t crc = crc8_dvb_s2(0, frame->type);\n    for (uint8_t i = 0; i < frame->length - 2; i++) {\n        crc = crc8_dvb_s2(crc, frame->payload[i]);\n    }\n    frame->payload[frame->length - 2] = crc;\n\n    uart->write((uint8_t*)frame, frame->length + 2);\n    uart->flush();\n\n#if defined(CRSF_DEBUG) || defined(CRSF_DEBUG_PARAMS)\n#ifdef CRSF_DEBUG_PARAMS\n    switch (frame->type) {\n        case AP_CRSF_Protocol::CRSF_FRAMETYPE_PARAMETER_SETTINGS_ENTRY:\n        case AP_CRSF_Protocol::CRSF_FRAMETYPE_PARAMETER_READ:\n        case AP_CRSF_Protocol::CRSF_FRAMETYPE_PARAMETER_WRITE:\n        case AP_CRSF_Protocol::CRSF_FRAMETYPE_COMMAND:\n#endif\n\n        hal.console->printf(\"CRSF: writing %s:\", get_frame_type(frame->type, frame->payload[0]));\n        for (uint8_t i = 0; i < frame->length + 2; i++) {\n            uint8_t val = ((uint8_t*)frame)[i];\n#ifdef CRSF_DEBUG_CHARS\n            if (val >= 32 && val <= 126) {\n                hal.console->printf(\" 0x%x '%c'\", val, (char)val);\n            } else {\n#endif\n                hal.console->printf(\" 0x%x\", val);\n#ifdef CRSF_DEBUG_CHARS\n            }\n#endif\n        }\n        hal.console->printf(\"\\n\");\n#ifdef CRSF_DEBUG_PARAMS\n    }\n#endif\n#endif // defined(CRSF_DEBUG) || defined(CRSF_DEBUG_PARAMS)\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "case": "C2",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "CRSF baud rate",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 46,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "CRSF baud rate",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 111.9,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"CRSF baud rate\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot#d2d15d1ffa0b19e9\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RCProtocol_CRSF.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L689-L714\",\n      \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"lines\": [\n        689,\n        714\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"excerpt\": \"    return true;\\n}\\n\\n// change the bootstrap baud rate to ELRS standard if configured\\nvoid AP_RCProtocol_CRSF::process_handshake(uint32_t baudrate)\\n{\\n    AP_HAL::UARTDriver *uart = get_current_UART();\\n\\n    // only change the baudrate if we are bootstrapping CRSF\\n    if (uart == nullptr\\n        || baudrate != CRSF_BAUDRATE\\n        || baudrate == get_bootstrap_baud_rate()\\n        || uart->get_baud_rate() == get_bootstrap_baud_rate()\\n        || !protocol_enabled(AP_RCProtocol::CRSF)) {\\n        return;\\n    }\\n\\n    uart->begin(get_bootstrap_baud_rate());\\n}\\n\\n//returns uplink link quality on 0-255 scal\",\n      \"untrusted\": true,\n      \"score\": -36.5733\n    },\n    {\n      \"cite_id\": \"edgetx#a2f1bf22a7c437f0\",\n      \"source_id\": \"edgetx\",\n      \"repo\": \"EdgeTX/edgetx\",\n      \"ref\": \"v2.12.5\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_measure.cpp\",\n      \"url\": \"https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.cpp#L371-L425\",\n      \"path\": \"radio/src/targets/hrs/v15/crsf_measure.cpp\",\n      \"lines\": [\n        371,\n        425\n      ],\n      \"version\": \"EdgeTX 2.12.5\",\n      \"ingested_at\": \"2026-10-25T20:13:32+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-2.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:32+0700\",\n      \"heading_path\": \"radio/src/targets/hrs/v15/crsf_measure.cpp\",\n      \"excerpt\": \"}\\n\\nvoid beginConfigSearch(uint8_t baudIdx, uint8_t polarity)\\n{\\n  g_configLocked = false;\\n  g_tryBaudIdx = baudIdx % BAUD_COUNT;\\n  g_tryPolarity = polarity;\\n  g_configTryStart = get_tmr10ms();\\n  g_polarityUi = CRSF_MEASURE_POL_SEARCHING;\\n  g_baudUi = 0;\\n  g_haveSignal = false;\\n  g_lastFrameUs = 0;\\n  g_parseLen = 0;\\n  startUart(BAUD_CANDIDATES[g_tryBaudIdx], g_tryPolarity);\\n}\\n\\nvoid advanceConfigSearch()\\n{\\n  // Cycle: for each baud, Normal then Inverted\\n  if (g_tryPolarity == ETX_Pol_Normal) {\\n    g_tryPolarity = ETX_Pol_Inverted;\\n  } else {\\n    g_tryPolarity = ETX_Pol_Normal;\\n    g_tryBaudIdx = \",\n      \"untrusted\": true,\n      \"score\": -31.0852\n    },\n    {\n      \"cite_id\": \"expresslrs#fbe624b4e6902251\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"CRSFHandset.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/Handset/CRSFHandset.cpp#L409-L443\",\n      \"path\": \"src/lib/Handset/CRSFHandset.cpp\",\n      \"lines\": [\n        409,\n        443\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/lib/Handset/CRSFHandset.cpp\",\n      \"excerpt\": \"    //USC0(UART0) &= ~BIT(UCLBE);\\n#endif\\n}\\n\\nint CRSFHandset::getMinPacketInterval() const\\n{\\n    if (halfDuplex && UARTrequestedBaud == 115200) // Packet rate limited to 200Hz if we are on 115k baud on half-duplex module\\n    {\\n        return 5000;\\n    }\\n    if (UARTrequestedBaud == 115200) // Packet rate limited to 250Hz if we are on 115k baud\\n    {\\n        return 4000;\\n    }\\n    if (UARTrequestedBaud == 400000) // Packet rate limited to 500Hz if we are on 400k baud\\n    {\\n        return 2000;\\n    }\\n    return 1;   // 1-million Hz!\\n}\\n\\nvoid ICACHE_RAM_ATTR CRSFHandset::adjustMaxPacketSize()\\n{\\n   \",\n      \"untrusted\": true,\n      \"score\": -30.8632\n    },\n    {\n      \"cite_id\": \"expresslrs#34d5b6cb0487a15b\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"TXModuleParameters.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/tx-crsf/TXModuleParameters.cpp#L324-L387\",\n      \"path\": \"src/lib/tx-crsf/TXModuleParameters.cpp\",\n      \"lines\": [\n        324,\n        387\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/lib/tx-crsf/TXModuleParameters.cpp\",\n      \"excerpt\": \"    // clear the critical error bits of the warning flags\\n    luaWarningFlags &= 0b00011111;\\n}\\n\\n/***\\n * @brief: Update the luaBadGoodString with the current bad/good count\\n * This item is hidden on our Lua and only displayed in other systems that don't poll our status\\n ****/\\nvoid TXModuleEndpoint::devicePingCalled()\\n{\\n    supressCriticalErrors();\\n}\\n\\nvoid TXModuleEndpoint::setWarningFlag(const warningFlags flag, const bool value)\\n{\\n  if (value)\\n  {\\n    luaWarningFlags |= 1 << (uint8_t)flag;\\n  }\\n  else\\n  {\\n    luaWarningFlags &= ~(1 << (uint8_t)flag);\\n  }\\n}\\n\\nvoid TXModuleEndpoint::sendELRSstatus\",\n      \"untrusted\": true,\n      \"score\": -30.8262\n    },\n    {\n      \"cite_id\": \"ardupilot#0adec6354cbdf85d\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RCProtocol_CRSF.h\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h#L36-L112\",\n      \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h\",\n      \"lines\": [\n        36,\n        112\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h\",\n      \"excerpt\": \"#define CRSF_TX_TIMEOUT    500000U   // the period after which the transmitter is considered disconnected (matches copters failsafe)\\n#define CRSF_RX_TIMEOUT    150000U   // the period after which the receiver is considered disconnected (>ping frequency)\\n\\nclass AP_RCProtocol_CRSF : public AP_RCProtocol_Backend {\\npublic:\\n    AP_RCProtocol_CRSF(AP_RCProtocol &_frontend);\\n    virtual ~AP_RCProtocol_CRSF();\\n    void process_byte(uint8_t byte, uint32_t baudrate) override;\\n    void process_handshake(uint32_t baudrate) override;\\n    void update(void) override;\\n#if HAL_CRSF_TELEM_ENABLED\\n    void start\",\n      \"untrusted\": true,\n      \"score\": -30.5898\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot#d2d15d1ffa0b19e9\",\n    \"edgetx#a2f1bf22a7c437f0\",\n    \"expresslrs#fbe624b4e6902251\",\n    \"expresslrs#34d5b6cb0487a15b\",\n    \"ardupilot#0adec6354cbdf85d\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "CRSF baud rate",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot#d2d15d1ffa0b19e9",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RCProtocol_CRSF.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L689-L714",
+            "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "lines": [
+              689,
+              714
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "excerpt": "    return true;\n}\n\n// change the bootstrap baud rate to ELRS standard if configured\nvoid AP_RCProtocol_CRSF::process_handshake(uint32_t baudrate)\n{\n    AP_HAL::UARTDriver *uart = get_current_UART();\n\n    // only change the baudrate if we are bootstrapping CRSF\n    if (uart == nullptr\n        || baudrate != CRSF_BAUDRATE\n        || baudrate == get_bootstrap_baud_rate()\n        || uart->get_baud_rate() == get_bootstrap_baud_rate()\n        || !protocol_enabled(AP_RCProtocol::CRSF)) {\n        return;\n    }\n\n    uart->begin(get_bootstrap_baud_rate());\n}\n\n//returns uplink link quality on 0-255 scal",
+            "untrusted": true,
+            "score": -36.5733
+          },
+          {
+            "cite_id": "edgetx#a2f1bf22a7c437f0",
+            "source_id": "edgetx",
+            "repo": "EdgeTX/edgetx",
+            "ref": "v2.12.5",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_measure.cpp",
+            "url": "https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.cpp#L371-L425",
+            "path": "radio/src/targets/hrs/v15/crsf_measure.cpp",
+            "lines": [
+              371,
+              425
+            ],
+            "version": "EdgeTX 2.12.5",
+            "ingested_at": "2026-10-25T20:13:32+0700",
+            "tier": "T1",
+            "license": "GPL-2.0",
+            "retrieved_at": "2026-10-25T20:13:32+0700",
+            "heading_path": "radio/src/targets/hrs/v15/crsf_measure.cpp",
+            "excerpt": "}\n\nvoid beginConfigSearch(uint8_t baudIdx, uint8_t polarity)\n{\n  g_configLocked = false;\n  g_tryBaudIdx = baudIdx % BAUD_COUNT;\n  g_tryPolarity = polarity;\n  g_configTryStart = get_tmr10ms();\n  g_polarityUi = CRSF_MEASURE_POL_SEARCHING;\n  g_baudUi = 0;\n  g_haveSignal = false;\n  g_lastFrameUs = 0;\n  g_parseLen = 0;\n  startUart(BAUD_CANDIDATES[g_tryBaudIdx], g_tryPolarity);\n}\n\nvoid advanceConfigSearch()\n{\n  // Cycle: for each baud, Normal then Inverted\n  if (g_tryPolarity == ETX_Pol_Normal) {\n    g_tryPolarity = ETX_Pol_Inverted;\n  } else {\n    g_tryPolarity = ETX_Pol_Normal;\n    g_tryBaudIdx = ",
+            "untrusted": true,
+            "score": -31.0852
+          },
+          {
+            "cite_id": "expresslrs#fbe624b4e6902251",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "CRSFHandset.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/Handset/CRSFHandset.cpp#L409-L443",
+            "path": "src/lib/Handset/CRSFHandset.cpp",
+            "lines": [
+              409,
+              443
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/lib/Handset/CRSFHandset.cpp",
+            "excerpt": "    //USC0(UART0) &= ~BIT(UCLBE);\n#endif\n}\n\nint CRSFHandset::getMinPacketInterval() const\n{\n    if (halfDuplex && UARTrequestedBaud == 115200) // Packet rate limited to 200Hz if we are on 115k baud on half-duplex module\n    {\n        return 5000;\n    }\n    if (UARTrequestedBaud == 115200) // Packet rate limited to 250Hz if we are on 115k baud\n    {\n        return 4000;\n    }\n    if (UARTrequestedBaud == 400000) // Packet rate limited to 500Hz if we are on 400k baud\n    {\n        return 2000;\n    }\n    return 1;   // 1-million Hz!\n}\n\nvoid ICACHE_RAM_ATTR CRSFHandset::adjustMaxPacketSize()\n{\n   ",
+            "untrusted": true,
+            "score": -30.8632
+          },
+          {
+            "cite_id": "expresslrs#34d5b6cb0487a15b",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "TXModuleParameters.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/tx-crsf/TXModuleParameters.cpp#L324-L387",
+            "path": "src/lib/tx-crsf/TXModuleParameters.cpp",
+            "lines": [
+              324,
+              387
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/lib/tx-crsf/TXModuleParameters.cpp",
+            "excerpt": "    // clear the critical error bits of the warning flags\n    luaWarningFlags &= 0b00011111;\n}\n\n/***\n * @brief: Update the luaBadGoodString with the current bad/good count\n * This item is hidden on our Lua and only displayed in other systems that don't poll our status\n ****/\nvoid TXModuleEndpoint::devicePingCalled()\n{\n    supressCriticalErrors();\n}\n\nvoid TXModuleEndpoint::setWarningFlag(const warningFlags flag, const bool value)\n{\n  if (value)\n  {\n    luaWarningFlags |= 1 << (uint8_t)flag;\n  }\n  else\n  {\n    luaWarningFlags &= ~(1 << (uint8_t)flag);\n  }\n}\n\nvoid TXModuleEndpoint::sendELRSstatus",
+            "untrusted": true,
+            "score": -30.8262
+          },
+          {
+            "cite_id": "ardupilot#0adec6354cbdf85d",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RCProtocol_CRSF.h",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h#L36-L112",
+            "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h",
+            "lines": [
+              36,
+              112
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h",
+            "excerpt": "#define CRSF_TX_TIMEOUT    500000U   // the period after which the transmitter is considered disconnected (matches copters failsafe)\n#define CRSF_RX_TIMEOUT    150000U   // the period after which the receiver is considered disconnected (>ping frequency)\n\nclass AP_RCProtocol_CRSF : public AP_RCProtocol_Backend {\npublic:\n    AP_RCProtocol_CRSF(AP_RCProtocol &_frontend);\n    virtual ~AP_RCProtocol_CRSF();\n    void process_byte(uint8_t byte, uint32_t baudrate) override;\n    void process_handshake(uint32_t baudrate) override;\n    void update(void) override;\n#if HAL_CRSF_TELEM_ENABLED\n    void start",
+            "untrusted": true,
+            "score": -30.5898
+          }
+        ],
+        "candidates": [
+          "ardupilot#d2d15d1ffa0b19e9",
+          "edgetx#a2f1bf22a7c437f0",
+          "expresslrs#fbe624b4e6902251",
+          "expresslrs#34d5b6cb0487a15b",
+          "ardupilot#0adec6354cbdf85d"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

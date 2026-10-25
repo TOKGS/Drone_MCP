@@ -1,0 +1,59 @@
+{
+  "case": "G2_03",
+  "note": "same content as the C/D hit for expresslrs_docs#9b82e6e086b6b0f5",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "expresslrs_docs#9b82e6e086b6b0f5"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1003,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "expresslrs_docs#9b82e6e086b6b0f5"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.0,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"expresslrs_docs#9b82e6e086b6b0f5\",\n  \"source_id\": \"expresslrs_docs\",\n  \"repo\": \"ExpressLRS/Docs\",\n  \"ref\": \"5ed656b6ebc7a38b6012297cf40fe5bc87232bed\",\n  \"channel\": \"snapshot\",\n  \"unreleased\": true,\n  \"pinned\": true,\n  \"title\": \"init-rate.md\",\n  \"url\": \"https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/info/init-rate.md#L22-L27\",\n  \"path\": \"docs/info/init-rate.md\",\n  \"lines\": [\n    22,\n    27\n  ],\n  \"version\": \"ELRS Docs@5ed656b (2026-10-12)\",\n  \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n  \"heading_path\": \"Setting Init Rate (before ExpressLRS 3.5.6 only) > Method 1: Switch To Rate\",\n  \"excerpt\": \"* Power on both a receiver and transmitter and wait for them to connect on any packet rate.\\n* On the transmitter, select the packet rate to set the receiver's Init Rate to.\\n  * **NOTE** the packet rate must actually change for the setting to be sent. This means changing away from, then back to the desired packet rate if already connected at the desired rate.\\n* The receiver briefly failsafes when changing packet modes and will save the target rate.\\n\\nThe receiver will now boot at the selected rate on next boot.\",\n  \"untrusted\": true,\n  \"text\": \"* Power on both a receiver and transmitter and wait for them to connect on any packet rate.\\n* On the transmitter, select the packet rate to set the receiver's Init Rate to.\\n  * **NOTE** the packet rate must actually change for the setting to be sent. This means changing away from, then back to the desired packet rate if already connected at the desired rate.\\n* The receiver briefly failsafes when changing packet modes and will save the target rate.\\n\\nThe receiver will now boot at the selected rate on next boot.\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "expresslrs_docs#9b82e6e086b6b0f5",
+        "source_id": "expresslrs_docs",
+        "repo": "ExpressLRS/Docs",
+        "ref": "5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+        "channel": "snapshot",
+        "unreleased": true,
+        "pinned": true,
+        "title": "init-rate.md",
+        "url": "https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/info/init-rate.md#L22-L27",
+        "path": "docs/info/init-rate.md",
+        "lines": [
+          22,
+          27
+        ],
+        "version": "ELRS Docs@5ed656b (2026-10-12)",
+        "ingested_at": "2026-10-25T20:13:33+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:33+0700",
+        "heading_path": "Setting Init Rate (before ExpressLRS 3.5.6 only) > Method 1: Switch To Rate",
+        "excerpt": "* Power on both a receiver and transmitter and wait for them to connect on any packet rate.\n* On the transmitter, select the packet rate to set the receiver's Init Rate to.\n  * **NOTE** the packet rate must actually change for the setting to be sent. This means changing away from, then back to the desired packet rate if already connected at the desired rate.\n* The receiver briefly failsafes when changing packet modes and will save the target rate.\n\nThe receiver will now boot at the selected rate on next boot.",
+        "untrusted": true,
+        "text": "* Power on both a receiver and transmitter and wait for them to connect on any packet rate.\n* On the transmitter, select the packet rate to set the receiver's Init Rate to.\n  * **NOTE** the packet rate must actually change for the setting to be sent. This means changing away from, then back to the desired packet rate if already connected at the desired rate.\n* The receiver briefly failsafes when changing packet modes and will save the target rate.\n\nThe receiver will now boot at the selected rate on next boot.",
+        "served_from": "index"
+      }
+    }
+  }
+}

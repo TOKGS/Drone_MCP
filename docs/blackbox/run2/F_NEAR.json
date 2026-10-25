@@ -1,0 +1,131 @@
+{
+  "case": "F_NEAR",
+  "note": "no crash, <10s",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "NEAR("
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 79,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "NEAR("
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 45.7,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"NEAR(\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot#d110ccd20f0951c7\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_math.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_math.cpp#L548-L568\",\n      \"path\": \"libraries/AP_Math/tests/test_math.cpp\",\n      \"lines\": [\n        548,\n        568\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Math/tests/test_math.cpp\",\n      \"excerpt\": \"    EXPECT_NEAR(0,    wrap_2PI(-M_2PI), accuracy);\\n    EXPECT_NEAR(1,    wrap_2PI(1.0), accuracy);\\n}\\n\\nTEST(MathTest, ASin)\\n{\\n    const float accuracy = 1.0e-5;\\n    EXPECT_NEAR(0.0f, safe_asin(0.0f), accuracy);\\n    EXPECT_NEAR(0.9033391107665127f, safe_asin(M_PI_2 * 0.5f), accuracy);\\n    EXPECT_NEAR(M_PI_2, safe_asin(M_PI_2 ), accuracy);\\n    EXPECT_NEAR(M_PI_2, safe_asin(M_PI), accuracy);\\n    EXPECT_NEAR(M_PI_2, safe_asin(M_2PI), accuracy);\\n    EXPECT_NEAR(-M_PI_2, safe_asin(-M_PI_2), accuracy);\\n    EXPECT_NEAR(-M_PI_2, safe_asin(-M_PI), accuracy);\\n    EXPECT_NEAR(-0.9033391107665127f, safe_asi\",\n      \"untrusted\": true,\n      \"score\": -17.8209\n    },\n    {\n      \"cite_id\": \"ardupilot#124e6d1453fb449c\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_baro_atmosphere.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Baro/tests/test_baro_atmosphere.cpp#L23-L40\",\n      \"path\": \"libraries/AP_Baro/tests/test_baro_atmosphere.cpp\",\n      \"lines\": [\n        23,\n        40\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Baro/tests/test_baro_atmosphere.cpp\",\n      \"excerpt\": \"    EXPECT_NEAR(AP_Baro::get_air_density_for_alt_amsl(65000), 163.210100967015E-6, accuracy);\\n    EXPECT_NEAR(AP_Baro::get_air_density_for_alt_amsl(78000), 25.2385188936996E-6, accuracy);\\n}\\n\\nTEST(AP_Baro, get_altitude_from_pressure)\\n{\\n    AP_Baro baro;\\n    float accuracy = 1.5E-1;\\n\\n    EXPECT_NEAR(baro.get_altitude_from_pressure(159598.2), -4000, accuracy);\\n    EXPECT_NEAR(baro.get_altitude_from_pressure(47217.6), 6000, accuracy);\\n    EXPECT_NEAR(baro.get_altitude_from_pressure(8182.3), 17500, accuracy);\\n    EXPECT_NEAR(baro.get_altitude_from_pressure(2549.2), 25000, accuracy);\\n    EXPECT_NEAR\",\n      \"untrusted\": true,\n      \"score\": -17.4306\n    },\n    {\n      \"cite_id\": \"ardupilot#dce3eed44e3915f3\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_math_double.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_math_double.cpp#L170-L194\",\n      \"path\": \"libraries/AP_Math/tests/test_math_double.cpp\",\n      \"lines\": [\n        170,\n        194\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Math/tests/test_math_double.cpp\",\n      \"excerpt\": \"    EXPECT_EQ(0.0,     wrap_360(static_cast<double>(7200.0)));\\n    EXPECT_EQ(260.0,     wrap_360(static_cast<double>(-100.0)));\\n}\\n\\nTEST(MathWrapTest, AnglePIDouble)\\n{\\n    const double accuracy = 1.0e-5;\\n\\n    EXPECT_NEAR(M_PI,    wrap_PI((double)M_PI),      accuracy);\\n    EXPECT_NEAR(0.0,     wrap_PI((double)M_2PI),     accuracy);\\n    EXPECT_NEAR(0,       wrap_PI((double)M_PI * 10.0), accuracy);\\n    EXPECT_NEAR(-2.1415925025939941,    wrap_PI((double)M_PI+1.0),      accuracy);\\n}\\n\\nTEST(MathWrapTest, Angle2PIDouble)\\n{\\n    const double accuracy = 1.0e-5;\\n\\n    EXPECT_NEAR(M_PI, wrap_2PI((double)M_P\",\n      \"untrusted\": true,\n      \"score\": -17.3677\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot#d110ccd20f0951c7\",\n    \"ardupilot#124e6d1453fb449c\",\n    \"ardupilot#dce3eed44e3915f3\",\n    \"ardupilot#d18e96d5da2fc2bc\",\n    \"ardupilot#db22bba699139ca4\"\n  ],\n  \"scope_notes\": [\n    \"khớp yếu, có thể ngoài kho\"\n  ],\n  \"confidence\": \"low\",\n  \"note\": null,\n  \"result_count\": 3\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "NEAR(",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot#d110ccd20f0951c7",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_math.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_math.cpp#L548-L568",
+            "path": "libraries/AP_Math/tests/test_math.cpp",
+            "lines": [
+              548,
+              568
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Math/tests/test_math.cpp",
+            "excerpt": "    EXPECT_NEAR(0,    wrap_2PI(-M_2PI), accuracy);\n    EXPECT_NEAR(1,    wrap_2PI(1.0), accuracy);\n}\n\nTEST(MathTest, ASin)\n{\n    const float accuracy = 1.0e-5;\n    EXPECT_NEAR(0.0f, safe_asin(0.0f), accuracy);\n    EXPECT_NEAR(0.9033391107665127f, safe_asin(M_PI_2 * 0.5f), accuracy);\n    EXPECT_NEAR(M_PI_2, safe_asin(M_PI_2 ), accuracy);\n    EXPECT_NEAR(M_PI_2, safe_asin(M_PI), accuracy);\n    EXPECT_NEAR(M_PI_2, safe_asin(M_2PI), accuracy);\n    EXPECT_NEAR(-M_PI_2, safe_asin(-M_PI_2), accuracy);\n    EXPECT_NEAR(-M_PI_2, safe_asin(-M_PI), accuracy);\n    EXPECT_NEAR(-0.9033391107665127f, safe_asi",
+            "untrusted": true,
+            "score": -17.8209
+          },
+          {
+            "cite_id": "ardupilot#124e6d1453fb449c",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_baro_atmosphere.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Baro/tests/test_baro_atmosphere.cpp#L23-L40",
+            "path": "libraries/AP_Baro/tests/test_baro_atmosphere.cpp",
+            "lines": [
+              23,
+              40
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Baro/tests/test_baro_atmosphere.cpp",
+            "excerpt": "    EXPECT_NEAR(AP_Baro::get_air_density_for_alt_amsl(65000), 163.210100967015E-6, accuracy);\n    EXPECT_NEAR(AP_Baro::get_air_density_for_alt_amsl(78000), 25.2385188936996E-6, accuracy);\n}\n\nTEST(AP_Baro, get_altitude_from_pressure)\n{\n    AP_Baro baro;\n    float accuracy = 1.5E-1;\n\n    EXPECT_NEAR(baro.get_altitude_from_pressure(159598.2), -4000, accuracy);\n    EXPECT_NEAR(baro.get_altitude_from_pressure(47217.6), 6000, accuracy);\n    EXPECT_NEAR(baro.get_altitude_from_pressure(8182.3), 17500, accuracy);\n    EXPECT_NEAR(baro.get_altitude_from_pressure(2549.2), 25000, accuracy);\n    EXPECT_NEAR",
+            "untrusted": true,
+            "score": -17.4306
+          },
+          {
+            "cite_id": "ardupilot#dce3eed44e3915f3",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_math_double.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_math_double.cpp#L170-L194",
+            "path": "libraries/AP_Math/tests/test_math_double.cpp",
+            "lines": [
+              170,
+              194
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Math/tests/test_math_double.cpp",
+            "excerpt": "    EXPECT_EQ(0.0,     wrap_360(static_cast<double>(7200.0)));\n    EXPECT_EQ(260.0,     wrap_360(static_cast<double>(-100.0)));\n}\n\nTEST(MathWrapTest, AnglePIDouble)\n{\n    const double accuracy = 1.0e-5;\n\n    EXPECT_NEAR(M_PI,    wrap_PI((double)M_PI),      accuracy);\n    EXPECT_NEAR(0.0,     wrap_PI((double)M_2PI),     accuracy);\n    EXPECT_NEAR(0,       wrap_PI((double)M_PI * 10.0), accuracy);\n    EXPECT_NEAR(-2.1415925025939941,    wrap_PI((double)M_PI+1.0),      accuracy);\n}\n\nTEST(MathWrapTest, Angle2PIDouble)\n{\n    const double accuracy = 1.0e-5;\n\n    EXPECT_NEAR(M_PI, wrap_2PI((double)M_P",
+            "untrusted": true,
+            "score": -17.3677
+          }
+        ],
+        "candidates": [
+          "ardupilot#d110ccd20f0951c7",
+          "ardupilot#124e6d1453fb449c",
+          "ardupilot#dce3eed44e3915f3",
+          "ardupilot#d18e96d5da2fc2bc",
+          "ardupilot#db22bba699139ca4"
+        ],
+        "scope_notes": [
+          "khớp yếu, có thể ngoài kho"
+        ],
+        "confidence": "low",
+        "note": null,
+        "result_count": 3
+      }
+    }
+  }
+}

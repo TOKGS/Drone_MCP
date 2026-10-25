@@ -1,0 +1,181 @@
+{
+  "case": "C11",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "EdgeTX CRSF telemetry",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 55,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "EdgeTX CRSF telemetry",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 76.2,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"EdgeTX CRSF telemetry\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"edgetx#b3109122eaaed214\",\n      \"source_id\": \"edgetx\",\n      \"repo\": \"EdgeTX/edgetx\",\n      \"ref\": \"v2.12.5\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_measure.cpp\",\n      \"url\": \"https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.cpp#L1-L37\",\n      \"path\": \"radio/src/targets/hrs/v15/crsf_measure.cpp\",\n      \"lines\": [\n        1,\n        37\n      ],\n      \"version\": \"EdgeTX 2.12.5\",\n      \"ingested_at\": \"2026-10-25T20:13:32+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-2.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:32+0700\",\n      \"heading_path\": \"radio/src/targets/hrs/v15/crsf_measure.cpp\",\n      \"excerpt\": \"/*\\n * Copyright (C) EdgeTX\\n *\\n * License GPLv2: http://www.gnu.org/licenses/gpl-2.0.html\\n *\\n * CRSF measure on V15 J10 (PJ8 half-duplex UART8).\\n * Auto-tries baud × polarity until a valid CHANNELS (0x16) frame locks.\\n */\\n\\n#include \\\"crsf_measure.h\\\"\\n#include \\\"ext_port_safety.h\\\"\\n#include \\\"measure_trainer_feed.h\\\"\\n\\n#if defined(RADIO_V15) && !defined(SIMU)\\n\\n#include \\\"board.h\\\"\\n#include \\\"crc.h\\\"\\n#include \\\"edgetx.h\\\"\\n#include \\\"hal/gpio.h\\\"\\n#undef UNUSED\\n#include \\\"hal/serial_driver.h\\\"\\n#include \\\"ppm_measure.h\\\"\\n#include \\\"pwm_measure.h\\\"\\n#include \\\"sbus_measure.h\\\"\\n#include \\\"serial.h\\\"\\n#include \\\"servo_tester.h\\\"\\n#\",\n      \"untrusted\": true,\n      \"score\": -31.4065\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#c2593dacde94604e\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-crsf-telemetry.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-crsf-telemetry.rst#L11-L19\",\n      \"path\": \"common/source/docs/common-crsf-telemetry.rst\",\n      \"lines\": [\n        11,\n        19\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"TBS Crossfire Telemetry\",\n      \"excerpt\": \"OpenTx will discover the native CRSF Telemetry sensors (but a limited number, use passthru option below for more displayed information using Yaapu Telemetry script), which then can be displayed on `OpenTX <https://www.open-tx.org/>`_ telemetry screens or repeated from the CRSF TX module's WIFI to MAVLink Ground Control Stations:\\n\\n.. image:: ../../../images/crossfire-telemetry-meaning.jpg\\n\\nThese values can be displayed on OpenTX transmitters in several ways:\\n\\n- Using the built-in telemetry screens:\\n\\n.. image:: ../../../images/x9d-telem-screen.jpg\",\n      \"untrusted\": true,\n      \"score\": -30.6399\n    },\n    {\n      \"cite_id\": \"expresslrs#952a9101ba9c0989\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf_protocol.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L38-L53\",\n      \"path\": \"src/include/crsf_protocol.h\",\n      \"lines\": [\n        38,\n        53\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/include/crsf_protocol.h\",\n      \"excerpt\": \"#define CRSF_FRAME_CRC_SIZE 1\\n#define CRSF_FRAME_LENGTH_EXT_TYPE_CRC 4 // length of Extended Dest/Origin, TYPE and CRC fields combined\\n\\n#define CRSF_TELEMETRY_LENGTH_INDEX 1\\n#define CRSF_TELEMETRY_TYPE_INDEX 2\\n#define CRSF_TELEMETRY_FIELD_ID_INDEX 5\\n#define CRSF_TELEMETRY_FIELD_CHUNK_INDEX 6\\n#define CRSF_TELEMETRY_CRC_LENGTH 1\\n#define CRSF_TELEMETRY_TOTAL_SIZE(x) (x + CRSF_FRAME_LENGTH_EXT_TYPE_CRC)\\n\\n//////////////////////////////////////////////////////////////\\n\\n#define CRSF_MSP_REQ_PAYLOAD_SIZE 8\\n#define CRSF_MSP_RESP_PAYLOAD_SIZE 58\\n#define CRSF_MSP_MAX_PAYLOAD_SIZE (CRSF_MSP_REQ_PAYLOAD_SI\",\n      \"untrusted\": true,\n      \"score\": -30.2598\n    },\n    {\n      \"cite_id\": \"expresslrs#09e4a70a391a73e3\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"CRSFParser.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CrsfProtocol/CRSFParser.cpp#L1-L67\",\n      \"path\": \"src/lib/CrsfProtocol/CRSFParser.cpp\",\n      \"lines\": [\n        1,\n        67\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/lib/CrsfProtocol/CRSFParser.cpp\",\n      \"excerpt\": \"#include \\\"CRSFParser.h\\\"\\n#include \\\"CRSFRouter.h\\\"\\n\\n#include \\\"crsf_protocol.h\\\"\\n\\nvoid CRSFParser::processBytes(CRSFConnector *origin, const uint8_t *inputBytes, const uint16_t size, const std::function<void(const crsf_header_t *)>& foundMessage)\\n{\\n    for (uint16_t i = 0; i < size; ++i)\\n    {\\n        processByte(origin, inputBytes[i], foundMessage);\\n    }\\n}\\n\\nbool CRSFParser::processByte(CRSFConnector *origin, const uint8_t inputByte, const std::function<void(const crsf_header_t *)>& foundMessage)\\n{\\n    switch(telemetry_state) {\\n        case TELEMETRY_IDLE:\\n            // Telemetry from Betaflight/\",\n      \"untrusted\": true,\n      \"score\": -29.9902\n    },\n    {\n      \"cite_id\": \"ardupilot#c5ca819721dea9f1\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RCProtocol_CRSF.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L542-L571\",\n      \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"lines\": [\n        542,\n        571\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"excerpt\": \"        bitsMerged -= channelBits;\\n    }\\n}\\n\\n// send out telemetry\\nbool AP_RCProtocol_CRSF::process_telemetry(bool check_constraint)\\n{\\n\\n    AP_HAL::UARTDriver *uart = get_current_UART();\\n    if (!uart) {\\n        return false;\\n    }\\n\\n    if (!telem_available) {\\n#if HAL_CRSF_TELEM_ENABLED\\n        if (AP_CRSF_Telem::get_telem_data(&_telemetry_frame, is_tx_active())) {\\n            telem_available = true;\\n        } else {\\n            return false;\\n        }\\n#else\\n        return false;\\n#endif\\n    }\\n    write_frame(&_telemetry_frame);\\n    // get fresh telem_data in the next call\\n    telem_available = \",\n      \"untrusted\": true,\n      \"score\": -29.2571\n    }\n  ],\n  \"candidates\": [\n    \"edgetx#b3109122eaaed214\",\n    \"ardupilot_wiki#c2593dacde94604e\",\n    \"expresslrs#952a9101ba9c0989\",\n    \"expresslrs#09e4a70a391a73e3\",\n    \"ardupilot#c5ca819721dea9f1\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "EdgeTX CRSF telemetry",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "edgetx#b3109122eaaed214",
+            "source_id": "edgetx",
+            "repo": "EdgeTX/edgetx",
+            "ref": "v2.12.5",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_measure.cpp",
+            "url": "https://github.com/EdgeTX/edgetx/blob/v2.12.5/radio/src/targets/hrs/v15/crsf_measure.cpp#L1-L37",
+            "path": "radio/src/targets/hrs/v15/crsf_measure.cpp",
+            "lines": [
+              1,
+              37
+            ],
+            "version": "EdgeTX 2.12.5",
+            "ingested_at": "2026-10-25T20:13:32+0700",
+            "tier": "T1",
+            "license": "GPL-2.0",
+            "retrieved_at": "2026-10-25T20:13:32+0700",
+            "heading_path": "radio/src/targets/hrs/v15/crsf_measure.cpp",
+            "excerpt": "/*\n * Copyright (C) EdgeTX\n *\n * License GPLv2: http://www.gnu.org/licenses/gpl-2.0.html\n *\n * CRSF measure on V15 J10 (PJ8 half-duplex UART8).\n * Auto-tries baud × polarity until a valid CHANNELS (0x16) frame locks.\n */\n\n#include \"crsf_measure.h\"\n#include \"ext_port_safety.h\"\n#include \"measure_trainer_feed.h\"\n\n#if defined(RADIO_V15) && !defined(SIMU)\n\n#include \"board.h\"\n#include \"crc.h\"\n#include \"edgetx.h\"\n#include \"hal/gpio.h\"\n#undef UNUSED\n#include \"hal/serial_driver.h\"\n#include \"ppm_measure.h\"\n#include \"pwm_measure.h\"\n#include \"sbus_measure.h\"\n#include \"serial.h\"\n#include \"servo_tester.h\"\n#",
+            "untrusted": true,
+            "score": -31.4065
+          },
+          {
+            "cite_id": "ardupilot_wiki#c2593dacde94604e",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-crsf-telemetry.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-crsf-telemetry.rst#L11-L19",
+            "path": "common/source/docs/common-crsf-telemetry.rst",
+            "lines": [
+              11,
+              19
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "TBS Crossfire Telemetry",
+            "excerpt": "OpenTx will discover the native CRSF Telemetry sensors (but a limited number, use passthru option below for more displayed information using Yaapu Telemetry script), which then can be displayed on `OpenTX <https://www.open-tx.org/>`_ telemetry screens or repeated from the CRSF TX module's WIFI to MAVLink Ground Control Stations:\n\n.. image:: ../../../images/crossfire-telemetry-meaning.jpg\n\nThese values can be displayed on OpenTX transmitters in several ways:\n\n- Using the built-in telemetry screens:\n\n.. image:: ../../../images/x9d-telem-screen.jpg",
+            "untrusted": true,
+            "score": -30.6399
+          },
+          {
+            "cite_id": "expresslrs#952a9101ba9c0989",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf_protocol.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L38-L53",
+            "path": "src/include/crsf_protocol.h",
+            "lines": [
+              38,
+              53
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/include/crsf_protocol.h",
+            "excerpt": "#define CRSF_FRAME_CRC_SIZE 1\n#define CRSF_FRAME_LENGTH_EXT_TYPE_CRC 4 // length of Extended Dest/Origin, TYPE and CRC fields combined\n\n#define CRSF_TELEMETRY_LENGTH_INDEX 1\n#define CRSF_TELEMETRY_TYPE_INDEX 2\n#define CRSF_TELEMETRY_FIELD_ID_INDEX 5\n#define CRSF_TELEMETRY_FIELD_CHUNK_INDEX 6\n#define CRSF_TELEMETRY_CRC_LENGTH 1\n#define CRSF_TELEMETRY_TOTAL_SIZE(x) (x + CRSF_FRAME_LENGTH_EXT_TYPE_CRC)\n\n//////////////////////////////////////////////////////////////\n\n#define CRSF_MSP_REQ_PAYLOAD_SIZE 8\n#define CRSF_MSP_RESP_PAYLOAD_SIZE 58\n#define CRSF_MSP_MAX_PAYLOAD_SIZE (CRSF_MSP_REQ_PAYLOAD_SI",
+            "untrusted": true,
+            "score": -30.2598
+          },
+          {
+            "cite_id": "expresslrs#09e4a70a391a73e3",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "CRSFParser.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CrsfProtocol/CRSFParser.cpp#L1-L67",
+            "path": "src/lib/CrsfProtocol/CRSFParser.cpp",
+            "lines": [
+              1,
+              67
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/lib/CrsfProtocol/CRSFParser.cpp",
+            "excerpt": "#include \"CRSFParser.h\"\n#include \"CRSFRouter.h\"\n\n#include \"crsf_protocol.h\"\n\nvoid CRSFParser::processBytes(CRSFConnector *origin, const uint8_t *inputBytes, const uint16_t size, const std::function<void(const crsf_header_t *)>& foundMessage)\n{\n    for (uint16_t i = 0; i < size; ++i)\n    {\n        processByte(origin, inputBytes[i], foundMessage);\n    }\n}\n\nbool CRSFParser::processByte(CRSFConnector *origin, const uint8_t inputByte, const std::function<void(const crsf_header_t *)>& foundMessage)\n{\n    switch(telemetry_state) {\n        case TELEMETRY_IDLE:\n            // Telemetry from Betaflight/",
+            "untrusted": true,
+            "score": -29.9902
+          },
+          {
+            "cite_id": "ardupilot#c5ca819721dea9f1",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RCProtocol_CRSF.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L542-L571",
+            "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "lines": [
+              542,
+              571
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "excerpt": "        bitsMerged -= channelBits;\n    }\n}\n\n// send out telemetry\nbool AP_RCProtocol_CRSF::process_telemetry(bool check_constraint)\n{\n\n    AP_HAL::UARTDriver *uart = get_current_UART();\n    if (!uart) {\n        return false;\n    }\n\n    if (!telem_available) {\n#if HAL_CRSF_TELEM_ENABLED\n        if (AP_CRSF_Telem::get_telem_data(&_telemetry_frame, is_tx_active())) {\n            telem_available = true;\n        } else {\n            return false;\n        }\n#else\n        return false;\n#endif\n    }\n    write_frame(&_telemetry_frame);\n    // get fresh telem_data in the next call\n    telem_available = ",
+            "untrusted": true,
+            "score": -29.2571
+          }
+        ],
+        "candidates": [
+          "edgetx#b3109122eaaed214",
+          "ardupilot_wiki#c2593dacde94604e",
+          "expresslrs#952a9101ba9c0989",
+          "expresslrs#09e4a70a391a73e3",
+          "ardupilot#c5ca819721dea9f1"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

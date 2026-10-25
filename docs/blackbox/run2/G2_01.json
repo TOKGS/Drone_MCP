@@ -1,0 +1,59 @@
+{
+  "case": "G2_01",
+  "note": "same content as the C/D hit for ardupilot_wiki#f8ab2e4e432c8a39",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot_wiki#f8ab2e4e432c8a39"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1001,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot_wiki#f8ab2e4e432c8a39"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 7.7,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot_wiki#f8ab2e4e432c8a39\",\n  \"source_id\": \"ardupilot_wiki\",\n  \"repo\": \"ArduPilot/ardupilot_wiki\",\n  \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n  \"channel\": \"snapshot\",\n  \"unreleased\": true,\n  \"pinned\": true,\n  \"title\": \"common-rc-systems.rst\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-rc-systems.rst#L98-L98\",\n  \"path\": \"common/source/docs/common-rc-systems.rst\",\n  \"lines\": [\n    98,\n    98\n  ],\n  \"version\": \"wiki@828de1f (2026-10-24)\",\n  \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"CC-BY-SA-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n  \"heading_path\": \"Connecting the Receiver > RC input to Serial Port\",\n  \"excerpt\": \".. note:: any UART RX input will auto-detect all the protocols (except PPM, or SRXL2/CRSF/ELRS which also require connection of the UART's TX pin), if the serial port protocol is set to 23 (for example, generally, :ref:`SERIAL2_PROTOCOL<SERIAL2_PROTOCOL>` for the TELEM2 UART if used). The exception to this is for SBUS attached to UARTs on F4 based autopilots. This requires an external inverter since SBUS is inverted and F4 autopilots do not have selectable inversion on their UART pins.\",\n  \"untrusted\": true,\n  \"text\": \".. note:: any UART RX input will auto-detect all the protocols (except PPM, or SRXL2/CRSF/ELRS which also require connection of the UART's TX pin), if the serial port protocol is set to 23 (for example, generally, :ref:`SERIAL2_PROTOCOL<SERIAL2_PROTOCOL>` for the TELEM2 UART if used). The exception to this is for SBUS attached to UARTs on F4 based autopilots. This requires an external inverter since SBUS is inverted and F4 autopilots do not have selectable inversion on their UART pins.\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot_wiki#f8ab2e4e432c8a39",
+        "source_id": "ardupilot_wiki",
+        "repo": "ArduPilot/ardupilot_wiki",
+        "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+        "channel": "snapshot",
+        "unreleased": true,
+        "pinned": true,
+        "title": "common-rc-systems.rst",
+        "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-rc-systems.rst#L98-L98",
+        "path": "common/source/docs/common-rc-systems.rst",
+        "lines": [
+          98,
+          98
+        ],
+        "version": "wiki@828de1f (2026-10-24)",
+        "ingested_at": "2026-10-25T20:13:23+0700",
+        "tier": "T1",
+        "license": "CC-BY-SA-3.0",
+        "retrieved_at": "2026-10-25T20:13:23+0700",
+        "heading_path": "Connecting the Receiver > RC input to Serial Port",
+        "excerpt": ".. note:: any UART RX input will auto-detect all the protocols (except PPM, or SRXL2/CRSF/ELRS which also require connection of the UART's TX pin), if the serial port protocol is set to 23 (for example, generally, :ref:`SERIAL2_PROTOCOL<SERIAL2_PROTOCOL>` for the TELEM2 UART if used). The exception to this is for SBUS attached to UARTs on F4 based autopilots. This requires an external inverter since SBUS is inverted and F4 autopilots do not have selectable inversion on their UART pins.",
+        "untrusted": true,
+        "text": ".. note:: any UART RX input will auto-detect all the protocols (except PPM, or SRXL2/CRSF/ELRS which also require connection of the UART's TX pin), if the serial port protocol is set to 23 (for example, generally, :ref:`SERIAL2_PROTOCOL<SERIAL2_PROTOCOL>` for the TELEM2 UART if used). The exception to this is for SBUS attached to UARTs on F4 based autopilots. This requires an external inverter since SBUS is inverted and F4 autopilots do not have selectable inversion on their UART pins.",
+        "served_from": "index"
+      }
+    }
+  }
+}

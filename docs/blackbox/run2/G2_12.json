@@ -1,0 +1,59 @@
+{
+  "case": "G2_12",
+  "note": "same content as the C/D hit for expresslrs#d5858b27de5d0307",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "expresslrs#d5858b27de5d0307"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1012,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "expresslrs#d5858b27de5d0307"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 7.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"expresslrs#d5858b27de5d0307\",\n  \"source_id\": \"expresslrs\",\n  \"repo\": \"ExpressLRS/ExpressLRS\",\n  \"ref\": \"4.1.0\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"TXModuleEndpoint.cpp\",\n  \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/tx-crsf/TXModuleEndpoint.cpp#L1-L40\",\n  \"path\": \"src/lib/tx-crsf/TXModuleEndpoint.cpp\",\n  \"lines\": [\n    1,\n    40\n  ],\n  \"version\": \"ExpressLRS 4.1.0\",\n  \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n  \"heading_path\": \"src/lib/tx-crsf/TXModuleEndpoint.cpp\",\n  \"excerpt\": \"#include \\\"TXModuleEndpoint.h\\\"\\n\\n#include \\\"rxtx_intf.h\\\"\\n#include \\\"CRSFRouter.h\\\"\\n#include \\\"CRSFHandset.h\\\"\\n#include \\\"logging.h\\\"\\n\\n#include \\\"FHSS.h\\\"\\n#include \\\"device.h\\\"\\n#include \\\"msp.h\\\"\\n#include \\\"msptypes.h\\\"\\n#include \\\"config.h\\\"\\n\\n#if defined(PLATFORM_ESP32)\\nRTC_DATA_ATTR int rtcModelId = 0;\\n#endif\\n\\nvoid ModelUpdateReq();\\n\\nvoid TXModuleEndpoint::begin()\\n{\\n#if defined(PLATFORM_ESP32)\\n    if (esp_reset_reason() != ESP_RST_POWERON)\\n    {\\n        modelId = rtcModelId;\\n        ModelUpdateReq();\\n    }\\n#endif\\n    registerParameters();\\n}\\n\\nbool TXModuleEndpoint::handleRaw(const crsf_header_t *message)\\n{\\n    if\",\n  \"untrusted\": true,\n  \"text\": \"#include \\\"TXModuleEndpoint.h\\\"\\n\\n#include \\\"rxtx_intf.h\\\"\\n#include \\\"CRSFRouter.h\\\"\\n#include \\\"CRSFHandset.h\\\"\\n#include \\\"logging.h\\\"\\n\\n#include \\\"FHSS.h\\\"\\n#include \\\"device.h\\\"\\n#include \\\"msp.h\\\"\\n#include \\\"msptypes.h\\\"\\n#include \\\"config.h\\\"\\n\\n#if defined(PLATFORM_ESP32)\\nRTC_DATA_ATTR int rtcModelId = 0;\\n#endif\\n\\nvoid ModelUpdateReq();\\n\\nvoid TXModuleEndpoint::begin()\\n{\\n#if defined(PLATFORM_ESP32)\\n    if (esp_reset_reason() != ESP_RST_POWERON)\\n    {\\n        modelId = rtcModelId;\\n        ModelUpdateReq();\\n    }\\n#endif\\n    registerParameters();\\n}\\n\\nbool TXModuleEndpoint::handleRaw(const crsf_header_t *message)\\n{\\n    if (message->type == CRSF_FRAMETYPE_RC_CHANNELS_PACKED)\\n    {\\n        RcPacketToChannelsData(message);\\n        return true;    // do NOT forward channel data via CRSF, as we have 'magic' OTA encoding\\n    }\\n    return false;\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "expresslrs#d5858b27de5d0307",
+        "source_id": "expresslrs",
+        "repo": "ExpressLRS/ExpressLRS",
+        "ref": "4.1.0",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "TXModuleEndpoint.cpp",
+        "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/tx-crsf/TXModuleEndpoint.cpp#L1-L40",
+        "path": "src/lib/tx-crsf/TXModuleEndpoint.cpp",
+        "lines": [
+          1,
+          40
+        ],
+        "version": "ExpressLRS 4.1.0",
+        "ingested_at": "2026-10-25T20:13:30+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:30+0700",
+        "heading_path": "src/lib/tx-crsf/TXModuleEndpoint.cpp",
+        "excerpt": "#include \"TXModuleEndpoint.h\"\n\n#include \"rxtx_intf.h\"\n#include \"CRSFRouter.h\"\n#include \"CRSFHandset.h\"\n#include \"logging.h\"\n\n#include \"FHSS.h\"\n#include \"device.h\"\n#include \"msp.h\"\n#include \"msptypes.h\"\n#include \"config.h\"\n\n#if defined(PLATFORM_ESP32)\nRTC_DATA_ATTR int rtcModelId = 0;\n#endif\n\nvoid ModelUpdateReq();\n\nvoid TXModuleEndpoint::begin()\n{\n#if defined(PLATFORM_ESP32)\n    if (esp_reset_reason() != ESP_RST_POWERON)\n    {\n        modelId = rtcModelId;\n        ModelUpdateReq();\n    }\n#endif\n    registerParameters();\n}\n\nbool TXModuleEndpoint::handleRaw(const crsf_header_t *message)\n{\n    if",
+        "untrusted": true,
+        "text": "#include \"TXModuleEndpoint.h\"\n\n#include \"rxtx_intf.h\"\n#include \"CRSFRouter.h\"\n#include \"CRSFHandset.h\"\n#include \"logging.h\"\n\n#include \"FHSS.h\"\n#include \"device.h\"\n#include \"msp.h\"\n#include \"msptypes.h\"\n#include \"config.h\"\n\n#if defined(PLATFORM_ESP32)\nRTC_DATA_ATTR int rtcModelId = 0;\n#endif\n\nvoid ModelUpdateReq();\n\nvoid TXModuleEndpoint::begin()\n{\n#if defined(PLATFORM_ESP32)\n    if (esp_reset_reason() != ESP_RST_POWERON)\n    {\n        modelId = rtcModelId;\n        ModelUpdateReq();\n    }\n#endif\n    registerParameters();\n}\n\nbool TXModuleEndpoint::handleRaw(const crsf_header_t *message)\n{\n    if (message->type == CRSF_FRAMETYPE_RC_CHANNELS_PACKED)\n    {\n        RcPacketToChannelsData(message);\n        return true;    // do NOT forward channel data via CRSF, as we have 'magic' OTA encoding\n    }\n    return false;\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

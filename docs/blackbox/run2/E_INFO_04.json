@@ -1,0 +1,286 @@
+{
+  "case": "E_INFO_04",
+  "note": "informational question -> NOT blocked",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "tại sao báo PreArm: Compass not calibrated"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 76,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "tại sao báo PreArm: Compass not calibrated"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 66.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"symptom\": \"tại sao báo PreArm: Compass not calibrated\",\n  \"safety_branch\": \"informational\",\n  \"language\": \"vi\",\n  \"confidence\": \"high\",\n  \"evidence\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#e2e50c3bcb2d549e\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-prearm-safety-checks.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L76-L79\",\n      \"path\": \"common/source/docs/common-prearm-safety-checks.rst\",\n      \"lines\": [\n        76,\n        79\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Recognising which Pre-Arm Check has failed using the GCS\",\n      \"excerpt\": \"    Compass calibrated requires reboot                      Autopilot must be rebooted after compass cal        Reboot autopilot\\n    Compass calibration running                             Compass calibration is running                      Complete or cancel the :ref:`compass calibration <common-compass-calibration-in-mission-planner>`\\n    Compass not calibrated                                  Compass offsets are zero or sensor count changed    Complete the :ref:`compass calibration <common-compass-calibration-in-mission-planner>`\\n    Compass X not healthy                                   C\",\n      \"untrusted\": true,\n      \"score\": -23.3755\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#66e98c9437592122\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-compass-setup-advanced.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-compass-setup-advanced.rst#L181-L190\",\n      \"path\": \"common/source/docs/common-compass-setup-advanced.rst\",\n      \"lines\": [\n        181,\n        190\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Compass error messages\",\n      \"excerpt\": \"-  **Compass Health**: The compass has not sent a signal for at least\\n   half a second.\\n-  **Compass Variance**: In the EKF solution, compass heading disagrees\\n   with the heading estimate from other inertial sensors. Clicking the\\n   EKF button on the Mission Planner HUD will show the magnitude of the\\n   error.\\n-  **Compass Not Calibrated**: The compass needs to be calibrated.\\n-  **Compass Offsets High**: One of your compass offsets exceeds 600,\\n   indicating likely magnetic interference. Check for sources of\\n   interference and try calibrating again.\",\n      \"untrusted\": true,\n      \"score\": -19.3322\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#4db6f4decc54612f\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-installing-3dr-ublox-gps-compass-module.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-installing-3dr-ublox-gps-compass-module.rst#L7-L13\",\n      \"path\": \"common/source/docs/common-installing-3dr-ublox-gps-compass-module.rst\",\n      \"lines\": [\n        7,\n        13\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"UBlox GPS + Compass Module\",\n      \"excerpt\": \"A UBlox GPS + Compass module is the most commonly used GPS for ArduPilot compatible autopilots.\\nThere are many versions of these modules available from various manufacturers, the recommended models are :ref:`here <common-positioning-landing-page>`.\\n\\nArduPilot automatically configures the GPS soon after startup so there is no need for any GPS related calibration.  The :ref:`compass must be calibrated <common-compass-calibration-in-mission-planner>` however.\\n\\n.. image:: ../../../images/GPS_TopAndSide.jpg\\n    :target: ../_images/GPS_TopAndSide.jpg\",\n      \"untrusted\": true,\n      \"score\": -17.1299\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#7da65b361369faea\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"setting-up-sitl-using-vagrant.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/setting-up-sitl-using-vagrant.rst#L130-L147\",\n      \"path\": \"dev/source/docs/setting-up-sitl-using-vagrant.rst\",\n      \"lines\": [\n        130,\n        147\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Start running SITL\",\n      \"excerpt\": \"Enter the following in your vagrant shell to run the Copter simulator.\\nThis will first build the code (if it has not previously been built) and\\nthen run the simulator:\\n\\n::\\n\\n    vagrant ssh -c \\\"sim_vehicle.py -j 2 -v ArduCopter\\\"\\n\\nOnce the simulation is running, you will start getting information from\\nthe MAVLink prompt about vehicle state. For example:\\n\\n::\\n\\n    GPS lock at 0 meters\\n    APM: PreArm: RC not calibrated\\n    APM: Copter V3.3-dev (999710d0)\\n    APM: Frame: QUAD\\n    APM: PreArm: RC not calibrated\",\n      \"untrusted\": true,\n      \"score\": -16.6665\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#343417e640d00dc4\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-compass-calibration-in-mission-planner.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-compass-calibration-in-mission-planner.rst#L34-L36\",\n      \"path\": \"common/source/docs/common-compass-calibration-in-mission-planner.rst\",\n      \"lines\": [\n        34,\n        36\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Calibration first steps\",\n      \"excerpt\": \"   You may wish to disable any internal compasses if you are consistently seeing the \\\"inconsistent compasses\\\" pre-arm message often and you are sure that the external compass is calibrated. \\n\\n.. _onboard_calibration:\",\n      \"untrusted\": true,\n      \"score\": -15.3317\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#2ea5abc275551082\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-magfit.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-magfit.rst#L42-L45\",\n      \"path\": \"common/source/docs/common-magfit.rst\",\n      \"lines\": [\n        42,\n        45\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Using MAVExplorer's integrated Magfit utility > Hints and Tips\",\n      \"excerpt\": \"- Be sure you have several complete turns during the flight and at least a few minutes of log.\\n- Be sure you put conditions on the analysis so you do not include data while on the ground or being carried.\\n- Be sure you have already calibrated the compasses prior to the flight. You can use the tool on very poorly calibrated compasses, but that could be a flight hazard (unless its a plane or vehicle not dependent on compass).\\n- If you have large COMPASS_MOT values indicating strong motor/battery system interference, be sure that none of those components can shift in flight, resulting in invalida\",\n      \"untrusted\": true,\n      \"score\": -13.2041\n    },\n    {\n      \"cite_id\": \"ardupilot#269ca0b2afcf592f\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"vehicle_test_suite.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/vehicle_test_suite.py#L10637-L10651\",\n      \"path\": \"Tools/autotest/vehicle_test_suite.py\",\n      \"lines\": [\n        10637,\n        10651\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"Tools/autotest/vehicle_test_suite.py\",\n      \"excerpt\": \"        self.progress(\\\"Verifying 6 compasses detected in DEV_ID slots\\\")\\n        self.check_mag_devids_detected(total_compasses)\\n\\n        # Reboot to apply changes\\n        self.progress(\\\"Rebooting to apply reordering\\\")\\n        self.reboot_sitl()\\n\\n        def wait_correct_compass_prearm_message():\\n            # Check for correct compass prearm messages\\n            # We expect \\\"PreArm: Compass not calibrated\\\" but NOT\\n            # \\\"PreArm: Compass x not found\\\" or any other compass prearm message\\n            self.progress(\\\"Waiting for compass prearm message\\\")\\n            self.context_collect(\\\"STAT\",\n      \"untrusted\": true,\n      \"score\": -23.5338\n    },\n    {\n      \"cite_id\": \"ardupilot#3490184dc0707d34\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"README.md\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/mavproxy_modules/README.md#L30-L36\",\n      \"path\": \"Tools/mavproxy_modules/README.md\",\n      \"lines\": [\n        30,\n        36\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"MAVProxy modules > `sitl_calibration` > Compass Calibration\",\n      \"excerpt\": \"The command `sitl_magcal` applies angular velocity on the vehicle in order to\\nget the compasses calibrated. Example:\\n\\n```text\\nmagcal start\\nsitl_magcal\\n```\",\n      \"untrusted\": true,\n      \"score\": -16.1765\n    },\n    {\n      \"cite_id\": \"ardupilot#297fae1cff822011\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_Compass_MAG3110.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Compass/AP_Compass_MAG3110.cpp#L14-L35\",\n      \"path\": \"libraries/AP_Compass/AP_Compass_MAG3110.cpp\",\n      \"lines\": [\n        14,\n        35\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Compass/AP_Compass_MAG3110.cpp\",\n      \"excerpt\": \" */\\n#include \\\"AP_Compass_MAG3110.h\\\"\\n\\n#if AP_COMPASS_MAG3110_ENABLED\\n\\n#include <utility>\\n\\n#include <AP_HAL/AP_HAL.h>\\n#include <AP_Math/AP_Math.h>\\n#include <stdio.h>\\n\\nextern const AP_HAL::HAL &hal;\\n\\n\\n/*\\nEN:\\n    at first glance, the magnetometer MAG3110 consists only of flaws:\\n    * noisy, with a bad characteristic, with very large difference on axes\\n    * it can't be calibrated in any way, you just have to believe what he has been measured\\n    * There are no adjustments and settings, it just sends data with some unknown sensitivity. Or does not sends :)\\n    * One and a half setup registers, in w\",\n      \"untrusted\": true,\n      \"score\": -16.1117\n    }\n  ],\n  \"citations\": [\n    \"ardupilot_wiki#e2e50c3bcb2d549e\",\n    \"ardupilot_wiki#66e98c9437592122\",\n    \"ardupilot_wiki#4db6f4decc54612f\",\n    \"ardupilot_wiki#7da65b361369faea\",\n    \"ardupilot_wiki#343417e640d00dc4\",\n    \"ardupilot_wiki#2ea5abc275551082\",\n    \"ardupilot#269ca0b2afcf592f\",\n    \"ardupilot#3490184dc0707d34\",\n    \"ardupilot#297fae1cff822011\"\n  ],\n  \"safety\": {\n    \"props_off\": null,\n    \"confirm\": null,\n    \"applies\": false,\n    \"note\": \"No bench procedure in this answer; the props-off line applies to hardware steps only.\"\n  },\n  \"symptom_evidence_only\": false,\n  \"note\": \"Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote.\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "symptom": "tại sao báo PreArm: Compass not calibrated",
+        "safety_branch": "informational",
+        "language": "vi",
+        "confidence": "high",
+        "evidence": [
+          {
+            "cite_id": "ardupilot_wiki#e2e50c3bcb2d549e",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-prearm-safety-checks.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-prearm-safety-checks.rst#L76-L79",
+            "path": "common/source/docs/common-prearm-safety-checks.rst",
+            "lines": [
+              76,
+              79
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Recognising which Pre-Arm Check has failed using the GCS",
+            "excerpt": "    Compass calibrated requires reboot                      Autopilot must be rebooted after compass cal        Reboot autopilot\n    Compass calibration running                             Compass calibration is running                      Complete or cancel the :ref:`compass calibration <common-compass-calibration-in-mission-planner>`\n    Compass not calibrated                                  Compass offsets are zero or sensor count changed    Complete the :ref:`compass calibration <common-compass-calibration-in-mission-planner>`\n    Compass X not healthy                                   C",
+            "untrusted": true,
+            "score": -23.3755
+          },
+          {
+            "cite_id": "ardupilot_wiki#66e98c9437592122",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-compass-setup-advanced.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-compass-setup-advanced.rst#L181-L190",
+            "path": "common/source/docs/common-compass-setup-advanced.rst",
+            "lines": [
+              181,
+              190
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Compass error messages",
+            "excerpt": "-  **Compass Health**: The compass has not sent a signal for at least\n   half a second.\n-  **Compass Variance**: In the EKF solution, compass heading disagrees\n   with the heading estimate from other inertial sensors. Clicking the\n   EKF button on the Mission Planner HUD will show the magnitude of the\n   error.\n-  **Compass Not Calibrated**: The compass needs to be calibrated.\n-  **Compass Offsets High**: One of your compass offsets exceeds 600,\n   indicating likely magnetic interference. Check for sources of\n   interference and try calibrating again.",
+            "untrusted": true,
+            "score": -19.3322
+          },
+          {
+            "cite_id": "ardupilot_wiki#4db6f4decc54612f",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-installing-3dr-ublox-gps-compass-module.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-installing-3dr-ublox-gps-compass-module.rst#L7-L13",
+            "path": "common/source/docs/common-installing-3dr-ublox-gps-compass-module.rst",
+            "lines": [
+              7,
+              13
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "UBlox GPS + Compass Module",
+            "excerpt": "A UBlox GPS + Compass module is the most commonly used GPS for ArduPilot compatible autopilots.\nThere are many versions of these modules available from various manufacturers, the recommended models are :ref:`here <common-positioning-landing-page>`.\n\nArduPilot automatically configures the GPS soon after startup so there is no need for any GPS related calibration.  The :ref:`compass must be calibrated <common-compass-calibration-in-mission-planner>` however.\n\n.. image:: ../../../images/GPS_TopAndSide.jpg\n    :target: ../_images/GPS_TopAndSide.jpg",
+            "untrusted": true,
+            "score": -17.1299
+          },
+          {
+            "cite_id": "ardupilot_wiki#7da65b361369faea",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "setting-up-sitl-using-vagrant.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/dev/source/docs/setting-up-sitl-using-vagrant.rst#L130-L147",
+            "path": "dev/source/docs/setting-up-sitl-using-vagrant.rst",
+            "lines": [
+              130,
+              147
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Start running SITL",
+            "excerpt": "Enter the following in your vagrant shell to run the Copter simulator.\nThis will first build the code (if it has not previously been built) and\nthen run the simulator:\n\n::\n\n    vagrant ssh -c \"sim_vehicle.py -j 2 -v ArduCopter\"\n\nOnce the simulation is running, you will start getting information from\nthe MAVLink prompt about vehicle state. For example:\n\n::\n\n    GPS lock at 0 meters\n    APM: PreArm: RC not calibrated\n    APM: Copter V3.3-dev (999710d0)\n    APM: Frame: QUAD\n    APM: PreArm: RC not calibrated",
+            "untrusted": true,
+            "score": -16.6665
+          },
+          {
+            "cite_id": "ardupilot_wiki#343417e640d00dc4",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-compass-calibration-in-mission-planner.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-compass-calibration-in-mission-planner.rst#L34-L36",
+            "path": "common/source/docs/common-compass-calibration-in-mission-planner.rst",
+            "lines": [
+              34,
+              36
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Calibration first steps",
+            "excerpt": "   You may wish to disable any internal compasses if you are consistently seeing the \"inconsistent compasses\" pre-arm message often and you are sure that the external compass is calibrated. \n\n.. _onboard_calibration:",
+            "untrusted": true,
+            "score": -15.3317
+          },
+          {
+            "cite_id": "ardupilot_wiki#2ea5abc275551082",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-magfit.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-magfit.rst#L42-L45",
+            "path": "common/source/docs/common-magfit.rst",
+            "lines": [
+              42,
+              45
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Using MAVExplorer's integrated Magfit utility > Hints and Tips",
+            "excerpt": "- Be sure you have several complete turns during the flight and at least a few minutes of log.\n- Be sure you put conditions on the analysis so you do not include data while on the ground or being carried.\n- Be sure you have already calibrated the compasses prior to the flight. You can use the tool on very poorly calibrated compasses, but that could be a flight hazard (unless its a plane or vehicle not dependent on compass).\n- If you have large COMPASS_MOT values indicating strong motor/battery system interference, be sure that none of those components can shift in flight, resulting in invalida",
+            "untrusted": true,
+            "score": -13.2041
+          },
+          {
+            "cite_id": "ardupilot#269ca0b2afcf592f",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "vehicle_test_suite.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/autotest/vehicle_test_suite.py#L10637-L10651",
+            "path": "Tools/autotest/vehicle_test_suite.py",
+            "lines": [
+              10637,
+              10651
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "Tools/autotest/vehicle_test_suite.py",
+            "excerpt": "        self.progress(\"Verifying 6 compasses detected in DEV_ID slots\")\n        self.check_mag_devids_detected(total_compasses)\n\n        # Reboot to apply changes\n        self.progress(\"Rebooting to apply reordering\")\n        self.reboot_sitl()\n\n        def wait_correct_compass_prearm_message():\n            # Check for correct compass prearm messages\n            # We expect \"PreArm: Compass not calibrated\" but NOT\n            # \"PreArm: Compass x not found\" or any other compass prearm message\n            self.progress(\"Waiting for compass prearm message\")\n            self.context_collect(\"STAT",
+            "untrusted": true,
+            "score": -23.5338
+          },
+          {
+            "cite_id": "ardupilot#3490184dc0707d34",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "README.md",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Tools/mavproxy_modules/README.md#L30-L36",
+            "path": "Tools/mavproxy_modules/README.md",
+            "lines": [
+              30,
+              36
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "MAVProxy modules > `sitl_calibration` > Compass Calibration",
+            "excerpt": "The command `sitl_magcal` applies angular velocity on the vehicle in order to\nget the compasses calibrated. Example:\n\n```text\nmagcal start\nsitl_magcal\n```",
+            "untrusted": true,
+            "score": -16.1765
+          },
+          {
+            "cite_id": "ardupilot#297fae1cff822011",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_Compass_MAG3110.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Compass/AP_Compass_MAG3110.cpp#L14-L35",
+            "path": "libraries/AP_Compass/AP_Compass_MAG3110.cpp",
+            "lines": [
+              14,
+              35
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Compass/AP_Compass_MAG3110.cpp",
+            "excerpt": " */\n#include \"AP_Compass_MAG3110.h\"\n\n#if AP_COMPASS_MAG3110_ENABLED\n\n#include <utility>\n\n#include <AP_HAL/AP_HAL.h>\n#include <AP_Math/AP_Math.h>\n#include <stdio.h>\n\nextern const AP_HAL::HAL &hal;\n\n\n/*\nEN:\n    at first glance, the magnetometer MAG3110 consists only of flaws:\n    * noisy, with a bad characteristic, with very large difference on axes\n    * it can't be calibrated in any way, you just have to believe what he has been measured\n    * There are no adjustments and settings, it just sends data with some unknown sensitivity. Or does not sends :)\n    * One and a half setup registers, in w",
+            "untrusted": true,
+            "score": -16.1117
+          }
+        ],
+        "citations": [
+          "ardupilot_wiki#e2e50c3bcb2d549e",
+          "ardupilot_wiki#66e98c9437592122",
+          "ardupilot_wiki#4db6f4decc54612f",
+          "ardupilot_wiki#7da65b361369faea",
+          "ardupilot_wiki#343417e640d00dc4",
+          "ardupilot_wiki#2ea5abc275551082",
+          "ardupilot#269ca0b2afcf592f",
+          "ardupilot#3490184dc0707d34",
+          "ardupilot#297fae1cff822011"
+        ],
+        "safety": {
+          "props_off": null,
+          "confirm": null,
+          "applies": false,
+          "note": "No bench procedure in this answer; the props-off line applies to hardware steps only."
+        },
+        "symptom_evidence_only": false,
+        "note": "Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote."
+      }
+    }
+  }
+}
