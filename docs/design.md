@@ -36,9 +36,11 @@ BM25 alone must be sufficient; embeddings are an optional extra table, never req
 
 ## Citation contract
 
-`cite_id = "<source_id>#c<chunk-ordinal>"`. Every citation carries repo, SHA-pinned permalink
-(`.../blob/<sha>/<path>#L<a>-L<b>`, never `main`), path, line range, version label, tier,
-license, `retrieved_at`, a verbatim excerpt (≤600 chars), and `untrusted: true`.
+`cite_id = "<source_id>#<hash16>"`, content-addressed as
+`sha256(source_id|path|line_start|line_end|sha256(text))[:16]` — stable across re-ingest and
+independent of row ids. Every citation carries repo, SHA-pinned permalink
+(`.../blob/<sha>/<path>#L<a>-L<b>`, never `main`), path, line range, version label, channel,
+tier, license, `retrieved_at`, a verbatim excerpt (≤600 chars), and `untrusted: true`.
 `cite.py::verify_quote(cite_id, text)` re-reads the stored chunk and asserts the excerpt is a
 substring; a test asserts this for **every** excerpt every tool can emit.
 
@@ -71,8 +73,20 @@ files and topic briefs. Enforced by convention plus the ledger acting as the aud
 
 ## Corpus acquisition (verified this build)
 
-Latest pin per repo, tarballs fetched with 0 search quota, filtered by `sources.yaml` globs:
-4885 files / 51.1 MB (ardupilot 2702, wiki 1609, mavlink 43, expresslrs 422, edgetx 109).
+Latest pin per repo, tarballs fetched with 0 search quota, filtered by `sources.yaml` globs.
+Seven sources are pinned, extracted, ingested and audited against their Git blobs:
+
+| source | pin | chunks |
+|---|---|---|
+| ardupilot | Copter-4.7.2 / `fb7735678960` | 28453 |
+| ardupilot_wiki | `828de1f225da` | 26580 |
+| expresslrs | 4.1.0 / `a9d4a9cb5b56` | 3716 |
+| expresslrs_docs | `5ed656b6ebc7` | 3341 |
+| edgetx | v2.12.5 / `0ebe2e98b208` | 770 |
+| mavlink | `eec8824212c1` | 635 |
+| crsf_spec | `a73f7dc5386e` | 157 |
+
+4885 + 143 extracted files, 63 652 chunks, 0 line-range mismatches against `git show`.
 Licenses read from each archive's own license file — see `docs/license-notes.md`.
 MAVLink XML definitions carry no upstream license statement; flagged for a user decision.
 

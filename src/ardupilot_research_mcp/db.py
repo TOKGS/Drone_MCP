@@ -46,9 +46,11 @@ CREATE TABLE IF NOT EXISTS chunks (
     line_start   INTEGER NOT NULL,
     line_end     INTEGER NOT NULL,
     sha256       TEXT NOT NULL,
+    cite_hash    TEXT NOT NULL,
     UNIQUE (document_id, ord)
 );
 CREATE INDEX IF NOT EXISTS chunks_document ON chunks(document_id);
+CREATE UNIQUE INDEX IF NOT EXISTS chunks_cite_hash ON chunks(cite_hash);
 
 CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(
     text,

@@ -131,3 +131,33 @@ sources:
     exclude:
       - "radio/src/translations/**"
       - "**/*.ts"
+
+  - id: expresslrs_docs
+    repo: ExpressLRS/Docs
+    ref: 5ed656b6ebc7a38b6012297cf40fe5bc87232bed
+    ref_kind: commit
+    tier: T1
+    license: GPL-3.0
+    license_file: LICENSE
+    version_label: "ELRS Docs@5ed656b (2026-10-12)"
+    note: "expresslrs.org documentation source (mkdocs): setup, packet rates, telemetry."
+    include:
+      - "docs/**"
+      - "*.md"
+    exclude:
+      - "docs/blog/**"
+      - "**/_static/**"
+      - "docs/**/images/**"
+
+  - id: crsf_spec
+    repo: tbs-fpv/tbs-crsf-spec
+    ref: a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92
+    ref_kind: commit
+    tier: T1
+    license: CC-BY-SA-4.0
+    license_file: LICENSE.md
+    version_label: "CRSF spec@a73f7dc"
+    note: "Team Blacksheep CRSF protocol specification: frames, CRC8, channel encoding."
+    include:
+      - "*.md"
+      - "tools/**"

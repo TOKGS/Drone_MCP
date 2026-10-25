@@ -1,5 +1,5 @@
 {
-  "resolved_at": "2026-10-25T15:49:55+0700",
+  "resolved_at": "2026-10-25T16:07:26+0700",
   "sources": {
     "ardupilot": {
       "repo": "ArduPilot/ardupilot",
@@ -51,6 +51,28 @@
       "tarball": "https://codeload.github.com/EdgeTX/edgetx/tar.gz/refs/tags/v2.12.5",
       "tier": "T1",
       "kind": "source+docs"
+    },
+    "expresslrs_docs": {
+      "repo": "ExpressLRS/Docs",
+      "ref": "5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+      "ref_kind": "commit",
+      "branch": "master",
+      "via": "commits/master",
+      "committed_at": "2026-10-12T08:05:28Z",
+      "tarball": "https://codeload.github.com/ExpressLRS/Docs/tar.gz/5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+      "tier": "T1",
+      "kind": "docs"
+    },
+    "crsf_spec": {
+      "repo": "tbs-fpv/tbs-crsf-spec",
+      "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+      "ref_kind": "commit",
+      "branch": "main",
+      "via": "commits/main",
+      "committed_at": "2026-10-21T10:41:08Z",
+      "tarball": "https://codeload.github.com/tbs-fpv/tbs-crsf-spec/tar.gz/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+      "tier": "T1",
+      "kind": "protocol-spec"
     }
   }
 }

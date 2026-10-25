@@ -39,6 +39,10 @@ REPOS = {
                    "strategy": "release"},
     "edgetx": {"repo": "EdgeTX/edgetx", "tier": "T1", "kind": "source+docs",
                "strategy": "release"},
+    "expresslrs_docs": {"repo": "ExpressLRS/Docs", "tier": "T1", "kind": "docs",
+                        "strategy": "commit", "branch": "master"},
+    "crsf_spec": {"repo": "tbs-fpv/tbs-crsf-spec", "tier": "T1", "kind": "protocol-spec",
+                  "strategy": "commit", "branch": "main"},
 }
 
 COPTER_TAG = re.compile(r"^Copter-4\.\d+\.\d+$")

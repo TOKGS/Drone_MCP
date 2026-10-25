@@ -10,6 +10,8 @@ Every license below was read from the license file copied out of the pinned arch
 | `mavlink` | commit `eec88242` (2026-10-22) | T1 | **(L)GPL-3.0 generator + MIT exception for generated code; XML definition license unstated** | `COPYING`: generator is "(L)GPL v3", generated output offered under MIT; no license text covers `message_definitions/*.xml`, and those files carry no header (checked `common.xml`) |
 | `expresslrs` | `4.1.0` | T1 | **GPL-3.0** | `LICENSE`: "GNU GENERAL PUBLIC LICENSE / Version 3, 29 June 2007" |
 | `edgetx` | `v2.12.5` | T1 | **GPL-2.0** | `LICENSE`: "GNU GENERAL PUBLIC LICENSE / Version 2, June 1991" |
+| `expresslrs_docs` | commit `5ed656b6` (2026-10-12) | T1 | **GPL-3.0** | `LICENSE`: "GNU GENERAL PUBLIC LICENSE / Version 3, 29 June 2007" |
+| `crsf_spec` | commit `a73f7dc5` | T1 | **CC-BY-SA-4.0** | `LICENSE.md`: "CRSF V3 Protocol Specification © 2020 by TBS Avionics Co LTD … licensed under Creative Commons Attribution-ShareAlike 4.0 International" |
 
 ## What the product does with each license
 

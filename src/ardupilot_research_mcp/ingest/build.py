@@ -8,7 +8,7 @@ import sqlite3
 import time
 from pathlib import Path
 
-from .. import config
+from .. import cite, config
 from . import chunk as chunker
 
 TEXT_SNIFF_BYTES = 4096
@@ -131,9 +131,11 @@ def ingest_source(con: sqlite3.Connection, source: dict, root: Path, *,
             document_id = int(cur.lastrowid)
             con.executemany(
                 "INSERT INTO chunks (document_id, ord, text, heading_path, anchor,"
-                " line_start, line_end, sha256) VALUES (?,?,?,?,?,?,?,?)",
+                " line_start, line_end, sha256, cite_hash) VALUES (?,?,?,?,?,?,?,?,?)",
                 [(document_id, ord_, piece.text, piece.heading_path, piece.anchor,
-                  piece.line_start, piece.line_end, piece.sha256)
+                  piece.line_start, piece.line_end, piece.sha256,
+                  cite.compute_cite_hash(source_id, rel, piece.line_start, piece.line_end,
+                                         piece.sha256))
                  for ord_, piece in enumerate(pieces)])
             con.execute("COMMIT")
         except Exception:

@@ -53,5 +53,27 @@
     "ref_kind": "tag",
     "repo": "EdgeTX/edgetx",
     "tier": "T1"
+  },
+  "expresslrs_docs": {
+    "url": "https://codeload.github.com/ExpressLRS/Docs/tar.gz/5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+    "path": "D:\\Skill_tulan\\ardupilot-research-mcp\\research\\cache\\repos\\expresslrs_docs.tar.gz",
+    "bytes": 62724324,
+    "sha256": "2c592399cdbd8fdb8bde868b540379e846b2521c85ccabf21f1cb054d85e531c",
+    "latency_ms": 4139,
+    "ref": "5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+    "ref_kind": "commit",
+    "repo": "ExpressLRS/Docs",
+    "tier": "T1"
+  },
+  "crsf_spec": {
+    "url": "https://codeload.github.com/tbs-fpv/tbs-crsf-spec/tar.gz/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+    "path": "D:\\Skill_tulan\\ardupilot-research-mcp\\research\\cache\\repos\\crsf_spec.tar.gz",
+    "bytes": 21844,
+    "sha256": "9efce04f749f5eda6ea58c44da84dad4b22b8b8e71b08a2fc116f0ec1fb44d03",
+    "latency_ms": 406,
+    "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+    "ref_kind": "commit",
+    "repo": "tbs-fpv/tbs-crsf-spec",
+    "tier": "T1"
   }
 }
