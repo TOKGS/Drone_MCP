@@ -219,10 +219,9 @@ def main() -> int:
 
     report.emit("## Quota ledger")
     report.emit()
-    ledger_before = run([PY, "-c", sql(
-        "SELECT COUNT(*), COALESCE(SUM(cost_units),0) FROM calls")])["stdout"].strip()
-    report.emit(f"ledger fingerprint before this report: `{ledger_before or 'unreadable'}`")
-    report.emit("(fingerprint = number of recorded calls | total cost units)")
+    ledger_before = govern_fingerprint()
+    report.emit(f"ledger fingerprint before this report: `{ledger_before}`")
+    report.emit("(fingerprint = recorded calls | total cost units, read from research/ledger.sqlite)")
     report.emit()
     report.command("gov_status", run([PY, "-m", "research.governor", "status"]))
     report.command("gov_report", run([PY, "-m", "research.governor", "export-report"]))
@@ -363,9 +362,8 @@ for item in found:
 '''
     report.command("ast_scan", run([PY, "-c", ast_script]))
 
-    ledger_after = run([PY, "-c", sql(
-        "SELECT COUNT(*), COALESCE(SUM(cost_units),0) FROM calls")])["stdout"].strip()
-    report.emit(f"ledger fingerprint after the full report: `{ledger_after or 'unreadable'}`")
+    ledger_after = govern_fingerprint()
+    report.emit(f"ledger fingerprint after the full report: `{ledger_after}`")
     report.emit()
 
     # ------------------------------------------------------------ summary sections
