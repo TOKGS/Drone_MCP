@@ -212,3 +212,65 @@ Known limitation khác của bảng tham số (ghi rõ, không giả vờ đủ)
   `@Param` không có chunk → không có citation → không vào bảng (`unlinked_blocks=142`).
 * 509 khối không ghép được tiền tố → liệt kê ở `A-unresolved.txt`, không đoán.
 
+## A-1. Citation trỏ sai khối @Param (lỗi 1) — bước (1) test đang fail + CHẨN ĐOÁN trước khi sửa
+
+`scripts/check_param_citations.py` (mới) kiểm từng hàng: (a) excerpt người gọi thấy có dòng
+`@Param...: <hậu tố khai báo>`; (b) khoảng `lines` được cite bao dòng `line_start` của hàng;
+(c) file nguồn tại khoảng dòng đó thật sự là khối ấy. Output TRƯỚC khi sửa
+(`docs/fix/A-citations-before.txt`):
+
+```
+PS> python scripts/check_param_citations.py
+params checked: 5089
+citation violations: 3891
+  ACRO_BAL_PITCH               ArduCopter/Parameters.cpp:307 lines=307-312 :: excerpt does not show the @Param line
+  ACRO_OPTIONS                 ArduCopter/Parameters.cpp:805 lines=805-809 :: excerpt does not show the @Param line
+  ...
+```
+
+### Chẩn đoán 5 tham số vi phạm (đo TRƯỚC khi sửa, output thô)
+
+```
+== FS_THR_ENABLE  path=ArduCopter/Parameters.cpp
+   stored lines=124-128  real @Param line(s)=[124]  delta=[0]
+   cited chunk lines=[95, 145]
+   excerpt first line='    // @Param: FS_GCS_ENABLE'
+== ARMING_SKIPCHK  path=libraries/AP_Arming/AP_Arming.cpp
+   stored lines=195-198  real @Param line(s)=[195]  delta=[0]
+   cited chunk lines=[178, 205]
+   excerpt first line='    // @Param: CRSDP_IGN'
+== BATT_FS_LOW_ACT  path=libraries/AP_BattMonitor/AP_BattMonitor_Params.cpp
+   stored lines=143-145  real @Param line(s)=[143]  delta=[0]
+   cited chunk lines=[134, 180]
+   excerpt first line='    // @Param: CRT_MAH'
+== RC_OPTIONS  path=libraries/RC_Channel/RC_Channels_VarInfo.h
+   stored lines=92-96  real @Param line(s)=[92]  delta=[0]
+   cited chunk lines=[84, 117]
+   excerpt first line='    // @Param: _OVERRIDE_TIME'
+== LOG_BITMASK  path=ArduCopter/Parameters.cpp
+   stored lines=207-211  real @Param line(s)=[207]  delta=[0]
+   cited chunk lines=[199, 232]
+   excerpt first line='    // @Param: SIMPLE'
+```
+
+**Kết luận mẫu hình**: KHÔNG phải lệch dòng hằng số (delta = 0 cả 5 tham số; cả 3891 vi phạm
+chỉ báo "excerpt does not show the @Param line", không có "stored line range is not this @Param
+block" lẫn "cited lines ... do not cover"), KHÔNG phải chọn nhầm chunk khi khối vắt ngang hai
+chunk (khối nằm nguyên vẹn trong chunk và lines bao đúng), KHÔNG phải trùng tên. Nguyên nhân:
+`cite.build_citation` luôn trả **600 ký tự ĐẦU của chunk**, còn chunk code là khối 30-85 dòng
+(~3000 ký tự), nên khối `@Param` nằm sâu trong chunk không xuất hiện trong excerpt — excerpt vì
+thế hiển thị khối của tham số **trước đó** cùng chunk (FS_THR_ENABLE → FS_GCS_ENABLE;
+ARMING_SKIPCHK → CRSDP_IGN; RC_OPTIONS → _OVERRIDE_TIME).
+
+### Bước (1) test mới đang fail
+
+```
+PS> python -m pytest tests/test_param_citation_integrity.py -q
+E       AssertionError: 3891 citations show another block: ['FHLD_XY_FILT_HZ (ArduCopter/mode_flowhold.cpp:34)', ...]
+FAILED tests/test_param_citation_integrity.py::test_citation_excerpt_shows_the_parameter_block
+FAILED tests/test_param_citation_integrity.py::test_citation_lines_cover_the_parameter_block
+FAILED tests/test_param_citation_integrity.py::test_every_row_cites_its_own_param_line
+3 failed in 0.72s
+```
+
+
