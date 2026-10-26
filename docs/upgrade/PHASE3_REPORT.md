@@ -226,5 +226,22 @@ python scripts\blackbox_run.py --out docs\upgrade\blackbox_after3
 
 ## 12. Commit list
 
-Pasted from `git log --oneline master..HEAD` at the end of the branch; see `PROGRESS3.md` for the
-per-task hash table.
+```
+    ca52859 test(phase3): final held-out runs, section 8 gates, blackbox, and the Phase 3 report
+    54a6aaf feat(V1..V5): safety chat tests, two new mutants, rung log, and the docs that go with them
+    617e9b5 feat(V2/V3/V5): document prior behind ARM_DOC_PRIOR, three measured rejects
+    ef447bf feat(V1): Vietnamese chat normalisation, folded glossary match, out-of-scope refusal
+    5bc4037 feat(eval): per-script split (ascii-only vs diacritics) with sample sizes, plus the 5 rewritten ids
+    00fb6f8 docs(phase3): record the B0 commit hashes
+    1a1730f test(B0): v5-vi baselines (default and dense), eval doc, progress ticks
+    59ad485 feat(B0): v5-vi eval set, strict-v5 validation, cross-set overlap, freeze
+    0a098f1 docs(phase3): record the Part A gate commit
+    42e40dd test(A-GATE): Part A gate run, five gates green
+    da1761e docs(A4): the 24 KB cap never touched E_INFO_02; decision recorded
+    d2f5b4a docs(A6): eval v4 is a regression guard from Phase 3 on
+    6c8121a docs(A5): how the data/exp experiment index is built and pointed at
+    2fc598a fix(A3): a dev-query test kills mutant M15, mutation score now 18/18
+    a9f1475 fix(A2): one mutation count everywhere (18 scored plus 1 equivalent)
+    4d2f6c2 fix(A1): README test counts follow the suite, and the checker enforces it
+    c50a36d docs(phase3): progress file with the section 0 baseline
+```

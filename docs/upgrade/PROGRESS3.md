@@ -56,8 +56,8 @@ budget: search_docs p95 <= 400 ms, measured 232.3 ms      bench: PASS
 - [x] B1-V3 expansion term weighting                                      owner: lead  commit: 617e9b5  evidence: v4 dev recall 0.833 -> 0.708, golden 1.000 -> 0.967; rejected and reverted
 - [x] B1-V4 256/512-token chunk rebuild (optional)                        owner: lead  commit: none  evidence: not attempted; measured estimate 164 min at 256 tokens (8.8 chunks/s)
 - [x] B1-V5 recover the Rung 1 rank-1 regression on dev only              owner: lead  commit: 617e9b5  evidence: v5 dev 0.535 -> 0.442, v4 dev 0.833 -> 0.771; rejected and reverted
-- [x] SHIP final run once per held-out set + gate section 8               owner: lead  commit: <SHIP>  evidence: v5 held-out 0.581/0.387/0.451/0.242/0.778, v4 held-out 0.738/0.323/0.482/0.369/0.714, neg_vi 0.750; all gates in gates/phase3_*
-- [x] REPORT docs/upgrade/PHASE3_REPORT.md, 12 sections                   owner: lead  commit: <SHIP>  evidence: 12 sections, ship bar disclosed as not met
+- [x] SHIP final run once per held-out set + gate section 8               owner: lead  commit: ca52859  evidence: v5 held-out 0.581/0.387/0.451/0.242/0.778, v4 held-out 0.738/0.323/0.482/0.369/0.714, neg_vi 0.750; all gates in gates/phase3_*
+- [x] REPORT docs/upgrade/PHASE3_REPORT.md, 12 sections                   owner: lead  commit: ca52859  evidence: 12 sections, ship bar disclosed as not met
 
 ## Decisions (what you chose and why, one line each)
 
