@@ -286,6 +286,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--json", default=None, help="write machine-readable results here")
     parser.add_argument("--compare", nargs=2, metavar=("BASE", "NEW"),
                         help="print a per-category delta table for two --json files")
+    parser.add_argument("--no-floor", action="store_true",
+                        help="do not exit 1 when recall@k is under 0.8 (for a baseline that is "
+                             "not tuned yet; the v4 sets are measured, not gated, on that floor)")
     args = parser.parse_args(argv)
 
     if args.compare:
@@ -372,6 +375,8 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"  - {record['id']} ({record['lang']}) expected found:false "
                       f"top={record['top_path']}")
 
+    if args.no_floor:
+        return 0
     if overall["positives"] and overall["recall_at_k"] < RECALL_FLOOR:
         return 1
     return 0

@@ -1,0 +1,581 @@
+# Eval set v4, HELD-OUT split: frozen by docs/eval-v4-heldout.sha256.
+# Nobody opens this file to read questions; run it only through
+# `python -m research.eval_retrieval --set tests/eval_v4_heldout.yaml --aggregate-only`.
+# Tuning against it is forbidden; re-merge only before the freeze.
+version: 4
+generated_by: research.make_eval_v4
+seed: 20261026
+split: heldout
+questions:
+- id: V4-B2-004
+  lang: en
+  q: Copter refuses to arm with Interlock/E-Stop Conflict; which source file produces that message?
+  category: code
+  expect:
+  - source: ardupilot
+    path: ArduCopter/AP_Arming_Copter.cpp
+  answer_snippet: Interlock/E-Stop Conflict
+- id: V4-B2-006
+  lang: en
+  q: What raw CRSF channel value is treated as the minimum in ArduPilot's CRSF decoder?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp
+  answer_snippet: '#define CRSF_DIGITAL_CHANNEL_MIN 172'
+- id: V4-B2-017
+  lang: en
+  q: What happens if the requested VTX power level is not one the transmitter supports?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_VideoTX/AP_VideoTX.cpp
+  answer_snippet: Different VTXs support different power levels
+- id: V4-B2-001
+  lang: en
+  q: What default main loop rate does AP_Scheduler use on Copter and Sub builds?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Scheduler/AP_Scheduler.cpp
+  answer_snippet: '#define SCHEDULER_DEFAULT_LOOP_RATE 400'
+- id: V4-B2-020
+  lang: en
+  q: How many degrees of IMU trim does the inertial sensor library allow by default?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_InertialSensor/AP_InertialSensor.cpp
+  answer_snippet: '#define HAL_INS_TRIM_LIMIT_DEG 10'
+- id: V4-B2-019
+  lang: mixed
+  q: Vì sao motor test trong AP_Motors không chạy các arming check riêng của từng frame?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Motors/AP_Motors_Class.cpp
+  answer_snippet: Do not run frame specific arming checks as motor test is less strict
+- id: V4-B3-025
+  lang: vi
+  q: AP_RCProtocol_CRSF bootstrap baudrate dua vao option nao
+  category: code
+  scope: all
+  expect:
+  - source: ardupilot
+    path: libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h
+  answer_snippet: rc().option_is_enabled(RC_Channels::Option::ELRS_420KBAUD)
+- id: V4-B2-003
+  lang: vi
+  q: Thong bao Multiple SERIAL ports configured for RC input duoc phat ra tu file nao?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Arming/AP_Arming.cpp
+  answer_snippet: Multiple SERIAL ports configured for RC input
+- id: V4-B2-016
+  lang: vi
+  q: Trong AP_MSP, tham so MSP_OPTIONS la bitmask bat cac tinh nang OSD rieng nao?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_MSP/AP_MSP.cpp
+  answer_snippet: A bitmask to set some MSP specific options
+- id: V4-B2-007
+  lang: vi
+  q: Mảng RF_MODE_RATES của AP_RCProtocol_CRSF khai báo tốc độ gói ELRS bắt đầu bằng dãy số nào?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp
+  answer_snippet: 4, 25, 50, 100, 100, 150, 200, 250, 333, 500
+- id: V4-B2-002
+  lang: vi
+  q: Bao lâu thì thông báo PreArm thất bại được lặp lại một lần trên GCS?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Arming/AP_Arming.cpp
+  answer_snippet: '# define PREARM_DISPLAY_PERIOD 30'
+- id: V4-B2-009
+  lang: vi
+  q: File log nhi phan cua ArduPilot duoc tao trong thu muc nao tren the SD?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Logger/AP_Logger_File.cpp
+  answer_snippet: This uses posix file IO to create log files called logs/NN.bin in the
+- id: V4-B2-008
+  lang: vi
+  q: Vì sao AP_RCProtocol buộc phải dò lại giao thức RC khi backend FDM đang hoạt động?
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_RCProtocol/AP_RCProtocol.cpp
+  answer_snippet: force re-detection when FDM is active and active backend is UDP values
+- id: V4-B2-042
+  lang: en
+  q: How can I tell from the version strings whether my TX module and receiver will bind?
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/binding.md
+  answer_snippet: should match between a TX Module and a Receiver
+- id: V4-B2-041
+  lang: en
+  q: What serial baud rate do ExpressLRS receivers use towards the flight controller?
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/ardupilot-setup.md
+  answer_snippet: ExpressLRS receivers use 420K Baudrate to talk to flight controllers.
+- id: V4-B2-044
+  lang: en
+  q: For an ExpressLRS packet to be understood at all, what must RSSI stay above?
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/info/signal-health.md
+  answer_snippet: RSSI must be above the sensitivity level to be understood
+- id: V4-B2-043
+  lang: en
+  q: In ELRS MAVLink mode, how many flight controller UARTs carry both RC and telemetry?
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/software/mavlink.md
+  answer_snippet: only one UART is needed on the flight controller for both RC and telemetry
+- id: V4-B2-049
+  lang: vi
+  q: Khi team race chưa chọn đúng model thì SerialCRSF có gửi dữ liệu MSP về flight controller không?
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs
+    path: src/src/rx-serial/SerialCRSF.cpp
+  answer_snippet: No MSP data to the FC if team-race is selected
+- id: V4-B2-048
+  lang: vi
+  q: EdgeTX coi module CRSF da chet khi nao?
+  category: elrs_edgetx
+  expect:
+  - source: edgetx
+    path: radio/src/pulses/crossfire.cpp
+  answer_snippet: if the module has sent a valid frame within 500ms it is declared alive
+- id: V4-B1-023
+  lang: en
+  category: hwdef
+  q: What APJ_BOARD_ID value is set in the Pixhawk6X hwdef?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/Pixhawk6X/hwdef.dat
+  answer_snippet: APJ_BOARD_ID TARGET_HW_PX4_FMU_V6X
+- id: V4-B1-021
+  lang: en
+  category: hwdef
+  q: Which MCU does the Pixhawk6X hwdef target?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/Pixhawk6X/hwdef.dat
+  answer_snippet: MCU STM32H7xx STM32H743xx
+- id: V4-B1-022
+  lang: en
+  category: hwdef
+  q: Which STM32 timer does Pixhawk6X use for the ChibiOS system tick?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/Pixhawk6X/hwdef.dat
+  answer_snippet: STM32_ST_USE_TIMER 2
+- id: V4-B1-024
+  lang: en
+  category: hwdef
+  q: What battery current scale does the MatekH743 hwdef define?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/MatekH743/hwdef.dat
+  answer_snippet: define HAL_BATT_CURR_SCALE 40.0
+- id: V4-B1-030
+  lang: vi
+  category: hwdef
+  q: CubeOrangePlus dung chip STM32 nao
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/CubeOrangePlus/hwdef.dat
+  answer_snippet: MCU STM32H7xx STM32H757xx
+- id: V4-B1-027
+  lang: vi
+  category: hwdef
+  q: Thứ tự UART trong SERIAL_ORDER của Pixhawk6X là gì?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/Pixhawk6X/hwdef.dat
+  answer_snippet: SERIAL_ORDER OTG1 UART7 UART5 USART1 UART8 USART2 UART4 USART3 OTG2
+- id: V4-B3-017
+  lang: en
+  q: nvidia gpu overclock
+  category: negative
+  expect_none: true
+- id: V4-B3-013
+  lang: en
+  q: iNav rates
+  category: negative
+  expect_none: true
+- id: V4-B3-015
+  lang: en
+  q: sourdough baking recipe
+  category: negative
+  expect_none: true
+- id: V4-B3-014
+  lang: en
+  q: bitcoin price today
+  category: negative
+  expect_none: true
+- id: V4-B3-016
+  lang: en
+  q: weather forecast tomorrow
+  category: negative
+  expect_none: true
+- id: V4-B3-022
+  lang: vi
+  q: cách nấu phở bò
+  category: negative
+  expect_none: true
+- id: V4-B3-020
+  lang: vi
+  q: giá bitcoin hôm nay
+  category: negative
+  expect_none: true
+- id: V4-B1-004
+  lang: en
+  category: param
+  q: What parameter sets the altitude that altitude control modes climb to when takeoff is triggered with
+    the throttle stick?
+  expect:
+  - source: ardupilot
+    path: ArduCopter/Parameters.cpp
+  answer_snippet: Altitude that altitude control modes will climb to when a takeoff is triggered with
+    the throttle stick.
+- id: V4-B1-009
+  lang: en
+  category: param
+  q: Which parameter lists the mission items that must be planned before the aircraft can arm?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Arming/AP_Arming.cpp
+  answer_snippet: Bitmask of mission items that are required to be planned in order to arm the aircraft
+- id: V4-B1-003
+  lang: en
+  category: param
+  q: Which RTL parameter defines a cone above home that limits the maximum climb?
+  expect:
+  - source: ardupilot
+    path: ArduCopter/Parameters.cpp
+  answer_snippet: Defines a cone above home which determines maximum climb
+- id: V4-B1-001
+  lang: en
+  category: param
+  q: Which LOG_ parameter is a bitmap that enables the file, MAVLink or block logger backends?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Logger/AP_Logger.cpp
+  answer_snippet: Bitmap of what Logger backend types to enable.
+- id: V4-B1-002
+  lang: en
+  category: param
+  q: My transmitter has a sprung throttle. Which PILOT_THR_BHV bit makes motor feedback start from mid-stick
+    on the ground?
+  expect:
+  - source: ardupilot
+    path: ArduCopter/Parameters.cpp
+  answer_snippet: TX with sprung throttle can set PILOT_THR_BHV to "1" so motor feedback when landed starts
+    from mid-stick instead of bottom of stick.
+- id: V4-B1-010
+  lang: en
+  category: param
+  q: What does MOT_SPIN_ARM represent in the motor output range?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Motors/AP_MotorsMulticopter.cpp
+  answer_snippet: Point at which the motors start to spin expressed as a number from 0 to 1 in the entire
+    output range.
+- id: V4-B1-012
+  lang: vi
+  category: param
+  q: Tham số nào đặt mức điện áp pin để kích hoạt failsafe pin yếu?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_BattMonitor/AP_BattMonitor_Params.cpp
+  answer_snippet: Battery voltage that triggers a low battery failsafe.
+- id: V4-B1-017
+  lang: vi
+  category: param
+  q: SRTL_OPTIONS bit 2 co tac dung gi
+  expect:
+  - source: ardupilot
+    path: libraries/AP_SmartRTL/AP_SmartRTL.cpp
+  answer_snippet: '// @Bitmask: 2:Ignore pilot yaw'
+- id: V4-B3-024
+  lang: vi
+  q: MOT_THST_HOVER thuong nam trong khoang nao
+  category: param
+  scope: all
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/ac_throttlemid.rst
+  answer_snippet: The value is usually between 0.2 and 0.6
+- id: V4-B3-023
+  lang: vi
+  q: RC_OPTIONS bit 13 bat 420kbaud cho ELRS nam o dau
+  category: param
+  scope: all
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-rc-options.rst
+  answer_snippet: Use 420kbaud for ELRS protocol
+- id: V4-B1-013
+  lang: vi
+  category: param
+  q: Tần số cắt của bộ lọc gia tốc kế được đặt bằng tham số nào?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_InertialSensor/AP_InertialSensor.cpp
+  answer_snippet: Filter cutoff frequency for accelerometers.
+- id: V4-B1-011
+  lang: vi
+  category: param
+  q: Bật chế độ tự động học offset la bàn thì dùng tham số nào?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Compass/AP_Compass.cpp
+  answer_snippet: Enable or disable the automatic learning of compass offsets.
+- id: V4-B1-020
+  lang: vi
+  category: param
+  q: Tốc độ chìm ở giai đoạn cuối khi hạ cánh được đặt bằng tham số nào?
+  expect:
+  - source: ardupilot
+    path: libraries/AP_TECS/AP_TECS.cpp
+  answer_snippet: The sink rate in meters/second for the final stage of landing.
+- id: V4-B1-035
+  lang: en
+  category: protocol
+  q: How does a MAVLink component acknowledge a PARAM_SET?
+  expect:
+  - source: mavlink
+    path: message_definitions/v1.0/common.xml
+  answer_snippet: The receiving component should acknowledge the new parameter value by broadcasting a
+    PARAM_VALUE message
+- id: V4-B1-032
+  lang: en
+  category: protocol
+  q: What is the default baud rate for CRSF on a two-wire full-duplex UART?
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: 416666 baud 8N1 at 3.0 to 3.3V level
+- id: V4-B1-037
+  lang: en
+  category: protocol
+  q: Which MAV_AUTOPILOT value represents ArduPilot?
+  expect:
+  - source: mavlink
+    path: message_definitions/v1.0/minimal.xml
+  answer_snippet: <entry value="3" name="MAV_AUTOPILOT_ARDUPILOTMEGA">
+- id: V4-B1-036
+  lang: en
+  category: protocol
+  q: Which MAVLink message id reports the result of a command?
+  expect:
+  - source: mavlink
+    path: message_definitions/v1.0/common.xml
+  answer_snippet: <message id="77" name="COMMAND_ACK">
+- id: V4-B1-042
+  lang: vi
+  category: protocol
+  q: Module ELRS gắn ngoài cần baudrate tối thiểu bao nhiêu để chạy được 333Hz?
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/transmitters/lua-howto.md
+  answer_snippet: 333Hz or faster packet rates require >400K Baudrate for external ELRS modules.
+- id: V4-B1-044
+  lang: vi
+  category: protocol
+  q: hai module ELRS co can cung binding phrase khong
+  expect:
+  - source: expresslrs_docs
+    path: docs/faq.md
+  answer_snippet: same binding phrase and configuration options (e.g. Regulatory Domain).
+- id: V4-B1-039
+  lang: vi
+  category: protocol
+  q: Địa chỉ thiết bị CRSF 0xEE thuộc loại thiết bị nào?
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: R/C Transmitter Module / Crossfire Tx
+- id: V4-B1-038
+  lang: vi
+  category: protocol
+  q: ExpressLRS dùng tốc độ baud nào để nói chuyện với flight controller?
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/ardupilot-setup.md
+  answer_snippet: ExpressLRS receivers use 420K Baudrate to talk to flight controllers.
+- id: V4-B3-030
+  lang: vi
+  q: MAV_AUTOPILOT_ARDUPILOTMEGA co gia tri bao nhieu
+  category: protocol
+  scope: all
+  expect:
+  - source: mavlink
+    path: message_definitions/v1.0/minimal.xml
+  answer_snippet: value="3" name="MAV_AUTOPILOT_ARDUPILOTMEGA"
+- id: V4-B3-003
+  lang: en
+  q: My log shows VIBE peaks around 60 m/s/s. Is that enough to explain poor position hold?
+  category: troubleshoot
+  scope: all
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-measuring-vibration.rst
+  answer_snippet: levels above 60m/s/s nearly always have problems with position or altitude hold
+- id: V4-B3-006
+  lang: en
+  q: Large quadplane loses thrust at high throttle and the ESC signal trace looks noisy. What wiring fix
+    is recommended?
+  category: troubleshoot
+  scope: all
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-esc-issues.rst
+  answer_snippet: Physically separate the signal wiring from the power wiring to the ESCs
+- id: V4-B3-009
+  lang: mixed
+  q: Dòng Sync trên X9D hiện G11 C00 F00 thì G, C, F nghĩa là gì?
+  category: troubleshoot
+  scope: all
+  expect:
+  - source: expresslrs_docs
+    path: docs/hardware/x9d-troubleshooting.md
+  answer_snippet: '`G` (good packets), `C` (CRC error), `F` (Framing error)'
+- id: V4-B3-004
+  lang: vi
+  q: Copter lật úp ngay khi vừa cất cánh, nên kiểm tra gì trước tiên?
+  category: troubleshoot
+  scope: all
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/safety-multicopter.rst
+  answer_snippet: A motor could be turning the wrong direction.
+- id: V4-B3-005
+  lang: vi
+  q: Copter bay vòng tròn chậm ở Loiter (toilet bowling), nghi nhiễu la bàn thì xem ở đâu?
+  category: troubleshoot
+  scope: all
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-diagnosing-problems-using-logs.rst
+  answer_snippet: Interference from the power distribution board, motors, battery, ESCs
+- id: V4-B2-024
+  lang: en
+  q: How many antennas does a moving baseline GPS yaw setup need?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-GPS-for-yaw.rst
+  answer_snippet: signal delays from each satellite as they reach two separated antennas
+- id: V4-B2-021
+  lang: en
+  q: What two kinds of data does the FPort protocol carry on its single wire?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-FPort-receivers.rst
+  answer_snippet: FPort protocol combines SBus RC control information being sent to the autopilot
+- id: V4-B2-030
+  lang: en
+  q: Choosing a fixed wing frame in Mission Planner assigns which functions to outputs 1 to 4?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-rcoutput-mapping.rst
+  answer_snippet: SERVO1-SERVO4 to Aileron, Elevator, Throttle, and Rudder
+- id: V4-B2-035
+  lang: en
+  q: Which PWM pulse range marks the brushed motor ESCs that need no special configuration?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-brushed-motors.rst
+  answer_snippet: PWM signals that are 1ms to 2ms in width
+- id: V4-B2-034
+  lang: en
+  q: What does BATT_WATT_MAX restrict during a QuadPlane transition?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-batt-watt-max.rst
+  answer_snippet: limit the total instantaneous power
+- id: V4-B2-037
+  lang: en
+  q: How are the nodes of a CAN bus physically wired to each other?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-canbus-setup-advanced.rst
+  answer_snippet: All nodes are connected to each other through a two wire bus.
+- id: V4-B2-026
+  lang: en
+  q: Where on the microSD card does the autopilot keep its terrain database?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-terrain-following.rst
+  answer_snippet: stored in the APM/TERRAIN directory on the microSD card
+- id: V4-B3-027
+  lang: vi
+  q: GPS for yaw can 2 anten cach nhau toi thieu bao xa
+  category: wiki
+  scope: all
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-gps-for-yaw.rst
+  answer_snippet: The antennas must be separated by at least 30cm
+- id: V4-B2-023
+  lang: vi
+  q: Nếu đã khai báo nhiều Rally Point thì khi vào RTL máy bay sẽ bay tới đâu trước?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-rally-points.rst
+  answer_snippet: proceed to the closest Rally Point
+- id: V4-B2-036
+  lang: vi
+  q: BLHeliSuite co con cau hinh duoc ESC khi autopilot van cam USB vao may tinh khong?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-blheli32-passthru.rst
+  answer_snippet: Pass-Through support in ArduPilot allows the BLHeliSuite
+- id: V4-B2-025
+  lang: vi
+  q: Bat MAVLink2 signing thi duong telemetry downlink co bi anh huong khong?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-MAVLink2-signing.rst
+  answer_snippet: Telemetry downlink data is unaffected.
+- id: V4-B2-038
+  lang: vi
+  q: Bit 3 của RC_OPTIONS thêm gì vào khung FPort cho một số hệ thống?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-rc-options.rst
+  answer_snippet: Add delay bytes in FPort protocol
+- id: V4-B2-040
+  lang: vi
+  q: Một hệ thống ArduPilot dùng được tối đa bao nhiêu rangefinder?
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-rangefinder-setup.rst
+  answer_snippet: Up to 10 Rangefinders can be used in the system

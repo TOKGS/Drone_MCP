@@ -20,6 +20,8 @@ from pathlib import Path
 
 import yaml
 
+from . import validate_eval_set
+
 REPO = Path(__file__).resolve().parents[1]
 SEED = 20261026
 DEV_RATIO = 0.4
@@ -101,6 +103,15 @@ def main(argv: list[str] | None = None) -> int:
     duplicated = {value for value in ids if ids.count(value) > 1}
     if duplicated:
         print(f"duplicate ids: {len(duplicated)}", file=sys.stderr)
+        return 2
+    # Validate the whole pool BEFORE splitting: a cross-fragment duplicate must never end up with
+    # one copy in dev and one in the held-out half.
+    report = validate_eval_set.validate(questions, None)
+    if report["errors"]:
+        print(f"fragment validation failed: {len(report['errors'])} error(s)", file=sys.stderr)
+        for error in report["errors"][:20]:
+            detail = f" {error['detail']}" if error["detail"] else ""
+            print(f"  - id={error['id']} code={error['code']}{detail}", file=sys.stderr)
         return 2
     dev, heldout = split(questions, ratio=args.ratio)
 

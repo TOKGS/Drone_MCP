@@ -1,4 +1,4 @@
-﻿name: CI
+name: CI
 
 on:
   push:
@@ -47,6 +47,11 @@ jobs:
       - run: python -m research.build_all --gates
       - run: python -m research.eval_retrieval --set tests/heldout_v3.yaml --aggregate-only
       - run: python -m research.eval_retrieval --set tests/golden.yaml --aggregate-only
+      # eval v4 is a measurement, not a gate: it runs for the report and never fails the job.
+      - run: python -m research.eval_retrieval --set tests/eval_v4_dev.yaml --json docs/upgrade/baseline/dev.json --no-floor
+        continue-on-error: true
+      - run: python -m research.eval_retrieval --set tests/eval_v4_heldout.yaml --aggregate-only --json docs/upgrade/baseline/heldout.json --no-floor
+        continue-on-error: true
       - run: python -m research.verify_citations
       - run: python scripts/mutation_check.py
       - uses: actions/upload-artifact@v4
@@ -56,3 +61,4 @@ jobs:
           path: |
             docs/mutation-report.md
             docs/mutation-report.json
+            docs/upgrade/baseline/*.json

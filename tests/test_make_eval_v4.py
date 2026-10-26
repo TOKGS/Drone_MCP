@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
+import yaml
+
 import research.make_eval_v4 as merge
 
 
@@ -34,3 +38,21 @@ def test_a_single_question_stratum_stays_tunable() -> None:
     dev, heldout = merge.split(_questions())
     assert merge.counts(dev).get(("troubleshoot", "vi")) == 1
     assert ("troubleshoot", "vi") not in merge.counts(heldout)
+
+
+def _fragment(path: Path, questions: list[dict]) -> Path:
+    path.write_text(yaml.safe_dump({"questions": questions}, allow_unicode=True), encoding="utf-8")
+    return path
+
+
+def test_a_cross_fragment_duplicate_blocks_the_merge(tmp_path: Path) -> None:
+    question = {"id": "V4-X-001", "lang": "en", "q": "where is the arming check declared",
+                "category": "param", "expect": [{"source": "ardupilot", "path": "AP_Arming"}],
+                "answer_snippet": "ARMING_CHECK_ALL"}
+    first = _fragment(tmp_path / "q_a.yaml", [question])
+    second = _fragment(tmp_path / "q_b.yaml", [{**question, "id": "V4-Y-001"}])
+    dev, heldout = tmp_path / "dev.yaml", tmp_path / "heldout.yaml"
+
+    assert merge.main(["--fragment", str(first), "--fragment", str(second),
+                       "--dev", str(dev), "--heldout", str(heldout)]) == 2
+    assert not dev.exists() and not heldout.exists(), "a rejected merge must write nothing"
