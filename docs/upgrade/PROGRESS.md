@@ -97,7 +97,7 @@ wheel workaround (or one approved install outside the sandbox).
 
 ## Tasks
 
-- [ ] P1-A evaluator upgrade          owner:      commit:      evidence:
+- [x] P1-A evaluator upgrade          owner: lead  commit: (this commit)  evidence: golden 1.000/0.767/0.859, v3 0.933/0.833/0.868, v3 sha256 verified, 10 new tests
 - [ ] P1-B question writers           owner:      commit:      evidence:
 - [ ] P1-C validation script          owner:      commit:      evidence:
 - [ ] P1-D merge and split            owner:      commit:      evidence:
