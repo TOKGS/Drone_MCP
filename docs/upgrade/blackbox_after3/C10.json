@@ -1,0 +1,156 @@
+{
+  "case": "C10",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "SERIAL port protocol RC input",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 54,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "SERIAL port protocol RC input",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 92.9,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"SERIAL port protocol RC input\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot#3e3ae68d74f4723f\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_SerialManager.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_SerialManager/AP_SerialManager.cpp#L148-L194\",\n      \"path\": \"libraries/AP_SerialManager/AP_SerialManager.cpp\",\n      \"lines\": [\n        148,\n        194\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_SerialManager/AP_SerialManager.cpp\",\n      \"excerpt\": \"#error \\\"Please use DEFAULT_SERIAL8_PROTOCOL\\\"\\n#endif\\n\\n#ifndef DEFAULT_SERIAL9_PROTOCOL\\n#define DEFAULT_SERIAL9_PROTOCOL SerialProtocol_None\\n#endif\\n#ifndef DEFAULT_SERIAL9_BAUD\\n#define DEFAULT_SERIAL9_BAUD AP_SERIALMANAGER_MAVLINK_BAUD/1000\\n#endif\\n#ifndef DEFAULT_SERIAL9_OPTIONS\\n#define DEFAULT_SERIAL9_OPTIONS 0\\n#endif\\n#ifdef HAL_SERIAL9_PROTOCOL\\n#error \\\"Please use DEFAULT_SERIAL9_PROTOCOL\\\"\\n#endif\\n\\nconst AP_Param::GroupInfo AP_SerialManager::var_info[] = {\\n#if HAL_HAVE_SERIAL0_PARAMS\\n    // @Param: 0_BAUD\\n    // @DisplayName: Serial0 baud rate\\n    // @Description: The baud rate used on the USB c\",\n      \"untrusted\": true,\n      \"score\": -34.6235\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#f8ab2e4e432c8a39\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-rc-systems.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-rc-systems.rst#L98-L98\",\n      \"path\": \"common/source/docs/common-rc-systems.rst\",\n      \"lines\": [\n        98,\n        98\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Connecting the Receiver > RC input to Serial Port\",\n      \"excerpt\": \".. note:: any UART RX input will auto-detect all the protocols (except PPM, or SRXL2/CRSF/ELRS which also require connection of the UART's TX pin), if the serial port protocol is set to 23 (for example, generally, :ref:`SERIAL2_PROTOCOL<SERIAL2_PROTOCOL>` for the TELEM2 UART if used). The exception to this is for SBUS attached to UARTs on F4 based autopilots. This requires an external inverter since SBUS is inverted and F4 autopilots do not have selectable inversion on their UART pins.\",\n      \"untrusted\": true,\n      \"score\": -33.6235\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#5459c930e4573c89\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-foxeerh743v1.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-foxeerh743v1.rst#L94-L96\",\n      \"path\": \"common/source/docs/common-foxeerh743v1.rst\",\n      \"lines\": [\n        94,\n        96\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"RC Input\",\n      \"excerpt\": \"RC input is configured by default on the R1 (UART1_RX) pin. It supports all serial RC protocols. For protocols requiring separate half-duplex serial to transmit telemetry (such as FPort) you should setup SERIAL1 as an RC input serial port, with half-duplex, pin-swap and inversion enabled (:ref:`SERIAL1_OPTIONS<SERIAL1_OPTIONS>` = 15).\\n\\nThe DJI connector also has UART4 RX input for DJI RC input. To use this you would need to set :ref:`SERIAL1_PROTOCOL<SERIAL1_PROTOCOL>` to something other than \\\"23\\\" (RCinput) and set this protocol for :ref:`SERIAL4_PROTOCOL<SERIAL4_PROTOCOL>` instead. \",\n      \"untrusted\": true,\n      \"score\": -31.9958\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#9d332ca8b5701f87\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-X_MAV_H743v2.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-X_MAV_H743v2.rst#L60-L60\",\n      \"path\": \"common/source/docs/common-X_MAV_H743v2.rst\",\n      \"lines\": [\n        60,\n        60\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"RC Input\",\n      \"excerpt\": \"The default RC input is configured on the UART5 and supports all RC protocols except PPM. The SBUS pin is inverted and connected to RX5. When using RX5 or SBUS, the other input should be unconnected. RC can be attached to any UART port as long as the serial port protocol is set to ``SERIALn_PROTOCOL=23`` and SERIAL7_Protocol  is changed to something other than '23'.\",\n      \"untrusted\": true,\n      \"score\": -31.9073\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot#3e3ae68d74f4723f\",\n    \"ardupilot_wiki#f8ab2e4e432c8a39\",\n    \"ardupilot_wiki#5459c930e4573c89\",\n    \"ardupilot_wiki#9d332ca8b5701f87\",\n    \"ardupilot_wiki#2037fbf231849622\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 4\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "SERIAL port protocol RC input",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot#3e3ae68d74f4723f",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_SerialManager.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_SerialManager/AP_SerialManager.cpp#L148-L194",
+            "path": "libraries/AP_SerialManager/AP_SerialManager.cpp",
+            "lines": [
+              148,
+              194
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_SerialManager/AP_SerialManager.cpp",
+            "excerpt": "#error \"Please use DEFAULT_SERIAL8_PROTOCOL\"\n#endif\n\n#ifndef DEFAULT_SERIAL9_PROTOCOL\n#define DEFAULT_SERIAL9_PROTOCOL SerialProtocol_None\n#endif\n#ifndef DEFAULT_SERIAL9_BAUD\n#define DEFAULT_SERIAL9_BAUD AP_SERIALMANAGER_MAVLINK_BAUD/1000\n#endif\n#ifndef DEFAULT_SERIAL9_OPTIONS\n#define DEFAULT_SERIAL9_OPTIONS 0\n#endif\n#ifdef HAL_SERIAL9_PROTOCOL\n#error \"Please use DEFAULT_SERIAL9_PROTOCOL\"\n#endif\n\nconst AP_Param::GroupInfo AP_SerialManager::var_info[] = {\n#if HAL_HAVE_SERIAL0_PARAMS\n    // @Param: 0_BAUD\n    // @DisplayName: Serial0 baud rate\n    // @Description: The baud rate used on the USB c",
+            "untrusted": true,
+            "score": -34.6235
+          },
+          {
+            "cite_id": "ardupilot_wiki#f8ab2e4e432c8a39",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-rc-systems.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-rc-systems.rst#L98-L98",
+            "path": "common/source/docs/common-rc-systems.rst",
+            "lines": [
+              98,
+              98
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Connecting the Receiver > RC input to Serial Port",
+            "excerpt": ".. note:: any UART RX input will auto-detect all the protocols (except PPM, or SRXL2/CRSF/ELRS which also require connection of the UART's TX pin), if the serial port protocol is set to 23 (for example, generally, :ref:`SERIAL2_PROTOCOL<SERIAL2_PROTOCOL>` for the TELEM2 UART if used). The exception to this is for SBUS attached to UARTs on F4 based autopilots. This requires an external inverter since SBUS is inverted and F4 autopilots do not have selectable inversion on their UART pins.",
+            "untrusted": true,
+            "score": -33.6235
+          },
+          {
+            "cite_id": "ardupilot_wiki#5459c930e4573c89",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-foxeerh743v1.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-foxeerh743v1.rst#L94-L96",
+            "path": "common/source/docs/common-foxeerh743v1.rst",
+            "lines": [
+              94,
+              96
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "RC Input",
+            "excerpt": "RC input is configured by default on the R1 (UART1_RX) pin. It supports all serial RC protocols. For protocols requiring separate half-duplex serial to transmit telemetry (such as FPort) you should setup SERIAL1 as an RC input serial port, with half-duplex, pin-swap and inversion enabled (:ref:`SERIAL1_OPTIONS<SERIAL1_OPTIONS>` = 15).\n\nThe DJI connector also has UART4 RX input for DJI RC input. To use this you would need to set :ref:`SERIAL1_PROTOCOL<SERIAL1_PROTOCOL>` to something other than \"23\" (RCinput) and set this protocol for :ref:`SERIAL4_PROTOCOL<SERIAL4_PROTOCOL>` instead. ",
+            "untrusted": true,
+            "score": -31.9958
+          },
+          {
+            "cite_id": "ardupilot_wiki#9d332ca8b5701f87",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-X_MAV_H743v2.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-X_MAV_H743v2.rst#L60-L60",
+            "path": "common/source/docs/common-X_MAV_H743v2.rst",
+            "lines": [
+              60,
+              60
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "RC Input",
+            "excerpt": "The default RC input is configured on the UART5 and supports all RC protocols except PPM. The SBUS pin is inverted and connected to RX5. When using RX5 or SBUS, the other input should be unconnected. RC can be attached to any UART port as long as the serial port protocol is set to ``SERIALn_PROTOCOL=23`` and SERIAL7_Protocol  is changed to something other than '23'.",
+            "untrusted": true,
+            "score": -31.9073
+          }
+        ],
+        "candidates": [
+          "ardupilot#3e3ae68d74f4723f",
+          "ardupilot_wiki#f8ab2e4e432c8a39",
+          "ardupilot_wiki#5459c930e4573c89",
+          "ardupilot_wiki#9d332ca8b5701f87",
+          "ardupilot_wiki#2037fbf231849622"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 4
+      }
+    }
+  }
+}

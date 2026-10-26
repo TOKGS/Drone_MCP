@@ -1,0 +1,6 @@
+cross-check: 49 questions vs 137 from 3 set(s), overlaps=0
+set=eval_v5_vi_dev.yaml questions=49 db=checked
+categories: code=9 elrs_edgetx=4 hwdef=4 negative=6 param=8 protocol=6 troubleshoot=4 wiki=8
+langs: mixed=36 vi=13
+snippets=43 negatives=6 diacritics_false=28
+errors: 0

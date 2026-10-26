@@ -139,3 +139,23 @@ def test_index_status_reports_the_dense_state() -> None:
     assert payload["dense"]["present"] in (True, False)
     assert payload["dense"]["state"] in ("enabled", "requested-but-unavailable",
                                         "available-opt-in", "absent")
+
+
+def test_the_document_prior_is_off_without_its_own_flag(monkeypatch) -> None:
+    monkeypatch.delenv("ARM_DOC_PRIOR", raising=False)
+    monkeypatch.setenv("ARM_DENSE", "1")
+    assert dense.docs_requested() is False
+
+
+def test_the_document_prior_flag_turns_it_on(monkeypatch) -> None:
+    monkeypatch.setenv("ARM_DOC_PRIOR", "1")
+    assert dense.docs_requested() is True
+
+
+def test_document_vectors_are_detected_and_absent_cleanly() -> None:
+    plain = sqlite3.connect(":memory:")
+    assert dense.docs_available(plain) is False
+    plain.execute("CREATE TABLE doc_vectors (document_id INTEGER PRIMARY KEY, dim INTEGER, vec BLOB)")
+    assert dense.docs_available(plain) is False
+    plain.execute("INSERT INTO doc_vectors VALUES (1, 384, x'00')")
+    assert dense.docs_available(plain) is True

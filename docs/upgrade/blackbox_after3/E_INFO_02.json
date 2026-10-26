@@ -1,0 +1,260 @@
+{
+  "case": "E_INFO_02",
+  "note": "informational question -> NOT blocked",
+  "tool": "troubleshoot",
+  "arguments": {
+    "symptom": "what does FS_THR_ENABLE do"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 74,
+    "method": "tools/call",
+    "params": {
+      "name": "troubleshoot",
+      "arguments": {
+        "symptom": "what does FS_THR_ENABLE do"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 264.6,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"symptom\": \"what does FS_THR_ENABLE do\",\n  \"safety_branch\": \"informational\",\n  \"language\": \"en\",\n  \"confidence\": \"high\",\n  \"evidence\": [\n    {\n      \"cite_id\": \"ardupilot#aff614bd8d1d5b3d\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"Parameters.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L95-L145\",\n      \"path\": \"ArduCopter/Parameters.cpp\",\n      \"lines\": [\n        95,\n        145\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduCopter/Parameters.cpp\",\n      \"excerpt\": \"    // @Param: FS_GCS_ENABLE\\n    // @DisplayName: Ground Station Failsafe Enable\\n    // @Description: Controls whether failsafe will be invoked (and what action to take) when connection with Ground station is lost for at least 5 seconds. See FS_OPTIONS param for additional actions, or for cases allowing Mission continuation, when GCS failsafe is enabled.\\n    // @Values: 0:Disabled/NoAction,1:RTL,2:RTL or Continue with Mission in Auto Mode (Removed in 4.0+-see FS_OPTIONS),3:SmartRTL or RTL,4:SmartRTL or Land,5:Land,6:Auto DO_LAND_START/DO_RETURN_PATH_START or RTL,7:Brake or Land\\n    // @User: S\",\n      \"untrusted\": true,\n      \"score\": -16.6281\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#af7f9b55f6454c74\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"radio-failsafe.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/radio-failsafe.rst#L72-L72\",\n      \"path\": \"copter/source/docs/radio-failsafe.rst\",\n      \"lines\": [\n        72,\n        72\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Parameter Configuration\",\n      \"excerpt\": \"The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe menu.\",\n      \"untrusted\": true,\n      \"score\": -15.6281\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#338914d3e5284166\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"radio-failsafe.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/sub/source/docs/radio-failsafe.rst#L88-L93\",\n      \"path\": \"sub/source/docs/radio-failsafe.rst\",\n      \"lines\": [\n        88,\n        93\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Testing\",\n      \"excerpt\": \"* A GCS message noting the failure will occur and the mode switch to SURFACE if that action has been selected with :ref:`FS_THR_ENABLE<FS_THR_ENABLE>`.\\n\\n* If disarmed, a pre-arm message will be sent and arming prevented.\\n\\n\\n**Test #2** : retaking control after the failsafe has cleared\",\n      \"untrusted\": true,\n      \"score\": -15.4495\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#a415c86091dc8c47\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-do-land-start.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-do-land-start.rst#L28-L36\",\n      \"path\": \"common/source/docs/common-do-land-start.rst\",\n      \"lines\": [\n        28,\n        36\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Using DO_LAND_START\",\n      \"excerpt\": \".. note:: if you execute an RTL due to a battery failsafe and the :ref:`MIS_OPTIONS<MIS_OPTIONS>` bit 1 (Use distance to land) is set, then if continuing the mission results in a closer landing point, then the mission will proceed.\\n\\n[/site]\\n[site wiki=\\\"copter\\\"]\\n\\nTo use, you need to do two things:\\n\\n-  add a :ref:`DO_LAND_START <mav_cmd_do_land_start>` mission item to your mission, just before the start of your landing sequence(s).\\n-  use ``DO_LAND_START`` as a failsafe action. For example, setting :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` = \\\"6\\\" for RC failsafe.\",\n      \"untrusted\": true,\n      \"score\": -14.9513\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#f4a15b615b597b37\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"indoor-flying.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/indoor-flying.rst#L52-L56\",\n      \"path\": \"copter/source/docs/indoor-flying.rst\",\n      \"lines\": [\n        52,\n        56\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Indoor Flying Guidelines > Safe Indoor Flying Dos\",\n      \"excerpt\": \"-  Disable the GPS by setting :ref:`GPS1_TYPE<GPS1_TYPE>` to 0\\n-  Configure the :ref:`battery failsafe <failsafe-battery>` to \\\"Land\\\" by setting :ref:`BATT_FS_LOW_ACT <BATT_FS_LOW_ACT>` = 1\\n-  Configure the :ref:`radio failsafe <radio-failsafe>` to \\\"Enabled always Land\\\" by setting :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` = 3\\n-  Disable the :ref:`fence <common-geofencing-landing-page>` by setting :ref:`FENCE_ENABLE <FENCE_ENABLE>` = 0\\n-  Use a downward facing sonar or lidar (if available)\",\n      \"untrusted\": true,\n      \"score\": -14.6474\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#fcd86403e10373d0\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"smartrtl-mode.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/smartrtl-mode.rst#L19-L21\",\n      \"path\": \"copter/source/docs/smartrtl-mode.rst\",\n      \"lines\": [\n        19,\n        21\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Smart RTL Mode\",\n      \"excerpt\": \"There are multiple ways that the vehicle can mode switch into SmartRTL. Either through user selected, or through failsafe selections. \\n\\nThe :ref:`FS_GCS_ENABLE <FS_GCS_ENABLE>` and :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` parameters set to 4 or 5 the vehicle will switch to SmartRTL->RTL or SmartRTL->Land based on whether the correct conditions allows the mode. The setting indicates that it will try SmartRTL first, then downgrade to RTL (4) or Land (5)\",\n      \"untrusted\": true,\n      \"score\": -14.3292\n    },\n    {\n      \"cite_id\": \"ardupilot#1593206d80825d05\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/ReleaseNotes.txt#L576-L584\",\n      \"path\": \"ArduCopter/ReleaseNotes.txt\",\n      \"lines\": [\n        576,\n        584\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduPilot Copter Release Notes:\",\n      \"excerpt\": \"- Rangefinders with more than 327m range supported (@peterbarker, PR:27886)\\n- RC failsafe cleared if enable param set to zero (FS_THR_ENABLE=0 or THR_FAILSAFE=0) (@Hwurzburg, PR:29846)\\n- RC input uses full resolution to reduce jitter (@andyp1per, PR:29465)\\n- RC input valid only if we have ever seen RC input (@peterbarker, PR:31351)\\n- Rockblock 9704 satellite modem support (@stephendade, PR:31296)\\n- RPLidar A2M12 proximity sensor support (@amilcarlucas, PR:30737)\\n- RPM sensors run at 50hz on all vehicles (@IamPete1, PR:30632)\\n- SBF GPS undulation usage fixed (@peterbarker, PR:31997)\\n- Scheduler\",\n      \"untrusted\": true,\n      \"score\": -13.4737\n    },\n    {\n      \"cite_id\": \"ardupilot#c9c106e826b2aa93\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Rover/ReleaseNotes.txt#L576-L584\",\n      \"path\": \"Rover/ReleaseNotes.txt\",\n      \"lines\": [\n        576,\n        584\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduPilot Rover Release Notes:\",\n      \"excerpt\": \"- Rangefinders with more than 327m range supported (@peterbarker, PR:27886)\\n- RC failsafe cleared if enable param set to zero (FS_THR_ENABLE=0 or THR_FAILSAFE=0) (@Hwurzburg, PR:29846)\\n- RC input uses full resolution to reduce jitter (@andyp1per, PR:29465)\\n- RC input valid only if we have ever seen RC input (@peterbarker, PR:31351)\\n- Rockblock 9704 satellite modem support (@stephendade, PR:31296)\\n- RPLidar A2M12 proximity sensor support (@amilcarlucas, PR:30737)\\n- RPM sensors run at 50hz on all vehicles (@IamPete1, PR:30632)\\n- SBF GPS undulation usage fixed (@peterbarker, PR:31997)\\n- Scheduler\",\n      \"untrusted\": true,\n      \"score\": -13.4737\n    }\n  ],\n  \"citations\": [\n    \"ardupilot#aff614bd8d1d5b3d\",\n    \"ardupilot_wiki#af7f9b55f6454c74\",\n    \"ardupilot_wiki#338914d3e5284166\",\n    \"ardupilot_wiki#a415c86091dc8c47\",\n    \"ardupilot_wiki#f4a15b615b597b37\",\n    \"ardupilot_wiki#fcd86403e10373d0\",\n    \"ardupilot#1593206d80825d05\",\n    \"ardupilot#c9c106e826b2aa93\"\n  ],\n  \"safety\": {\n    \"props_off\": null,\n    \"confirm\": null,\n    \"applies\": false,\n    \"note\": \"No bench procedure in this answer; the props-off line applies to hardware steps only.\"\n  },\n  \"symptom_evidence_only\": false,\n  \"note\": \"Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote.\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "symptom": "what does FS_THR_ENABLE do",
+        "safety_branch": "informational",
+        "language": "en",
+        "confidence": "high",
+        "evidence": [
+          {
+            "cite_id": "ardupilot#aff614bd8d1d5b3d",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "Parameters.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L95-L145",
+            "path": "ArduCopter/Parameters.cpp",
+            "lines": [
+              95,
+              145
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduCopter/Parameters.cpp",
+            "excerpt": "    // @Param: FS_GCS_ENABLE\n    // @DisplayName: Ground Station Failsafe Enable\n    // @Description: Controls whether failsafe will be invoked (and what action to take) when connection with Ground station is lost for at least 5 seconds. See FS_OPTIONS param for additional actions, or for cases allowing Mission continuation, when GCS failsafe is enabled.\n    // @Values: 0:Disabled/NoAction,1:RTL,2:RTL or Continue with Mission in Auto Mode (Removed in 4.0+-see FS_OPTIONS),3:SmartRTL or RTL,4:SmartRTL or Land,5:Land,6:Auto DO_LAND_START/DO_RETURN_PATH_START or RTL,7:Brake or Land\n    // @User: S",
+            "untrusted": true,
+            "score": -16.6281
+          },
+          {
+            "cite_id": "ardupilot_wiki#af7f9b55f6454c74",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "radio-failsafe.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/radio-failsafe.rst#L72-L72",
+            "path": "copter/source/docs/radio-failsafe.rst",
+            "lines": [
+              72,
+              72
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Parameter Configuration",
+            "excerpt": "The :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` parameter can be set in the Mission Planner full parameter list or full parameter tree, or can also be set using the Mission Planner *failsafe options* dropdown in the Initial Setup >> Mandatory Hardware >> Failsafe menu.",
+            "untrusted": true,
+            "score": -15.6281
+          },
+          {
+            "cite_id": "ardupilot_wiki#338914d3e5284166",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "radio-failsafe.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/sub/source/docs/radio-failsafe.rst#L88-L93",
+            "path": "sub/source/docs/radio-failsafe.rst",
+            "lines": [
+              88,
+              93
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Testing",
+            "excerpt": "* A GCS message noting the failure will occur and the mode switch to SURFACE if that action has been selected with :ref:`FS_THR_ENABLE<FS_THR_ENABLE>`.\n\n* If disarmed, a pre-arm message will be sent and arming prevented.\n\n\n**Test #2** : retaking control after the failsafe has cleared",
+            "untrusted": true,
+            "score": -15.4495
+          },
+          {
+            "cite_id": "ardupilot_wiki#a415c86091dc8c47",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-do-land-start.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-do-land-start.rst#L28-L36",
+            "path": "common/source/docs/common-do-land-start.rst",
+            "lines": [
+              28,
+              36
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Using DO_LAND_START",
+            "excerpt": ".. note:: if you execute an RTL due to a battery failsafe and the :ref:`MIS_OPTIONS<MIS_OPTIONS>` bit 1 (Use distance to land) is set, then if continuing the mission results in a closer landing point, then the mission will proceed.\n\n[/site]\n[site wiki=\"copter\"]\n\nTo use, you need to do two things:\n\n-  add a :ref:`DO_LAND_START <mav_cmd_do_land_start>` mission item to your mission, just before the start of your landing sequence(s).\n-  use ``DO_LAND_START`` as a failsafe action. For example, setting :ref:`FS_THR_ENABLE<FS_THR_ENABLE>` = \"6\" for RC failsafe.",
+            "untrusted": true,
+            "score": -14.9513
+          },
+          {
+            "cite_id": "ardupilot_wiki#f4a15b615b597b37",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "indoor-flying.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/indoor-flying.rst#L52-L56",
+            "path": "copter/source/docs/indoor-flying.rst",
+            "lines": [
+              52,
+              56
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Indoor Flying Guidelines > Safe Indoor Flying Dos",
+            "excerpt": "-  Disable the GPS by setting :ref:`GPS1_TYPE<GPS1_TYPE>` to 0\n-  Configure the :ref:`battery failsafe <failsafe-battery>` to \"Land\" by setting :ref:`BATT_FS_LOW_ACT <BATT_FS_LOW_ACT>` = 1\n-  Configure the :ref:`radio failsafe <radio-failsafe>` to \"Enabled always Land\" by setting :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` = 3\n-  Disable the :ref:`fence <common-geofencing-landing-page>` by setting :ref:`FENCE_ENABLE <FENCE_ENABLE>` = 0\n-  Use a downward facing sonar or lidar (if available)",
+            "untrusted": true,
+            "score": -14.6474
+          },
+          {
+            "cite_id": "ardupilot_wiki#fcd86403e10373d0",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "smartrtl-mode.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/smartrtl-mode.rst#L19-L21",
+            "path": "copter/source/docs/smartrtl-mode.rst",
+            "lines": [
+              19,
+              21
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Smart RTL Mode",
+            "excerpt": "There are multiple ways that the vehicle can mode switch into SmartRTL. Either through user selected, or through failsafe selections. \n\nThe :ref:`FS_GCS_ENABLE <FS_GCS_ENABLE>` and :ref:`FS_THR_ENABLE <FS_THR_ENABLE>` parameters set to 4 or 5 the vehicle will switch to SmartRTL->RTL or SmartRTL->Land based on whether the correct conditions allows the mode. The setting indicates that it will try SmartRTL first, then downgrade to RTL (4) or Land (5)",
+            "untrusted": true,
+            "score": -14.3292
+          },
+          {
+            "cite_id": "ardupilot#1593206d80825d05",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/ReleaseNotes.txt#L576-L584",
+            "path": "ArduCopter/ReleaseNotes.txt",
+            "lines": [
+              576,
+              584
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduPilot Copter Release Notes:",
+            "excerpt": "- Rangefinders with more than 327m range supported (@peterbarker, PR:27886)\n- RC failsafe cleared if enable param set to zero (FS_THR_ENABLE=0 or THR_FAILSAFE=0) (@Hwurzburg, PR:29846)\n- RC input uses full resolution to reduce jitter (@andyp1per, PR:29465)\n- RC input valid only if we have ever seen RC input (@peterbarker, PR:31351)\n- Rockblock 9704 satellite modem support (@stephendade, PR:31296)\n- RPLidar A2M12 proximity sensor support (@amilcarlucas, PR:30737)\n- RPM sensors run at 50hz on all vehicles (@IamPete1, PR:30632)\n- SBF GPS undulation usage fixed (@peterbarker, PR:31997)\n- Scheduler",
+            "untrusted": true,
+            "score": -13.4737
+          },
+          {
+            "cite_id": "ardupilot#c9c106e826b2aa93",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/Rover/ReleaseNotes.txt#L576-L584",
+            "path": "Rover/ReleaseNotes.txt",
+            "lines": [
+              576,
+              584
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduPilot Rover Release Notes:",
+            "excerpt": "- Rangefinders with more than 327m range supported (@peterbarker, PR:27886)\n- RC failsafe cleared if enable param set to zero (FS_THR_ENABLE=0 or THR_FAILSAFE=0) (@Hwurzburg, PR:29846)\n- RC input uses full resolution to reduce jitter (@andyp1per, PR:29465)\n- RC input valid only if we have ever seen RC input (@peterbarker, PR:31351)\n- Rockblock 9704 satellite modem support (@stephendade, PR:31296)\n- RPLidar A2M12 proximity sensor support (@amilcarlucas, PR:30737)\n- RPM sensors run at 50hz on all vehicles (@IamPete1, PR:30632)\n- SBF GPS undulation usage fixed (@peterbarker, PR:31997)\n- Scheduler",
+            "untrusted": true,
+            "score": -13.4737
+          }
+        ],
+        "citations": [
+          "ardupilot#aff614bd8d1d5b3d",
+          "ardupilot_wiki#af7f9b55f6454c74",
+          "ardupilot_wiki#338914d3e5284166",
+          "ardupilot_wiki#a415c86091dc8c47",
+          "ardupilot_wiki#f4a15b615b597b37",
+          "ardupilot_wiki#fcd86403e10373d0",
+          "ardupilot#1593206d80825d05",
+          "ardupilot#c9c106e826b2aa93"
+        ],
+        "safety": {
+          "props_off": null,
+          "confirm": null,
+          "applies": false,
+          "note": "No bench procedure in this answer; the props-off line applies to hardware steps only."
+        },
+        "symptom_evidence_only": false,
+        "note": "Evidence is ordered by retrieval score, not by a diagnostic script: read the cited lines before acting. Nothing in this corpus is a forum post, so every item is source or documentation evidence, not community anecdote."
+      }
+    }
+  }
+}

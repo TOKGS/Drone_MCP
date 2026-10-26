@@ -1,0 +1,181 @@
+{
+  "case": "C7",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "RTL mode implementation Copter",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 51,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "RTL mode implementation Copter",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 78.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"RTL mode implementation Copter\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot#9db38568cd9df5e4\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"mode_rtl.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/mode_rtl.cpp#L69-L105\",\n      \"path\": \"ArduCopter/mode_rtl.cpp\",\n      \"lines\": [\n        69,\n        105\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduCopter/mode_rtl.cpp\",\n      \"excerpt\": \"    };\\n    AP_Param::convert_old_parameters_scaled(conversion_info, ARRAY_SIZE(conversion_info), 0.01, 0);\\n}\\n\\n/*\\n * Init and run calls for RTL flight mode\\n *\\n * There are two parts to RTL, the high level decision making which controls which state we are in\\n * and the lower implementation of the waypoint or landing controllers within those states\\n */\\n\\n// rtl_init - initialise rtl controller\\nbool ModeRTL::init(bool ignore_checks)\\n{\\n    if (!ignore_checks) {\\n        if (!AP::ahrs().home_is_set()) {\\n            return false;\\n        }\\n    }\\n    // initialise waypoint and spline controller\\n    wp_n\",\n      \"untrusted\": true,\n      \"score\": -38.7184\n    },\n    {\n      \"cite_id\": \"ardupilot#3f57c6f81aa1e098\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"Parameters.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L14-L96\",\n      \"path\": \"ArduCopter/Parameters.cpp\",\n      \"lines\": [\n        14,\n        96\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduCopter/Parameters.cpp\",\n      \"excerpt\": \"   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\\n   GNU General Public License for more details.\\n\\n   You should have received a copy of the GNU General Public License\\n   along with this program.  If not, see <http://www.gnu.org/licenses/>.\\n */\\n\\n/*\\n *  ArduCopter parameter definitions\\n *\\n */\\n\\n#if FRAME_CONFIG == HELI_FRAME\\n// 6 here is AP_Motors::MOTOR_FRAME_HELI\\n#define DEFAULT_FRAME_CLASS 6\\n#else\\n#define DEFAULT_FRAME_CLASS 0\\n#endif\\n\\nconst AP_Param::Info Copter::var_info[] = {\\n    // @Param: FORMAT_VERSION\\n    // @DisplayName: Eeprom format version number\\n    // @Description: \",\n      \"untrusted\": true,\n      \"score\": -39.7184\n    },\n    {\n      \"cite_id\": \"ardupilot#52da62b485d7dbdd\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"mode_smart_rtl.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/mode_smart_rtl.cpp#L176-L203\",\n      \"path\": \"ArduCopter/mode_smart_rtl.cpp\",\n      \"lines\": [\n        176,\n        203\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduCopter/mode_smart_rtl.cpp\",\n      \"excerpt\": \"    pos_control->D_update_controller();\\n    attitude_control->input_thrust_vector_heading(pos_control->get_thrust_vector(), auto_yaw.get_heading());\\n}\\n\\n// save current position for use by the smart_rtl flight mode\\nvoid ModeSmartRTL::save_position()\\n{\\n    const bool should_save_position = motors->armed() && (copter.flightmode->mode_number() != Mode::Number::SMART_RTL);\\n\\n    copter.g2.smart_rtl.update(copter.position_ok(), should_save_position);\\n}\\n\\nbool ModeSmartRTL::get_wp(Location& destination) const\\n{\\n    // provide target in states which use wp_nav\\n    switch (smart_rtl_state) {\\n    case Sub\",\n      \"untrusted\": true,\n      \"score\": -34.6626\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#53ef87f176799abd\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"rtl-mode.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/rtl-mode.rst#L7-L10\",\n      \"path\": \"copter/source/docs/rtl-mode.rst\",\n      \"lines\": [\n        7,\n        10\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"RTL Mode\",\n      \"excerpt\": \"RTL mode (Return To Launch mode) navigates Copter from its current\\nposition to hover above the home position. The behavior of RTL mode can\\nbe controlled by several adjustable parameters. This page describes how\\nto use and customize RTL mode.\",\n      \"untrusted\": true,\n      \"score\": -34.0332\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#9423501b7434bdc6\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"smartrtl-mode.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/smartrtl-mode.rst#L7-L13\",\n      \"path\": \"copter/source/docs/smartrtl-mode.rst\",\n      \"lines\": [\n        7,\n        13\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Smart RTL Mode\",\n      \"excerpt\": \"..  youtube:: gXfBmFn_JEU\\n    :width: 100%\\n\\nWhen switched into Smart RTL, like regular RTL, the vehicle will attempt to return home.  The \\\"Smart\\\" part of this mode is that it will retrace a safe path home instead of returning directly home.  This can be useful if there are obstacles between the vehicle and the home position.\\n\\n.. note::\\n   The vehicle must have a good position estimate (LEDs should be green) when the vehicle is armed or SmartRTL will be disabled.  If the vehicle is armed without a good position estimate, \\\"SmartRTL deactivated: bad position\\\" will be sent to the ground station.\",\n      \"untrusted\": true,\n      \"score\": -31.8658\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot#9db38568cd9df5e4\",\n    \"ardupilot#3f57c6f81aa1e098\",\n    \"ardupilot#52da62b485d7dbdd\",\n    \"ardupilot_wiki#53ef87f176799abd\",\n    \"ardupilot_wiki#9423501b7434bdc6\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "RTL mode implementation Copter",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot#9db38568cd9df5e4",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "mode_rtl.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/mode_rtl.cpp#L69-L105",
+            "path": "ArduCopter/mode_rtl.cpp",
+            "lines": [
+              69,
+              105
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduCopter/mode_rtl.cpp",
+            "excerpt": "    };\n    AP_Param::convert_old_parameters_scaled(conversion_info, ARRAY_SIZE(conversion_info), 0.01, 0);\n}\n\n/*\n * Init and run calls for RTL flight mode\n *\n * There are two parts to RTL, the high level decision making which controls which state we are in\n * and the lower implementation of the waypoint or landing controllers within those states\n */\n\n// rtl_init - initialise rtl controller\nbool ModeRTL::init(bool ignore_checks)\n{\n    if (!ignore_checks) {\n        if (!AP::ahrs().home_is_set()) {\n            return false;\n        }\n    }\n    // initialise waypoint and spline controller\n    wp_n",
+            "untrusted": true,
+            "score": -38.7184
+          },
+          {
+            "cite_id": "ardupilot#3f57c6f81aa1e098",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "Parameters.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L14-L96",
+            "path": "ArduCopter/Parameters.cpp",
+            "lines": [
+              14,
+              96
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduCopter/Parameters.cpp",
+            "excerpt": "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n   GNU General Public License for more details.\n\n   You should have received a copy of the GNU General Public License\n   along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\n/*\n *  ArduCopter parameter definitions\n *\n */\n\n#if FRAME_CONFIG == HELI_FRAME\n// 6 here is AP_Motors::MOTOR_FRAME_HELI\n#define DEFAULT_FRAME_CLASS 6\n#else\n#define DEFAULT_FRAME_CLASS 0\n#endif\n\nconst AP_Param::Info Copter::var_info[] = {\n    // @Param: FORMAT_VERSION\n    // @DisplayName: Eeprom format version number\n    // @Description: ",
+            "untrusted": true,
+            "score": -39.7184
+          },
+          {
+            "cite_id": "ardupilot#52da62b485d7dbdd",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "mode_smart_rtl.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/mode_smart_rtl.cpp#L176-L203",
+            "path": "ArduCopter/mode_smart_rtl.cpp",
+            "lines": [
+              176,
+              203
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduCopter/mode_smart_rtl.cpp",
+            "excerpt": "    pos_control->D_update_controller();\n    attitude_control->input_thrust_vector_heading(pos_control->get_thrust_vector(), auto_yaw.get_heading());\n}\n\n// save current position for use by the smart_rtl flight mode\nvoid ModeSmartRTL::save_position()\n{\n    const bool should_save_position = motors->armed() && (copter.flightmode->mode_number() != Mode::Number::SMART_RTL);\n\n    copter.g2.smart_rtl.update(copter.position_ok(), should_save_position);\n}\n\nbool ModeSmartRTL::get_wp(Location& destination) const\n{\n    // provide target in states which use wp_nav\n    switch (smart_rtl_state) {\n    case Sub",
+            "untrusted": true,
+            "score": -34.6626
+          },
+          {
+            "cite_id": "ardupilot_wiki#53ef87f176799abd",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "rtl-mode.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/rtl-mode.rst#L7-L10",
+            "path": "copter/source/docs/rtl-mode.rst",
+            "lines": [
+              7,
+              10
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "RTL Mode",
+            "excerpt": "RTL mode (Return To Launch mode) navigates Copter from its current\nposition to hover above the home position. The behavior of RTL mode can\nbe controlled by several adjustable parameters. This page describes how\nto use and customize RTL mode.",
+            "untrusted": true,
+            "score": -34.0332
+          },
+          {
+            "cite_id": "ardupilot_wiki#9423501b7434bdc6",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "smartrtl-mode.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/smartrtl-mode.rst#L7-L13",
+            "path": "copter/source/docs/smartrtl-mode.rst",
+            "lines": [
+              7,
+              13
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Smart RTL Mode",
+            "excerpt": "..  youtube:: gXfBmFn_JEU\n    :width: 100%\n\nWhen switched into Smart RTL, like regular RTL, the vehicle will attempt to return home.  The \"Smart\" part of this mode is that it will retrace a safe path home instead of returning directly home.  This can be useful if there are obstacles between the vehicle and the home position.\n\n.. note::\n   The vehicle must have a good position estimate (LEDs should be green) when the vehicle is armed or SmartRTL will be disabled.  If the vehicle is armed without a good position estimate, \"SmartRTL deactivated: bad position\" will be sent to the ground station.",
+            "untrusted": true,
+            "score": -31.8658
+          }
+        ],
+        "candidates": [
+          "ardupilot#9db38568cd9df5e4",
+          "ardupilot#3f57c6f81aa1e098",
+          "ardupilot#52da62b485d7dbdd",
+          "ardupilot_wiki#53ef87f176799abd",
+          "ardupilot_wiki#9423501b7434bdc6"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

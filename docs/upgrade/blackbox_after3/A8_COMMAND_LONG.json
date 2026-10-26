@@ -1,0 +1,135 @@
+{
+  "case": "A8_COMMAND_LONG",
+  "note": "msgid must match the pinned XML id for COMMAND_LONG",
+  "tool": "mavlink_message",
+  "arguments": {
+    "name_or_id": "COMMAND_LONG"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 17,
+    "method": "tools/call",
+    "params": {
+      "name": "mavlink_message",
+      "arguments": {
+        "name_or_id": "COMMAND_LONG"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 12.4,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"COMMAND_LONG\",\n  \"kind\": \"message\",\n  \"resolved_by\": \"name\",\n  \"msgid\": 76,\n  \"name\": \"COMMAND_LONG\",\n  \"description\": \"Send a command with up to seven parameters to the MAV. COMMAND_INT is generally preferred when sending MAV_CMD commands that include positional information; it offers higher precision and allows the MAV_FRAME to be specified (which may otherwise be ambiguous, particularly for altitude). The command microservice is documented at https://mavlink.io/en/services/command.html\",\n  \"fields\": [\n    {\n      \"type\": \"uint8_t\",\n      \"name\": \"target_system\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"uint8_t\",\n      \"name\": \"target_component\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"uint16_t\",\n      \"name\": \"command\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"uint8_t\",\n      \"name\": \"confirmation\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"param1\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"param2\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"param3\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"param4\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"param5\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"param6\",\n      \"units\": null,\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"param7\",\n      \"units\": null,\n      \"description\": null\n    }\n  ],\n  \"citation\": {\n    \"cite_id\": \"mavlink#b146e4ec7666c88c\",\n    \"source_id\": \"mavlink\",\n    \"repo\": \"mavlink/mavlink\",\n    \"ref\": \"eec8824212c1fe8c5d8f5181fcfdef54ee219b63\",\n    \"channel\": \"snapshot\",\n    \"unreleased\": true,\n    \"pinned\": true,\n    \"title\": \"common.xml\",\n    \"url\": \"https://github.com/mavlink/mavlink/blob/eec8824212c1fe8c5d8f5181fcfdef54ee219b63/message_definitions/v1.0/common.xml#L6166-L6186\",\n    \"path\": \"message_definitions/v1.0/common.xml\",\n    \"lines\": [\n      6166,\n      6186\n    ],\n    \"version\": \"mavlink@eec8824 (2026-10-22)\",\n    \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n    \"tier\": \"T1\",\n    \"license\": \"(L)GPL-3.0 generator; MIT generated code; XML definitions unstated\",\n    \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n    \"heading_path\": \"message_definitions/v1.0/common.xml\",\n    \"excerpt\": \"    <message id=\\\"75\\\" name=\\\"COMMAND_INT\\\">\\n      <description>Send a command with up to seven parameters to the MAV, where params 5 and 6 are integers and the other values are floats. This is preferred over COMMAND_LONG as it allows the MAV_FRAME to be specified for interpreting positional information, such as altitude. COMMAND_INT is also preferred when sending latitude and longitude data in params 5 and 6, as it allows for greater precision. Param 5 and 6 encode positional data as scaled integers, where the scaling depends on the actual command value. NaN or INT32_MAX may be used in float/inte\",\n    \"untrusted\": true\n  },\n  \"untrusted\": true\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "COMMAND_LONG",
+        "kind": "message",
+        "resolved_by": "name",
+        "msgid": 76,
+        "name": "COMMAND_LONG",
+        "description": "Send a command with up to seven parameters to the MAV. COMMAND_INT is generally preferred when sending MAV_CMD commands that include positional information; it offers higher precision and allows the MAV_FRAME to be specified (which may otherwise be ambiguous, particularly for altitude). The command microservice is documented at https://mavlink.io/en/services/command.html",
+        "fields": [
+          {
+            "type": "uint8_t",
+            "name": "target_system",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "uint8_t",
+            "name": "target_component",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "uint16_t",
+            "name": "command",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "uint8_t",
+            "name": "confirmation",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "param1",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "param2",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "param3",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "param4",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "param5",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "param6",
+            "units": null,
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "param7",
+            "units": null,
+            "description": null
+          }
+        ],
+        "citation": {
+          "cite_id": "mavlink#b146e4ec7666c88c",
+          "source_id": "mavlink",
+          "repo": "mavlink/mavlink",
+          "ref": "eec8824212c1fe8c5d8f5181fcfdef54ee219b63",
+          "channel": "snapshot",
+          "unreleased": true,
+          "pinned": true,
+          "title": "common.xml",
+          "url": "https://github.com/mavlink/mavlink/blob/eec8824212c1fe8c5d8f5181fcfdef54ee219b63/message_definitions/v1.0/common.xml#L6166-L6186",
+          "path": "message_definitions/v1.0/common.xml",
+          "lines": [
+            6166,
+            6186
+          ],
+          "version": "mavlink@eec8824 (2026-10-22)",
+          "ingested_at": "2026-10-25T20:13:30+0700",
+          "tier": "T1",
+          "license": "(L)GPL-3.0 generator; MIT generated code; XML definitions unstated",
+          "retrieved_at": "2026-10-25T20:13:30+0700",
+          "heading_path": "message_definitions/v1.0/common.xml",
+          "excerpt": "    <message id=\"75\" name=\"COMMAND_INT\">\n      <description>Send a command with up to seven parameters to the MAV, where params 5 and 6 are integers and the other values are floats. This is preferred over COMMAND_LONG as it allows the MAV_FRAME to be specified for interpreting positional information, such as altitude. COMMAND_INT is also preferred when sending latitude and longitude data in params 5 and 6, as it allows for greater precision. Param 5 and 6 encode positional data as scaled integers, where the scaling depends on the actual command value. NaN or INT32_MAX may be used in float/inte",
+          "untrusted": true
+        },
+        "untrusted": true
+      }
+    }
+  }
+}

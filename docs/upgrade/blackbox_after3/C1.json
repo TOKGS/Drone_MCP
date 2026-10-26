@@ -1,0 +1,181 @@
+{
+  "case": "C1",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "CRC8 polynomial CRSF",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 45,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "CRC8 polynomial CRSF",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 85.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"CRC8 polynomial CRSF\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"expresslrs#a1f60b4b71bc7e62\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"CRSFRouter.h\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CrsfProtocol/CRSFRouter.h#L118-L146\",\n      \"path\": \"src/lib/CrsfProtocol/CRSFRouter.h\",\n      \"lines\": [\n        118,\n        146\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/lib/CrsfProtocol/CRSFRouter.h\",\n      \"excerpt\": \"     * @param frame Pointer to the buffer where the MSPv2 request frame will be constructed.\\n     * @param function The MSP function code that identifies the type of request being made.\\n     * @param payload Pointer to the payload data that will be included in the request.\\n     * @param payloadLength The length of the payload data in bytes.\\n     */\\n    void SetMspV2Request(uint8_t *frame, uint16_t function, const uint8_t *payload, uint8_t payloadLength);\\n\\n    /**\\n     * Adds an MSP (Multiwii Serial Protocol) message to be processed by the CRSFRouter.\\n     *\\n     * This method encapsulates and \",\n      \"untrusted\": true,\n      \"score\": -36.185\n    },\n    {\n      \"cite_id\": \"expresslrs#ed8e9c335ffb581b\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_crsf.cpp\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/test/test_crsf/test_crsf.cpp#L1-L34\",\n      \"path\": \"src/test/test_crsf/test_crsf.cpp\",\n      \"lines\": [\n        1,\n        34\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/test/test_crsf/test_crsf.cpp\",\n      \"excerpt\": \"#include <cassert>\\n#include <cstdint>\\n#include <iostream>\\n#include <unity.h>\\n#include \\\"../test_msp/mock_serial.h\\\"\\n\\n#include \\\"CRSFRouter.h\\\"\\n#include \\\"common.h\\\"\\n#include \\\"options.h\\\"\\n\\nusing namespace std;\\n\\nuint32_t ChannelData[CRSF_NUM_CHANNELS];      // Current state of channels, CRSF format\\n\\nGENERIC_CRC8 test_crc(CRSF_CRC_POLY);\\n\\nclass MockEndpoint : public CRSFEndpoint\\n{\\npublic:\\n    MockEndpoint() : CRSFEndpoint(CRSF_ADDRESS_CRSF_RECEIVER) {}\\n    void handleMessage(const crsf_header_t *message) override {}\\n\\n    // mock class helper methods\\n    void fireDevicePacket() { sendDeviceInformationPac\",\n      \"untrusted\": true,\n      \"score\": -36.0219\n    },\n    {\n      \"cite_id\": \"crsf_spec#3fc62acc09010b9a\",\n      \"source_id\": \"crsf_spec\",\n      \"repo\": \"tbs-fpv/tbs-crsf-spec\",\n      \"ref\": \"a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"crsf.md\",\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L188-L192\",\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        188,\n        192\n      ],\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-4.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n      \"heading_path\": \"CRC\",\n      \"excerpt\": \"CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).\\n\\nCRC8 implementation with polynom = x7+ x6+ x4+ x2+ x0 (0xD5)\\n\\ncode example:\",\n      \"untrusted\": true,\n      \"score\": -29.0557\n    },\n    {\n      \"cite_id\": \"ardupilot#9345259ec64dd06e\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_RCProtocol_CRSF.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L335-L384\",\n      \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"lines\": [\n        335,\n        384\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp\",\n      \"excerpt\": \"    _use_lq_for_rssi = rc().option_is_enabled(RC_Channels::Option::USE_CRSF_LQ_AS_RSSI);\\n#endif\\n}\\n\\n// write out a frame of any type\\nvoid AP_RCProtocol_CRSF::write_frame(Frame* frame)\\n{\\n    AP_HAL::UARTDriver *uart = get_current_UART();\\n\\n    if (!uart) {\\n        return;\\n    }\\n    // calculate crc\\n    uint8_t crc = crc8_dvb_s2(0, frame->type);\\n    for (uint8_t i = 0; i < frame->length - 2; i++) {\\n        crc = crc8_dvb_s2(crc, frame->payload[i]);\\n    }\\n    frame->payload[frame->length - 2] = crc;\\n\\n    uart->write((uint8_t*)frame, frame->length + 2);\\n    uart->flush();\\n\\n#if defined(CRSF_DEBUG) ||\",\n      \"untrusted\": true,\n      \"score\": -31.0744\n    },\n    {\n      \"cite_id\": \"ardupilot#bca71e018b58cdcb\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"test_crc8.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_crc8.cpp#L1-L14\",\n      \"path\": \"libraries/AP_Math/tests/test_crc8.cpp\",\n      \"lines\": [\n        1,\n        14\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Math/tests/test_crc8.cpp\",\n      \"excerpt\": \"#include <AP_gtest.h>\\n\\n#include <AP_Math/AP_Math.h>\\n\\nconst AP_HAL::HAL& hal = AP_HAL::get_HAL();\\n\\nTEST(CRC8, crc8_dvb_buffer)\\n{\\n    const uint8_t buffer[2] { 0xBE, 0xEF };\\n    EXPECT_EQ(0x92, crc8_generic(buffer, 2, 0x31, 0xff));\\n}\\n\\nAP_GTEST_PANIC()\\nAP_GTEST_MAIN()\",\n      \"untrusted\": true,\n      \"score\": -28.7445\n    }\n  ],\n  \"candidates\": [\n    \"expresslrs#a1f60b4b71bc7e62\",\n    \"expresslrs#ed8e9c335ffb581b\",\n    \"crsf_spec#3fc62acc09010b9a\",\n    \"ardupilot#9345259ec64dd06e\",\n    \"ardupilot#bca71e018b58cdcb\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "CRC8 polynomial CRSF",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "expresslrs#a1f60b4b71bc7e62",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "CRSFRouter.h",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/CrsfProtocol/CRSFRouter.h#L118-L146",
+            "path": "src/lib/CrsfProtocol/CRSFRouter.h",
+            "lines": [
+              118,
+              146
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/lib/CrsfProtocol/CRSFRouter.h",
+            "excerpt": "     * @param frame Pointer to the buffer where the MSPv2 request frame will be constructed.\n     * @param function The MSP function code that identifies the type of request being made.\n     * @param payload Pointer to the payload data that will be included in the request.\n     * @param payloadLength The length of the payload data in bytes.\n     */\n    void SetMspV2Request(uint8_t *frame, uint16_t function, const uint8_t *payload, uint8_t payloadLength);\n\n    /**\n     * Adds an MSP (Multiwii Serial Protocol) message to be processed by the CRSFRouter.\n     *\n     * This method encapsulates and ",
+            "untrusted": true,
+            "score": -36.185
+          },
+          {
+            "cite_id": "expresslrs#ed8e9c335ffb581b",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_crsf.cpp",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/test/test_crsf/test_crsf.cpp#L1-L34",
+            "path": "src/test/test_crsf/test_crsf.cpp",
+            "lines": [
+              1,
+              34
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/test/test_crsf/test_crsf.cpp",
+            "excerpt": "#include <cassert>\n#include <cstdint>\n#include <iostream>\n#include <unity.h>\n#include \"../test_msp/mock_serial.h\"\n\n#include \"CRSFRouter.h\"\n#include \"common.h\"\n#include \"options.h\"\n\nusing namespace std;\n\nuint32_t ChannelData[CRSF_NUM_CHANNELS];      // Current state of channels, CRSF format\n\nGENERIC_CRC8 test_crc(CRSF_CRC_POLY);\n\nclass MockEndpoint : public CRSFEndpoint\n{\npublic:\n    MockEndpoint() : CRSFEndpoint(CRSF_ADDRESS_CRSF_RECEIVER) {}\n    void handleMessage(const crsf_header_t *message) override {}\n\n    // mock class helper methods\n    void fireDevicePacket() { sendDeviceInformationPac",
+            "untrusted": true,
+            "score": -36.0219
+          },
+          {
+            "cite_id": "crsf_spec#3fc62acc09010b9a",
+            "source_id": "crsf_spec",
+            "repo": "tbs-fpv/tbs-crsf-spec",
+            "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "crsf.md",
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L188-L192",
+            "path": "crsf.md",
+            "lines": [
+              188,
+              192
+            ],
+            "version": "CRSF spec@a73f7dc",
+            "ingested_at": "2026-10-25T20:13:33+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-4.0",
+            "retrieved_at": "2026-10-25T20:13:33+0700",
+            "heading_path": "CRC",
+            "excerpt": "CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).\n\nCRC8 implementation with polynom = x7+ x6+ x4+ x2+ x0 (0xD5)\n\ncode example:",
+            "untrusted": true,
+            "score": -29.0557
+          },
+          {
+            "cite_id": "ardupilot#9345259ec64dd06e",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_RCProtocol_CRSF.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp#L335-L384",
+            "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "lines": [
+              335,
+              384
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp",
+            "excerpt": "    _use_lq_for_rssi = rc().option_is_enabled(RC_Channels::Option::USE_CRSF_LQ_AS_RSSI);\n#endif\n}\n\n// write out a frame of any type\nvoid AP_RCProtocol_CRSF::write_frame(Frame* frame)\n{\n    AP_HAL::UARTDriver *uart = get_current_UART();\n\n    if (!uart) {\n        return;\n    }\n    // calculate crc\n    uint8_t crc = crc8_dvb_s2(0, frame->type);\n    for (uint8_t i = 0; i < frame->length - 2; i++) {\n        crc = crc8_dvb_s2(crc, frame->payload[i]);\n    }\n    frame->payload[frame->length - 2] = crc;\n\n    uart->write((uint8_t*)frame, frame->length + 2);\n    uart->flush();\n\n#if defined(CRSF_DEBUG) ||",
+            "untrusted": true,
+            "score": -31.0744
+          },
+          {
+            "cite_id": "ardupilot#bca71e018b58cdcb",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "test_crc8.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Math/tests/test_crc8.cpp#L1-L14",
+            "path": "libraries/AP_Math/tests/test_crc8.cpp",
+            "lines": [
+              1,
+              14
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Math/tests/test_crc8.cpp",
+            "excerpt": "#include <AP_gtest.h>\n\n#include <AP_Math/AP_Math.h>\n\nconst AP_HAL::HAL& hal = AP_HAL::get_HAL();\n\nTEST(CRC8, crc8_dvb_buffer)\n{\n    const uint8_t buffer[2] { 0xBE, 0xEF };\n    EXPECT_EQ(0x92, crc8_generic(buffer, 2, 0x31, 0xff));\n}\n\nAP_GTEST_PANIC()\nAP_GTEST_MAIN()",
+            "untrusted": true,
+            "score": -28.7445
+          }
+        ],
+        "candidates": [
+          "expresslrs#a1f60b4b71bc7e62",
+          "expresslrs#ed8e9c335ffb581b",
+          "crsf_spec#3fc62acc09010b9a",
+          "ardupilot#9345259ec64dd06e",
+          "ardupilot#bca71e018b58cdcb"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

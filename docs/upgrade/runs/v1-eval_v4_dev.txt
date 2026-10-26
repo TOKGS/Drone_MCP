@@ -1,0 +1,31 @@
+set=eval_v4_dev.yaml questions=53 k=5
+sha256: verified against eval-v4-dev.sha256 (7f22f9cf1479f7cb...)
+recall@5 = 40/48 = 0.833
+precision@1 = 26/48 = 0.542
+MRR = 0.645
+chunk-hit@5 = 0.375
+negative-pass = 0.600
+
+per category
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+code             9     0.889   0.667   0.778      0.222         -
+elrs_edgetx      4     0.750   0.500   0.625      0.500         -
+hwdef            4     0.750   0.750   0.750      0.750         -
+negative         5         -       -       -          -     0.600
+param            9     0.889   0.556   0.637      0.222         -
+protocol         8     0.750   0.375   0.504      0.375         -
+troubleshoot     5     0.800   0.600   0.650      0.200         -
+wiki             9     0.889   0.444   0.606      0.556         -
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+en              26     0.909   0.636   0.752      0.500     0.500
+mixed            5     0.600   0.400   0.440      0.000         -
+vi              22     0.810   0.476   0.583      0.333     1.000
+
+per script (read from the question text)
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+ascii-only      34     0.867   0.567   0.687      0.533     0.500
+diacritics      19     0.778   0.500   0.575      0.111     1.000
+
+wrote docs/upgrade/runs/v1-eval_v4_dev.json

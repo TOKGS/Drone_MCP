@@ -1,0 +1,59 @@
+{
+  "case": "G2_12",
+  "note": "same content as the C/D hit for ardupilot_wiki#e49f685c8d736020",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot_wiki#e49f685c8d736020"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1012,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot_wiki#e49f685c8d736020"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 8.7,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot_wiki#e49f685c8d736020\",\n  \"source_id\": \"ardupilot_wiki\",\n  \"repo\": \"ArduPilot/ardupilot_wiki\",\n  \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n  \"channel\": \"snapshot\",\n  \"unreleased\": true,\n  \"pinned\": true,\n  \"title\": \"mission-planner-configuration-and-tuning.rst\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/planner/source/docs/mission-planner-configuration-and-tuning.rst#L84-L88\",\n  \"path\": \"planner/source/docs/mission-planner-configuration-and-tuning.rst\",\n  \"lines\": [\n    84,\n    88\n  ],\n  \"version\": \"wiki@828de1f (2026-10-24)\",\n  \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"CC-BY-SA-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n  \"heading_path\": \"Full Parameter List\",\n  \"excerpt\": \"- Load from File: load saved parameters from a file\\n- Save to file: Save parameters to a file\\n- Write Params: Write the modified parameters on this screen to the autopilot\\n- Refresh Params: Reload the parameter list from the autopilot. Often this is required, to display a group of parameters that were just enabled, such when you enable Q_ENABLE (QuadPlane enable mode) on Plane, or a battery monitor.\\n- Compare Params: Compares current parameters on the screen (including modified but not saved yet) to a file, and allows selection of which will be modified to that file's value.\",\n  \"untrusted\": true,\n  \"text\": \"- Load from File: load saved parameters from a file\\n- Save to file: Save parameters to a file\\n- Write Params: Write the modified parameters on this screen to the autopilot\\n- Refresh Params: Reload the parameter list from the autopilot. Often this is required, to display a group of parameters that were just enabled, such when you enable Q_ENABLE (QuadPlane enable mode) on Plane, or a battery monitor.\\n- Compare Params: Compares current parameters on the screen (including modified but not saved yet) to a file, and allows selection of which will be modified to that file's value.\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot_wiki#e49f685c8d736020",
+        "source_id": "ardupilot_wiki",
+        "repo": "ArduPilot/ardupilot_wiki",
+        "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+        "channel": "snapshot",
+        "unreleased": true,
+        "pinned": true,
+        "title": "mission-planner-configuration-and-tuning.rst",
+        "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/planner/source/docs/mission-planner-configuration-and-tuning.rst#L84-L88",
+        "path": "planner/source/docs/mission-planner-configuration-and-tuning.rst",
+        "lines": [
+          84,
+          88
+        ],
+        "version": "wiki@828de1f (2026-10-24)",
+        "ingested_at": "2026-10-25T20:13:23+0700",
+        "tier": "T1",
+        "license": "CC-BY-SA-3.0",
+        "retrieved_at": "2026-10-25T20:13:23+0700",
+        "heading_path": "Full Parameter List",
+        "excerpt": "- Load from File: load saved parameters from a file\n- Save to file: Save parameters to a file\n- Write Params: Write the modified parameters on this screen to the autopilot\n- Refresh Params: Reload the parameter list from the autopilot. Often this is required, to display a group of parameters that were just enabled, such when you enable Q_ENABLE (QuadPlane enable mode) on Plane, or a battery monitor.\n- Compare Params: Compares current parameters on the screen (including modified but not saved yet) to a file, and allows selection of which will be modified to that file's value.",
+        "untrusted": true,
+        "text": "- Load from File: load saved parameters from a file\n- Save to file: Save parameters to a file\n- Write Params: Write the modified parameters on this screen to the autopilot\n- Refresh Params: Reload the parameter list from the autopilot. Often this is required, to display a group of parameters that were just enabled, such when you enable Q_ENABLE (QuadPlane enable mode) on Plane, or a battery monitor.\n- Compare Params: Compares current parameters on the screen (including modified but not saved yet) to a file, and allows selection of which will be modified to that file's value.",
+        "served_from": "index"
+      }
+    }
+  }
+}

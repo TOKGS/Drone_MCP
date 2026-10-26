@@ -1,0 +1,38 @@
+python : dense: loaded 86262 vectors (126 MB) in 1.8s
+At line:1 char:503
++ ... _v4_dev') { python -m research.eval_retrieval --set "tests/$s.yaml" - ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (dense: loaded 8...126 MB) in 1.8s:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+set=eval_v4_dev.yaml questions=53 k=5
+sha256: verified against eval-v4-dev.sha256 (7f22f9cf1479f7cb...)
+recall@5 = 40/48 = 0.833
+precision@1 = 29/48 = 0.604
+MRR = 0.680
+chunk-hit@5 = 0.375
+negative-pass = 0.600
+
+per category
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+code             9     0.889   0.778   0.833      0.222         -
+elrs_edgetx      4     0.750   0.500   0.625      0.500         -
+hwdef            4     0.750   0.750   0.750      0.750         -
+negative         5         -       -       -          -     0.600
+param            9     0.889   0.556   0.637      0.222         -
+protocol         8     0.750   0.500   0.588      0.375         -
+troubleshoot     5     0.800   0.600   0.650      0.200         -
+wiki             9     0.889   0.556   0.661      0.556         -
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+en              26     0.909   0.773   0.827      0.500     0.500
+mixed            5     0.600   0.400   0.440      0.000         -
+vi              22     0.810   0.476   0.583      0.333     1.000
+
+per script (read from the question text)
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+ascii-only      34     0.867   0.667   0.743      0.533     0.500
+diacritics      19     0.778   0.500   0.575      0.111     1.000
+
+wrote docs/upgrade/runs/v2-eval_v4_dev-dense.json

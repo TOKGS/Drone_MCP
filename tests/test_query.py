@@ -69,6 +69,29 @@ def test_identifier_query_prefers_the_named_page() -> None:
         con.close()
 
 
+def test_identifier_in_the_source_text_outranks_a_path_match():
+    """The text-identifier boost (M15): LAND_TYPE is spelled in AP_Landing.cpp, whose path does
+    not contain it; without the boost a wiki page that only shares the words wins the top spot.
+    The query is the v4 dev question V4-B2-011 (dev is tunable); it is here as a mutation guard."""
+    con = db.connect()
+    try:
+        payload = query.search(
+            con, "Copter hiện Landing configuration error, invalid LAND_TYPE thì thông điệp đó nằm ở file nào?",
+            limit=3)
+        assert payload["results"][0]["path"] == "libraries/AP_Landing/AP_Landing.cpp"
+    finally:
+        con.close()
+
+
+def test_chat_spelling_is_normalised_for_matching_but_not_for_display():
+    con = db.connect()
+    try:
+        payload = query.search(con, "pin ko sac dc", limit=3)
+        assert payload["query"] == "pin ko sac dc"
+    finally:
+        con.close()
+
+
 def test_vietnamese_query_is_expanded() -> None:
     con = db.connect()
     try:
@@ -153,6 +176,32 @@ def test_foreign_product_names_get_a_scope_note(con) -> None:
         joined = " ".join(payload.get("scope_notes") or [])
         assert f"không có {name}" in joined, (text, payload.get("scope_notes"))
         assert payload["confidence"] == "low", text
+        assert payload["found"] is False, text
+        assert payload["results"] == [], text
+
+
+def test_a_lowercase_parameter_name_is_not_a_product_name(con) -> None:
+    """`inav alt` is an ArduPilot PreArm parameter; only the exact spelling "iNav" is the product."""
+    payload = query.search(con, "PreArm check baro và inav alt", limit=3)
+    assert payload["found"] is True
+
+
+def test_a_question_that_names_an_in_scope_product_is_answered(con) -> None:
+    """The corpus documents these products, so naming a foreign one alongside them is not a refusal."""
+    for text in ("How do I configure ExpressLRS in Betaflight?",
+                 "Khác nhau giữa ArduPilot và PX4 về failsafe là gì",
+                 "Chuyen tu Betaflight sang ArduPilot can doi gi",
+                 "MAVLink dùng chung với QGroundControl thế nào"):
+        payload = query.search(con, text, limit=3)
+        assert payload["found"] is True, (text, payload.get("note"))
+        assert payload["results"], text
+
+
+def test_a_foreign_product_question_with_no_in_scope_name_is_still_refused(con) -> None:
+    payload = query.search(con, "Betaflight GPS Rescue dat bao nhieu met thi no tu RTH?", limit=3)
+    assert payload["found"] is False
+    assert payload["results"] == []
+    assert "Betaflight" in payload["note"]
 
 
 def test_unknown_version_is_flagged_with_the_pinned_labels(con) -> None:

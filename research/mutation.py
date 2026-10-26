@@ -91,6 +91,11 @@ MUTANTS = [
            'rank - DENSE_RERANK_WEIGHT * similarity.get(row["cite_hash"], 0.0)',
            'rank + DENSE_RERANK_WEIGHT * similarity.get(row["cite_hash"], 0.0)',
            ["tests/test_dense.py"], "dense rerank sign inverted"),
+    Mutant("M20", "vi.py", "if target is None and evidence:", "if target is None:",
+           ["tests/test_vi.py"], "ambiguous chat spelling expands without Vietnamese evidence"),
+    Mutant("M21", "query.py", "if named and not mentions_in_scope_name(query):",
+           "if named:", ["tests/test_query.py"],
+           "a question that names an in-scope product and a foreign one is refused again"),
 ]
 
 

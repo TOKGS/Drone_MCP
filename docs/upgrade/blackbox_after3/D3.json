@@ -1,0 +1,181 @@
+{
+  "case": "D3",
+  "note": "out-of-corpus: found:false or an explicit scope/version caveat",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "Plane parameter Q_ENABLE",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 59,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "Plane parameter Q_ENABLE",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 272.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"Plane parameter Q_ENABLE\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#a13e972632dda146\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"quadplane-overview.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/quadplane-overview.rst#L32-L39\",\n      \"path\": \"plane/source/docs/quadplane-overview.rst\",\n      \"lines\": [\n        32,\n        39\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Installing the Firmware\",\n      \"excerpt\": \"The normal instructions for installing the Plane firmware apply since QuadPlane functions are an option within the Plane firmware.\\n\\nWhen you install the plane firmware and look in the parameter list you\\nwill see a :ref:`Q_ENABLE<Q_ENABLE>` parameter. That defaults to zero, which disables\\nQuadPlane support. Setting :ref:`Q_ENABLE<Q_ENABLE>` to 1 will enable QuadPlane\\nsupport. You then need to refresh your parameter list to see all the\\nother QuadPlane options. All QuadPlane specific parameters start with\\n\\\\Q_.\",\n      \"untrusted\": true,\n      \"score\": -28.7784\n    },\n    {\n      \"cite_id\": \"ardupilot#b935ce0134590e58\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"arming-checks.lua\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L115-L131\",\n      \"path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n      \"lines\": [\n        115,\n        131\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n      \"excerpt\": \"FOLL_SYSID = Parameter(\\\"FOLL_SYSID\\\")\\nRALLY_LIMIT_KM = Parameter(\\\"RALLY_LIMIT_KM\\\")\\n\\nif FWVersion:type() == FIRMWARE.COPTER then -- Copter specific paramters\\n    RTL_ALTITUDE = Parameter(\\\"RTL_ALT_M\\\")\\n    RTL_CLIMB_MIN = Parameter(\\\"RTL_CLIMB_MIN_M\\\")\\nelseif FWVersion:type() == FIRMWARE.PLANE then -- Plane specific Parameters\\n    RTL_ALTITUDE = Parameter(\\\"RTL_ALTITUDE\\\")\\n    RTL_CLIMB_MIN = Parameter(\\\"RTL_CLIMB_MIN\\\")\\n    Q_ENABLE = Parameter(\\\"Q_ENABLE\\\")\\n    AIRSPEED_STALL = Parameter(\\\"AIRSPEED_STALL\\\")\\n    AIRSPEED_MIN = Parameter(\\\"AIRSPEED_MIN\\\")\\n    AIRSPEED_CRUISE = Parameter(\\\"AIRSPEED_CRUISE\\\")\\n   \",\n      \"untrusted\": true,\n      \"score\": -26.7165\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#f504ee227905786f\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"quadplane-parameters.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/quadplane-parameters.rst#L15-L22\",\n      \"path\": \"plane/source/docs/quadplane-parameters.rst\",\n      \"lines\": [\n        15,\n        22\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Key Parameters\",\n      \"excerpt\": \"-  To enable QuadPlane functionality you need to set the :ref:`Q_ENABLE<Q_ENABLE>`\\n   parameter to 1 and then refresh the parameter list\\n-  The :ref:`Q_M_PWM_MIN<Q_M_PWM_MIN>` and :ref:`Q_M_PWM_MAX<Q_M_PWM_MAX>` parameters used to set the\\n   PWM range of the VTOL motors (MOTORx) and the SERVOx_MIN/MAX for the outputs driving these motors is ignored. These need to be set to the range\\n   your ESCs expect.\\n-  The most critical tuning parameters are :ref:`Q_A_RAT_RLL_P<Q_A_RAT_RLL_P>` and\\n   :ref:`Q_A_RAT_PIT_P<Q_A_RAT_PIT_P>`. These default to 0.25 but you may\\n   find significantly higher values \",\n      \"untrusted\": true,\n      \"score\": -25.8305\n    },\n    {\n      \"cite_id\": \"ardupilot#80503cf4a791838c\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"quadplane_terrain_avoid.lua\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/quadplane_terrain_avoid.lua#L203-L234\",\n      \"path\": \"libraries/AP_Scripting/applets/quadplane_terrain_avoid.lua\",\n      \"lines\": [\n        203,\n        234\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Scripting/applets/quadplane_terrain_avoid.lua\",\n      \"excerpt\": \"end\\nlocal cmtc_enable = TA_CMTC_ENABLE:get()\\n\\nMIN_ALT_MAX = 20\\n\\nREFRESH_RATE = 1.0 / TA_UPDATE_RATE:get()\\n\\nlocal rangefinder_down_value = 0.0\\nlocal rangefinder_forward_value = 0.0\\nMAX_RANGEFINDER_VALUE = 90\\n\\nQ_ENABLE = Parameter('Q_ENABLE')\\nQ_WVANE_ENABLE = Parameter('Q_WVANE_ENABLE')\\nQ_TILT_ENABLE = Parameter('Q_TILT_ENABLE')\\nTHR_MAX = Parameter('THR_MAX')\\nAIRSPEED_MIN = Parameter(\\\"AIRSPEED_MIN\\\")\\nAIRSPEED_CRUISE = Parameter(\\\"AIRSPEED_CRUISE\\\")\\nAIRSPEED_MAX = Parameter(\\\"AIRSPEED_MAX\\\")\\nWP_LOITER_RAD = Parameter(\\\"WP_LOITER_RAD\\\")\\nTERRAIN_ENABLE = Parameter(\\\"TERRAIN_ENABLE\\\")\\nTERRAIN_SPACING = Param\",\n      \"untrusted\": true,\n      \"score\": -24.0887\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#e49f685c8d736020\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"mission-planner-configuration-and-tuning.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/planner/source/docs/mission-planner-configuration-and-tuning.rst#L84-L88\",\n      \"path\": \"planner/source/docs/mission-planner-configuration-and-tuning.rst\",\n      \"lines\": [\n        84,\n        88\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Full Parameter List\",\n      \"excerpt\": \"- Load from File: load saved parameters from a file\\n- Save to file: Save parameters to a file\\n- Write Params: Write the modified parameters on this screen to the autopilot\\n- Refresh Params: Reload the parameter list from the autopilot. Often this is required, to display a group of parameters that were just enabled, such when you enable Q_ENABLE (QuadPlane enable mode) on Plane, or a battery monitor.\\n- Compare Params: Compares current parameters on the screen (including modified but not saved yet) to a file, and allows selection of which will be modified to that file's value.\",\n      \"untrusted\": true,\n      \"score\": -23.2917\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot_wiki#a13e972632dda146\",\n    \"ardupilot#b935ce0134590e58\",\n    \"ardupilot_wiki#f504ee227905786f\",\n    \"ardupilot#80503cf4a791838c\",\n    \"ardupilot_wiki#e49f685c8d736020\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "Plane parameter Q_ENABLE",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot_wiki#a13e972632dda146",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "quadplane-overview.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/quadplane-overview.rst#L32-L39",
+            "path": "plane/source/docs/quadplane-overview.rst",
+            "lines": [
+              32,
+              39
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Installing the Firmware",
+            "excerpt": "The normal instructions for installing the Plane firmware apply since QuadPlane functions are an option within the Plane firmware.\n\nWhen you install the plane firmware and look in the parameter list you\nwill see a :ref:`Q_ENABLE<Q_ENABLE>` parameter. That defaults to zero, which disables\nQuadPlane support. Setting :ref:`Q_ENABLE<Q_ENABLE>` to 1 will enable QuadPlane\nsupport. You then need to refresh your parameter list to see all the\nother QuadPlane options. All QuadPlane specific parameters start with\n\\Q_.",
+            "untrusted": true,
+            "score": -28.7784
+          },
+          {
+            "cite_id": "ardupilot#b935ce0134590e58",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "arming-checks.lua",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L115-L131",
+            "path": "libraries/AP_Scripting/applets/arming-checks.lua",
+            "lines": [
+              115,
+              131
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Scripting/applets/arming-checks.lua",
+            "excerpt": "FOLL_SYSID = Parameter(\"FOLL_SYSID\")\nRALLY_LIMIT_KM = Parameter(\"RALLY_LIMIT_KM\")\n\nif FWVersion:type() == FIRMWARE.COPTER then -- Copter specific paramters\n    RTL_ALTITUDE = Parameter(\"RTL_ALT_M\")\n    RTL_CLIMB_MIN = Parameter(\"RTL_CLIMB_MIN_M\")\nelseif FWVersion:type() == FIRMWARE.PLANE then -- Plane specific Parameters\n    RTL_ALTITUDE = Parameter(\"RTL_ALTITUDE\")\n    RTL_CLIMB_MIN = Parameter(\"RTL_CLIMB_MIN\")\n    Q_ENABLE = Parameter(\"Q_ENABLE\")\n    AIRSPEED_STALL = Parameter(\"AIRSPEED_STALL\")\n    AIRSPEED_MIN = Parameter(\"AIRSPEED_MIN\")\n    AIRSPEED_CRUISE = Parameter(\"AIRSPEED_CRUISE\")\n   ",
+            "untrusted": true,
+            "score": -26.7165
+          },
+          {
+            "cite_id": "ardupilot_wiki#f504ee227905786f",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "quadplane-parameters.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/quadplane-parameters.rst#L15-L22",
+            "path": "plane/source/docs/quadplane-parameters.rst",
+            "lines": [
+              15,
+              22
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Key Parameters",
+            "excerpt": "-  To enable QuadPlane functionality you need to set the :ref:`Q_ENABLE<Q_ENABLE>`\n   parameter to 1 and then refresh the parameter list\n-  The :ref:`Q_M_PWM_MIN<Q_M_PWM_MIN>` and :ref:`Q_M_PWM_MAX<Q_M_PWM_MAX>` parameters used to set the\n   PWM range of the VTOL motors (MOTORx) and the SERVOx_MIN/MAX for the outputs driving these motors is ignored. These need to be set to the range\n   your ESCs expect.\n-  The most critical tuning parameters are :ref:`Q_A_RAT_RLL_P<Q_A_RAT_RLL_P>` and\n   :ref:`Q_A_RAT_PIT_P<Q_A_RAT_PIT_P>`. These default to 0.25 but you may\n   find significantly higher values ",
+            "untrusted": true,
+            "score": -25.8305
+          },
+          {
+            "cite_id": "ardupilot#80503cf4a791838c",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "quadplane_terrain_avoid.lua",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/quadplane_terrain_avoid.lua#L203-L234",
+            "path": "libraries/AP_Scripting/applets/quadplane_terrain_avoid.lua",
+            "lines": [
+              203,
+              234
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Scripting/applets/quadplane_terrain_avoid.lua",
+            "excerpt": "end\nlocal cmtc_enable = TA_CMTC_ENABLE:get()\n\nMIN_ALT_MAX = 20\n\nREFRESH_RATE = 1.0 / TA_UPDATE_RATE:get()\n\nlocal rangefinder_down_value = 0.0\nlocal rangefinder_forward_value = 0.0\nMAX_RANGEFINDER_VALUE = 90\n\nQ_ENABLE = Parameter('Q_ENABLE')\nQ_WVANE_ENABLE = Parameter('Q_WVANE_ENABLE')\nQ_TILT_ENABLE = Parameter('Q_TILT_ENABLE')\nTHR_MAX = Parameter('THR_MAX')\nAIRSPEED_MIN = Parameter(\"AIRSPEED_MIN\")\nAIRSPEED_CRUISE = Parameter(\"AIRSPEED_CRUISE\")\nAIRSPEED_MAX = Parameter(\"AIRSPEED_MAX\")\nWP_LOITER_RAD = Parameter(\"WP_LOITER_RAD\")\nTERRAIN_ENABLE = Parameter(\"TERRAIN_ENABLE\")\nTERRAIN_SPACING = Param",
+            "untrusted": true,
+            "score": -24.0887
+          },
+          {
+            "cite_id": "ardupilot_wiki#e49f685c8d736020",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "mission-planner-configuration-and-tuning.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/planner/source/docs/mission-planner-configuration-and-tuning.rst#L84-L88",
+            "path": "planner/source/docs/mission-planner-configuration-and-tuning.rst",
+            "lines": [
+              84,
+              88
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Full Parameter List",
+            "excerpt": "- Load from File: load saved parameters from a file\n- Save to file: Save parameters to a file\n- Write Params: Write the modified parameters on this screen to the autopilot\n- Refresh Params: Reload the parameter list from the autopilot. Often this is required, to display a group of parameters that were just enabled, such when you enable Q_ENABLE (QuadPlane enable mode) on Plane, or a battery monitor.\n- Compare Params: Compares current parameters on the screen (including modified but not saved yet) to a file, and allows selection of which will be modified to that file's value.",
+            "untrusted": true,
+            "score": -23.2917
+          }
+        ],
+        "candidates": [
+          "ardupilot_wiki#a13e972632dda146",
+          "ardupilot#b935ce0134590e58",
+          "ardupilot_wiki#f504ee227905786f",
+          "ardupilot#80503cf4a791838c",
+          "ardupilot_wiki#e49f685c8d736020"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

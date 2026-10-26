@@ -130,3 +130,59 @@ def test_per_category_and_per_lang_tables_are_grouped() -> None:
     assert set(summary["per_category"]) == {"param", "negative"}
     assert set(summary["per_lang"]) == {"en", "vi"}
     assert summary["per_category"]["negative"]["negative_pass"] == 0.0
+
+
+# ------------------------------------------------------------------ v5-vi freezedef test_the_v5_sets_are_pinned() -> None:
+    for name in ("tests/eval_v5_vi_dev.yaml", "tests/eval_v5_vi_heldout.yaml",
+                 "tests/eval_v5_mention.yaml"):
+        path = ev.REPO / name
+        found = ev.find_sha_line(path)
+        assert found is not None, name
+        assert found[1] == hashlib.sha256(path.read_bytes()).hexdigest(), name
+
+
+def test_a_tampered_v5_copy_is_refused(tmp_path: Path) -> None:
+    source = ev.REPO / "tests/eval_v5_vi_dev.yaml"
+    copy = tmp_path / "copy.yaml"
+    copy.write_bytes(source.read_bytes())
+    sha_file = tmp_path / "set.sha256"
+    sha_file.write_text(f"{hashlib.sha256(copy.read_bytes()).hexdigest()}  copy.yaml\n",
+                        encoding="utf-8")
+    assert ev.verify_hash(copy, sha_file)["verified"] is True
+    copy.write_bytes(copy.read_bytes() + b"\n# tampered\n")
+    with pytest.raises(ev.HashMismatch):
+        ev.verify_hash(copy, sha_file)
+    assert ev.main(["--set", str(copy), "--verify-sha", str(sha_file)]) == 2
+
+
+# ------------------------------------------------------------------ script split
+def test_per_script_table_splits_on_the_question_text() -> None:
+    questions = [
+        {"id": "A", "lang": "vi", "q": "tắt arming check", "category": "negative",
+         "expect_none": True},
+        {"id": "B", "lang": "vi", "q": "tat arming check", "category": "negative",
+         "expect_none": True},
+    ]
+    records = ev.evaluate(questions, lambda question: {"found": False, "results": []}, 5)
+    summary = ev.aggregate(records)
+    assert summary["per_script"]["diacritics"]["questions"] == 1
+    assert summary["per_script"]["ascii-only"]["questions"] == 1
+    assert summary["overall"]["negative_pass"] == 1.0
+
+
+def test_script_is_read_from_the_text_not_a_declared_flag() -> None:
+    assert ev.question_script({"q": "cach chinh toc do", "diacritics": True}) == "ascii-only"
+    assert ev.question_script({"q": "cách chỉnh tốc độ"}) == "diacritics"
+    assert ev.question_script({"q": "đc rồi"}) == "diacritics"
+
+
+def test_script_split_never_changes_the_metrics() -> None:
+    questions = [
+        {**QUESTION, "id": "P1"},
+        {**QUESTION, "id": "P2", "lang": "vi", "q": "tắt arming check ở đâu"},
+    ]
+    payload = {"found": True, "results": [HIT_CHUNK]}
+    summary = ev.aggregate(ev.evaluate(questions, lambda question: payload, 5))
+    assert summary["overall"]["recall_at_k"] == 1.0
+    for rows in summary["per_script"].values():
+        assert rows["recall_at_k"] == 1.0

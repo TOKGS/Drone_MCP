@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from . import cite, config, dense, textsanitize
+from . import cite, config, dense, textsanitize, vi
 
 IDENTIFIER = re.compile(r"^[A-Z][A-Z0-9_]{2,}$")
 WORD = re.compile(r"[A-Za-z][A-Za-z0-9_]*")
@@ -63,6 +63,9 @@ SIMULATOR_PENALTY = 5.0
 # Similarity is a cosine in [-1, 1] and the BM25 ranks span tens of points, so the weight is small.
 DENSE_RERANK_WEIGHT = 2.0
 DENSE_RERANK_CANDIDATES = 200
+# V2 document prior: the cosine to the best-matching document (path words plus headings, one vector
+# per document) is subtracted from every chunk of that document. Same opt-in as the dense rerank.
+DOC_PRIOR_WEIGHT = 2.0
 # A ranked candidate carries a negative bm25-like number (lower is better). The declaring chunk of
 # a parameter that the query names outright enters with this score, so it beats a chunk that only
 # mentions the name unless the mention is an even stronger identifier match.
@@ -77,6 +80,11 @@ STOPWORDS = {
     "here", "some", "any", "all", "so", "but", "just", "very", "much", "more", "most",
     "la", "là", "có", "cần", "khi", "thì", "và", "của", "cho", "một", "các", "những",
 }
+# Vietnamese function words typed without diacritics ("bao nhieu", "vay", "nhu") are ASCII, so they
+# are not in the English stopword list above. They are NOT added to it: adding them raised the
+# anchor gate's support ratio and let out-of-scope questions through (v5 dev negative-pass 0.500 ->
+# 0.333, eval_v4_neg_vi 0.750 -> 0.583); the kept V1 change is the normaliser and the folded
+# glossary match instead. See docs/upgrade/rungs3.md, V1.
 
 
 @lru_cache(maxsize=4)
@@ -100,14 +108,15 @@ def load_glossary() -> dict[str, list[str]]:
 @lru_cache(maxsize=4)
 def _read_scope(path: str, mtime_ns: int, size: int) -> dict:
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
-    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []]}
+    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []],
+            "in_scope_names": [str(name) for name in data.get("in_scope_names") or []]}
 
 
 def load_scope() -> dict:
-    """Out-of-scope product names from scope.yaml (data, never hardcoded in this module)."""
+    """Scope names from scope.yaml (data, never hardcoded in this module)."""
     path = config.repo_root() / "scope.yaml"
     if not path.exists():
-        return {"out_of_scope_names": []}
+        return {"out_of_scope_names": [], "in_scope_names": []}
     stat = path.stat()
     return _read_scope(str(path), stat.st_mtime_ns, stat.st_size)
 
@@ -126,16 +135,24 @@ def expand_query(query: str, glossary: dict[str, list[str]] | None = None) -> tu
     r"""Return (expanded query, applied expansions). Vietnamese phrases become English terms.
 
     Matching is per whole `\w+` token, never a word fragment: the key "bit" must not fire inside
-    "bitcoin", while a multi-word key fires on a run of consecutive tokens ("mặt nạ bit").
+    "bitcoin", while a multi-word key fires on a run of consecutive tokens ("mặt nạ bit"). A
+    multi-word key is also matched with diacritics folded, so "khong arm duoc" fires the key
+    "không arm được"; single-word keys keep the exact match, because folding one of them
+    ("pin", "bit") to ASCII would also fire on an English word.
     """
     glossary = load_glossary() if glossary is None else glossary
     words = _word_tokens(query)
+    folded = [vi.fold(token) for token in words]
     expanded = query
     applied: list[str] = []
-    for vi, english in glossary.items():
-        if _contains_phrase(words, _word_tokens(vi)):
-            expanded += " " + " ".join(english)
-            applied.append(f"{vi} -> {'/'.join(english)}")
+    for key, english in glossary.items():
+        key_tokens = _word_tokens(key)
+        if not _contains_phrase(words, key_tokens):
+            if len(key_tokens) < 2 or not _contains_phrase(
+                    folded, [vi.fold(token) for token in key_tokens]):
+                continue
+        expanded += " " + " ".join(english)
+        applied.append(f"{key} -> {'/'.join(english)}")
     return expanded, applied
 
 
@@ -215,6 +232,33 @@ def _version_labels(con: sqlite3.Connection) -> list[str]:
     return [row[0] for row in rows if row[0]]
 
 
+def named_out_of_scope_product(query: str) -> str | None:
+    """The product the query is about, matched on the exact spelling of its name.
+
+    Case matters on purpose: "inav alt" is an ArduPilot PreArm parameter, "iNav" is another flight
+    stack, so a case-insensitive match would refuse a real ArduPilot question.
+    """
+    for name in load_scope()["out_of_scope_names"]:
+        if re.search(rf"(?<!\w){re.escape(name)}(?!\w)", query):
+            return name
+    return None
+
+
+def mentions_in_scope_name(query: str) -> bool:
+    """True when the query names something the pinned corpus documents.
+
+    The corpus talks *about* other stacks ("How do I configure ExpressLRS in Betaflight?"), so a
+    foreign name alone does not make the question unanswerable. Diacritics are folded here because a
+    user types "ardupilot" or "ArduPilot" for the same thing; the out-of-scope match stays
+    case-sensitive and this check does not run through it.
+    """
+    folded = vi.fold(query)
+    for name in load_scope()["in_scope_names"]:
+        if re.search(rf"(?<!\w){re.escape(vi.fold(name))}(?!\w)", folded):
+            return True
+    return False
+
+
 def _document_frequency(con: sqlite3.Connection, token: str,
                         cap: int = ANCHOR_MIN_DOCS) -> int:
     """Number of documents containing the token, capped at `cap` so FTS can stop early."""
@@ -280,7 +324,9 @@ def _dense_reranked_scores(merged: dict[str, tuple[sqlite3.Row, float]],
 
 def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
            version: str | None = None, tier_max: str = "T1", limit: int = 8) -> dict:
-    expanded, applied = expand_query(query)
+    # Chat spellings are rewritten for matching only; the payload keeps what the user typed.
+    match_query = vi.normalise(query)
+    expanded, applied = expand_query(match_query)
     tokens = _tokens(expanded)
     if not tokens:
         return {"found": False, "query": query, "results": [], "candidates": [],
@@ -293,6 +339,18 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         return {"found": False, "query": query, "results": [], "candidates": [],
                 "note": f"scope {scope!r} has no indexed source yet"}
     max_tier = TIER_ORDER.get(tier_max, 0)
+
+    named = named_out_of_scope_product(query) if scope != "local" else None
+    if named and not mentions_in_scope_name(query):
+        # The query is about a product the pinned corpus does not document, and it names nothing the
+        # corpus does document. Nearby ArduPilot text is not an answer ("Betaflight GPS rescue" must
+        # not return AP_GPS), so refuse instead of returning a plausible-looking list. A question
+        # that names an in-scope product as well is answerable and goes through the normal path.
+        return {"found": False, "query": query, "results": [], "candidates": [],
+                "scope_notes": scope_notes(query, [], labels=_version_labels(con),
+                                           applied=applied),
+                "confidence": "low",
+                "note": f"câu hỏi về {named}, sản phẩm ngoài kho đã ghim; không có kết quả thay thế"}
 
     if scope != "local":  # the local overlay is deliberately small, it needs no corpus vocabulary
         weight, support = _corpus_anchor(con, query, applied)
@@ -316,6 +374,13 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
     # The local overlay is the user's own files and has no vectors; do not fuse it.
     dense_hits = (dense.search(con, query, limit=DENSE_RERANK_CANDIDATES)
                   if scope != "local" and dense.enabled(con) else [])
+    # V2 measured the document prior on the dev sets and it lost (v5-vi dev recall@5 0.558 -> 0.535,
+    # MRR 0.416 -> 0.405; v4 dev recall@5 0.833 -> 0.812), so it is off even under ARM_DENSE=1 and
+    # only ARM_DOC_PRIOR=1 turns it on, to keep the measurement reproducible.
+    doc_prior: dict[str, float] = (
+        dict(dense.search_docs(con, query, limit=dense.DOC_CANDIDATES))
+        if (scope != "local" and dense_hits and dense.docs_requested()
+            and dense.docs_available(con)) else {})
 
     sql = (
         "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
@@ -386,6 +451,10 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         if TIER_ORDER.get(tiers.get(row["source_id"], "T3"), 0) > max_tier:
             continue
         score = base_scores.get(row["cite_hash"], rank)     # lower is better
+        if doc_prior:
+            # Topic similarity is a weak prior next to the lexical evidence; it reorders documents
+            # that are already candidates and never adds one.
+            score -= DOC_PRIOR_WEIGHT * doc_prior.get(row["path"], 0.0)
         score -= 6.0 * sum(1 for token in identifiers if token in row["text"])
         # A file named after an identifier (common-rc-options.rst for RC_OPTIONS) is the
         # canonical page for it; without this the parameter-name page loses to incidental

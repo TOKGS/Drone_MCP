@@ -23,7 +23,12 @@ from . import config
 
 QUERY_PREFIX = "query: "
 DENSE_CANDIDATES = 50
+# V2 document prior: one vector per document (`doc_vectors`), used as a candidate generator and a
+# topic prior before chunk selection. 100 candidates cover the topic of a question without letting a
+# popular page win on topic similarity alone.
+DOC_CANDIDATES = 100
 _CACHE: dict[str, tuple] = {}
+_DOC_CACHE: dict[str, tuple] = {}
 
 
 def model_dir() -> Path:
@@ -145,17 +150,13 @@ def _load(con: sqlite3.Connection):
 
 
 def forget() -> None:
-    """Drop the cached matrix (tests, or after rebuilding the vector table)."""
+    """Drop the cached matrices (tests, or after rebuilding the vector tables)."""
     _CACHE.clear()
+    _DOC_CACHE.clear()
 
 
-def search(con: sqlite3.Connection, text: str, limit: int = DENSE_CANDIDATES
-           ) -> list[tuple[str, float]]:
-    """Cosine nearest neighbours for one query; deterministic ties by cite_hash."""
-    loaded = _load(con)
-    if loaded is None:
-        return []
-    session, tokenizer, matrix, hashes = loaded
+def _encode(session, tokenizer, text: str) -> np.ndarray:
+    """Mean-pooled, L2-normalised query vector (e5 wants the `query: ` prefix)."""
     encoded = tokenizer.encode(QUERY_PREFIX + text[:2000])
     ids = np.array([encoded.ids], dtype=np.int64)
     mask = np.array([encoded.attention_mask], dtype=np.int64)
@@ -165,14 +166,75 @@ def search(con: sqlite3.Connection, text: str, limit: int = DENSE_CANDIDATES
     hidden = session.run(None, feed)[0]
     weights = mask[..., None].astype(np.float32)
     pooled = (hidden * weights).sum(axis=1) / np.clip(weights.sum(axis=1), 1e-9, None)
-    query_vector = pooled[0] / max(float(np.linalg.norm(pooled[0])), 1e-9)
-    similarities = matrix @ query_vector
+    return pooled[0] / max(float(np.linalg.norm(pooled[0])), 1e-9)
+
+
+def _top(keys: np.ndarray, similarities: np.ndarray, limit: int) -> list[tuple[str, float]]:
+    """argpartition then sort the shortlist: sorting every key would dominate a query."""
     take = min(limit, similarities.shape[0])
     if take < similarities.shape[0]:
         shortlist = np.argpartition(-similarities, take - 1)[:take]
     else:
         shortlist = np.arange(similarities.shape[0])
-    # Sorting 86 262 python strings would dominate the query; sort the shortlist and break ties on
-    # cite_hash so two processes still agree.
-    order = shortlist[np.lexsort((hashes[shortlist], -similarities[shortlist]))]
-    return [(str(hashes[index]), float(similarities[index])) for index in order]
+    order = shortlist[np.lexsort((keys[shortlist], -similarities[shortlist]))]
+    return [(str(keys[index]), float(similarities[index])) for index in order]
+
+
+def search(con: sqlite3.Connection, text: str, limit: int = DENSE_CANDIDATES
+           ) -> list[tuple[str, float]]:
+    """Cosine nearest neighbours for one query; deterministic ties by cite_hash."""
+    loaded = _load(con)
+    if loaded is None:
+        return []
+    session, tokenizer, matrix, hashes = loaded
+    return _top(hashes, matrix @ _encode(session, tokenizer, text), limit)
+
+
+def docs_available(con: sqlite3.Connection) -> bool:
+    """True when the index carries the per-document vectors the V2 prior needs."""
+    try:
+        return con.execute("SELECT 1 FROM doc_vectors LIMIT 1").fetchone() is not None
+    except sqlite3.OperationalError:
+        return False
+
+
+def docs_requested() -> bool:
+    """The V2 document prior lost on the dev sets, so it is off even when ARM_DENSE=1 is set."""
+    return os.environ.get("ARM_DOC_PRIOR", "").strip().lower() in ("1", "true", "on", "yes")
+
+
+def _load_docs(con: sqlite3.Connection):
+    """Document matrix, loaded once per index; reuses the session and tokenizer of `_load`."""
+    chunk_loaded = _load(con)
+    if chunk_loaded is None:
+        return None
+    key = f"{config.index_path()}|docs"
+    cached = _DOC_CACHE.get(key)
+    if cached is not None:
+        return cached
+    try:
+        rows = con.execute(
+            "SELECT v.vec, d.path FROM doc_vectors v JOIN documents d ON d.id = v.document_id"
+            " ORDER BY d.path").fetchall()
+    except sqlite3.OperationalError:
+        return None
+    if not rows:
+        return None
+    buffer = b"".join(row[0] for row in rows)
+    matrix = np.frombuffer(buffer, dtype=np.float16).reshape(len(rows), -1).astype(np.float32)
+    paths = np.array([row[1] for row in rows], dtype=object)
+    loaded = (chunk_loaded[0], chunk_loaded[1], matrix, paths)
+    _DOC_CACHE[key] = loaded
+    print(f"dense: loaded {matrix.shape[0]} document vectors "
+          f"({matrix.nbytes / 1048576:.1f} MB)", file=sys.stderr, flush=True)
+    return loaded
+
+
+def search_docs(con: sqlite3.Connection, text: str, limit: int = DOC_CANDIDATES
+                ) -> list[tuple[str, float]]:
+    """Cosine nearest documents for one query; `(path, similarity)` in best-first order."""
+    loaded = _load_docs(con)
+    if loaded is None:
+        return []
+    session, tokenizer, matrix, paths = loaded
+    return _top(paths, matrix @ _encode(session, tokenizer, text), limit)

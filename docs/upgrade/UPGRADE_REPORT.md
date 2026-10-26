@@ -13,8 +13,9 @@ Branch `feat/eval-v4-hybrid-retrieval`, 2026-10-26. Authority: `docs/upgrade/GOA
   (baseline 0.692 / 0.369 / 0.493 / 0.571).
 - Dense opt-in on the same split: 0.692 / 0.277 / 0.439 / 0.571. Golden 1.000 / 0.833 / 0.908, v3
   0.933 / 0.833 / 0.868, bench p95 222.1 ms against a 400 ms budget.
-- Tests 184 passed, 1 skipped; 19 mutation mutants, 17 killed, score 0.944 (target 0.90); blackbox
-  110 cases, 98 identical to run3, 0 regressions.
+- Tests 184 passed, 1 skipped; mutation `mutants=18 killed=17 survived=1 errors=0 equivalent=1
+  score=0.944` (target 0.90), where 18 is the scored set and the equivalent mutant `M12` is excluded
+  from the score; blackbox 110 cases, 98 identical to run3, 0 regressions.
 
 ## 2. Phase 1 evidence
 
@@ -163,8 +164,11 @@ Two things worth reading before trusting the table:
   `index_status`: `B2_INDEX_STATUS` changed because the payload gained the `dense` object and the run
   path, `C7`, `C10`, `D1`, `E_INFO_02` and `F_SQLI` changed because a parameter declaration page moved
   up, and `C10`'s new first result `libraries/AP_SerialManager/AP_SerialManager.cpp` is exactly what
-  the frozen case expects. No case lost its answer; `E_INFO_02` went from 9 to 8 citations because the
-  24 KB response cap dropped the last wiki chunk after `Parameters.cpp` took the first slot.
+  the frozen case expects. No case lost its answer; `E_INFO_02` went from 9 to 8 citations because
+  one of the six `docs` slots now goes to `ArduCopter/Parameters.cpp` and the `code` search returns
+  two items instead of three after the simulator penalty. The 24 KB cap is not involved: it only
+  trims `search_docs` results, and this payload carries its citations under `evidence` (Phase 3
+  item A4, `DECISIONS.md`).
 - Mutation: the earlier README claim of `1.000` belonged to the pre-Rung-1 tree with 14 scored
   mutants. The gate now reports 18 scored mutants and `M15` (removing the text identifier boost)
   survives because Rung 1 added a path identifier boost that covers the same ordering for every

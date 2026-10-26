@@ -1,0 +1,614 @@
+# Eval set v5-vi, HELD-OUT split: frozen by docs/eval-v5-vi-heldout.sha256.
+# Nobody opens this file to read questions; run it only through
+# `python -m research.eval_retrieval --set tests/eval_v5_vi_heldout.yaml --aggregate-only`.
+# Tuning against it is forbidden; re-merge only before the freeze.
+version: 5
+generated_by: research.make_eval_v5
+seed: 20261026
+split: heldout
+questions:
+- id: V5-W2-006
+  q: crsf decoder cua ardupilot dua tren code betaflight phai ko
+  lang: mixed
+  diacritics: false
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_RCProtocol/AP_RCProtocol_CRSF.cpp
+  answer_snippet: CRSF protocol decoder based on betaflight implementation
+- id: V5-W2-019
+  q: sao AC_AttitudeControl lai giam gain khi landed
+  lang: mixed
+  diacritics: false
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AC_AttitudeControl/AC_AttitudeControl.cpp
+  answer_snippet: // Reduce attitude control gains while landed to stop ground resonance
+- id: V5-W2-008
+  q: Hàm output() của AP_MotorsMulticopter làm gì?
+  lang: mixed
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Motors/AP_MotorsMulticopter.cpp
+  answer_snippet: // output - sends commands to the motors
+- id: V5-W2-020
+  q: SITL ho tro toi da may notify device
+  lang: mixed
+  diacritics: false
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Notify/AP_Notify.cpp
+  answer_snippet: '#define CONFIG_NOTIFY_DEVICES_MAX 12'
+- id: V5-W2-009
+  q: Tại sao Copter và Sub luôn phải dùng EKF?
+  lang: mixed
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_AHRS/AP_AHRS.cpp
+  answer_snippet: // Copter and Sub force the use of EKF
+- id: V5-W2-007
+  q: mission start_command gap lenh landing thi set co gi
+  lang: mixed
+  diacritics: false
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Mission/AP_Mission.cpp
+  answer_snippet: // check for landing related commands and set flags
+- id: V5-W2-003
+  q: AP_Terrain lấy dữ liệu địa hình từ đâu?
+  lang: mixed
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Terrain/AP_Terrain.cpp
+  answer_snippet: The terrain data is requested from the ground station as needed
+- id: V5-W2-015
+  q: update_calibration cua baro dung lam j
+  lang: mixed
+  diacritics: false
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Baro/AP_Baro.cpp
+  answer_snippet: this updates the baro ground calibration to the current values
+- id: V5-W2-004
+  q: toc do update cham nhat cua GPS la bao nhieu Hz
+  lang: mixed
+  diacritics: false
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_GPS/AP_GPS.cpp
+  answer_snippet: '#define GPS_MAX_RATE_MS 200 // maximum value of rate_ms (i.e. slowest update rate)
+    is 5hz or 200ms'
+- id: V5-W2-013
+  q: IMU batch logging duoc khoi tao o dau trong AP_InertialSensor
+  lang: mixed
+  diacritics: false
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_InertialSensor/AP_InertialSensor.cpp
+  answer_snippet: // initialise IMU batch logging
+- id: V5-W2-018
+  q: Heartbeat MAVLink được gửi từ hàm nào trong GCS_Common.cpp?
+  lang: mixed
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/GCS_MAVLink/GCS_Common.cpp
+  answer_snippet: void GCS_MAVLINK::send_heartbeat() const
+- id: V5-W2-048
+  q: elrs receiver xuat duoc nhung serial protocol nao
+  lang: mixed
+  diacritics: false
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/software/serial-protocols.md
+  answer_snippet: ExpressLRS receivers can communicate using a variety of serial protocols
+- id: V5-W2-047
+  q: chep elrs.lua vao folder nao tren the sd
+  lang: mixed
+  diacritics: false
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/transmitters/lua-howto.md
+  answer_snippet: into your radio's SD Card under the `Scripts/Tools` folder
+- id: V5-W2-043
+  q: model match tren edgetx de lam gi
+  lang: mixed
+  diacritics: false
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/software/model-config-match.md
+  answer_snippet: enabling model match ensures the receiver only outputs control signals when the Receiver
+    number and Model Match number match
+- id: V5-W2-045
+  q: bao lau co 1 goi LINK vay
+  lang: mixed
+  diacritics: false
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/info/telem-bandwidth.md
+  answer_snippet: The LINK rate chosen was one every 512ms
+- id: V5-W2-041
+  q: tx va rx elrs phai giong nhau cai j moi bind duoc
+  lang: mixed
+  diacritics: false
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/binding.md
+  answer_snippet: The first number in the Version string should match between a TX Module and a Receiver.
+- id: V5-W2-049
+  q: 1 frame CRSF toi da dai bao nhieu byte ca sync va crc vay
+  lang: mixed
+  category: elrs_edgetx
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: Each CRSF frame is not longer than **64 bytes** (including the Sync and CRC bytes)
+  diacritics: false
+- id: V5-W1-024
+  q: CubeOrange co IMU ICM20602 gan rotation gi vay
+  lang: mixed
+  diacritics: false
+  category: hwdef
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/CubeOrange/hwdef.inc
+  answer_snippet: IMU Invensense SPI:icm20602_ext ROTATION_ROLL_180_YAW_270
+- id: V5-W1-022
+  q: Den LED bao bootloader cua MatekH743 nam o chan nao
+  lang: mixed
+  diacritics: false
+  category: hwdef
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/MatekH743/hwdef-bl.dat
+  answer_snippet: PE3 LED_BOOTLOADER OUTPUT LOW
+- id: V5-W1-029
+  q: UART6 tren SpeedyBeeF405WING mac dinh chay baud bao nhieu
+  lang: mixed
+  diacritics: false
+  category: hwdef
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/SpeedyBeeF405WING/hwdef.dat
+  answer_snippet: define DEFAULT_SERIAL6_BAUD 115
+- id: V5-W1-021
+  q: MatekH743 xai chip j vay
+  lang: mixed
+  diacritics: false
+  category: hwdef
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/MatekH743/hwdef.dat
+  answer_snippet: MCU STM32H7xx STM32H743xx
+- id: V5-W1-025
+  q: Pixhawk6X GPS1 truyền dữ liệu ra chân TX nào?
+  lang: mixed
+  category: hwdef
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/Pixhawk6X/hwdef.dat
+  answer_snippet: PB6 USART1_TX USART1
+- id: V5-W1-023
+  q: IMU ICM20948 trên CubeOrange được khai báo xoay hướng nào?
+  lang: mixed
+  category: hwdef
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/CubeOrange/hwdef.inc
+  answer_snippet: IMU Invensensev2 SPI:icm20948 ROTATION_YAW_270
+- id: V5-W3-018
+  q: mat ngu mai ko het thi uong tra gung co dc ko?
+  lang: vi
+  diacritics: false
+  category: negative
+  expect_none: true
+- id: V5-W3-020
+  q: QGroundControl cai tren Ubuntu 24.04 bao loi thieu Qt lib, fix the nao?
+  lang: vi
+  diacritics: false
+  category: negative
+  expect_none: true
+- id: V5-W3-021
+  q: DJI Mavic 3 nạp waypoint qua DJI Fly được không?
+  lang: vi
+  category: negative
+  expect_none: true
+- id: V5-W3-024
+  q: Keil MDK bao loi L6218E undefined symbol, sua o dau?
+  lang: vi
+  diacritics: false
+  category: negative
+  expect_none: true
+- id: V5-W3-025
+  q: Betaflight OSD hiển thị % ga từng motor thế nào?
+  lang: vi
+  category: negative
+  expect_none: true
+- id: V5-W3-017
+  q: cach trong cay lan o ban cong chung cu
+  lang: vi
+  category: negative
+  expect_none: true
+  diacritics: false
+- id: V5-W3-011
+  q: PX4 dat tham so nao de tat EKF3 khi bay indoor vay?
+  lang: vi
+  diacritics: false
+  category: negative
+  expect_none: true
+- id: V5-W3-013
+  q: INAV đặt nav_fw_cruise_thr bao nhiêu cho wing 800mm bay xa?
+  lang: vi
+  category: negative
+  expect_none: true
+- id: V5-W3-023
+  q: KiCad 8 autoroute mạch 4 lớp có đáng dùng không?
+  lang: vi
+  category: negative
+  expect_none: true
+- id: V5-W1-015
+  q: LAND_FLARE_ALT quyết định gì trong pha autoland?
+  lang: mixed
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Landing/AP_Landing.cpp
+  answer_snippet: Altitude in autoland at which to lock heading and flare to the LAND_PITCH_DEG pitch.
+    Note that this option is secondary to LAND_FLARE_SEC. For a good landing it preferable that the flare
+    is triggered by LAND_FLARE_SEC.
+- id: V5-W1-012
+  q: COMPASS_AUTODEC co tu tinh do lech tu dong theo vi tri GPS ko
+  lang: mixed
+  diacritics: false
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Compass/AP_Compass.cpp
+  answer_snippet: Enable or disable the automatic calculation of the declination based on gps location
+- id: V5-W1-003
+  q: RTL_LOIT_TIME tinh bang ms hay giay, day la thoi gian bay luu tren nha truoc khi ha canh dung khong
+  lang: mixed
+  diacritics: false
+  category: param
+  expect:
+  - source: ardupilot
+    path: ArduCopter/Parameters.cpp
+  answer_snippet: Time (in milliseconds) to loiter above home before beginning final descent
+- id: V5-W1-001
+  q: PILOT_THR_FILT loc ga o tan so bao nhieu Hz, dat 0 la tat han dung khong
+  lang: mixed
+  diacritics: false
+  category: param
+  expect:
+  - source: ardupilot
+    path: ArduCopter/Parameters.cpp
+  answer_snippet: Throttle filter cutoff (Hz) - active whenever altitude control is inactive - 0 to disable
+- id: V5-W1-013
+  q: FENCE_ACTION của Copter có những lựa chọn nào?
+  lang: mixed
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AC_Fence/AC_Fence.cpp
+  answer_snippet: 0:Report Only,1:RTL or Land,2:Always Land,3:SmartRTL or RTL or Land,4:Brake or Land,5:SmartRTL
+    or Land
+- id: V5-W1-011
+  q: TECS_PITCH_MAX=0 thì TECS lấy giới hạn pitch từ tham số nào?
+  lang: mixed
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AP_TECS/AP_TECS.cpp
+  answer_snippet: Overrides PTCH_LIM_MAX_DEG in automatic throttle modes to reduce climb rates. Uses PTCH_LIM_MAX_DEG
+    if set to 0. For proper TECS tuning, set to the angle that the aircraft can climb at AIRSPEED_CRUISE
+    and THR_MAX.
+- id: V5-W1-007
+  q: BATT_LOW_VOLT có phải là ngưỡng điện áp để kích failsafe pin yếu không?
+  lang: mixed
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AP_BattMonitor/AP_BattMonitor_Params.cpp
+  answer_snippet: Battery voltage that triggers a low battery failsafe. Set to 0 to disable. If the battery
+    voltage drops below this voltage continuously for more then the period specified by the @PREFIX@LOW_TIMER
+    parameter then the vehicle will perform the failsafe specified by the @PREFIX@FS_LOW_ACT parameter.
+- id: V5-W1-010
+  q: MOT_SPIN_ARM voi MOT_SPIN_MIN cai nao phai nho hon
+  lang: mixed
+  diacritics: false
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Motors/AP_MotorsMulticopter.cpp
+  answer_snippet: Point at which the motors start to spin expressed as a number from 0 to 1 in the entire
+    output range.  Should be lower than MOT_SPIN_MIN.
+- id: V5-W1-020
+  q: BATT_CAPACITY khai báo dung lượng pin theo đơn vị nào?
+  lang: mixed
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AP_BattMonitor/AP_BattMonitor_Params.cpp
+  answer_snippet: Capacity of the battery in mAh when full
+- id: V5-W1-004
+  q: FLTMODE_CH la kenh RC nao de chuyen che do bay
+  lang: mixed
+  diacritics: false
+  category: param
+  expect:
+  - source: ardupilot
+    path: ArduCopter/Parameters.cpp
+  answer_snippet: RC Channel to use for flight mode control
+- id: V5-W1-017
+  q: MOT_THST_EXPO=0 thi duong cong luc day tuyen tinh dung ko
+  lang: mixed
+  diacritics: false
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AP_Motors/AP_MotorsMulticopter.cpp
+  answer_snippet: Motor thrust curve exponent (0.0 for linear to 1.0 for second order curve)
+- id: V5-W1-006
+  q: Sau khi hạ cánh, thời gian chờ trước khi tự động tắt động cơ đặt bằng 0 thì có tắt hẳn không?
+  lang: vi
+  category: param
+  expect:
+  - source: ardupilot
+    path: ArduCopter/Parameters.cpp
+  answer_snippet: Delay before automatic disarm in seconds after landing touchdown detection. A value
+    of zero disables auto disarm. If Emergency Motor stop active, delay time is half this value.
+- id: V5-W1-034
+  q: STATUSTEXT.text có kết thúc bằng ký tự null không và encode kiểu gì?
+  lang: mixed
+  category: protocol
+  expect:
+  - source: mavlink
+    path: message_definitions/v1.0/common.xml
+  answer_snippet: Status text message, without null termination character. UTF-8 encoded.
+- id: V5-W1-040
+  q: Frame 0x16 RC Channels Packed chứa bao nhiêu kênh trong bao nhiêu byte?
+  lang: mixed
+  category: protocol
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: 16 channels packed into 22 bytes
+- id: V5-W1-044
+  q: ExpressLRS gửi packet LINK trong telemetry burst bao lâu một lần?
+  lang: mixed
+  category: protocol
+  expect:
+  - source: expresslrs_docs
+    path: docs/info/telem-bandwidth.md
+  answer_snippet: The LINK rate chosen was one every 512ms
+- id: V5-W1-032
+  q: COMMAND_ACK tra result=1 thi xu ly sao, thu lai dc ko
+  lang: mixed
+  diacritics: false
+  category: protocol
+  expect:
+  - source: mavlink
+    path: message_definitions/v1.0/common.xml
+  answer_snippet: Command is valid, but cannot be executed at this time. This is used to indicate a problem
+    that should be fixed just by waiting (e.g. a state machine is busy, can't arm because have not got
+    GPS lock, etc.). Retrying later should work.
+- id: V5-W1-036
+  q: CRC cua frame CRSF duoc tinh tren nhung byte nao
+  lang: mixed
+  diacritics: false
+  category: protocol
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).
+- id: V5-W1-038
+  q: CRSF single-wire half-duplex chạy mặc định ở tốc độ bao nhiêu?
+  lang: mixed
+  category: protocol
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: The UART by default runs at **400 kbaud 8N1**
+- id: V5-W1-039
+  q: frame 0x08 battery cua CRSF, voltage LSB la bao nhieu
+  lang: mixed
+  diacritics: false
+  category: protocol
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: Voltage (LSB = 100 mV, i.e. 0.1 V)
+- id: V5-W1-031
+  q: SYS_STATUS.voltage_battery dùng đơn vị gì và giá trị nào nghĩa là không gửi?
+  lang: mixed
+  category: protocol
+  expect:
+  - source: mavlink
+    path: message_definitions/v1.0/common.xml
+  answer_snippet: '<field type="uint16_t" name="voltage_battery" units="mV" invalid="UINT16_MAX">Battery
+    voltage, UINT16_MAX: Voltage not sent by autopilot. Value is ambiguous on multi-battery systems. BATTERY_STATUS
+    is a recommended alternative.</field>'
+- id: V5-W1-041
+  q: 992 ticks trong CRSF la bao nhieu us vay
+  lang: mixed
+  diacritics: false
+  category: protocol
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: '#define TICKS_TO_US(x)  ((x - 992) * 5 / 8 + 1500)'
+- id: V5-W3-010
+  q: Radio X9D cũ của mình cứ báo Telemetry Lost rồi Recovered liên tục, bay gần cũng bị. Có cách nào
+    khắc phục không?
+  lang: vi
+  category: troubleshoot
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/troubleshooting.md
+  answer_snippet: You're on an X9D(+) or a QX7 with subpar inverter chips.
+- id: V5-W3-004
+  q: quad rung manh, dang AltHold no cu tu nhien leo len full throttle xong tut do cao la bi j vay?
+  lang: vi
+  diacritics: false
+  category: troubleshoot
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/vibration-failsafe.rst
+  answer_snippet: which can lead to the accelerometers saturating
+- id: V5-W3-003
+  q: Đang bay Loiter tự nhiên xe đổi sang Land, LED nháy đỏ vàng, HUD hiện EKF variance. Nguyên nhân do
+    đâu?
+  lang: vi
+  category: troubleshoot
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-ekf-inav-failsafe.rst
+  answer_snippet: The EKF failsafe will trigger when any two of the EKF
+- id: V5-W3-008
+  q: dang bay Loiter tu nhien HUD hien Bad Position roi xe tu chuyen Land, GPS van 3D fix. Nguyen nhan
+    j?
+  lang: vi
+  diacritics: false
+  category: troubleshoot
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/gps-failsafe-glitch-protection.rst
+  answer_snippet: for at least 5 seconds while Copter is
+- id: V5-W3-007
+  q: QuadPlane lớn, dây tín hiệu ESC dài, đẩy ga mạnh motor có lúc khựng rồi mất đồng bộ. Có phải xung
+    3.3V quá yếu không?
+  lang: vi
+  category: troubleshoot
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-esc-issues.rst
+  answer_snippet: add buffers to autopilot outputs to provide 5v signaling and higher drive currents
+- id: V5-W3-006
+  q: tau bay xa mat song ma copter van bay tiep, ko thay RTL. reciever minh set the nao moi bao mat tin
+    hieu?
+  lang: vi
+  diacritics: false
+  category: troubleshoot
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/radio-failsafe.rst
+  answer_snippet: some low end receivers will be set-up to simply hold all channels at their last known
+    position
+- id: V5-W2-026
+  q: pid mac dinh bay dc ko can tune ko
+  lang: mixed
+  diacritics: false
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-tuning.rst
+  answer_snippet: With the default PID settings, ArduPilot will fly most RC vehicles
+- id: V5-W2-034
+  q: Calib compass có cần GPS 3D lock không?
+  lang: mixed
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-compass-calibration-in-mission-planner.rst
+  answer_snippet: It is important that when compass calibration is done, the vehicle have a good 3D gps
+    lock
+- id: V5-W2-025
+  q: Motor hoặc ESC hỏng thì log sẽ thể hiện ra sao?
+  lang: mixed
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-diagnosing-problems-using-logs.rst
+  answer_snippet: These appear in the log as a sudden divergence in the desired roll and pitch vs the
+    vehicle's actual roll and pitch.
+- id: V5-W2-035
+  q: calib accel co lam duoc khi dang armed ko
+  lang: mixed
+  diacritics: false
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-accelerometer-calibration.rst
+  answer_snippet: Accelerometer calibration cannot be performed while the vehicle is armed.
+- id: V5-W2-022
+  q: Trước khi arm phải để công tắc bay ở mode nào?
+  lang: mixed
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: copter/source/docs/arming_the_motors.rst
+  answer_snippet: Check that your flight mode switch is set to Stabilize
+- id: V5-W2-024
+  q: log stream qua mavlink can baud bao nhieu
+  lang: mixed
+  diacritics: false
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-downloading-and-analyzing-data-logs-in-mission-planner.rst
+  answer_snippet: typically 921600 baud
+- id: V5-W2-039
+  q: rung nhieu thi mode nao bi anh huong nhieu nhat
+  lang: mixed
+  diacritics: false
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-measuring-vibration.rst
+  answer_snippet: AltHold, Loiter, RTL, Guided, Position and Auto flight modes
+- id: V5-W2-032
+  q: GPS nào mới dùng được để blend hai GPS?
+  lang: mixed
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-gps-blending.rst
+  answer_snippet: Only GPSs that report position and speed accuracy can be used for blending.
+- id: V5-W2-023
+  q: Dataflash log khác telemetry log ở chỗ nào?
+  lang: mixed
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-logs.rst
+  answer_snippet: recorded on the autopilot (often to the SD card)
+- id: V5-W2-029
+  q: ELRS có dùng chung giao thức CRSF với Crossfire không?
+  lang: mixed
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-crsf-telemetry.rst
+  answer_snippet: ELRS (ExpressLRS) RC systems use the CRSF protocol and are connected in a similar manner.
+- id: V5-W2-036
+  q: ESC DShot có cần calibrate không?
+  lang: mixed
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-esc-calibration.rst
+  answer_snippet: If you are using a digital esc protocol like DShot or are using CAN ESCs then you don't
+    need to calibrate them.
+- id: V5-W2-040
+  q: Cảm biến đo khoảng cách gồm những loại nào?
+  lang: vi
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-rangefinder-setup.rst
+  answer_snippet: Lidar (using laser or infra-red light to measure distance), Sonar (using ultrasonic
+    sound), and Radar (using microwave RF)

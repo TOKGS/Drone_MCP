@@ -1,0 +1,54 @@
+{
+  "case": "B2_INDEX_STATUS",
+  "note": "indexed parameter count, to compare with grep @Param: at the same tag",
+  "tool": "index_status",
+  "arguments": {},
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 40,
+    "method": "tools/call",
+    "params": {
+      "name": "index_status",
+      "arguments": {}
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 15.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"counts\": {\n    \"sources\": 7,\n    \"documents\": 7356,\n    \"chunks\": 86262,\n    \"params\": 5089\n  },\n  \"index_path\": \"D:\\\\Skill_tulan\\\\ardupilot-research-mcp\\\\data\\\\index.sqlite\",\n  \"index_mb\": 182.3,\n  \"last_ingest\": \"2026-10-25T20:13:33+0700\",\n  \"stale_warning_days\": 90,\n  \"dense\": {\n    \"present\": false,\n    \"vectors\": 0,\n    \"dim\": 0,\n    \"size_mb\": 0.0,\n    \"model\": null,\n    \"built_at\": null,\n    \"requested\": false,\n    \"state\": \"absent\",\n    \"unavailable_reason\": \"no chunk_vectors table (run: python -m research.build_vectors)\"\n  },\n  \"note\": \"offline mode: no network access at serve time\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "counts": {
+          "sources": 7,
+          "documents": 7356,
+          "chunks": 86262,
+          "params": 5089
+        },
+        "index_path": "D:\\Skill_tulan\\ardupilot-research-mcp\\data\\index.sqlite",
+        "index_mb": 182.3,
+        "last_ingest": "2026-10-25T20:13:33+0700",
+        "stale_warning_days": 90,
+        "dense": {
+          "present": false,
+          "vectors": 0,
+          "dim": 0,
+          "size_mb": 0.0,
+          "model": null,
+          "built_at": null,
+          "requested": false,
+          "state": "absent",
+          "unavailable_reason": "no chunk_vectors table (run: python -m research.build_vectors)"
+        },
+        "note": "offline mode: no network access at serve time"
+      }
+    }
+  }
+}

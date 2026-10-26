@@ -1,0 +1,38 @@
+python : dense: loaded 86262 vectors (126 MB) in 1.8s
+At line:1 char:880
++ ... _v4_dev') { python -m research.eval_retrieval --set "tests/$s.yaml" - ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (dense: loaded 8...126 MB) in 1.8s:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+dense: loaded 7356 document vectors (10.8 MB)
+set=eval_v5_vi_dev.yaml questions=49 k=5
+sha256: verified against eval-v5-vi-dev.sha256 (0df27ec4b45aa208...)
+recall@5 = 23/43 = 0.535
+precision@1 = 13/43 = 0.302
+MRR = 0.408
+chunk-hit@5 = 0.326
+negative-pass = 0.500
+
+per category
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+code             9     0.556   0.222   0.356      0.222         -
+elrs_edgetx      4     0.750   0.750   0.750      0.750         -
+hwdef            4     0.750   0.250   0.500      0.500         -
+negative         6         -       -       -          -     0.500
+param            8     0.625   0.625   0.625      0.125         -
+protocol         6     0.333   0.167   0.250      0.333         -
+troubleshoot     4     0.500   0.250   0.375      0.500         -
+wiki             8     0.375   0.000   0.167      0.250         -
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+mixed           36     0.583   0.333   0.445      0.333         -
+vi              13     0.286   0.143   0.214      0.286     0.500
+
+per script (read from the question text)
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+ascii-only      28     0.500   0.208   0.335      0.250     0.750
+diacritics      21     0.579   0.421   0.500      0.421     0.000
+
+wrote docs/upgrade/runs/v2-eval_v5_vi_dev-docprior.json

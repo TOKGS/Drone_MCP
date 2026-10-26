@@ -13,7 +13,7 @@ nguyên văn, hoặc nói `found:false`.
 
 ```
 python -m ardupilot_research_mcp.server     # MCP stdio, 14 tool
-python -m pytest -q                         # 184 passed
+python -m pytest -q                         # 223 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP`. Package `ardupilot-research-mcp` v0.1.0, Python 3.10 trở lên.
@@ -299,6 +299,7 @@ Sáu biến môi trường, mặc định lấy theo checkout:
 | `ARM_SOURCES` | `<repo>/sources.yaml` | bộ pin khác, ví dụ `sources-4.6.yaml` |
 | `ARM_DENSE` | không đặt, tắt | `1` bật rerank ngữ nghĩa tùy chọn (xem bên dưới) |
 | `ARM_MODEL_DIR` | `<data>/models/multilingual-e5-small` | thư mục model ONNX và tokenizer |
+| `ARM_DOC_PRIOR` | không đặt, tắt | `1` thêm prior ngữ nghĩa theo tài liệu chồng lên `ARM_DENSE=1`; đo được là tệ hơn trên cả hai tập dev, giữ lại để tái lập |
 
 Vì index và ledger phân giải từ các biến này, bạn giữ được nhiều bản độc lập trên cùng máy, ví dụ
 mỗi worktree một bản:
@@ -448,7 +449,7 @@ Rồi hỏi: *"tra RC_OPTIONS và cho biết bit nào bật ELRS 420kbaud"*. Câ
 ## Test và cổng kiểm
 
 ```powershell
-python -m pytest -q                                     # 184 passed
+python -m pytest -q                                     # 223 passed
 python scripts\check_traceability.py                    # yêu cầu, test, kết quả, failing=0
 python scripts\fidelity_scan.py                         # 86 262 chunk, 0 mismatch, PASS
 python scripts\check_param_citations.py                 # 5 089 tham số, 0 vi phạm
@@ -465,7 +466,7 @@ python scripts\mutation_check.py                        # điểm mutation
 
 | Cổng | Kết quả |
 |---|---|
-| `pytest -q` | 184 passed, 1 skipped |
+| `pytest -q` | 223 passed, 1 skipped |
 | `fidelity_scan.py` | 86 262 chunk, 0 mismatch, PASS |
 | `check_param_citations.py` | 5 089 kiểm, 0 vi phạm |
 | `check_traceability.py` | 22 yêu cầu, failing=0 |
@@ -486,7 +487,7 @@ nên không test nào phân biệt được nó với bản gốc.
 `tests/conftest.py` reset guard tốc độ giữa các test. Guard sản phẩm vẫn giữ 60 lần gọi mỗi phút.
 
 Cả `data/index.sqlite` và `data/corpus` đều nằm trong gitignore, nên clone mới tự thích nghi thay vì
-fail: module nào cần index hoặc corpus thì tự skip. Có đủ cả hai thì bộ test chạy 184 passed và 1
+fail: module nào cần index hoặc corpus thì tự skip. Có đủ cả hai thì bộ test chạy 223 passed và 1
 skipped; test bị skip là test thoát khỏi thư mục bằng symlink trên tài khoản Windows này.
 
 ## Chất lượng đo được
@@ -657,7 +658,7 @@ Binary, ảnh, font, archive, file `.hex` và `.apj` không vào corpus, và `LI
 
 v0.1.0, lượt hoàn chỉnh đầu tiên, 2026-10-25.
 
-- 14 tool qua stdio, chỉ đọc và offline, 141 test, 86 262 chunk không lệch fidelity.
+- 14 tool qua stdio, chỉ đọc và offline, 223 test, 86 262 chunk không lệch fidelity.
 - Bảng tham số dựng lại từ metadata ghim: 230 thành 5 089 tham số, vi phạm citation 3 891 thành 0,
   default 0 thành 4 703 raw với 3 003 quy được.
 - Cổng an toàn viết lại thành dữ liệu với khớp song ngữ đã chuẩn hoá dấu: false negative từ 3 trên 11

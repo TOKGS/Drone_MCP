@@ -1,0 +1,171 @@
+# Eval set v5-mention: questions that ASK about the pinned corpus (ArduPilot, Copter, ExpressLRS,
+# ELRS, EdgeTX, CRSF, MAVLink, Mission Planner, ...) and also name another product (PX4, Betaflight,
+# iNav, Cleanflight, KISS, QGroundControl). Every entry is positive: the corpus answers it, so a
+# found:false here would mean the scope rule refused a question it should answer.
+# Frozen by docs/eval-v5-mention.sha256; run once per kept configuration, aggregate output only.
+version: 5
+generated_by: independent writer, frozen by the lead
+split: mention
+questions:
+- id: V5-MENTION-001
+  q: Mạch mua về đang chạy Betaflight thì nạp ArduPilot lần đầu bằng cách nào?
+  lang: vi
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-loading-firmware-onto-chibios-only-boards.rst
+  answer_snippet: The ArduPilot bootloader and firmware are loaded together over USB in DFU (direct firmware
+    upload) mode.
+- id: V5-MENTION-002
+  q: Toi chuyen tu Betaflight sang ArduPilot tren Kakute H7 V2, co phai dao thu tu day motor khong?
+  lang: vi
+  diacritics: false
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-holybro-kakuteh7-v2.rst
+  answer_snippet: For Copter firmware the FRAME_TYPE is already defaulted to type "12" (BetaFlight X)
+    allowing existing BetaFlight configurations with ESCs attached to have the correct motor ordering
+    without changes to the FRAME_TYPE and FRAME_CLASS parameters or ESC wiring.
+- id: V5-MENTION-003
+  q: Trong ArduPilot, muốn OSD MSP DisplayPort trên kính DJI dùng bảng font kiểu iNav thì đặt bit nào
+    của MSP_OPTIONS?
+  lang: vi
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-displayport.rst
+  answer_snippet: Set bit 3 (+8 to value) to use iNAV style font table
+- id: V5-MENTION-004
+  q: Co ground station nao vua dung ArduPilot vua cau hinh duoc Betaflight khong?
+  lang: vi
+  diacritics: false
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-install-gcs.rst
+  answer_snippet: Also supports Betaflight and iNav via MSP protocol.
+- id: V5-MENTION-005
+  q: ELRS dung giao thuc CRSF thi dau day vao ArduPilot giong TBS Crossfire phai khong?
+  lang: vi
+  diacritics: false
+  category: wiki
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-crsf-telemetry.rst
+  answer_snippet: ELRS (ExpressLRS) RC systems use the CRSF protocol and are connected in a similar manner.
+- id: V5-MENTION-006
+  q: Cần firmware ArduPilot từ bản nào mới chạy được CRSF với ExpressLRS?
+  lang: vi
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/ardupilot-setup.md
+  answer_snippet: ArduPilot Firmware must be 4.1 or higher to run CRSF protocol.
+- id: V5-MENTION-007
+  q: Lam sao nap firmware ExpressLRS cho receiver qua Betaflight passthrough?
+  lang: vi
+  diacritics: false
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/software/updating/betaflight-passthrough.md
+  answer_snippet: Once you have Flashed ELRS onto your receivers they can be conveniently updated using
+    the passthrough feature of Betaflight (and similar FC FW).
+- id: V5-MENTION-008
+  q: trong EdgeTX, file crsf_measure.cpp liet ke nhung muc baud nao
+  lang: vi
+  category: elrs_edgetx
+  expect:
+  - source: edgetx
+    path: radio/src/targets/hrs/v15/crsf_measure.cpp
+  answer_snippet: constexpr uint32_t BAUD_CANDIDATES[] = {400000u, 420000u, 115200u};
+  diacritics: false
+- id: V5-MENTION-009
+  q: ELRS hybrid switch thi ArduPilot dat FLTMODE_CH bao nhieu?
+  lang: vi
+  diacritics: false
+  category: elrs_edgetx
+  expect:
+  - source: expresslrs_docs
+    path: docs/quick-start/ardupilot-setup.md
+  answer_snippet: ArduPilot default flight modes channel is channel 8, but ELRS 8 position channel is
+    on channel 12 (in hybrid switch mode).
+- id: V5-MENTION-010
+  q: Kết nối QGroundControl qua MAVLink High Latency thì phải chọn mục nào?
+  lang: vi
+  category: protocol
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-MAVLink-high-latency.rst
+  answer_snippet: In QGroundControl connect using the ``High Latency`` option to enable sending telemetry
+    on the High Latency port
+- id: V5-MENTION-011
+  q: duong UART cua CRSF mac dinh chay o baud bao nhieu va muc logic bao nhieu V
+  lang: vi
+  diacritics: false
+  category: protocol
+  expect:
+  - source: crsf_spec
+    path: crsf.md
+  answer_snippet: The UART by default runs at **400 kbaud 8N1** (inverted or non-inverted) at **3.3V**
+    level
+- id: V5-MENTION-012
+  q: MSP mà ArduPilot dùng có giống bên Betaflight và iNav không, hỗ trợ những phiên bản nào?
+  lang: vi
+  category: protocol
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-msp-overview-4.2.rst
+  answer_snippet: ArduPilot's MSP protocol module is ported from Betaflight and iNav, and supports both
+    MSPV1 and MSPV2.
+- id: V5-MENTION-013
+  q: If QGroundControl drops off the link, how long does ArduPilot wait before starting the GCS failsafe?
+  lang: en
+  category: param
+  expect:
+  - source: ardupilot
+    path: ArduCopter/Parameters.cpp
+  answer_snippet: when connection with Ground station is lost for at least 5 seconds
+- id: V5-MENTION-014
+  q: Which ArduPilot parameter sets the pack voltage that starts a low battery failsafe, and how do I
+    turn that check off?
+  lang: en
+  category: param
+  expect:
+  - source: ardupilot
+    path: libraries/AP_BattMonitor/AP_BattMonitor_Params.cpp
+  answer_snippet: Battery voltage that triggers a low battery failsafe. Set to 0 to disable.
+- id: V5-MENTION-015
+  q: In the ArduPilot source, how long does CRSF wait before it treats the transmitter as disconnected?
+  lang: en
+  category: code
+  expect:
+  - source: ardupilot
+    path: libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h
+  answer_snippet: the period after which the transmitter is considered disconnected (matches copters failsafe)
+- id: V5-MENTION-016
+  q: At what temperature does the CubeOrange board definition aim to hold the IMU heater?
+  lang: en
+  category: hwdef
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/CubeOrange/hwdef.inc
+  answer_snippet: define HAL_IMU_TEMP_DEFAULT 45
+- id: V5-MENTION-017
+  q: Which serial ports does the MatekH743 board definition declare, and in what order?
+  lang: en
+  category: hwdef
+  expect:
+  - source: ardupilot
+    path: libraries/AP_HAL_ChibiOS/hwdef/MatekH743/hwdef.dat
+  answer_snippet: SERIAL_ORDER OTG1 UART7 USART1 USART2 USART3 UART8 UART4 USART6 OTG2
+- id: V5-MENTION-018
+  q: I used BLHeliSuite32 with Betaflight before; how do I reach the ESCs through ArduPilot while they
+    stay wired to the autopilot?
+  lang: en
+  category: troubleshoot
+  expect:
+  - source: ardupilot_wiki
+    path: common/source/docs/common-blheli32-passthru.rst
+  answer_snippet: selecting "BLHeli32/AM32 Bootloader (Betaflight/Cleanflight)" from the interfaces menu

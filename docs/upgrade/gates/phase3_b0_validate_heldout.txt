@@ -1,0 +1,6 @@
+cross-check: 71 questions vs 137 from 3 set(s), overlaps=0
+set=eval_v5_vi_heldout.yaml questions=71 db=checked
+categories: code=11 elrs_edgetx=6 hwdef=6 negative=9 param=12 protocol=9 troubleshoot=6 wiki=12
+langs: mixed=54 vi=17
+snippets=62 negatives=9 diacritics_false=39
+errors: 0

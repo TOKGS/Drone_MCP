@@ -1,0 +1,14 @@
+{
+  "chunks_checked": 86262,
+  "line_range_mismatches": 0,
+  "first_mismatches": [],
+  "excerpt_verify_failures": 0,
+  "unpinned_urls": 0,
+  "chunk_chars": {
+    "min": 10,
+    "median": 601,
+    "p95": 2932,
+    "max": 3000
+  }
+}
+chunk/line verification: PASS

@@ -1,0 +1,16 @@
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 24/30 = 0.800
+MRR = 0.881
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+en              19     1.000   0.842   0.899          -         -
+vi              11     1.000   0.727   0.848          -         -
+
+per script (read from the question text)
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+ascii-only      19     1.000   0.842   0.899          -         -
+diacritics      11     1.000   0.727   0.848          -         -
+
+wrote docs/upgrade/runs/v1-golden.json

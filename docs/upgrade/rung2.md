@@ -109,3 +109,25 @@ $env:ARM_DENSE = "1"
 ```
 
 Reproduction of the measured candidate: `docs/upgrade/runs/rung2-*.txt`, JSON next to them.
+
+## Experiment index: where `data/exp/index.sqlite` comes from
+
+The 63 MB of vectors were written into a **copy** of the index, never into `data/index.sqlite`, so
+the default build stays BM25-only. To rebuild the experiment folder from scratch:
+
+```powershell
+New-Item -ItemType Directory -Force data\exp | Out-Null
+Copy-Item data\index.sqlite data\exp\index.sqlite
+python -m research.build_vectors --index data\exp\index.sqlite    # 68 min, resumable by rowid
+
+$env:ARM_DATA_DIR = "D:\Skill_tulan\ardupilot-research-mcp\data\exp"                        # folder holding index.sqlite
+$env:ARM_MODEL_DIR = "D:\Skill_tulan\ardupilot-research-mcp\data\models\multilingual-e5-small"
+$env:ARM_DENSE = "1"
+python -m research.eval_retrieval --set tests/eval_v4_dev.yaml --aggregate-only --json docs\upgrade\runs\exp-dev.json
+```
+
+`ARM_DATA_DIR` is the folder that contains `index.sqlite`; `ARM_MODEL_DIR` is the folder that holds
+`model.onnx` or `onnx/model.onnx` plus `tokenizer.json`. With `ARM_DATA_DIR=data\exp` but no
+`ARM_MODEL_DIR`, `dense.py` warns once and falls back to BM25 (`index_status.dense.state` =
+`requested-but-unavailable`). Unset all three variables to get the shipped default.
+

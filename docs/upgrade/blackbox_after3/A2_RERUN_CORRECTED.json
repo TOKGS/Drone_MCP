@@ -1,0 +1,161 @@
+{
+  "case": "A2_RERUN_CORRECTED",
+  "note": "DISCLOSED RERUN: A2 with the missing nibble restored (valid frame, bad CRC)",
+  "tool": "decode_crsf_frame",
+  "arguments": {
+    "hex": "C81816E0031FF8C0073EF0810F7CE0031FF8C0073EF0810F7CAC"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 90,
+    "method": "tools/call",
+    "params": {
+      "name": "decode_crsf_frame",
+      "arguments": {
+        "hex": "C81816E0031FF8C0073EF0810F7CE0031FF8C0073EF0810F7CAC"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"byte_count\": 26,\n  \"frames_found\": 1,\n  \"frame_count\": 1,\n  \"all_crc_valid\": false,\n  \"frames\": [\n    {\n      \"offset\": 0,\n      \"sync\": 200,\n      \"length\": 24,\n      \"type\": 22,\n      \"type_name\": \"RC Channels Packed\",\n      \"payload_hex\": \"e0031ff8c0073ef0810f7ce0031ff8c0073ef0810f7c\",\n      \"crc\": 172,\n      \"crc_computed\": 173,\n      \"crc_valid\": false,\n      \"channels\": [\n        {\n          \"channel\": 1,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 2,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 3,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 4,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 5,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 6,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 7,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 8,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 9,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 10,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 11,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 12,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 13,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 14,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 15,\n          \"ticks\": 992,\n          \"us\": 1500\n        },\n        {\n          \"channel\": 16,\n          \"ticks\": 992,\n          \"us\": 1500\n        }\n      ]\n    }\n  ],\n  \"crc_polynomial\": \"0xD5, init 0, over Type+Payload (CRC over sync/length is wrong)\",\n  \"citation\": {\n    \"cite_id\": \"crsf_spec#3fc62acc09010b9a\",\n    \"source_id\": \"crsf_spec\",\n    \"repo\": \"tbs-fpv/tbs-crsf-spec\",\n    \"ref\": \"a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92\",\n    \"channel\": \"snapshot\",\n    \"unreleased\": true,\n    \"pinned\": true,\n    \"title\": \"crsf.md\",\n    \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L188-L192\",\n    \"path\": \"crsf.md\",\n    \"lines\": [\n      188,\n      192\n    ],\n    \"version\": \"CRSF spec@a73f7dc\",\n    \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n    \"tier\": \"T1\",\n    \"license\": \"CC-BY-SA-4.0\",\n    \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n    \"heading_path\": \"CRC\",\n    \"excerpt\": \"CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).\\n\\nCRC8 implementation with polynom = x7+ x6+ x4+ x2+ x0 (0xD5)\\n\\ncode example:\",\n    \"untrusted\": true\n  },\n  \"untrusted\": true\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "byte_count": 26,
+        "frames_found": 1,
+        "frame_count": 1,
+        "all_crc_valid": false,
+        "frames": [
+          {
+            "offset": 0,
+            "sync": 200,
+            "length": 24,
+            "type": 22,
+            "type_name": "RC Channels Packed",
+            "payload_hex": "e0031ff8c0073ef0810f7ce0031ff8c0073ef0810f7c",
+            "crc": 172,
+            "crc_computed": 173,
+            "crc_valid": false,
+            "channels": [
+              {
+                "channel": 1,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 2,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 3,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 4,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 5,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 6,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 7,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 8,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 9,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 10,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 11,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 12,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 13,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 14,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 15,
+                "ticks": 992,
+                "us": 1500
+              },
+              {
+                "channel": 16,
+                "ticks": 992,
+                "us": 1500
+              }
+            ]
+          }
+        ],
+        "crc_polynomial": "0xD5, init 0, over Type+Payload (CRC over sync/length is wrong)",
+        "citation": {
+          "cite_id": "crsf_spec#3fc62acc09010b9a",
+          "source_id": "crsf_spec",
+          "repo": "tbs-fpv/tbs-crsf-spec",
+          "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+          "channel": "snapshot",
+          "unreleased": true,
+          "pinned": true,
+          "title": "crsf.md",
+          "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L188-L192",
+          "path": "crsf.md",
+          "lines": [
+            188,
+            192
+          ],
+          "version": "CRSF spec@a73f7dc",
+          "ingested_at": "2026-10-25T20:13:33+0700",
+          "tier": "T1",
+          "license": "CC-BY-SA-4.0",
+          "retrieved_at": "2026-10-25T20:13:33+0700",
+          "heading_path": "CRC",
+          "excerpt": "CRC includes Type and Payload of each frame (doesn't include sync byte and frame length).\n\nCRC8 implementation with polynom = x7+ x6+ x4+ x2+ x0 (0xD5)\n\ncode example:",
+          "untrusted": true
+        },
+        "untrusted": true
+      }
+    }
+  }
+}
