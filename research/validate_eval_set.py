@@ -3,14 +3,17 @@
 
     python -m research.validate_eval_set --set docs/upgrade/scratch/q_b1.yaml
     python -m research.validate_eval_set --set tests/eval_v4_dev.yaml --strict-v4
+    python -m research.validate_eval_set --set docs/upgrade/scratch/q5_w1.yaml --strict-v5
+    python -m research.validate_eval_set --set tests/eval_v5_vi_dev.yaml --strict-v5 \
+        --cross-check tests/eval_v4_dev.yaml --cross-check tests/eval_v4_heldout.yaml
 
 Never prints the question text: a fragment author gets `id` plus an error code and a short detail
 (a path, a count, a token count), which is enough to fix the entry without echoing the question.
 
 Checks
   1. schema: `questions` is a non-empty list; unique non-empty ids; `lang` in {vi,en,mixed};
-     `category` known when present (`--strict-v4` requires it); `expect_none` implies
-     `category: negative` and no `expect`.
+     `category` known when present (`--strict-v4` and `--strict-v5` require it); `expect_none`
+     implies `category: negative` and no `expect`.
   2. ground truth exists: every `expect.path` matches at least one row in `documents` for that
      `source` (needs the built index; the check is reported as skipped otherwise). The match is
      case-sensitive, exactly like `is_hit()` in the evaluator, so a path whose only difference is
@@ -21,6 +24,13 @@ Checks
      substring of another.
   5. an `expect_none` question is rejected when three or more of its content words each appear in
      three or more indexed documents, i.e. the corpus does answer it.
+  6. `--strict-v5`: `lang` is `vi` or `mixed` (the v5 set is Vietnamese or Vietnamese-English), and
+     a question flagged `diacritics: false` really contains no Vietnamese diacritics (a false flag
+     would corrupt the "at least 40 % no diacritics" count).
+  7. `--cross-check OTHER.yaml` (repeatable): the same question must not be re-used across sets.
+     Two questions are the same when their normalised token overlap is at least 60 % of the shorter
+     one; questions with fewer than four content tokens (identifier-only queries) are not compared
+     because asking for the same identifier is intentional.
 """
 
 from __future__ import annotations
@@ -41,9 +51,12 @@ from ardupilot_research_mcp import config, query  # noqa: E402
 CATEGORIES = {"param", "code", "protocol", "hwdef", "wiki", "elrs_edgetx", "troubleshoot",
               "negative"}
 LANGS = {"vi", "en", "mixed"}
+V5_LANGS = {"vi", "mixed"}
 MIN_SNIPPET = 12
 NEGATIVE_MIN_WORDS = 3
 NEGATIVE_DOC_FLOOR = 3
+OVERLAP_THRESHOLD = 0.6
+OVERLAP_MIN_TOKENS = 4
 
 
 def fold(text: str) -> str:
@@ -55,6 +68,34 @@ def fold(text: str) -> str:
 
 def normalise(text: str) -> str:
     return " ".join(re.findall(r"[a-z0-9_]+", fold(text)))
+
+
+def has_diacritics(text: str) -> bool:
+    """True when the text carries a Vietnamese mark (including the letter d with a stroke)."""
+    decomposed = unicodedata.normalize("NFD", text or "")
+    return any(unicodedata.combining(ch) for ch in decomposed) or any(ch in "đĐ" for ch in text)
+
+
+def token_set(text: str) -> set[str]:
+    return {token for token in normalise(text).split() if len(token) > 1}
+
+
+def cross_overlap_errors(questions: list[dict], others: list[tuple[str, dict]]) -> list[dict]:
+    """Flag a question that is a re-use of a question from another set (counts only, no text)."""
+    errors: list[dict] = []
+    for question in questions:
+        tokens = token_set(question.get("q", ""))
+        if len(tokens) < OVERLAP_MIN_TOKENS:
+            continue
+        for set_name, other in others:
+            other_tokens = token_set(other.get("q", ""))
+            if len(other_tokens) < OVERLAP_MIN_TOKENS:
+                continue
+            shared = len(tokens & other_tokens) / min(len(tokens), len(other_tokens))
+            if shared >= OVERLAP_THRESHOLD:
+                errors.append(_error(question, "overlaps_v4",
+                                     f"{other.get('id')}@{set_name} {shared:.2f}"))
+    return errors
 
 
 def content_words(question: dict) -> list[str]:
@@ -101,7 +142,8 @@ def _snippet_found(con, question: dict, snippet: str) -> bool:
     return False
 
 
-def validate(questions: list[dict], con=None, *, strict_v4: bool = False) -> dict:
+def validate(questions: list[dict], con=None, *, strict_v4: bool = False,
+             strict_v5: bool = False) -> dict:
     """Return counts plus the error list; `con` may be None (document checks are then skipped)."""
     errors: list[dict] = []
     checks = {"schema": 0, "documents": 0, "snippets": 0, "duplicates": 0, "negatives": 0}
@@ -109,6 +151,7 @@ def validate(questions: list[dict], con=None, *, strict_v4: bool = False) -> dic
     seen_questions: list[tuple[str, str]] = []
     categories: dict[str, int] = {}
     langs: dict[str, int] = {}
+    diacritics_false = 0
     documents_checked = con is not None
 
     for question in questions:
@@ -129,6 +172,8 @@ def validate(questions: list[dict], con=None, *, strict_v4: bool = False) -> dic
             checks["schema"] += 1
         else:
             langs[lang] = langs.get(lang, 0) + 1
+            if strict_v5 and lang not in V5_LANGS:
+                errors.append(_error(question, "v5_lang_must_be_vi_or_mixed", str(lang)))
 
         category = question.get("category")
         if category is None:
@@ -142,6 +187,14 @@ def validate(questions: list[dict], con=None, *, strict_v4: bool = False) -> dic
         if not isinstance(question.get("q"), str) or len(question["q"].strip()) < 4:
             errors.append(_error(question, "missing_question"))
             continue
+
+        flag = question.get("diacritics")
+        if flag is not None and not isinstance(flag, bool):
+            errors.append(_error(question, "bad_diacritics_flag", repr(flag)))
+        elif flag is False:
+            diacritics_false += 1
+            if has_diacritics(question["q"]):
+                errors.append(_error(question, "diacritics_flag_wrong"))
 
         snippet = question.get("answer_snippet")
         if snippet is not None:
@@ -197,7 +250,14 @@ def validate(questions: list[dict], con=None, *, strict_v4: bool = False) -> dic
                                 if error["code"] in ("duplicate_question", "question_substring")])
 
     return {"questions": len(questions), "categories": categories, "langs": langs,
-            "checks": checks, "errors": errors, "documents_checked": documents_checked}
+            "diacritics_false": diacritics_false, "checks": checks, "errors": errors,
+            "documents_checked": documents_checked}
+
+
+def load_questions(path: Path) -> list[dict]:
+    payload = yaml.safe_load(path.read_text(encoding="utf-8"))
+    questions = payload.get("questions") if isinstance(payload, dict) else payload
+    return questions if isinstance(questions, list) else []
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -205,11 +265,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--set", required=True)
     parser.add_argument("--strict-v4", action="store_true",
                         help="require `category` on every question (the v4 rule)")
+    parser.add_argument("--strict-v5", action="store_true",
+                        help="v5-vi rules: category required, lang vi or mixed, honest diacritics flag")
+    parser.add_argument("--cross-check", action="append", default=[],
+                        help="another set whose questions must not be re-used (counts only)")
     args = parser.parse_args(argv)
 
-    payload = yaml.safe_load(Path(args.set).read_text(encoding="utf-8"))
-    questions = payload.get("questions") if isinstance(payload, dict) else payload
-    if not isinstance(questions, list) or not questions:
+    questions = load_questions(Path(args.set))
+    if not questions:
         print(f"set={Path(args.set).name} questions=0")
         print("  - id=(none) code=no_questions")
         return 1
@@ -221,7 +284,17 @@ def main(argv: list[str] | None = None) -> int:
         con = db.connect()
         if not con.execute("SELECT COUNT(*) FROM documents").fetchone()[0]:
             con = None
-    report = validate(questions, con, strict_v4=args.strict_v4)
+    report = validate(questions, con, strict_v4=args.strict_v4, strict_v5=args.strict_v5)
+
+    others: list[tuple[str, dict]] = []
+    for name in args.cross_check:
+        path = Path(name)
+        others.extend((path.name, question) for question in load_questions(path))
+    if others:
+        report["errors"].extend(cross_overlap_errors(questions, others))
+        print(f"cross-check: {len(questions)} questions vs {len(others)} from "
+              f"{len(args.cross_check)} set(s), overlaps="
+              f"{len([error for error in report['errors'] if error['code'] == 'overlaps_v4'])}")
 
     print(f"set={Path(args.set).name} questions={report['questions']}"
           f" db={'checked' if report['documents_checked'] else 'skipped (no index)'}")
@@ -229,7 +302,8 @@ def main(argv: list[str] | None = None) -> int:
                                     for name, count in sorted(report["categories"].items())))
     print("langs: " + " ".join(f"{name}={count}"
                                for name, count in sorted(report["langs"].items())))
-    print(f"snippets={report['checks']['snippets']} negatives={report['checks']['negatives']}")
+    print(f"snippets={report['checks']['snippets']} negatives={report['checks']['negatives']}"
+          f" diacritics_false={report['diacritics_false']}")
     print(f"errors: {len(report['errors'])}")
     for error in report["errors"]:
         detail = f" {error['detail']}" if error["detail"] else ""

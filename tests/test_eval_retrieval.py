@@ -130,3 +130,26 @@ def test_per_category_and_per_lang_tables_are_grouped() -> None:
     assert set(summary["per_category"]) == {"param", "negative"}
     assert set(summary["per_lang"]) == {"en", "vi"}
     assert summary["per_category"]["negative"]["negative_pass"] == 0.0
+
+
+# ------------------------------------------------------------------ v5-vi freeze
+def test_the_v5_sets_are_pinned() -> None:
+    for name in ("tests/eval_v5_vi_dev.yaml", "tests/eval_v5_vi_heldout.yaml"):
+        path = ev.REPO / name
+        found = ev.find_sha_line(path)
+        assert found is not None, name
+        assert found[1] == hashlib.sha256(path.read_bytes()).hexdigest(), name
+
+
+def test_a_tampered_v5_copy_is_refused(tmp_path: Path) -> None:
+    source = ev.REPO / "tests/eval_v5_vi_dev.yaml"
+    copy = tmp_path / "copy.yaml"
+    copy.write_bytes(source.read_bytes())
+    sha_file = tmp_path / "set.sha256"
+    sha_file.write_text(f"{hashlib.sha256(copy.read_bytes()).hexdigest()}  copy.yaml\n",
+                        encoding="utf-8")
+    assert ev.verify_hash(copy, sha_file)["verified"] is True
+    copy.write_bytes(copy.read_bytes() + b"\n# tampered\n")
+    with pytest.raises(ev.HashMismatch):
+        ev.verify_hash(copy, sha_file)
+    assert ev.main(["--set", str(copy), "--verify-sha", str(sha_file)]) == 2
