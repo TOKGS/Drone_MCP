@@ -43,14 +43,14 @@ budget: search_docs p95 <= 400 ms, measured 232.3 ms      bench: PASS
 - [x] A5 experiment index paragraph (docs)                                owner: lead  commit: 6c8121a  evidence: `docs/upgrade/rung2.md` section "Experiment index"
 - [x] A6 eval-v4 regression-guard note                                    owner: lead  commit: d2f5b4a  evidence: note at the top of `docs/eval-v4.md`
 - [x] A-GATE pytest, check_readmes, check_traceability, fidelity, audit_safety  owner: lead  commit: 42e40dd  evidence: 191 passed 1 skipped; readme PASS; requirements=22 failing=0; fidelity TOTAL 86262 0 PASS; audit_safety exit 0 for the six inputs (`gates/phase3_partA_*.txt`)
-- [ ] B0-tools make_eval_v5 + validator cross-set overlap + tests        owner: lead  commit:  evidence:
-- [ ] B0-w1 fragment param/hwdef/protocol                                owner: writer-1  commit:  evidence:
-- [ ] B0-w2 fragment code/wiki/elrs_edgetx                               owner: writer-2  commit:  evidence:
-- [ ] B0-w3 fragment troubleshoot/negative                               owner: writer-3  commit:  evidence:
-- [ ] B0-merge validate, stratified split, freeze sha (dev + held-out)    owner: lead  commit:  evidence:
-- [ ] B0-tamper evaluator refuses a tampered v5 set                       owner: lead  commit:  evidence:
-- [ ] B0-baseline default and opt-in dense on both v5 splits -> baseline3/  owner: lead  commit:  evidence:
-- [ ] B0-docs docs/eval-v5-vi.md                                         owner: lead  commit:  evidence:
+- [x] B0-tools make_eval_v5 + validator cross-set overlap + tests        owner: lead  commit: <B0>  evidence: `--strict-v5` + `--cross-check` in `research/validate_eval_set.py`, `research/make_eval_v5.py`, 5 tests in `tests/test_eval_v5.py`
+- [x] B0-w1 fragment param/hwdef/protocol                                owner: writer-1  commit: <B0>  evidence: 45 questions (20/10/15), diacritics_free=25, `errors: 0`
+- [x] B0-w2 fragment code/wiki/elrs_edgetx                               owner: writer-2  commit: <B0>  evidence: 50 questions (20/20/10), diacritics_free=28, `errors: 0`
+- [x] B0-w3 fragment troubleshoot/negative                               owner: writer-3  commit: <B0>  evidence: 25 questions (10/15), diacritics_free=14, `errors: 0`
+- [x] B0-merge validate, stratified split, freeze sha (dev + held-out)    owner: lead  commit: <B0>  evidence: 120 questions, dev 49 / held-out 71, no-diacritics 67 (55.8%), negatives 15, overlaps 6 to 3 to 0; sha `0df27ec4...` / `19f0e46a...`
+- [x] B0-tamper evaluator refuses a tampered v5 set                       owner: lead  commit: <B0>  evidence: `test_the_v5_sets_are_pinned` and `test_a_tampered_v5_copy_is_refused` (12 passed in `tests/test_eval_retrieval.py`); both baseline runs printed `sha256: verified`
+- [x] B0-baseline default and opt-in dense on both v5 splits -> baseline3/  owner: lead  commit: <B0>  evidence: dev default 0.488/0.256/0.354/0.302/0.500, dev dense 0.512/0.279/0.381/0.326/0.500; held-out default 0.581/0.387/0.447/0.242/0.556, held-out dense 0.581/0.387/0.444/0.242/0.556
+- [x] B0-docs docs/eval-v5-vi.md                                         owner: lead  commit: <B0>  evidence: protocol, counts, both baseline tables, what the ruler says, limits
 - [ ] B1-V1 normaliser + mined glossary (vi)                              owner:  commit:  evidence:
 - [ ] B1-V2 doc-level vectors as prior                                    owner:  commit:  evidence:
 - [ ] B1-V3 expansion term weighting                                      owner:  commit:  evidence:
@@ -64,7 +64,53 @@ budget: search_docs p95 <= 400 ms, measured 232.3 ms      bench: PASS
 - Part A is done by the lead directly (small, single-file edits); only the v5-vi question writers are
   subagents, and they run in the shared workspace instead of separate worktrees because each owns
   exactly one new scratch file and the gitignored corpus/index can not be reached from a worktree.
+- v5-vi: the cross-set overlap check rejected 9 questions over two passes (6 then 3); the lead
+  rewrote 5 of them (two twice) by changing the topic or the wording, and never looked at a v4
+  held-out question. Recorded in `docs/eval-v5-vi.md`.
+- v5-vi baseline: the held-out split was measured twice on purpose, once for the default build and
+  once for `ARM_DENSE=1`, which is what B0 asks for; every later configuration gets one run.
 
 ## BLOCKERS
 
 - (none)
+
+## B0 evidence (raw)
+
+```
+python -m research.validate_eval_set --set tests/eval_v5_vi_dev.yaml --strict-v5 --cross-check ...
+cross-check: 49 questions vs 137 from 3 set(s), overlaps=0
+set=eval_v5_vi_dev.yaml questions=49 db=checked
+categories: code=9 elrs_edgetx=4 hwdef=4 negative=6 param=8 protocol=6 troubleshoot=4 wiki=8
+langs: mixed=36 vi=13
+snippets=43 negatives=6 diacritics_false=28
+errors: 0
+
+python -m research.validate_eval_set --set tests/eval_v5_vi_heldout.yaml --strict-v5 --cross-check ...
+cross-check: 71 questions vs 137 from 3 set(s), overlaps=0
+set=eval_v5_vi_heldout.yaml questions=71 db=checked
+categories: code=11 elrs_edgetx=6 hwdef=6 negative=9 param=12 protocol=9 troubleshoot=6 wiki=12
+langs: mixed=54 vi=17
+snippets=62 negatives=9 diacritics_false=39
+errors: 0
+
+python -m research.make_eval_v5 --fragment docs/upgrade/scratch/q5_w1.yaml --fragment ... --fragment ...
+fragments=3 questions=120 dev=49 heldout=71 cross-checked=137
+(param 20, code 20, protocol 15, hwdef 10, wiki 20, elrs_edgetx 10, troubleshoot 10, negative 15)
+no diacritics: total=67 (55.8%) dev=28 heldout=39  ok (floor 40%)
+negatives: 15  ok (floor 15)
+sha256 eval_v5_vi_dev.yaml = 0df27ec4b45aa208b5618ba22d69955301d47979504b9ad6caeb3902e55cdf3d
+sha256 eval_v5_vi_heldout.yaml = 19f0e46aaff2ae25b120bebf74bd6a610121f3e689d1510ae3962d2dae3412a3
+```
+
+```
+docs/upgrade/baseline3/v5_vi_dev_default.txt
+sha256: verified against eval-v5-vi-dev.sha256 (0df27ec4b45aa208...)
+recall@5 = 21/43 = 0.488   P@1 = 0.256   MRR = 0.354   chunk-hit@5 = 0.302   negative-pass = 0.500
+docs/upgrade/baseline3/v5_vi_heldout_default.txt
+sha256: verified against eval-v5-vi-heldout.sha256 (19f0e46aaff2ae25...)
+recall@5 = 36/62 = 0.581   P@1 = 0.387   MRR = 0.447   chunk-hit@5 = 0.242   negative-pass = 0.556
+docs/upgrade/baseline3/v5_vi_dev_dense.txt
+recall@5 = 0.512   P@1 = 0.279   MRR = 0.381   chunk-hit@5 = 0.326   negative-pass = 0.500
+docs/upgrade/baseline3/v5_vi_heldout_dense.txt
+recall@5 = 0.581   P@1 = 0.387   MRR = 0.444   chunk-hit@5 = 0.242   negative-pass = 0.556
+```

@@ -1,0 +1,25 @@
+set=eval_v5_vi_heldout.yaml questions=71 k=5
+sha256: verified against eval-v5-vi-heldout.sha256 (19f0e46aaff2ae25...)
+recall@5 = 36/62 = 0.581
+precision@1 = 24/62 = 0.387
+MRR = 0.447
+chunk-hit@5 = 0.242
+negative-pass = 0.556
+
+per category
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+code            11     0.636   0.636   0.636      0.273         -
+elrs_edgetx      6     0.667   0.333   0.458      0.167         -
+hwdef            6     0.833   0.333   0.528      0.667         -
+negative         9         -       -       -          -     0.556
+param           12     0.583   0.417   0.458      0.083         -
+protocol         9     0.444   0.444   0.444      0.111         -
+troubleshoot     6     0.667   0.500   0.556      0.500         -
+wiki            12     0.417   0.083   0.161      0.167         -
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+mixed           54     0.593   0.389   0.451      0.222         -
+vi              17     0.500   0.375   0.417      0.375     0.556
+
+wrote docs/upgrade/baseline3/v5_vi_heldout_default.json
