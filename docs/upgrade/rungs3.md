@@ -126,3 +126,37 @@ It was much worse everywhere: the declaration priority is doing real work for th
 and the rank-1 losses Rung 1 caused are smaller than the losses its removal creates. **Decision:
 rejected**, reverted. The Rung 1 regression on those categories therefore stays; it is a known limit
 in the report, not a fixed item.
+
+## Final configuration: one run per frozen set
+
+The shipped configuration is the V1 change only: BM25 with the Vietnamese normalisation, the folded
+multi-word glossary match and the out-of-scope refusal. Dense stays opt-in (`ARM_DENSE=1`) and the
+document prior stays behind `ARM_DOC_PRIOR=1`.
+
+`python -m research.eval_retrieval --set tests/eval_v5_vi_heldout.yaml --aggregate-only --no-floor`
+(`docs/upgrade/runs/final-v5_vi_heldout.txt`, run once):
+
+| split | n | recall@5 | P@1 | MRR | chunk-hit@5 | neg-pass |
+|---|---|---|---|---|---|---|
+| v5-vi held-out, baseline (B0) | 71 | 0.581 | 0.387 | 0.447 | 0.242 | 0.556 |
+| v5-vi held-out, shipped | 71 | 0.581 | 0.387 | 0.451 | 0.242 | 0.778 |
+
+Per category, shipped against baseline (recall@5 / MRR): `code` 0.636/0.636 unchanged, `elrs_edgetx`
+0.667/0.458 unchanged, `hwdef` 0.833/0.528 unchanged, `param` 0.583/0.458 -> 0.479 (MRR +0.021),
+`protocol` 0.444/0.444 unchanged, `troubleshoot` 0.667/0.556 unchanged, `wiki` 0.417/0.161 unchanged,
+`negative` 0.556 -> 0.778. No category lost recall@5; `param` is the only positive category that
+moved, and it moved up. Sample sizes are 6 to 12 per category, so 0.083 steps.
+
+The v4 guard sets, one run each (`docs/upgrade/runs/final-v4_*.txt`):
+
+| set | recall@5 | P@1 | MRR | neg-pass | floor |
+|---|---|---|---|---|---|
+| `eval_v4_heldout` (guard) | 0.738 (Rung 1: 0.723) | 0.323 | 0.482 (0.475) | 0.714 (0.571) | recall 0.70, MRR 0.45, neg 0.571 |
+| `eval_v4_neg_vi` | - | - | - | 0.750 (=) | 0.750 |
+
+**Ship bar, as written: not met.** It asks for `MRR +0.05` on v5-vi held-out; the shipped
+configuration measured **+0.004** (0.447 -> 0.451) with recall unchanged. The rest of the bar holds
+(no category lost 0.05, all v4 guard floors cleared, negative-pass rose sharply), and the release
+notes say so instead of claiming a win. Section 9 of `PHASE3_REPORT.md` records why the change is
+still the default: it is input normalisation plus an out-of-scope refusal, it is what lifts
+negative-pass from 0.556 to 0.778 on the new held-out set, and every alternative measured worse.

@@ -93,3 +93,27 @@ of every tool and would only change which item is lost, not how many. The 24 KB 
 three-excerpts-per-source rule are unchanged. Recorded rather than fixed: `troubleshoot` evidence is
 not byte-capped at all (only `results` is), which is why a 10 KB evidence list is possible; capping
 it would drop citations from frozen blackbox cases for no measured gain.
+
+## Phase 3 (Vietnamese), 2026-10-27
+
+| # | technique | v5-vi dev (recall / P@1 / MRR) | v5-vi held-out | decision |
+|---|---|---|---|---|
+| 1 | V1: chat normalisation (`vi.py`), folded multi-word glossary match, out-of-scope refusal | 0.535 / 0.279 / 0.389 (was 0.488 / 0.256 / 0.354) | 0.581 / 0.387 / 0.451 (was 0.581 / 0.387 / 0.447) | **kept, default** |
+| 2 | V1 with ASCII Vietnamese function words added to `STOPWORDS` | 0.605 / 0.326 / 0.448 | not measured | rejected: v5-vi dev negative-pass 0.500 -> 0.333, `eval_v4_neg_vi` 0.750 -> 0.583 |
+| 3 | V2: one vector per document as a topic prior, plus the chunk rerank (`ARM_DENSE=1`) | 0.535 / 0.279 / 0.408 (chunk rerank alone: 0.558 / 0.302 / 0.416) | not measured | rejected, stays behind `ARM_DOC_PRIOR=1` |
+| 4 | V3: drop the expansion terms from the FTS query when the user's own word is index vocabulary | 0.512 / 0.279 / 0.378 | not measured | rejected: costs 0.125 recall on v4 dev |
+| 5 | V5: declaration priority only for a parameter-shaped query | 0.442 / 0.186 / 0.290 | not measured | rejected: costs 0.062 recall on v4 dev |
+| 6 | V4: rebuild chunk vectors at 256/512 tokens | - | - | not attempted; measured estimate 164 min at 256 tokens, and the misses are absent candidates and gate refusals, not truncated chunks |
+
+Why V1 is the default although the written ship bar (MRR +0.05 on the new held-out set) was missed by
+0.046: it is input normalisation and a scope correction, not a new retrieval path; it is the only
+change in the ladder that lifts negative-pass on the set built to catch false answers (0.556 -> 0.778
+on v5-vi held-out, 0.571 -> 0.714 on the v4 guard); and no set regressed beyond the 0.01 tolerance
+(golden MRR -0.005). The bar, the measured delta and the reasoning are printed in
+`PHASE3_REPORT.md` section 9 rather than argued away.
+
+Safety: `safety_rules.yaml` was not touched. A chat-style zeroing request **without** an equals sign
+("dat arming check 0 dc ko") is answered rather than refused; the rules cover "=0", "0xffff",
+"to 0" and the verb-object forms. Recorded as a known limit instead of editing safety rules meaning,
+which the Phase 3 brief forbids. The seven chat-style variants of the six audited inputs that the
+rules do cover are pinned in `tests/test_safety_vi_chat.py`.

@@ -120,6 +120,22 @@ Dense moves dev up by +0.024 recall@5 and +0.027 MRR, and the held-out split not
 0.447 to 0.444). It stays where Phase 2 left it: off by default, measured here only as the
 starting point for the Phase 3 ladder.
 
+## Phase 3 shipped configuration (one held-out run)
+
+The Phase 3 default (V1: chat normalisation, folded multi-word glossary match, out-of-scope refusal)
+was measured **once** on the held-out split: `docs/upgrade/runs/final-v5_vi_heldout.txt`.
+
+| split | recall@5 | P@1 | MRR | chunk-hit@5 | neg-pass |
+|---|---|---|---|---|---|
+| held-out, B0 baseline | 0.581 | 0.387 | 0.447 | 0.242 | 0.556 |
+| held-out, shipped | 0.581 | 0.387 | 0.451 | 0.242 | 0.778 |
+
+Per script on the shipped run: `ascii-only` n=39 0.529 / 0.382 / 0.439, `diacritics` n=32
+0.643 / 0.393 / 0.465. So the no-diacritics half is still the weaker one, and it is the half the V1
+normaliser was aimed at; the dev split moved more (`ascii-only` recall@5 0.417 -> 0.500, `diacritics`
+0.579 unchanged) than the held-out split did. The ship bar (MRR +0.05) was not met; section 9 of
+`PHASE3_REPORT.md` records that plainly.
+
 ## What the baseline says about the ruler
 
 - The set is harder than v4's Vietnamese subset: held-out recall@5 0.581 here against 0.516 there
