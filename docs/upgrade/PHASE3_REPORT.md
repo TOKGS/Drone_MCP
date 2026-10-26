@@ -295,6 +295,8 @@ Pasted from `git log --oneline master..HEAD` at the end of the branch; `PROGRESS
 per-task hashes.
 
 ```
+f53f256 docs(phase3): how to reproduce the master baseline of the mention set
+5c55282 docs(phase3): record the re-audit commit and the commit list
 8f53802 test(phase3): re-audit gates, mention-set runs, and the updated report
 b0b2d5c fix(scope): refuse a foreign product only when no in-scope name is present, with the mention set
 2024000 docs(phase3): record the SHIP commit and the commit list
