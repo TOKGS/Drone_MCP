@@ -138,3 +138,18 @@ a Phase 2 target.
   keep that file, distinct documents 20 to 25). That agent reported those Copter parameters exist
   only in `Parameters.cpp`, so the moved questions re-anchor to a library-declared parameter in the
   same topic instead of inventing a path.
+
+## Phase 2 outcome
+
+The frozen held-out split was used five times in total, each logged in
+`docs/upgrade/DECISIONS.md`: the Phase 1 baseline, three Rung 1 builds (two rejected after a golden
+regression and a determinism defect) and the Rung 2 dense candidate. Final numbers per configuration:
+
+| configuration | recall@5 | P@1 | MRR | chunk-hit@5 | negative-pass |
+|---|---|---|---|---|---|
+| Phase 1 baseline | 0.692 | 0.369 | 0.493 | 0.369 | 0.571 |
+| Rung 1 lexical, default | 0.723 | 0.323 | 0.475 | 0.369 | 0.571 |
+| Rung 2 dense rerank, opt-in | 0.692 | 0.277 | 0.439 | 0.354 | 0.571 |
+
+Vietnamese remains the weak language: recall@5 0.516 against 0.906 for English in the default build.
+`docs/upgrade/UPGRADE_REPORT.md` has the per-category and per-language comparisons.

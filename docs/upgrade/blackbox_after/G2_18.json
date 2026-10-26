@@ -1,0 +1,59 @@
+{
+  "case": "G2_18",
+  "note": "same content as the C/D hit for ardupilot#c40fafc3a81dd1ad",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#c40fafc3a81dd1ad"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1018,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#c40fafc3a81dd1ad"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 6.9,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#c40fafc3a81dd1ad\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"crsf_helper.lua\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/modules/crsf_helper.lua#L78-L102\",\n  \"path\": \"libraries/AP_Scripting/modules/crsf_helper.lua\",\n  \"lines\": [\n    78,\n    102\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"libraries/AP_Scripting/modules/crsf_helper.lua\",\n  \"excerpt\": \"    return string.pack(\\\">BzBBz\\\", CRSF_PARAM_TYPE.COMMAND, name, status, timeout, info)\\nend\\n\\n-- ####################\\n-- # MENU PARSING\\n-- ####################\\n\\n-- Recursively parses a menu definition table and builds the CRSF menu structure.\\nlocal function parse_menu(menu_definition, parent_menu_obj)\\n    if not menu_definition.items or type(menu_definition.items) ~= \\\"table\\\" then\\n        return\\n    end\\n\\n    for _, item_def in ipairs(menu_definition.items) do\\n        local param_obj = nil\\n        local packed_data\\n\\n        if item_def.type == 'MENU' then\\n            param_obj = parent_menu_obj:ad\",\n  \"untrusted\": true,\n  \"text\": \"    return string.pack(\\\">BzBBz\\\", CRSF_PARAM_TYPE.COMMAND, name, status, timeout, info)\\nend\\n\\n-- ####################\\n-- # MENU PARSING\\n-- ####################\\n\\n-- Recursively parses a menu definition table and builds the CRSF menu structure.\\nlocal function parse_menu(menu_definition, parent_menu_obj)\\n    if not menu_definition.items or type(menu_definition.items) ~= \\\"table\\\" then\\n        return\\n    end\\n\\n    for _, item_def in ipairs(menu_definition.items) do\\n        local param_obj = nil\\n        local packed_data\\n\\n        if item_def.type == 'MENU' then\\n            param_obj = parent_menu_obj:add_menu(item_def.name)\\n            if param_obj then\\n                parse_menu(item_def, param_obj) -- Recurse into sub-menu\\n            else\\n                gcs:send_text(MAV_SEVERITY.WARNING, \\\"CRSF: Failed to create menu: \\\" .. item_def.name)\\n            end\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#c40fafc3a81dd1ad",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "crsf_helper.lua",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/modules/crsf_helper.lua#L78-L102",
+        "path": "libraries/AP_Scripting/modules/crsf_helper.lua",
+        "lines": [
+          78,
+          102
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "libraries/AP_Scripting/modules/crsf_helper.lua",
+        "excerpt": "    return string.pack(\">BzBBz\", CRSF_PARAM_TYPE.COMMAND, name, status, timeout, info)\nend\n\n-- ####################\n-- # MENU PARSING\n-- ####################\n\n-- Recursively parses a menu definition table and builds the CRSF menu structure.\nlocal function parse_menu(menu_definition, parent_menu_obj)\n    if not menu_definition.items or type(menu_definition.items) ~= \"table\" then\n        return\n    end\n\n    for _, item_def in ipairs(menu_definition.items) do\n        local param_obj = nil\n        local packed_data\n\n        if item_def.type == 'MENU' then\n            param_obj = parent_menu_obj:ad",
+        "untrusted": true,
+        "text": "    return string.pack(\">BzBBz\", CRSF_PARAM_TYPE.COMMAND, name, status, timeout, info)\nend\n\n-- ####################\n-- # MENU PARSING\n-- ####################\n\n-- Recursively parses a menu definition table and builds the CRSF menu structure.\nlocal function parse_menu(menu_definition, parent_menu_obj)\n    if not menu_definition.items or type(menu_definition.items) ~= \"table\" then\n        return\n    end\n\n    for _, item_def in ipairs(menu_definition.items) do\n        local param_obj = nil\n        local packed_data\n\n        if item_def.type == 'MENU' then\n            param_obj = parent_menu_obj:add_menu(item_def.name)\n            if param_obj then\n                parse_menu(item_def, param_obj) -- Recurse into sub-menu\n            else\n                gcs:send_text(MAV_SEVERITY.WARNING, \"CRSF: Failed to create menu: \" .. item_def.name)\n            end",
+        "served_from": "index"
+      }
+    }
+  }
+}

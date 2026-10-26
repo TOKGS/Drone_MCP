@@ -1,0 +1,14 @@
+cases compared: 110  identical: 98  changed: 12
+regressions: 0
+  B2_INDEX_STATUS | changed | found True->True | cites 0->0 results->0
+  C10 | changed | found True->True | cites 0->0 results->4
+  C5 | changed | found True->True | cites 0->0 results->3
+  C7 | changed | found True->True | cites 0->0 results->5
+  D1 | changed | found True->True | cites 0->0 results->4
+  E_INFO_01 | changed | found True->True | cites 9->9 results->0
+  E_INFO_02 | changed | found True->True | cites 9->8 results->0 citations 9->8
+  E_INFO_03 | changed | found True->True | cites 6->6 results->0
+  E_INFO_04 | changed | found True->True | cites 9->9 results->0
+  F_SQLI | changed | found True->True | cites 0->0 results->7
+  G2_01 | changed | found None->None | cites 0->0 results->0
+  G2_15 | changed | found None->None | cites 0->0 results->0

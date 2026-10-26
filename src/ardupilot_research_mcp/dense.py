@@ -31,10 +31,42 @@ def model_dir() -> Path:
     return Path(override) if override else config.data_dir() / "models" / "multilingual-e5-small"
 
 
+def model_file() -> Path:
+    """The ONNX file, whether it sits next to the tokenizer or in the model's onnx/ folder."""
+    folder = model_dir()
+    for candidate in (folder / "model.onnx", folder / "onnx" / "model.onnx"):
+        if candidate.exists():
+            return candidate
+    return folder / "model.onnx"
+
+
 def requested() -> bool:
     """Opt-in only: Rung 2 measured the rerank as worse on held-out v4, so unset means off."""
     value = os.environ.get("ARM_DENSE", "").strip().lower()
     return value in ("1", "true", "on", "yes")
+
+
+_WARNED: set[str] = set()
+
+
+def unavailable_reason(con: sqlite3.Connection) -> str | None:
+    """Why an explicitly requested dense retriever cannot run, or None when it can."""
+    try:
+        if con.execute("SELECT 1 FROM chunk_vectors LIMIT 1").fetchone() is None:
+            return "no chunk_vectors table (run: python -m research.build_vectors)"
+    except sqlite3.OperationalError:
+        return "no chunk_vectors table (run: python -m research.build_vectors)"
+    folder = model_dir()
+    if not model_file().exists():
+        return f"model.onnx missing at {folder} (set ARM_MODEL_DIR or download the model)"
+    if not (folder / "tokenizer.json").exists():
+        return f"tokenizer.json missing at {folder}"
+    try:
+        import onnxruntime  # noqa: F401,PLC0415 - optional dependency probe
+        import tokenizers  # noqa: F401,PLC0415 - optional dependency probe
+    except ImportError:
+        return "optional dependency missing (pip install -e '.[embeddings]')"
+    return None
 
 
 def stats(con: sqlite3.Connection) -> dict:
@@ -43,29 +75,40 @@ def stats(con: sqlite3.Connection) -> dict:
         rows, dim, size = con.execute(
             "SELECT COUNT(*), MAX(dim), SUM(LENGTH(vec)) FROM chunk_vectors").fetchone()
     except sqlite3.OperationalError:
-        return {"present": False, "vectors": 0}
+        rows, dim, size = 0, 0, 0
     meta = {}
     try:
         meta = dict(con.execute("SELECT key, value FROM chunk_vectors_meta"))
     except sqlite3.OperationalError:
         pass
+    reason = unavailable_reason(con)
+    if requested():
+        state = "enabled" if reason is None else "requested-but-unavailable"
+    else:
+        state = "available-opt-in" if reason is None else "absent"
     return {"present": bool(rows), "vectors": int(rows or 0), "dim": int(dim or 0),
             "size_mb": round((size or 0) / 1048576, 1),
-            "model": meta.get("model"), "built_at": meta.get("built_at")}
+            "model": meta.get("model"), "built_at": meta.get("built_at"),
+            "requested": requested(), "state": state, "unavailable_reason": reason}
 
 
 def available(con: sqlite3.Connection) -> bool:
     """Cheap probe: `stats()` aggregates over every vector blob, which is too slow per query."""
-    try:
-        if con.execute("SELECT 1 FROM chunk_vectors LIMIT 1").fetchone() is None:
-            return False
-    except sqlite3.OperationalError:
-        return False
-    return (model_dir() / "model.onnx").exists() and (model_dir() / "tokenizer.json").exists()
+    return unavailable_reason(con) is None
 
 
 def enabled(con: sqlite3.Connection) -> bool:
-    return requested() and available(con)
+    if not requested():
+        return False
+    reason = unavailable_reason(con)
+    if reason is None:
+        return True
+    key = f"{config.index_path()}|{reason}"
+    if key not in _WARNED:
+        _WARNED.add(key)
+        print(f"dense: ARM_DENSE is set but the retriever is unavailable: {reason}; "
+              f"using BM25", file=sys.stderr, flush=True)
+    return False
 
 
 def _load(con: sqlite3.Connection):
@@ -84,7 +127,7 @@ def _load(con: sqlite3.Connection):
     tokenizer = Tokenizer.from_file(str(model / "tokenizer.json"))
     tokenizer.enable_truncation(max_length=512)
     tokenizer.enable_padding(pad_id=1, pad_token="<pad>")
-    session = ort.InferenceSession(str(model / "model.onnx"), providers=["CPUExecutionProvider"])
+    session = ort.InferenceSession(str(model_file()), providers=["CPUExecutionProvider"])
     rows = con.execute(
         "SELECT v.vec, c.cite_hash FROM chunk_vectors v JOIN chunks c ON c.rowid = v.rowid"
         " ORDER BY v.rowid").fetchall()

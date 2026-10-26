@@ -87,3 +87,16 @@ Edit `ref` and `version_label` in `sources-4.6.yaml`, update the `ardupilot` ent
 `--rebuild-index`. `tests/test_variant.py` fails if the two files disagree, if the pin is not a
 `Copter-4.6.x` tag, or if the variant drifts from `sources.yaml` anywhere other than the ArduPilot
 pin and the `data/4.6` paths.
+
+## Dense vectors for this variant
+
+The 4.6 variant builds its own `data/4.6/index.sqlite`; nothing in this phase built vectors for it.
+`research/build_vectors.py` takes `--index`, so a variant can have its own vectors:
+
+```powershell
+python -m research.build_vectors --index data\4.6\index.sqlite --model data\models\multilingual-e5-small
+$env:ARM_DATA_DIR = "<repo>\data\4.6"
+$env:ARM_DENSE = "1"
+```
+
+Without that step the variant answers with BM25, and `index_status` reports `dense.state: absent`.

@@ -12,9 +12,65 @@ from ardupilot_research_mcp import config, dense, query, safety
 def test_the_vector_table_is_absent_on_a_plain_index() -> None:
     con = sqlite3.connect(":memory:")
     con.execute("CREATE TABLE chunks (rowid INTEGER PRIMARY KEY, cite_hash TEXT)")
-    assert dense.stats(con) == {"present": False, "vectors": 0}
+    stats = dense.stats(con)
+    assert stats["present"] is False and stats["vectors"] == 0
+    assert stats["state"] == "absent" and stats["requested"] is False
     assert dense.available(con) is False
     assert dense.enabled(con) is False
+
+
+def _index_with_vectors() -> sqlite3.Connection:
+    con = sqlite3.connect(":memory:")
+    con.execute("CREATE TABLE chunk_vectors (rowid INTEGER PRIMARY KEY, dim INTEGER, vec BLOB)")
+    con.execute("INSERT INTO chunk_vectors VALUES (1, 384, x'0001')")
+    return con
+
+
+def test_requested_but_unavailable_warns_once_with_the_reason(monkeypatch, capsys) -> None:
+    monkeypatch.setenv("ARM_DENSE", "1")
+    monkeypatch.setenv("ARM_MODEL_DIR", r"C:\definitely-missing-model-dir")
+    dense._WARNED.clear()
+    con = _index_with_vectors()
+
+    assert dense.enabled(con) is False
+    first = capsys.readouterr().err
+    assert "ARM_DENSE is set but the retriever is unavailable" in first
+    assert "model.onnx missing" in first
+
+    assert dense.enabled(con) is False
+    assert capsys.readouterr().err == "", "the warning must not repeat every query"
+
+    stats = dense.stats(con)
+    assert stats["state"] == "requested-but-unavailable"
+    assert stats["requested"] is True and stats["unavailable_reason"]
+
+
+def test_the_reason_names_a_missing_vector_table(monkeypatch) -> None:
+    monkeypatch.setenv("ARM_DENSE", "1")
+    con = sqlite3.connect(":memory:")
+    con.execute("CREATE TABLE chunks (rowid INTEGER PRIMARY KEY, cite_hash TEXT)")
+    reason = dense.unavailable_reason(con)
+    assert reason and "chunk_vectors" in reason and "build_vectors" in reason
+
+
+def test_the_hugging_face_onnx_layout_is_accepted(monkeypatch, tmp_path) -> None:
+    monkeypatch.delenv("ARM_DENSE", raising=False)
+    (tmp_path / "onnx").mkdir()
+    (tmp_path / "onnx" / "model.onnx").write_bytes(b"stub")
+    (tmp_path / "tokenizer.json").write_bytes(b"stub")
+    monkeypatch.setenv("ARM_MODEL_DIR", str(tmp_path))
+    assert dense.unavailable_reason(_index_with_vectors()) is None
+
+
+def test_unrequested_dense_reports_available_opt_in(monkeypatch, tmp_path) -> None:
+    monkeypatch.delenv("ARM_DENSE", raising=False)
+    (tmp_path / "model.onnx").write_bytes(b"stub")
+    (tmp_path / "tokenizer.json").write_bytes(b"stub")
+    monkeypatch.setenv("ARM_MODEL_DIR", str(tmp_path))
+    con = _index_with_vectors()
+    stats = dense.stats(con)
+    assert stats["state"] == "available-opt-in", stats
+    assert dense.enabled(con) is False, "available is not the same as switched on"
 
 
 def test_arm_dense_zero_forces_bm25_even_when_the_assets_exist(monkeypatch) -> None:
@@ -46,6 +102,8 @@ def _row(cite_hash: str) -> dict:
 def test_dense_rerank_lifts_the_more_similar_candidate() -> None:
     merged = {"a": (_row("a"), -10.0), "b": (_row("b"), -12.0)}
     scores = query._dense_reranked_scores(merged, [("b", 0.95)])
+    assert scores["a"] == -10.0
+    assert scores["b"] == -12.0 - query.DENSE_RERANK_WEIGHT * 0.95
     assert scores["b"] < scores["a"], "the similar candidate must overtake the better bm25 one"
 
 
@@ -79,3 +137,5 @@ def test_index_status_reports_the_dense_state() -> None:
     payload = query.index_status(db.connect())
     assert isinstance(payload["dense"], dict)
     assert payload["dense"]["present"] in (True, False)
+    assert payload["dense"]["state"] in ("enabled", "requested-but-unavailable",
+                                        "available-opt-in", "absent")

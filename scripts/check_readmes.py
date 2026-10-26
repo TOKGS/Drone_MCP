@@ -29,7 +29,7 @@ TELLS = [
 # One entry per number that must match in both files: label, pattern, human hint.
 NUMBERS = [
     ("tool count", r"\b14 (?:tools|tool)\b", "14 tools"),
-    ("test count", r"\b141 (?:passed|tests|test)\b", "141"),
+    ("test count", r"\b184 (?:passed|tests|test)\b", "184"),
     ("chunks", r"86 ?262", "86 262"),
     ("documents", r"7 ?356", "7 356"),
     ("params", r"5 ?089", "5 089"),

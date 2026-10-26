@@ -14,7 +14,7 @@ either carry a `cite_id`, a pinned permalink, an exact line range and a verbatim
 
 ```
 python -m ardupilot_research_mcp.server     # stdio MCP server, 14 tools
-python -m pytest -q                         # 141 passed
+python -m pytest -q                         # 184 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP`. Package `ardupilot-research-mcp` v0.1.0, Python 3.10 or newer.
@@ -89,10 +89,12 @@ python -m ardupilot_research_mcp.ingest.cli --all --rebuild-index
 python -m research.build_params      # @Param, @Bitmask and @Default into the params table
 python -m research.build_mavlink     # MAVLink XML into message and enum tables
 python -m ardupilot_research_mcp.ingest.cli --verify
+# optional, semantic retrieval only: python -m research.build_vectors   (about 68 minutes)
 ```
 
 Expect about five minutes and a 182 MB `data/index.sqlite`: 7 356 documents become 86 262 chunks,
 5 089 parameters, 397 MAVLink messages and 2 367 enum entries.
+The optional vector stage adds 63 MB and about an hour of CPU; everything else works without it.
 
 `--resume` is the default and skips files already indexed by hash. `--rebuild-index` recreates the
 SQLite file.
@@ -302,13 +304,16 @@ index, which is why markup-heavy wiki pages match prose queries without corrupti
 
 ## Configuration
 
-Three environment variables, with defaults filled in by the checkout:
+Six environment variables, with defaults filled in by the checkout:
 
 | Variable | Default | Meaning |
 |---|---|---|
 | `ARM_REPO_ROOT` | the checkout containing `src/` | where `sources.yaml`, `glossary.vi-en.yaml` and `scope.yaml` live |
 | `ARM_DATA_DIR` | `<repo>/data` | where `index.sqlite`, `corpus/` and `local/` live |
 | `GOVERNOR_HOME` | `<repo>/research` | where the quota ledger lives |
+| `ARM_SOURCES` | `<repo>/sources.yaml` | alternate pin set, for example `sources-4.6.yaml` |
+| `ARM_DENSE` | unset, off | `1` enables the optional semantic rerank (see below) |
+| `ARM_MODEL_DIR` | `<data>/models/multilingual-e5-small` | ONNX model and tokenizer directory |
 
 Because the index and the ledger resolve from these, you can keep isolated copies on one machine,
 for example one per worktree:
@@ -460,7 +465,7 @@ PATH, `PYTHONPATH`, cwd, environment variables and the `cmd /c` wrapper.
 ## Tests and gates
 
 ```powershell
-python -m pytest -q                                     # 141 passed
+python -m pytest -q                                     # 184 passed
 python scripts\check_traceability.py                    # requirement to test to result, failing=0
 python scripts\fidelity_scan.py                         # 86 262 chunks, 0 mismatch, PASS
 python scripts\check_param_citations.py                 # 5 089 parameters, 0 violations
@@ -477,7 +482,7 @@ Last measured on the merged tree with the index rebuilt from scratch:
 
 | Gate | Result |
 |---|---|
-| `pytest -q` | 141 passed, 1 skipped |
+| `pytest -q` | 184 passed, 1 skipped |
 | `fidelity_scan.py` | 86 262 chunks, 0 mismatch, PASS |
 | `check_param_citations.py` | 5 089 checked, 0 violations |
 | `check_traceability.py` | 22 requirements, failing=0 |
@@ -494,9 +499,9 @@ Last measured on the merged tree with the index rebuilt from scratch:
 `tests/conftest.py` resets the in-process rate guard between tests. The guard still enforces 60 calls
 per minute in production.
 
-Both `data/index.sqlite` and `data/corpus` are gitignored, so a fresh clone adapts instead of failing.
-With the index only, the one test that compares citations against source files skips, giving 133
-passed and 1 skipped. With the corpus extracted as well, all 134 run.
+Both `data/index.sqlite` and `data/corpus` are gitignored, so a fresh clone adapts instead of
+failing: modules that need the index or the corpus skip themselves. With both present the suite runs
+184 passed and 1 skipped; the skip is the directory-symlink escape test on this Windows account.
 
 ## Measured quality
 
@@ -509,6 +514,18 @@ passed and 1 skipped. With the corpus extracted as well, all 134 run.
 
 The fair instrument is v3 (`docs/eval-heldout-v3.md`). v1 and v2 are kept for honesty and are not used
 for scoring. Hashes are in `docs/heldout*.sha256`, and the evaluator refuses to run if a set changed.
+
+Eval set v4 is the current ruler: 125 questions written from corpus evidence, split into 53 dev and
+72 frozen held-out questions (`docs/eval-v4.md`). Held-out results, one row per configuration:
+
+| configuration | recall@5 | P@1 | MRR | chunk-hit@5 | negative-pass |
+|---|---|---|---|---|---|
+| Phase 1 baseline | 0.692 | 0.369 | 0.493 | 0.369 | 0.571 |
+| Rung 1 lexical, the default | 0.723 | 0.323 | 0.475 | 0.369 | 0.571 |
+| Rung 2 semantic rerank, opt-in | 0.692 | 0.277 | 0.439 | 0.354 | 0.571 |
+
+The Vietnamese subset is the weak spot: 0.516 recall@5 against 0.906 for English in the default
+build. Per category and per language: `docs/upgrade/rung1.md` and `docs/upgrade/rung2.md`.
 
 An independent tester froze 108 tool-level cases (`tests/blackbox_cases.md`, SHA-256
 `1b53e69…dcaf27`), ran them over one stdio session, and wrote `docs/blackbox/REPORT.md`, which scored
@@ -526,6 +543,27 @@ string missing a nibble, parameters that do not exist at the tag, expectations t
 The five scoring scripts were also run twice on the same raw output and produced byte-identical
 results, so the 92/16 verdict does not depend on run order or timing
 (`docs/blackbox/run2/determinism.md`).
+
+## Optional: semantic retrieval
+
+An ONNX e5-small retriever can rerank the BM25 candidates. It is off by default: measured on the
+frozen eval set v4 it did not beat the plain ranking (`docs/upgrade/rung2.md`).
+
+```powershell
+pip install -e ".[embeddings]"      # onnxruntime, tokenizers, numpy
+python -m research.build_vectors    # 86 262 chunks, 63 MB, about 68 minutes on 8 cores
+$env:ARM_DENSE = "1"                # opt in; unset means BM25 only
+```
+
+The model is `intfloat/multilingual-e5-small` (ONNX, 448.5 MB, MIT, see `docs/license-notes.md`),
+expected under `data/models/multilingual-e5-small/`; point `ARM_MODEL_DIR` elsewhere if needed. The
+index grows by 63 MB and the first search of a process spends about 7 s loading the vectors.
+
+Measured tradeoff on held-out v4: recall@5 0.692 against 0.723 and MRR 0.439 against 0.475 for the
+default ranking, so enable it only if your own questions look more semantic than identifier based.
+Missing extras, model or `chunk_vectors` table always fall back to BM25; `ARM_DENSE=1` with missing
+assets prints one warning naming the reason, and `index_status` reports
+`dense: {state: "requested-but-unavailable", unavailable_reason: ...}`.
 
 ## Reproduce the build
 

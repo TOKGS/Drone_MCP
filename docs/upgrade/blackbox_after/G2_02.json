@@ -1,0 +1,59 @@
+{
+  "case": "G2_02",
+  "note": "same content as the C/D hit for expresslrs#5ca3d45f5fa4a924",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "expresslrs#5ca3d45f5fa4a924"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1002,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "expresslrs#5ca3d45f5fa4a924"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 6.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"expresslrs#5ca3d45f5fa4a924\",\n  \"source_id\": \"expresslrs\",\n  \"repo\": \"ExpressLRS/ExpressLRS\",\n  \"ref\": \"4.1.0\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"crsf_protocol.h\",\n  \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L51-L91\",\n  \"path\": \"src/include/crsf_protocol.h\",\n  \"lines\": [\n    51,\n    91\n  ],\n  \"version\": \"ExpressLRS 4.1.0\",\n  \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n  \"heading_path\": \"src/include/crsf_protocol.h\",\n  \"excerpt\": \"#define CRSF_MSP_RESP_PAYLOAD_SIZE 58\\n#define CRSF_MSP_MAX_PAYLOAD_SIZE (CRSF_MSP_REQ_PAYLOAD_SIZE > CRSF_MSP_RESP_PAYLOAD_SIZE ? CRSF_MSP_REQ_PAYLOAD_SIZE : CRSF_MSP_RESP_PAYLOAD_SIZE)\\n\\ntypedef enum : uint8_t\\n{\\n    CRSF_FRAMETYPE_GPS = 0x02,\\n    CRSF_FRAMETYPE_GPS_TIME = 0x03,\\n    CRSF_FRAMETYPE_VARIO = 0x07,\\n    CRSF_FRAMETYPE_BATTERY_SENSOR = 0x08,\\n    CRSF_FRAMETYPE_BARO_ALTITUDE = 0x09,\\n    CRSF_FRAMETYPE_AIRSPEED = 0x0A,\\n    CRSF_FRAMETYPE_HEARTBEAT = 0x0B,\\n    CRSF_FRAMETYPE_RPM = 0x0C,\\n    CRSF_FRAMETYPE_TEMP = 0x0D,\\n    CRSF_FRAMETYPE_CELLS = 0x0E,\\n    CRSF_FRAMETYPE_LINK_STATISTICS =\",\n  \"untrusted\": true,\n  \"text\": \"#define CRSF_MSP_RESP_PAYLOAD_SIZE 58\\n#define CRSF_MSP_MAX_PAYLOAD_SIZE (CRSF_MSP_REQ_PAYLOAD_SIZE > CRSF_MSP_RESP_PAYLOAD_SIZE ? CRSF_MSP_REQ_PAYLOAD_SIZE : CRSF_MSP_RESP_PAYLOAD_SIZE)\\n\\ntypedef enum : uint8_t\\n{\\n    CRSF_FRAMETYPE_GPS = 0x02,\\n    CRSF_FRAMETYPE_GPS_TIME = 0x03,\\n    CRSF_FRAMETYPE_VARIO = 0x07,\\n    CRSF_FRAMETYPE_BATTERY_SENSOR = 0x08,\\n    CRSF_FRAMETYPE_BARO_ALTITUDE = 0x09,\\n    CRSF_FRAMETYPE_AIRSPEED = 0x0A,\\n    CRSF_FRAMETYPE_HEARTBEAT = 0x0B,\\n    CRSF_FRAMETYPE_RPM = 0x0C,\\n    CRSF_FRAMETYPE_TEMP = 0x0D,\\n    CRSF_FRAMETYPE_CELLS = 0x0E,\\n    CRSF_FRAMETYPE_LINK_STATISTICS = 0x14,\\n    CRSF_FRAMETYPE_RC_CHANNELS_PACKED = 0x16,\\n    CRSF_FRAMETYPE_ATTITUDE = 0x1E,\\n    CRSF_FRAMETYPE_FLIGHT_MODE = 0x21,\\n    // Extended Header Frames, range: 0x28 to 0x96\\n    CRSF_FRAMETYPE_DEVICE_PING = 0x28,\\n    CRSF_FRAMETYPE_DEVICE_INFO = 0x29,\\n    CRSF_FRAMETYPE_PARAMETER_SETTINGS_ENTRY = 0x2B,\\n    CRSF_FRAMETYPE_PARAMETER_READ = 0x2C,\\n    CRSF_FRAMETYPE_PARAMETER_WRITE = 0x2D,\\n    CRSF_FRAMETYPE_ELRS_STATUS = 0x2E, // ELRS good/bad packet count and status flags\\n\\n    CRSF_FRAMETYPE_COMMAND = 0x32,\\n    CRSF_FRAMETYPE_HANDSET = 0x3A,\\n\\n    // KISS frames\\n    CRSF_FRAMETYPE_KISS_REQ  = 0x78,\\n    CRSF_FRAMETYPE_KISS_RESP = 0x79,\\n    // MSP commands\\n    CRSF_FRAMETYPE_MSP_REQ = 0x7A,   // response request using msp sequence as command\\n    CRSF_FRAMETYPE_MSP_RESP = 0x7B,  // reply with 58 byte chunked binary\\n    CRSF_FRAMETYPE_MSP_WRITE = 0x7C, // write with 8 byte chunked binary (OpenTX outbound telemetry buffer limit)\\n    // Ardupilot frames\\n    CRSF_FRAMETYPE_ARDUPILOT_RESP = 0x80,\\n} crsf_frame_type_e;\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "expresslrs#5ca3d45f5fa4a924",
+        "source_id": "expresslrs",
+        "repo": "ExpressLRS/ExpressLRS",
+        "ref": "4.1.0",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "crsf_protocol.h",
+        "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/include/crsf_protocol.h#L51-L91",
+        "path": "src/include/crsf_protocol.h",
+        "lines": [
+          51,
+          91
+        ],
+        "version": "ExpressLRS 4.1.0",
+        "ingested_at": "2026-10-25T20:13:30+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:30+0700",
+        "heading_path": "src/include/crsf_protocol.h",
+        "excerpt": "#define CRSF_MSP_RESP_PAYLOAD_SIZE 58\n#define CRSF_MSP_MAX_PAYLOAD_SIZE (CRSF_MSP_REQ_PAYLOAD_SIZE > CRSF_MSP_RESP_PAYLOAD_SIZE ? CRSF_MSP_REQ_PAYLOAD_SIZE : CRSF_MSP_RESP_PAYLOAD_SIZE)\n\ntypedef enum : uint8_t\n{\n    CRSF_FRAMETYPE_GPS = 0x02,\n    CRSF_FRAMETYPE_GPS_TIME = 0x03,\n    CRSF_FRAMETYPE_VARIO = 0x07,\n    CRSF_FRAMETYPE_BATTERY_SENSOR = 0x08,\n    CRSF_FRAMETYPE_BARO_ALTITUDE = 0x09,\n    CRSF_FRAMETYPE_AIRSPEED = 0x0A,\n    CRSF_FRAMETYPE_HEARTBEAT = 0x0B,\n    CRSF_FRAMETYPE_RPM = 0x0C,\n    CRSF_FRAMETYPE_TEMP = 0x0D,\n    CRSF_FRAMETYPE_CELLS = 0x0E,\n    CRSF_FRAMETYPE_LINK_STATISTICS =",
+        "untrusted": true,
+        "text": "#define CRSF_MSP_RESP_PAYLOAD_SIZE 58\n#define CRSF_MSP_MAX_PAYLOAD_SIZE (CRSF_MSP_REQ_PAYLOAD_SIZE > CRSF_MSP_RESP_PAYLOAD_SIZE ? CRSF_MSP_REQ_PAYLOAD_SIZE : CRSF_MSP_RESP_PAYLOAD_SIZE)\n\ntypedef enum : uint8_t\n{\n    CRSF_FRAMETYPE_GPS = 0x02,\n    CRSF_FRAMETYPE_GPS_TIME = 0x03,\n    CRSF_FRAMETYPE_VARIO = 0x07,\n    CRSF_FRAMETYPE_BATTERY_SENSOR = 0x08,\n    CRSF_FRAMETYPE_BARO_ALTITUDE = 0x09,\n    CRSF_FRAMETYPE_AIRSPEED = 0x0A,\n    CRSF_FRAMETYPE_HEARTBEAT = 0x0B,\n    CRSF_FRAMETYPE_RPM = 0x0C,\n    CRSF_FRAMETYPE_TEMP = 0x0D,\n    CRSF_FRAMETYPE_CELLS = 0x0E,\n    CRSF_FRAMETYPE_LINK_STATISTICS = 0x14,\n    CRSF_FRAMETYPE_RC_CHANNELS_PACKED = 0x16,\n    CRSF_FRAMETYPE_ATTITUDE = 0x1E,\n    CRSF_FRAMETYPE_FLIGHT_MODE = 0x21,\n    // Extended Header Frames, range: 0x28 to 0x96\n    CRSF_FRAMETYPE_DEVICE_PING = 0x28,\n    CRSF_FRAMETYPE_DEVICE_INFO = 0x29,\n    CRSF_FRAMETYPE_PARAMETER_SETTINGS_ENTRY = 0x2B,\n    CRSF_FRAMETYPE_PARAMETER_READ = 0x2C,\n    CRSF_FRAMETYPE_PARAMETER_WRITE = 0x2D,\n    CRSF_FRAMETYPE_ELRS_STATUS = 0x2E, // ELRS good/bad packet count and status flags\n\n    CRSF_FRAMETYPE_COMMAND = 0x32,\n    CRSF_FRAMETYPE_HANDSET = 0x3A,\n\n    // KISS frames\n    CRSF_FRAMETYPE_KISS_REQ  = 0x78,\n    CRSF_FRAMETYPE_KISS_RESP = 0x79,\n    // MSP commands\n    CRSF_FRAMETYPE_MSP_REQ = 0x7A,   // response request using msp sequence as command\n    CRSF_FRAMETYPE_MSP_RESP = 0x7B,  // reply with 58 byte chunked binary\n    CRSF_FRAMETYPE_MSP_WRITE = 0x7C, // write with 8 byte chunked binary (OpenTX outbound telemetry buffer limit)\n    // Ardupilot frames\n    CRSF_FRAMETYPE_ARDUPILOT_RESP = 0x80,\n} crsf_frame_type_e;",
+        "served_from": "index"
+      }
+    }
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "case": "F_SQLI",
+  "note": "no crash, no injection",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "'; DROP TABLE chunks;--"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 81,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "'; DROP TABLE chunks;--"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 32.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"'; DROP TABLE chunks;--\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"crsf_spec#dcf5667793214464\",\n      \"source_id\": \"crsf_spec\",\n      \"repo\": \"tbs-fpv/tbs-crsf-spec\",\n      \"ref\": \"a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"crsf.md\",\n      \"url\": \"https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L47-L58\",\n      \"path\": \"crsf.md\",\n      \"lines\": [\n        47,\n        58\n      ],\n      \"version\": \"CRSF spec@a73f7dc\",\n      \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-4.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n      \"heading_path\": \"Table of Contents\",\n      \"excerpt\": \"  - [0x1E Attitude](#0x1e-attitude)\\n  - [0x1F MAVLink FC](#0x1f-mavlink-fc)\\n  - [0x21 Flight Mode](#0x21-flight-mode)\\n  - [0x22 ESP_NOW Messages](#0x22-esp_now-messages)\\n  - [0x23 GPS Home](#0x23-gps-home)\\n  - [0x27 Reserved](#0x27-reserved)\\n- [Extended Frame Types](#extended-frame-types)\\n  - [0x28 Parameter Ping Devices](#0x28-parameter-ping-devices)\\n  - [0x29 Parameter Device Information](#0x29-parameter-device-information)\\n  - [Chunks](#chunks)\\n  - [0x2B Parameter Settings (Entry)](#0x2b-parameter-settings-entry)\\n    - [Parameter Type Definitions & Hidden Bit](#parameter-type-definitions--h\",\n      \"untrusted\": true,\n      \"score\": -18.798\n    },\n    {\n      \"cite_id\": \"ardupilot#d9f0be3e8637224d\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"arming-checks.lua\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L10-L41\",\n      \"path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n      \"lines\": [\n        10,\n        41\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Scripting/applets/arming-checks.lua\",\n      \"excerpt\": \"--\\n-- Thanks to @yuri_rage and Peter Barker for help with the Lua and Autotests\\n\\nSCRIPT_VERSION = \\\"4.7.0-022\\\"\\nSCRIPT_NAME = \\\"Arming Checks\\\"\\nSCRIPT_NAME_SHORT = \\\"ArmCk\\\"\\n\\nREFRESH_DELAY = 500      -- wait this many milliseconds between each update loop (while not armed)\\nINITIAL_DELAY = 20000   -- wait 20 seconds for the AP to settle down before starting to show messages\\n\\nGLOBAL_PARAM_TABLE_BASE = 170\\nVALUES_PARAM_TABLE_KEY = GLOBAL_PARAM_TABLE_BASE + 9\\nVALUES_PARAM_TABLE_PREFIX = \\\"ARM_V_\\\"\\n\\nFIRMWARE = {GLOBAL = 0, ROVER = 1, COPTER = 2, PLANE = 3, ANTENNA = 4, SUB = 7, BLIMP = 12, HELI = 13 }\\nVEHI\",\n      \"untrusted\": true,\n      \"score\": -14.0989\n    },\n    {\n      \"cite_id\": \"ardupilot#fb0f074b9e1228b5\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"dma_parse.py\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py#L65-L91\",\n      \"path\": \"libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py\",\n      \"lines\": [\n        65,\n        91\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py\",\n      \"excerpt\": \"            if not ((1<<c) & stream_mask[i]):\\n                error(\\\"Missing stream %u for dma table %u\\\" % (c, i))\\n    \\n\\ntable = {}\\n\\nif len(sys.argv) != 2:\\n    print(\\\"Error: expected a CSV files and output file\\\")\\n    sys.exit(1)\\n\\nparse_dma_table(sys.argv[1], table)\\n\\ncheck_full_table(table)\\n\\nsys.stdout.write(\\\"DMA_Map = {\\\\n\\\");\\nsys.stdout.write('\\\\t# format is (DMA_TABLE, StreamNum, Channel)\\\\n')\\nsys.stdout.write('\\\\t# extracted from %s\\\\n' % os.path.basename(sys.argv[1]))\\n\\nfor k in sorted(table.keys()):\\n    s = '\\\"%s\\\"' % k\\n    sys.stdout.write('\\\\t%-10s\\\\t:\\\\t[' % s)\\n    for i in range(len(table[k])):\\n \",\n      \"untrusted\": true,\n      \"score\": -14.0182\n    },\n    {\n      \"cite_id\": \"ardupilot#db88c774990b2478\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"AP_ExpandingArray.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/AP_ExpandingArray.cpp#L13-L71\",\n      \"path\": \"libraries/AP_Common/AP_ExpandingArray.cpp\",\n      \"lines\": [\n        13,\n        71\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"libraries/AP_Common/AP_ExpandingArray.cpp\",\n      \"excerpt\": \"   along with this program.  If not, see <http://www.gnu.org/licenses/>.\\n */\\n\\n#include \\\"AP_ExpandingArray.h\\\"\\n#include <AP_HAL/AP_HAL.h>\\n\\n#ifndef HAL_BOOTLOADER_BUILD\\n\\nextern const AP_HAL::HAL& hal;\\n\\nAP_ExpandingArrayGeneric::~AP_ExpandingArrayGeneric(void)\\n{\\n    // free chunks\\n    for (uint16_t i=0; i<chunk_count; i++) {\\n        free(chunk_ptrs[i]);\\n    }\\n    // free chunks_ptrs array\\n    free(chunk_ptrs);\\n}\\n\\n// expand the array by specified number of chunks, returns true on success\\nbool AP_ExpandingArrayGeneric::expand(uint16_t num_chunks)\\n{\\n    // expand chunk_ptrs array if necessary\\n    if \",\n      \"untrusted\": true,\n      \"score\": -12.9337\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#06af75fea6310ae0\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"reefmaster-for-bathymetry.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/rover/source/docs/reefmaster-for-bathymetry.rst#L24-L29\",\n      \"path\": \"rover/source/docs/reefmaster-for-bathymetry.rst\",\n      \"lines\": [\n        24,\n        29\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"ReefMaster > Extract DPTH messages from the Onboard Log\",\n      \"excerpt\": \"- :ref:`Download the Onboard Logs over MAVLink <common-downloading-and-analyzing-data-logs-in-mission-planner>` or eject the autopilot's SD card, insert it into your PC and directly copy the .BIN files from the APM/LOGS directory to your PC\\n- Open the .BIN file using Mission Planner's Data >> DataFlash Logs >> Review a Log feature\\n- Check the \\\"Data Table\\\" checkbox, then click anywhere on the data table's column header and select \\\"DPTH\\\" from the drop-down and push the \\\"Filter\\\" button\\n\\n  .. image:: ../images/reefmaster-log-filter.png\\n      :target: ../_images/reefmaster-log-filter.png\",\n      \"untrusted\": true,\n      \"score\": -11.6681\n    },\n    {\n      \"cite_id\": \"expresslrs#8a9f7fddcb97ba95\",\n      \"source_id\": \"expresslrs\",\n      \"repo\": \"ExpressLRS/ExpressLRS\",\n      \"ref\": \"4.1.0\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"crsf.py\",\n      \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/python/crsf.py#L46-L99\",\n      \"path\": \"src/python/crsf.py\",\n      \"lines\": [\n        46,\n        99\n      ],\n      \"version\": \"ExpressLRS 4.1.0\",\n      \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n      \"heading_path\": \"src/python/crsf.py\",\n      \"excerpt\": \"    if device == 0xEE: return 'R/C Transmitter Module / Crossfire Tx'\\n    return None\\n\\n\\nnext_chunk = 0\\ndata = b''\\n\\n\\ndef process(command: bytes):\\n    if command[0] == 0x14: # Link Stats\\n        None\\n    elif command[0] == 0x16: # RC Packet\\n        None\\n    elif command[0] >= 0x28:\\n        type = command[0]\\n        print('Type: ' + hex(type))\\n        print('Dest: ' + device_name(command[1]))\\n        print('Orig: ' + device_name(command[2]))\\n        command = command[3:]\\n        if type == 0x29: # Parameter Device Info\\n            zero = command.index(0)\\n            print('Name: ' + str(command[:\",\n      \"untrusted\": true,\n      \"score\": -11.3143\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#60f7aba9d9bbed13\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"airspeed.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/airspeed.rst#L150-L152\",\n      \"path\": \"plane/source/docs/airspeed.rst\",\n      \"lines\": [\n        150,\n        152\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Failure > Balloon Drop\",\n      \"excerpt\": \"In the special case of a high altitude balloon drop, the EKF will declare the airspeed sensor faulty since there is gps speed but no airspeed due to air density. This can result in TECS miss-applying pitch. In this special case , the :ref:`AHRS_OPTIONS<AHRS_OPTIONS>` bit 2 can be set to prevent EKF from declaring the airspeed sensor as faulty and continue to use it.\\n\\n.. _arspd-sensor-list:\",\n      \"untrusted\": true,\n      \"score\": -11.259\n    }\n  ],\n  \"candidates\": [\n    \"crsf_spec#dcf5667793214464\",\n    \"ardupilot#d9f0be3e8637224d\",\n    \"ardupilot#fb0f074b9e1228b5\",\n    \"ardupilot#db88c774990b2478\",\n    \"ardupilot#5a38954cb61a3f7c\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 7\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "'; DROP TABLE chunks;--",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "crsf_spec#dcf5667793214464",
+            "source_id": "crsf_spec",
+            "repo": "tbs-fpv/tbs-crsf-spec",
+            "ref": "a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "crsf.md",
+            "url": "https://github.com/tbs-fpv/tbs-crsf-spec/blob/a73f7dc5386e5b8744aa4a23b3af5354ee0d4c92/crsf.md#L47-L58",
+            "path": "crsf.md",
+            "lines": [
+              47,
+              58
+            ],
+            "version": "CRSF spec@a73f7dc",
+            "ingested_at": "2026-10-25T20:13:33+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-4.0",
+            "retrieved_at": "2026-10-25T20:13:33+0700",
+            "heading_path": "Table of Contents",
+            "excerpt": "  - [0x1E Attitude](#0x1e-attitude)\n  - [0x1F MAVLink FC](#0x1f-mavlink-fc)\n  - [0x21 Flight Mode](#0x21-flight-mode)\n  - [0x22 ESP_NOW Messages](#0x22-esp_now-messages)\n  - [0x23 GPS Home](#0x23-gps-home)\n  - [0x27 Reserved](#0x27-reserved)\n- [Extended Frame Types](#extended-frame-types)\n  - [0x28 Parameter Ping Devices](#0x28-parameter-ping-devices)\n  - [0x29 Parameter Device Information](#0x29-parameter-device-information)\n  - [Chunks](#chunks)\n  - [0x2B Parameter Settings (Entry)](#0x2b-parameter-settings-entry)\n    - [Parameter Type Definitions & Hidden Bit](#parameter-type-definitions--h",
+            "untrusted": true,
+            "score": -18.798
+          },
+          {
+            "cite_id": "ardupilot#d9f0be3e8637224d",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "arming-checks.lua",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Scripting/applets/arming-checks.lua#L10-L41",
+            "path": "libraries/AP_Scripting/applets/arming-checks.lua",
+            "lines": [
+              10,
+              41
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Scripting/applets/arming-checks.lua",
+            "excerpt": "--\n-- Thanks to @yuri_rage and Peter Barker for help with the Lua and Autotests\n\nSCRIPT_VERSION = \"4.7.0-022\"\nSCRIPT_NAME = \"Arming Checks\"\nSCRIPT_NAME_SHORT = \"ArmCk\"\n\nREFRESH_DELAY = 500      -- wait this many milliseconds between each update loop (while not armed)\nINITIAL_DELAY = 20000   -- wait 20 seconds for the AP to settle down before starting to show messages\n\nGLOBAL_PARAM_TABLE_BASE = 170\nVALUES_PARAM_TABLE_KEY = GLOBAL_PARAM_TABLE_BASE + 9\nVALUES_PARAM_TABLE_PREFIX = \"ARM_V_\"\n\nFIRMWARE = {GLOBAL = 0, ROVER = 1, COPTER = 2, PLANE = 3, ANTENNA = 4, SUB = 7, BLIMP = 12, HELI = 13 }\nVEHI",
+            "untrusted": true,
+            "score": -14.0989
+          },
+          {
+            "cite_id": "ardupilot#fb0f074b9e1228b5",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "dma_parse.py",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py#L65-L91",
+            "path": "libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py",
+            "lines": [
+              65,
+              91
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_HAL_ChibiOS/hwdef/scripts/dma_parse.py",
+            "excerpt": "            if not ((1<<c) & stream_mask[i]):\n                error(\"Missing stream %u for dma table %u\" % (c, i))\n    \n\ntable = {}\n\nif len(sys.argv) != 2:\n    print(\"Error: expected a CSV files and output file\")\n    sys.exit(1)\n\nparse_dma_table(sys.argv[1], table)\n\ncheck_full_table(table)\n\nsys.stdout.write(\"DMA_Map = {\\n\");\nsys.stdout.write('\\t# format is (DMA_TABLE, StreamNum, Channel)\\n')\nsys.stdout.write('\\t# extracted from %s\\n' % os.path.basename(sys.argv[1]))\n\nfor k in sorted(table.keys()):\n    s = '\"%s\"' % k\n    sys.stdout.write('\\t%-10s\\t:\\t[' % s)\n    for i in range(len(table[k])):\n ",
+            "untrusted": true,
+            "score": -14.0182
+          },
+          {
+            "cite_id": "ardupilot#db88c774990b2478",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "AP_ExpandingArray.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Common/AP_ExpandingArray.cpp#L13-L71",
+            "path": "libraries/AP_Common/AP_ExpandingArray.cpp",
+            "lines": [
+              13,
+              71
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "libraries/AP_Common/AP_ExpandingArray.cpp",
+            "excerpt": "   along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\n#include \"AP_ExpandingArray.h\"\n#include <AP_HAL/AP_HAL.h>\n\n#ifndef HAL_BOOTLOADER_BUILD\n\nextern const AP_HAL::HAL& hal;\n\nAP_ExpandingArrayGeneric::~AP_ExpandingArrayGeneric(void)\n{\n    // free chunks\n    for (uint16_t i=0; i<chunk_count; i++) {\n        free(chunk_ptrs[i]);\n    }\n    // free chunks_ptrs array\n    free(chunk_ptrs);\n}\n\n// expand the array by specified number of chunks, returns true on success\nbool AP_ExpandingArrayGeneric::expand(uint16_t num_chunks)\n{\n    // expand chunk_ptrs array if necessary\n    if ",
+            "untrusted": true,
+            "score": -12.9337
+          },
+          {
+            "cite_id": "ardupilot_wiki#06af75fea6310ae0",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "reefmaster-for-bathymetry.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/rover/source/docs/reefmaster-for-bathymetry.rst#L24-L29",
+            "path": "rover/source/docs/reefmaster-for-bathymetry.rst",
+            "lines": [
+              24,
+              29
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "ReefMaster > Extract DPTH messages from the Onboard Log",
+            "excerpt": "- :ref:`Download the Onboard Logs over MAVLink <common-downloading-and-analyzing-data-logs-in-mission-planner>` or eject the autopilot's SD card, insert it into your PC and directly copy the .BIN files from the APM/LOGS directory to your PC\n- Open the .BIN file using Mission Planner's Data >> DataFlash Logs >> Review a Log feature\n- Check the \"Data Table\" checkbox, then click anywhere on the data table's column header and select \"DPTH\" from the drop-down and push the \"Filter\" button\n\n  .. image:: ../images/reefmaster-log-filter.png\n      :target: ../_images/reefmaster-log-filter.png",
+            "untrusted": true,
+            "score": -11.6681
+          },
+          {
+            "cite_id": "expresslrs#8a9f7fddcb97ba95",
+            "source_id": "expresslrs",
+            "repo": "ExpressLRS/ExpressLRS",
+            "ref": "4.1.0",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "crsf.py",
+            "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/python/crsf.py#L46-L99",
+            "path": "src/python/crsf.py",
+            "lines": [
+              46,
+              99
+            ],
+            "version": "ExpressLRS 4.1.0",
+            "ingested_at": "2026-10-25T20:13:30+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:30+0700",
+            "heading_path": "src/python/crsf.py",
+            "excerpt": "    if device == 0xEE: return 'R/C Transmitter Module / Crossfire Tx'\n    return None\n\n\nnext_chunk = 0\ndata = b''\n\n\ndef process(command: bytes):\n    if command[0] == 0x14: # Link Stats\n        None\n    elif command[0] == 0x16: # RC Packet\n        None\n    elif command[0] >= 0x28:\n        type = command[0]\n        print('Type: ' + hex(type))\n        print('Dest: ' + device_name(command[1]))\n        print('Orig: ' + device_name(command[2]))\n        command = command[3:]\n        if type == 0x29: # Parameter Device Info\n            zero = command.index(0)\n            print('Name: ' + str(command[:",
+            "untrusted": true,
+            "score": -11.3143
+          },
+          {
+            "cite_id": "ardupilot_wiki#60f7aba9d9bbed13",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "airspeed.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/airspeed.rst#L150-L152",
+            "path": "plane/source/docs/airspeed.rst",
+            "lines": [
+              150,
+              152
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Failure > Balloon Drop",
+            "excerpt": "In the special case of a high altitude balloon drop, the EKF will declare the airspeed sensor faulty since there is gps speed but no airspeed due to air density. This can result in TECS miss-applying pitch. In this special case , the :ref:`AHRS_OPTIONS<AHRS_OPTIONS>` bit 2 can be set to prevent EKF from declaring the airspeed sensor as faulty and continue to use it.\n\n.. _arspd-sensor-list:",
+            "untrusted": true,
+            "score": -11.259
+          }
+        ],
+        "candidates": [
+          "crsf_spec#dcf5667793214464",
+          "ardupilot#d9f0be3e8637224d",
+          "ardupilot#fb0f074b9e1228b5",
+          "ardupilot#db88c774990b2478",
+          "ardupilot#5a38954cb61a3f7c"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 7
+      }
+    }
+  }
+}

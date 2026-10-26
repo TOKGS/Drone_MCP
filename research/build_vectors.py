@@ -41,6 +41,8 @@ def _load_model(model_dir: Path, tokens: int):
     except ImportError as exc:  # pragma: no cover - environment dependent
         raise SystemExit("missing optional dependency; run: pip install -e '.[embeddings]'") from exc
     onnx_path = model_dir / "model.onnx"
+    if not onnx_path.exists():
+        onnx_path = model_dir / "onnx" / "model.onnx"     # Hugging Face export layout
     tokenizer_path = model_dir / "tokenizer.json"
     for path in (onnx_path, tokenizer_path):
         if not path.exists():
@@ -79,7 +81,9 @@ def main(argv: list[str] | None = None) -> int:
                         help="exit 0 when the model is absent instead of failing")
     args = parser.parse_args(argv)
 
-    if args.optional and not (Path(args.model) / "model.onnx").exists():
+    optional_model = Path(args.model)
+    if args.optional and not any((optional_model / name).exists()
+                                 for name in ("model.onnx", "onnx/model.onnx")):
         print(f"skipped: model not downloaded at {args.model}")
         return 0
     index = Path(args.index)

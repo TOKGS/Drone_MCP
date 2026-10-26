@@ -1,0 +1,164 @@
+{
+  "case": "B1_ARMING_SKIPCHK",
+  "note": "found + description/default must match the pinned tag",
+  "tool": "lookup_param",
+  "arguments": {
+    "name_or_pattern": "ARMING_SKIPCHK"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 36,
+    "method": "tools/call",
+    "params": {
+      "name": "lookup_param",
+      "arguments": {
+        "name_or_pattern": "ARMING_SKIPCHK"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 51.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"ARMING_SKIPCHK\",\n  \"vehicle\": \"ArduCopter\",\n  \"version_filter\": null,\n  \"resolved_by\": \"exact\",\n  \"params\": [\n    {\n      \"citation\": {\n        \"cite_id\": \"ardupilot#63566fa37e3fefce\",\n        \"source_id\": \"ardupilot\",\n        \"repo\": \"ArduPilot/ardupilot\",\n        \"ref\": \"Copter-4.7.2\",\n        \"channel\": \"stable\",\n        \"unreleased\": false,\n        \"pinned\": true,\n        \"title\": \"AP_Arming.cpp\",\n        \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L178-L205\",\n        \"path\": \"libraries/AP_Arming/AP_Arming.cpp\",\n        \"lines\": [\n          178,\n          205\n        ],\n        \"version\": \"Copter-4.7.2\",\n        \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n        \"tier\": \"T1\",\n        \"license\": \"GPL-3.0\",\n        \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n        \"heading_path\": \"libraries/AP_Arming/AP_Arming.cpp\",\n        \"excerpt\": \"    // @Param: SKIPCHK\\n    // @DisplayName: Arm Checks to Skip (bitmask)\\n    // @Description: Checks to skip prior to arming motor. This is a bitmask of checks before allowing arming that will be skipped. For most users it is recommended to leave this at the default of 0 (no checks skipped). In extreme circumstances, a value of -1 can be used to skip all non-mandatory current and future checks.\\n    // @Bitmask: 1:Barometer,2:Compass,3:GPS lock,4:INS,5:Parameters,6:RC Channels,7:Board voltage,8:Battery Level,10:Logging Available,11:Hardware safety switch,12:GPS Configuration,13:System,14:Missio\",\n        \"untrusted\": true,\n        \"excerpt_starts_at_line\": 195\n      },\n      \"name\": \"ARMING_SKIPCHK\",\n      \"name_raw\": \"SKIPCHK\",\n      \"name_suffix\": \"SKIPCHK\",\n      \"prefix\": \"ARMING_\",\n      \"prefix_origin\": \"ArduCopter/Parameters.cpp:238\",\n      \"display_name\": \"Arm Checks to Skip (bitmask)\",\n      \"description\": \"Checks to skip prior to arming motor. This is a bitmask of checks before allowing arming that will be skipped. For most users it is recommended to leave this at the default of 0 (no checks skipped). In extreme circumstances, a value of -1 can be used to skip all non-mandatory current and future checks.\",\n      \"vehicle\": \"shared\",\n      \"version\": \"Copter-4.7.2\",\n      \"units\": null,\n      \"range\": null,\n      \"default_raw\": \"0\",\n      \"default\": 0.0,\n      \"default_resolved\": true,\n      \"reboot_required\": false,\n      \"values\": null,\n      \"bitmask\": [\n        {\n          \"bit\": 1,\n          \"name\": \"Barometer\"\n        },\n        {\n          \"bit\": 2,\n          \"name\": \"Compass\"\n        },\n        {\n          \"bit\": 3,\n          \"name\": \"GPS lock\"\n        },\n        {\n          \"bit\": 4,\n          \"name\": \"INS\"\n        },\n        {\n          \"bit\": 5,\n          \"name\": \"Parameters\"\n        },\n        {\n          \"bit\": 6,\n          \"name\": \"RC Channels\"\n        },\n        {\n          \"bit\": 7,\n          \"name\": \"Board voltage\"\n        },\n        {\n          \"bit\": 8,\n          \"name\": \"Battery Level\"\n        },\n        {\n          \"bit\": 10,\n          \"name\": \"Logging Available\"\n        },\n        {\n          \"bit\": 11,\n          \"name\": \"Hardware safety switch\"\n        },\n        {\n          \"bit\": 12,\n          \"name\": \"GPS Configuration\"\n        },\n        {\n          \"bit\": 13,\n          \"name\": \"System\"\n        },\n        {\n          \"bit\": 14,\n          \"name\": \"Mission\"\n        },\n        {\n          \"bit\": 15,\n          \"name\": \"Rangefinder\"\n        },\n        {\n          \"bit\": 16,\n          \"name\": \"Camera\"\n        },\n        {\n          \"bit\": 17,\n          \"name\": \"AuxAuth\"\n        },\n        {\n          \"bit\": 18,\n          \"name\": \"VisualOdometry\"\n        },\n        {\n          \"bit\": 19,\n          \"name\": \"FFT\"\n        }\n      ],\n      \"resolved_by\": \"exact\"\n    }\n  ],\n  \"candidates\": [\n    \"ARMING_SKIPCHK\"\n  ],\n  \"note\": null\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "ARMING_SKIPCHK",
+        "vehicle": "ArduCopter",
+        "version_filter": null,
+        "resolved_by": "exact",
+        "params": [
+          {
+            "citation": {
+              "cite_id": "ardupilot#63566fa37e3fefce",
+              "source_id": "ardupilot",
+              "repo": "ArduPilot/ardupilot",
+              "ref": "Copter-4.7.2",
+              "channel": "stable",
+              "unreleased": false,
+              "pinned": true,
+              "title": "AP_Arming.cpp",
+              "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_Arming/AP_Arming.cpp#L178-L205",
+              "path": "libraries/AP_Arming/AP_Arming.cpp",
+              "lines": [
+                178,
+                205
+              ],
+              "version": "Copter-4.7.2",
+              "ingested_at": "2026-10-25T20:13:02+0700",
+              "tier": "T1",
+              "license": "GPL-3.0",
+              "retrieved_at": "2026-10-25T20:13:02+0700",
+              "heading_path": "libraries/AP_Arming/AP_Arming.cpp",
+              "excerpt": "    // @Param: SKIPCHK\n    // @DisplayName: Arm Checks to Skip (bitmask)\n    // @Description: Checks to skip prior to arming motor. This is a bitmask of checks before allowing arming that will be skipped. For most users it is recommended to leave this at the default of 0 (no checks skipped). In extreme circumstances, a value of -1 can be used to skip all non-mandatory current and future checks.\n    // @Bitmask: 1:Barometer,2:Compass,3:GPS lock,4:INS,5:Parameters,6:RC Channels,7:Board voltage,8:Battery Level,10:Logging Available,11:Hardware safety switch,12:GPS Configuration,13:System,14:Missio",
+              "untrusted": true,
+              "excerpt_starts_at_line": 195
+            },
+            "name": "ARMING_SKIPCHK",
+            "name_raw": "SKIPCHK",
+            "name_suffix": "SKIPCHK",
+            "prefix": "ARMING_",
+            "prefix_origin": "ArduCopter/Parameters.cpp:238",
+            "display_name": "Arm Checks to Skip (bitmask)",
+            "description": "Checks to skip prior to arming motor. This is a bitmask of checks before allowing arming that will be skipped. For most users it is recommended to leave this at the default of 0 (no checks skipped). In extreme circumstances, a value of -1 can be used to skip all non-mandatory current and future checks.",
+            "vehicle": "shared",
+            "version": "Copter-4.7.2",
+            "units": null,
+            "range": null,
+            "default_raw": "0",
+            "default": 0.0,
+            "default_resolved": true,
+            "reboot_required": false,
+            "values": null,
+            "bitmask": [
+              {
+                "bit": 1,
+                "name": "Barometer"
+              },
+              {
+                "bit": 2,
+                "name": "Compass"
+              },
+              {
+                "bit": 3,
+                "name": "GPS lock"
+              },
+              {
+                "bit": 4,
+                "name": "INS"
+              },
+              {
+                "bit": 5,
+                "name": "Parameters"
+              },
+              {
+                "bit": 6,
+                "name": "RC Channels"
+              },
+              {
+                "bit": 7,
+                "name": "Board voltage"
+              },
+              {
+                "bit": 8,
+                "name": "Battery Level"
+              },
+              {
+                "bit": 10,
+                "name": "Logging Available"
+              },
+              {
+                "bit": 11,
+                "name": "Hardware safety switch"
+              },
+              {
+                "bit": 12,
+                "name": "GPS Configuration"
+              },
+              {
+                "bit": 13,
+                "name": "System"
+              },
+              {
+                "bit": 14,
+                "name": "Mission"
+              },
+              {
+                "bit": 15,
+                "name": "Rangefinder"
+              },
+              {
+                "bit": 16,
+                "name": "Camera"
+              },
+              {
+                "bit": 17,
+                "name": "AuxAuth"
+              },
+              {
+                "bit": 18,
+                "name": "VisualOdometry"
+              },
+              {
+                "bit": 19,
+                "name": "FFT"
+              }
+            ],
+            "resolved_by": "exact"
+          }
+        ],
+        "candidates": [
+          "ARMING_SKIPCHK"
+        ],
+        "note": null
+      }
+    }
+  }
+}

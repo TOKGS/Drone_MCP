@@ -1,0 +1,50 @@
+{
+  "case": "A8_NOT_A_MSG",
+  "note": "found:false for an unknown message name",
+  "tool": "mavlink_message",
+  "arguments": {
+    "name_or_id": "NOT_A_MSG"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 19,
+    "method": "tools/call",
+    "params": {
+      "name": "mavlink_message",
+      "arguments": {
+        "name_or_id": "NOT_A_MSG"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 12.0,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": false,\n  \"query\": \"NOT_A_MSG\",\n  \"candidates\": [\n    \"HEARTBEAT\",\n    \"SYS_STATUS\",\n    \"SYSTEM_TIME\",\n    \"PING\",\n    \"CHANGE_OPERATOR_CONTROL\",\n    \"CHANGE_OPERATOR_CONTROL_ACK\",\n    \"AUTH_KEY\",\n    \"LINK_NODE_STATUS\",\n    \"SET_MODE\",\n    \"PARAM_REQUEST_READ\"\n  ],\n  \"note\": \"unknown MAVLink name; nothing was invented\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": false,
+        "query": "NOT_A_MSG",
+        "candidates": [
+          "HEARTBEAT",
+          "SYS_STATUS",
+          "SYSTEM_TIME",
+          "PING",
+          "CHANGE_OPERATOR_CONTROL",
+          "CHANGE_OPERATOR_CONTROL_ACK",
+          "AUTH_KEY",
+          "LINK_NODE_STATUS",
+          "SET_MODE",
+          "PARAM_REQUEST_READ"
+        ],
+        "note": "unknown MAVLink name; nothing was invented"
+      }
+    }
+  }
+}

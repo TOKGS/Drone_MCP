@@ -79,6 +79,18 @@ MUTANTS = [
     Mutant("M15", "query.py", 'score -= 6.0 * sum(1 for token in identifiers if token in row["text"])',
            'score -= 0.0 * sum(1 for token in identifiers if token in row["text"])',
            ["tests/test_query.py", "tests/test_params.py"], "identifier boost removed"),
+    Mutant("M16", "dense.py", "return value in (\"1\", \"true\", \"on\", \"yes\")",
+           "return True",
+           ["tests/test_dense.py"], "dense auto-enables without the opt-in flag"),
+    Mutant("M17", "dense.py", "return unavailable_reason(con) is None",
+           "return True",
+           ["tests/test_dense.py"], "missing table/model reported as available"),
+    Mutant("M18", "dense.py", "if key not in _WARNED:", "if True:",
+           ["tests/test_dense.py"], "requested-but-unavailable warning repeats every query"),
+    Mutant("M19", "query.py",
+           'rank - DENSE_RERANK_WEIGHT * similarity.get(row["cite_hash"], 0.0)',
+           'rank + DENSE_RERANK_WEIGHT * similarity.get(row["cite_hash"], 0.0)',
+           ["tests/test_dense.py"], "dense rerank sign inverted"),
 ]
 
 

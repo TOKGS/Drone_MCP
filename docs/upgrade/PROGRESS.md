@@ -101,13 +101,13 @@ wheel workaround (or one approved install outside the sandbox).
 - [x] P1-B question writers           owner: WP-B1 + WP-B2 + WP-B3 (subagents)  commit: 7d6a4c3  evidence: 45 + 50 + 30 = 125 questions, every fragment `errors: 0`
 - [x] P1-C validation script          owner: lead  commit: 37c2c45  evidence: self-test fragment produced the 6 planted error codes, 7 tests
 - [x] P1-D merge and split            owner: lead  commit: 7d6a4c3  evidence: 125 merged, dev 53 / held-out 72, stratified by (category, lang), seed 20261026
-- [x] P1-E freeze                      owner: lead  commit: 7d6a4c3  evidence: docs/eval-v4-dev.sha256 `7f22f9cf...`, docs/eval-v4-heldout.sha256 `cf9d2035...`, scratch deleted
+- [x] P1-E freeze                      owner: lead  commit: 7d6a4c3  evidence: docs/eval-v4-dev.sha256 `7f22f9cf...`, docs/eval-v4-heldout.sha256 `cf9d2035...`, scratch deleted (re-frozen as `5500cf0f...` in 1fe401b after one case-insensitive path was corrected)
 - [x] P1-F baseline v4                owner: lead  commit: 7d6a4c3  evidence: docs/upgrade/baseline/{dev,heldout,golden,v3}.json + docs/eval-v4.md
 - [x] Rung 0 baseline                 owner: lead  commit: 24a91fa  evidence: docs/upgrade/baseline/
 - [x] Rung 1 lexical                  owner: lead  commit: ade40be (code) + 96ebc24  evidence: dev 0.583->0.833 recall, held-out 0.692->0.723, negatives held, bench 237.5 ms
 - [x] Rung 2 dense + fusion           owner: lead  commit: c6527fd  evidence: built + measured; held-out 0.692/0.277/0.439 -> rejected as default, opt-in ARM_DENSE=1
-- [ ] Rung 3 rerank (optional)        owner:      commit:      evidence:
-- [ ] WP-G docs and gates             owner:      commit:      evidence:
+- [x] Rung 3 rerank (optional)        owner: -    commit: -    evidence: skipped by the brief's own condition (only if Rung 2 helps); Rung 2 did not help
+- [x] WP-G docs and gates             owner: lead  commit: (wp-g commit)  evidence: README.md + README.vi.md (184 tests, eval v4 table, optional dense section, 6 env vars, vector stage), CLAUDE.md, docs/eval-v4.md, docs/variant-4.6.md, UPGRADE_REPORT.md, all section-8 gates run
 
 ## Phase 1 result (raw)
 
@@ -203,8 +203,41 @@ per-language three-way comparison, the dev ablation ladder and the latency cavea
 `docs/upgrade/rung2.md`. Raw runs: `docs/upgrade/runs/rung2-*`.
 
 
+## Phase 2 final gates (2026-10-26, raw)
+
+```
+pytest -q                                        184 passed, 1 skipped in 42.54s
+check_readmes.py                                 readme check: PASS
+check_traceability.py                            requirements=22 failing=0 known_tests=173, 185 collected
+fidelity_scan.py                                 TOTAL 86262 0, fidelity: PASS
+check_param_citations.py                         params checked: 5089, violations: 0
+research.verify_citations                         chunk/line verification: PASS
+research.audit_safety                            six inputs, four refusals, informational question not blocked
+bench.py                                         search_docs p50 64.2 ms p95 222.1 ms max 325.3 ms, cold start 71 ms, PASS
+mutation_check.py                                mutants=18 killed=17 survived=1 score=0.944, survivor M15, equivalent M12
+golden.yaml                                      recall@5 1.000, P@1 0.800, MRR 0.886
+heldout_v3.yaml                                  recall@5 0.933, P@1 0.833, MRR 0.868
+eval_v4_heldout --compare baseline -> rung 1     flagged drops: 4
+eval_v4_heldout --compare baseline -> rung 2     flagged drops: 8
+blackbox_run.py --out docs/upgrade/blackbox_after cases_run=110
+blackbox vs docs/blackbox/run3                   110 compared, 98 identical, 12 changed, 0 regressions
+safety + offline suites, dense absent            35 passed
+safety + offline suites, dense enabled           35 passed
+dense requested on an index without vectors      BM25 answer, one warning naming the reason, state requested-but-unavailable
+```
+
+Raw files: `docs/upgrade/gates/*.txt`, blackbox payloads `docs/upgrade/blackbox_after/`.
+The mutation survivor is disclosed, not hidden: `M15` removes the text identifier boost and is masked
+by the path identifier boost added in Rung 1, so the score is 0.944 instead of the historical 1.000.
+Full report: `docs/upgrade/UPGRADE_REPORT.md`.
+
+
 ## Decisions
 
+- 2026-10-26: WP-G closed. Both READMEs carry the real test count, the eval v4 table and the
+  optional dense section; CLAUDE.md documents the new files, the v4 rules, the extras and the
+  fallback; UPGRADE_REPORT.md has the eleven sections. Bench re-measured on the quiet machine
+  (p95 222.1 ms) after the loaded window that produced the earlier failure.
 - 2026-10-26: Rung 2 built the dense path and rejected it as the default. Held-out MRR 0.439 against the 0.543 bar; the rerank is opt-in behind ARM_DENSE=1 and the default stays BM25 (docs/upgrade/rung2.md). Bench p95 could not be re-verified on this loaded machine: the Rung 1 code fails the same budget in interleaved runs, so no Rung 2 regression is claimed or inferred.
 - 2026-10-26: Rung 1 kept four changes (glossary growth, parameter-declaration priority,
   Vietnamese anchor relaxation, test-harness penalty). Held-out P@1/MRR moved -0.015/-0.003
