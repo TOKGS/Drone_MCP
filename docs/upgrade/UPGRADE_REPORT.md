@@ -13,8 +13,9 @@ Branch `feat/eval-v4-hybrid-retrieval`, 2026-10-26. Authority: `docs/upgrade/GOA
   (baseline 0.692 / 0.369 / 0.493 / 0.571).
 - Dense opt-in on the same split: 0.692 / 0.277 / 0.439 / 0.571. Golden 1.000 / 0.833 / 0.908, v3
   0.933 / 0.833 / 0.868, bench p95 222.1 ms against a 400 ms budget.
-- Tests 184 passed, 1 skipped; 19 mutation mutants, 17 killed, score 0.944 (target 0.90); blackbox
-  110 cases, 98 identical to run3, 0 regressions.
+- Tests 184 passed, 1 skipped; mutation `mutants=18 killed=17 survived=1 errors=0 equivalent=1
+  score=0.944` (target 0.90), where 18 is the scored set and the equivalent mutant `M12` is excluded
+  from the score; blackbox 110 cases, 98 identical to run3, 0 regressions.
 
 ## 2. Phase 1 evidence
 
