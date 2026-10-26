@@ -281,4 +281,8 @@ c95a911 docs(upgrade): record the Rung 1 commit hash
 5bbe588 fix(upgrade): restore PROGRESS.md, truncated to 0 bytes in 84bee96
 ```
 
-WP-G and the final gates add one more commit on top of this list; `PROGRESS.md` carries its hash.
+```
+f743d9e docs(upgrade): WP-G close-out, final gates, and the Phase 2 report
+```
+
+`PROGRESS.md` records `f743d9e`; the commit after it only writes that hash into the progress file.
