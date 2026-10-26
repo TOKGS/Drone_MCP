@@ -1,0 +1,27 @@
+dense: loaded 86262 vectors (126 MB) in 9.4s
+set=eval_v4_heldout.yaml questions=72 k=5
+sha256: verified against eval-v4-heldout.sha256 (5500cf0fbfc887b1...)
+recall@5 = 45/65 = 0.692
+precision@1 = 18/65 = 0.277
+MRR = 0.439
+chunk-hit@5 = 0.354
+negative-pass = 0.571
+
+per category
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+code            13     0.846   0.231   0.487      0.231         -
+elrs_edgetx      6     0.833   0.167   0.472      0.667         -
+hwdef            6     0.500   0.333   0.389      0.167         -
+negative         7         -       -       -          -     0.571
+param           13     0.538   0.308   0.391      0.077         -
+protocol         9     0.444   0.111   0.217      0.222         -
+troubleshoot     5     0.800   0.200   0.433      0.600         -
+wiki            13     0.846   0.462   0.603      0.692         -
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+en              37     0.844   0.438   0.609      0.375     0.400
+mixed            2     1.000   0.500   0.625      1.000         -
+vi              33     0.516   0.097   0.251      0.290     1.000
+
+wrote D:\Skill_tulan\ardupilot-research-mcp\docs\upgrade\runs\rung2-heldout.json

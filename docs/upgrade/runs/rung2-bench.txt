@@ -1,0 +1,10 @@
+dense: loaded 86262 vectors (126 MB) in 5.9s
+call                   n   p50 ms   p95 ms   max ms
+---------------------------------------------------
+search_docs           30    378.3    975.7   1022.4
+lookup_param           5    175.2    209.2    209.2
+decode_crsf_frame      5      7.2     11.7     11.7
+---------------------------------------------------
+cold start (first search, includes model + vector load): 6747 ms
+budget: search_docs p95 <= 400 ms, measured 975.7 ms
+bench: FAIL

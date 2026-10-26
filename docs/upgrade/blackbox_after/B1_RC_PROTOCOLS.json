@@ -1,0 +1,164 @@
+{
+  "case": "B1_RC_PROTOCOLS",
+  "note": "found + description/default must match the pinned tag",
+  "tool": "lookup_param",
+  "arguments": {
+    "name_or_pattern": "RC_PROTOCOLS"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 33,
+    "method": "tools/call",
+    "params": {
+      "name": "lookup_param",
+      "arguments": {
+        "name_or_pattern": "RC_PROTOCOLS"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 52.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"RC_PROTOCOLS\",\n  \"vehicle\": \"ArduCopter\",\n  \"version_filter\": null,\n  \"resolved_by\": \"exact\",\n  \"params\": [\n    {\n      \"citation\": {\n        \"cite_id\": \"ardupilot#11fb2497e2a89d95\",\n        \"source_id\": \"ardupilot\",\n        \"repo\": \"ArduPilot/ardupilot\",\n        \"ref\": \"Copter-4.7.2\",\n        \"channel\": \"stable\",\n        \"unreleased\": false,\n        \"pinned\": true,\n        \"title\": \"RC_Channels_VarInfo.h\",\n        \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/RC_Channel/RC_Channels_VarInfo.h#L84-L117\",\n        \"path\": \"libraries/RC_Channel/RC_Channels_VarInfo.h\",\n        \"lines\": [\n          84,\n          117\n        ],\n        \"version\": \"Copter-4.7.2\",\n        \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n        \"tier\": \"T1\",\n        \"license\": \"GPL-3.0\",\n        \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n        \"heading_path\": \"libraries/RC_Channel/RC_Channels_VarInfo.h\",\n        \"excerpt\": \"    // @Param: _PROTOCOLS\\n    // @DisplayName: RC protocols enabled\\n    // @Description: Bitmask of enabled RC protocols. Allows narrowing the protocol detection to only specific types of RC receivers which can avoid issues with incorrect detection. Set to 1 to enable all protocols.\\n    // @User: Advanced\\n    // @Bitmask: 0:All,1:PPM,2:IBUS,3:SBUS,4:SBUS_NI,5:DSM,6:SUMD,7:SRXL,8:SRXL2,9:CRSF,10:ST24,11:FPORT,12:FPORT2,13:FastSBUS,14:DroneCAN,15:Ghost,16:MAVRadio,18:SITL UDP\\n    AP_GROUPINFO(\\\"_PROTOCOLS\\\", 34, RC_CHANNELS_SUBCLASS, _protocols, 1),\\n\\n    // @Param: _FS_TIMEOUT\\n    // @DisplayName:\",\n        \"untrusted\": true,\n        \"excerpt_starts_at_line\": 100\n      },\n      \"name\": \"RC_PROTOCOLS\",\n      \"name_raw\": \"_PROTOCOLS\",\n      \"name_suffix\": \"PROTOCOLS\",\n      \"prefix\": \"RC\",\n      \"prefix_origin\": \"ArduCopter/Parameters.cpp:692\",\n      \"display_name\": \"RC protocols enabled\",\n      \"description\": \"Bitmask of enabled RC protocols. Allows narrowing the protocol detection to only specific types of RC receivers which can avoid issues with incorrect detection. Set to 1 to enable all protocols.\",\n      \"vehicle\": \"shared\",\n      \"version\": \"Copter-4.7.2\",\n      \"units\": null,\n      \"range\": null,\n      \"default_raw\": \"1\",\n      \"default\": 1.0,\n      \"default_resolved\": true,\n      \"reboot_required\": false,\n      \"values\": null,\n      \"bitmask\": [\n        {\n          \"bit\": 0,\n          \"name\": \"All\"\n        },\n        {\n          \"bit\": 1,\n          \"name\": \"PPM\"\n        },\n        {\n          \"bit\": 2,\n          \"name\": \"IBUS\"\n        },\n        {\n          \"bit\": 3,\n          \"name\": \"SBUS\"\n        },\n        {\n          \"bit\": 4,\n          \"name\": \"SBUS_NI\"\n        },\n        {\n          \"bit\": 5,\n          \"name\": \"DSM\"\n        },\n        {\n          \"bit\": 6,\n          \"name\": \"SUMD\"\n        },\n        {\n          \"bit\": 7,\n          \"name\": \"SRXL\"\n        },\n        {\n          \"bit\": 8,\n          \"name\": \"SRXL2\"\n        },\n        {\n          \"bit\": 9,\n          \"name\": \"CRSF\"\n        },\n        {\n          \"bit\": 10,\n          \"name\": \"ST24\"\n        },\n        {\n          \"bit\": 11,\n          \"name\": \"FPORT\"\n        },\n        {\n          \"bit\": 12,\n          \"name\": \"FPORT2\"\n        },\n        {\n          \"bit\": 13,\n          \"name\": \"FastSBUS\"\n        },\n        {\n          \"bit\": 14,\n          \"name\": \"DroneCAN\"\n        },\n        {\n          \"bit\": 15,\n          \"name\": \"Ghost\"\n        },\n        {\n          \"bit\": 16,\n          \"name\": \"MAVRadio\"\n        },\n        {\n          \"bit\": 18,\n          \"name\": \"SITL UDP\"\n        }\n      ],\n      \"resolved_by\": \"exact\"\n    }\n  ],\n  \"candidates\": [\n    \"RC_PROTOCOLS\"\n  ],\n  \"note\": null\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "RC_PROTOCOLS",
+        "vehicle": "ArduCopter",
+        "version_filter": null,
+        "resolved_by": "exact",
+        "params": [
+          {
+            "citation": {
+              "cite_id": "ardupilot#11fb2497e2a89d95",
+              "source_id": "ardupilot",
+              "repo": "ArduPilot/ardupilot",
+              "ref": "Copter-4.7.2",
+              "channel": "stable",
+              "unreleased": false,
+              "pinned": true,
+              "title": "RC_Channels_VarInfo.h",
+              "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/RC_Channel/RC_Channels_VarInfo.h#L84-L117",
+              "path": "libraries/RC_Channel/RC_Channels_VarInfo.h",
+              "lines": [
+                84,
+                117
+              ],
+              "version": "Copter-4.7.2",
+              "ingested_at": "2026-10-25T20:13:02+0700",
+              "tier": "T1",
+              "license": "GPL-3.0",
+              "retrieved_at": "2026-10-25T20:13:02+0700",
+              "heading_path": "libraries/RC_Channel/RC_Channels_VarInfo.h",
+              "excerpt": "    // @Param: _PROTOCOLS\n    // @DisplayName: RC protocols enabled\n    // @Description: Bitmask of enabled RC protocols. Allows narrowing the protocol detection to only specific types of RC receivers which can avoid issues with incorrect detection. Set to 1 to enable all protocols.\n    // @User: Advanced\n    // @Bitmask: 0:All,1:PPM,2:IBUS,3:SBUS,4:SBUS_NI,5:DSM,6:SUMD,7:SRXL,8:SRXL2,9:CRSF,10:ST24,11:FPORT,12:FPORT2,13:FastSBUS,14:DroneCAN,15:Ghost,16:MAVRadio,18:SITL UDP\n    AP_GROUPINFO(\"_PROTOCOLS\", 34, RC_CHANNELS_SUBCLASS, _protocols, 1),\n\n    // @Param: _FS_TIMEOUT\n    // @DisplayName:",
+              "untrusted": true,
+              "excerpt_starts_at_line": 100
+            },
+            "name": "RC_PROTOCOLS",
+            "name_raw": "_PROTOCOLS",
+            "name_suffix": "PROTOCOLS",
+            "prefix": "RC",
+            "prefix_origin": "ArduCopter/Parameters.cpp:692",
+            "display_name": "RC protocols enabled",
+            "description": "Bitmask of enabled RC protocols. Allows narrowing the protocol detection to only specific types of RC receivers which can avoid issues with incorrect detection. Set to 1 to enable all protocols.",
+            "vehicle": "shared",
+            "version": "Copter-4.7.2",
+            "units": null,
+            "range": null,
+            "default_raw": "1",
+            "default": 1.0,
+            "default_resolved": true,
+            "reboot_required": false,
+            "values": null,
+            "bitmask": [
+              {
+                "bit": 0,
+                "name": "All"
+              },
+              {
+                "bit": 1,
+                "name": "PPM"
+              },
+              {
+                "bit": 2,
+                "name": "IBUS"
+              },
+              {
+                "bit": 3,
+                "name": "SBUS"
+              },
+              {
+                "bit": 4,
+                "name": "SBUS_NI"
+              },
+              {
+                "bit": 5,
+                "name": "DSM"
+              },
+              {
+                "bit": 6,
+                "name": "SUMD"
+              },
+              {
+                "bit": 7,
+                "name": "SRXL"
+              },
+              {
+                "bit": 8,
+                "name": "SRXL2"
+              },
+              {
+                "bit": 9,
+                "name": "CRSF"
+              },
+              {
+                "bit": 10,
+                "name": "ST24"
+              },
+              {
+                "bit": 11,
+                "name": "FPORT"
+              },
+              {
+                "bit": 12,
+                "name": "FPORT2"
+              },
+              {
+                "bit": 13,
+                "name": "FastSBUS"
+              },
+              {
+                "bit": 14,
+                "name": "DroneCAN"
+              },
+              {
+                "bit": 15,
+                "name": "Ghost"
+              },
+              {
+                "bit": 16,
+                "name": "MAVRadio"
+              },
+              {
+                "bit": 18,
+                "name": "SITL UDP"
+              }
+            ],
+            "resolved_by": "exact"
+          }
+        ],
+        "candidates": [
+          "RC_PROTOCOLS"
+        ],
+        "note": null
+      }
+    }
+  }
+}

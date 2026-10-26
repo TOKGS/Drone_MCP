@@ -1,0 +1,22 @@
+comparison: eval_v4_heldout.yaml -> eval_v4_heldout.yaml  k=5
+group         metric          base     new    delta  flag
+overall       recall_at_k    0.692   0.723   +0.031  
+overall       mrr            0.493   0.475   -0.018  DROP
+code          recall_at_k    0.769   0.846   +0.077  
+code          mrr            0.451   0.522   +0.071  
+elrs_edgetx   recall_at_k    0.833   0.833   +0.000  
+elrs_edgetx   mrr            0.639   0.472   -0.167  DROP
+hwdef         recall_at_k    0.667   0.667   +0.000  
+hwdef         mrr            0.458   0.458   +0.000  
+negative      recall_at_k        -       -        -  -
+negative      mrr                -       -        -  -
+param         recall_at_k    0.462   0.538   +0.077  
+param         mrr            0.297   0.442   +0.145  
+protocol      recall_at_k    0.556   0.556   +0.000  
+protocol      mrr            0.248   0.248   +0.000  
+troubleshoot  recall_at_k    0.800   0.800   +0.000  
+troubleshoot  mrr            0.800   0.533   -0.267  DROP
+wiki          recall_at_k    0.846   0.846   +0.000  
+wiki          mrr            0.731   0.603   -0.128  DROP
+
+flagged drops: 4

@@ -1,0 +1,41 @@
+dense: loaded 86262 vectors (126 MB) in 6.8s
+set=eval_v4_dev.yaml questions=53 k=5
+sha256: verified against eval-v4-dev.sha256 (7f22f9cf1479f7cb...)
+recall@5 = 40/48 = 0.833
+precision@1 = 29/48 = 0.604
+MRR = 0.681
+chunk-hit@5 = 0.354
+negative-pass = 0.200
+
+per category
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+code             9     0.889   0.778   0.833      0.222         -
+elrs_edgetx      4     0.750   0.500   0.625      0.500         -
+hwdef            4     0.750   0.750   0.750      0.750         -
+negative         5         -       -       -          -     0.200
+param            9     0.889   0.556   0.643      0.111         -
+protocol         8     0.750   0.500   0.588      0.375         -
+troubleshoot     5     0.800   0.600   0.650      0.200         -
+wiki             9     0.889   0.556   0.661      0.556         -
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+en              26     0.909   0.773   0.827      0.500     0.000
+mixed            5     0.600   0.400   0.440      0.000         -
+vi              22     0.810   0.476   0.585      0.286     1.000
+
+wrote D:\Skill_tulan\ardupilot-research-mcp\docs\upgrade\runs\rung2-dev.json
+
+misses (12):
+  - V4-B2-005 (mixed) expected ardupilot:ArduCopter/AP_Arming_Copter.cpp top=common/source/docs/common-prearm-safety-checks.rst rank=None
+  - V4-B2-045 (vi) expected expresslrs_docs:docs/software/dynamic-transmit-power.md top=dev/source/docs/using-linux-trace-toolkit-ng-lttng-to-trace-ardupilot-in-realtime.rst rank=None
+  - V4-B1-029 (vi) expected ardupilot:libraries/AP_HAL_ChibiOS/hwdef/KakuteH7/hwdef.dat top=libraries/AP_HAL_ChibiOS/hwdef/KakuteH7/README.md rank=None
+  - V4-B1-008 (en) expected ardupilot:libraries/AP_Arming/AP_Arming.cpp top=Tools/autotest/vehicle_test_suite.py rank=None
+  - V4-B1-043 (vi) expected mavlink:message_definitions/v1.0/minimal.xml top=libraries/AP_Scripting/modules/MAVLink/mavlink_msg_HEARTBEAT.lua rank=None
+  - V4-B1-041 (vi) expected expresslrs_docs:docs/faq.md top=docs/info/init-rate.md rank=None
+  - V4-B3-008 (mixed) expected expresslrs_docs:docs/quick-start/troubleshooting.md | expresslrs_docs:docs/software/model-config-match.md top=common/source/docs/common-telemetry-xbee.rst rank=None
+  - V4-B2-022 (en) expected ardupilot_wiki:common/source/docs/common-crsf-telemetry.rst top=common/source/docs/common-FPort-receivers.rst rank=None
+  - V4-B3-012 (en) expected found:false top=plane/source/docs/tuning-quickstart.rst
+  - V4-B3-011 (en) expected found:false top=copter/source/docs/autotune.rst
+  - V4-B3-018 (en) expected found:false top=common/source/docs/common-choosing-a-ground-station.rst
+  - V4-B3-019 (en) expected found:false top=README.md

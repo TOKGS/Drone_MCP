@@ -1,0 +1,23 @@
+M01  killed    cite_id length changes
+M02  killed    channel rule inverted
+M03  killed    quote verification inverted
+M04  killed    wrong CRC polynomial
+M05  killed    CRC bit test inverted
+M06  killed    microsecond conversion off by one
+M07  killed    channel bit width wrong
+M08  killed    sync detection inverted
+M09  killed    checksum sign dropped
+M10  killed    length check inverted
+M11  killed    verb plus object rule demoted
+M12  SURVIVED  refusal excerpt filter disabled (equivalent: dangerous_excerpt regex catches the same sentences)
+M13  killed    path containment inverted
+M14  killed    stopword filter removed
+M15  SURVIVED  identifier boost removed
+M16  killed    dense auto-enables without the opt-in flag
+M17  killed    missing table/model reported as available
+M18  killed    requested-but-unavailable warning repeats every query
+M19  killed    dense rerank sign inverted
+
+mutants=18 killed=17 survived=1 errors=0 equivalent=1 score=0.944
+
+killed=17/18 score=0.944 target=0.90 survivors=['M15'] equivalent=['M12']

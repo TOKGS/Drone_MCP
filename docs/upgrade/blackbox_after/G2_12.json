@@ -1,0 +1,59 @@
+{
+  "case": "G2_12",
+  "note": "same content as the C/D hit for expresslrs#2c512913b65f46e3",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "expresslrs#2c512913b65f46e3"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1012,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "expresslrs#2c512913b65f46e3"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 6.8,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"expresslrs#2c512913b65f46e3\",\n  \"source_id\": \"expresslrs\",\n  \"repo\": \"ExpressLRS/ExpressLRS\",\n  \"ref\": \"4.1.0\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"TXModuleEndpoint.cpp\",\n  \"url\": \"https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/tx-crsf/TXModuleEndpoint.cpp#L87-L160\",\n  \"path\": \"src/lib/tx-crsf/TXModuleEndpoint.cpp\",\n  \"lines\": [\n    87,\n    160\n  ],\n  \"version\": \"ExpressLRS 4.1.0\",\n  \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n  \"heading_path\": \"src/lib/tx-crsf/TXModuleEndpoint.cpp\",\n  \"excerpt\": \"        parameterUpdateReq(extMessage->orig_addr, packetType, extMessage->payload[0], extMessage->payload + 1);\\n    }\\n}\\n\\nvoid TXModuleEndpoint::RcPacketToChannelsData(const crsf_header_t *message) // data is packed as 11 bits per channel\\n{\\n    const auto payload = (uint8_t *)message + sizeof(crsf_header_t);\\n    constexpr unsigned srcBits = 11;\\n    constexpr unsigned dstBits = 11;\\n    constexpr unsigned inputChannelMask = (1 << srcBits) - 1;\\n    constexpr unsigned precisionShift = dstBits - srcBits;\\n\\n    uint32_t localChannelData[CRSF_NUM_CHANNELS];\\n\\n    // code from BetaFlight rx/crsf.cpp / bi\",\n  \"untrusted\": true,\n  \"text\": \"        parameterUpdateReq(extMessage->orig_addr, packetType, extMessage->payload[0], extMessage->payload + 1);\\n    }\\n}\\n\\nvoid TXModuleEndpoint::RcPacketToChannelsData(const crsf_header_t *message) // data is packed as 11 bits per channel\\n{\\n    const auto payload = (uint8_t *)message + sizeof(crsf_header_t);\\n    constexpr unsigned srcBits = 11;\\n    constexpr unsigned dstBits = 11;\\n    constexpr unsigned inputChannelMask = (1 << srcBits) - 1;\\n    constexpr unsigned precisionShift = dstBits - srcBits;\\n\\n    uint32_t localChannelData[CRSF_NUM_CHANNELS];\\n\\n    // code from BetaFlight rx/crsf.cpp / bitpacker_unpack\\n    uint8_t bitsMerged = 0;\\n    uint32_t readValue = 0;\\n    unsigned readByteIndex = 0;\\n    for (uint32_t & n : localChannelData)\\n    {\\n        while (bitsMerged < srcBits)\\n        {\\n            const uint8_t readByte = payload[readByteIndex++];\\n            readValue |= ((uint32_t) readByte) << bitsMerged;\\n            bitsMerged += 8;\\n        }\\n        //printf(\\\"rv=%x(%x) bm=%u\\\\n\\\", readValue, (readValue & inputChannelMask), bitsMerged);\\n        n = (readValue & inputChannelMask) << precisionShift;\\n        readValue >>= srcBits;\\n        bitsMerged -= srcBits;\\n    }\\n\\n    handset->PerformChannelOverrides(localChannelData, CRSF_NUM_CHANNELS);\\n\\n    //\\n    // sends channel data and also communicates commanded armed status in arming mode Switch.\\n    // frame len 24 -> arming mode CH5: use channel 5 value\\n    // frame len 25 -> use status byte for arming mode, commanded arming status\\n    //\\n    // ARMMODE_CH5 | ARMED | Meaning\\n    //      0      |   0   | Arm using Switch, not armed\\n    //      0      |   1   | Arm using Switch, is armed\\n    //      1      |   x   | Arm using CH5, armed/not armed depending on CH5 value\\n    //\\n\\n    bool armCmd;\\n    if (message->frame_size == CRSF_FRAME_SIZE(sizeof(crsf_channels_t)))\\n    {\\n        armCmd = CRSF_to_BIT(localChannelData[AUX1]);       // no status byte present, us CH5 to arm\\n    }\\n    else\\n    {\\n        const uint8_t status = payload[readByteIndex];\\n        if (status & CRSF_CHANNELS_STATUS_ARMING_MODE_CH5)\\n        {\\n            armCmd = CRSF_to_BIT(localChannelData[AUX1]);   // status byte present and Arm using CH5 selected\\n        }\\n        else\\n        {\\n            armCmd = status & CRSF_CHANNELS_STATUS_ARMED;   // status byte present and Arm using Switch selected\\n        }\\n    }\\n\\n    // monitoring arming state\\n    if (isArmed != armCmd)\\n    {\\n        isArmed = armCmd;\\n#if defined(PLATFORM_ESP32)\\n        devicesTriggerEvent(EVENT_ARM_FLAG_CHANGED);\\n#endif\\n    }\\n\\n    handset->RCDataReceived(localChannelData, CRSF_NUM_CHANNELS);\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "expresslrs#2c512913b65f46e3",
+        "source_id": "expresslrs",
+        "repo": "ExpressLRS/ExpressLRS",
+        "ref": "4.1.0",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "TXModuleEndpoint.cpp",
+        "url": "https://github.com/ExpressLRS/ExpressLRS/blob/4.1.0/src/lib/tx-crsf/TXModuleEndpoint.cpp#L87-L160",
+        "path": "src/lib/tx-crsf/TXModuleEndpoint.cpp",
+        "lines": [
+          87,
+          160
+        ],
+        "version": "ExpressLRS 4.1.0",
+        "ingested_at": "2026-10-25T20:13:30+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:30+0700",
+        "heading_path": "src/lib/tx-crsf/TXModuleEndpoint.cpp",
+        "excerpt": "        parameterUpdateReq(extMessage->orig_addr, packetType, extMessage->payload[0], extMessage->payload + 1);\n    }\n}\n\nvoid TXModuleEndpoint::RcPacketToChannelsData(const crsf_header_t *message) // data is packed as 11 bits per channel\n{\n    const auto payload = (uint8_t *)message + sizeof(crsf_header_t);\n    constexpr unsigned srcBits = 11;\n    constexpr unsigned dstBits = 11;\n    constexpr unsigned inputChannelMask = (1 << srcBits) - 1;\n    constexpr unsigned precisionShift = dstBits - srcBits;\n\n    uint32_t localChannelData[CRSF_NUM_CHANNELS];\n\n    // code from BetaFlight rx/crsf.cpp / bi",
+        "untrusted": true,
+        "text": "        parameterUpdateReq(extMessage->orig_addr, packetType, extMessage->payload[0], extMessage->payload + 1);\n    }\n}\n\nvoid TXModuleEndpoint::RcPacketToChannelsData(const crsf_header_t *message) // data is packed as 11 bits per channel\n{\n    const auto payload = (uint8_t *)message + sizeof(crsf_header_t);\n    constexpr unsigned srcBits = 11;\n    constexpr unsigned dstBits = 11;\n    constexpr unsigned inputChannelMask = (1 << srcBits) - 1;\n    constexpr unsigned precisionShift = dstBits - srcBits;\n\n    uint32_t localChannelData[CRSF_NUM_CHANNELS];\n\n    // code from BetaFlight rx/crsf.cpp / bitpacker_unpack\n    uint8_t bitsMerged = 0;\n    uint32_t readValue = 0;\n    unsigned readByteIndex = 0;\n    for (uint32_t & n : localChannelData)\n    {\n        while (bitsMerged < srcBits)\n        {\n            const uint8_t readByte = payload[readByteIndex++];\n            readValue |= ((uint32_t) readByte) << bitsMerged;\n            bitsMerged += 8;\n        }\n        //printf(\"rv=%x(%x) bm=%u\\n\", readValue, (readValue & inputChannelMask), bitsMerged);\n        n = (readValue & inputChannelMask) << precisionShift;\n        readValue >>= srcBits;\n        bitsMerged -= srcBits;\n    }\n\n    handset->PerformChannelOverrides(localChannelData, CRSF_NUM_CHANNELS);\n\n    //\n    // sends channel data and also communicates commanded armed status in arming mode Switch.\n    // frame len 24 -> arming mode CH5: use channel 5 value\n    // frame len 25 -> use status byte for arming mode, commanded arming status\n    //\n    // ARMMODE_CH5 | ARMED | Meaning\n    //      0      |   0   | Arm using Switch, not armed\n    //      0      |   1   | Arm using Switch, is armed\n    //      1      |   x   | Arm using CH5, armed/not armed depending on CH5 value\n    //\n\n    bool armCmd;\n    if (message->frame_size == CRSF_FRAME_SIZE(sizeof(crsf_channels_t)))\n    {\n        armCmd = CRSF_to_BIT(localChannelData[AUX1]);       // no status byte present, us CH5 to arm\n    }\n    else\n    {\n        const uint8_t status = payload[readByteIndex];\n        if (status & CRSF_CHANNELS_STATUS_ARMING_MODE_CH5)\n        {\n            armCmd = CRSF_to_BIT(localChannelData[AUX1]);   // status byte present and Arm using CH5 selected\n        }\n        else\n        {\n            armCmd = status & CRSF_CHANNELS_STATUS_ARMED;   // status byte present and Arm using Switch selected\n        }\n    }\n\n    // monitoring arming state\n    if (isArmed != armCmd)\n    {\n        isArmed = armCmd;\n#if defined(PLATFORM_ESP32)\n        devicesTriggerEvent(EVENT_ARM_FLAG_CHANGED);\n#endif\n    }\n\n    handset->RCDataReceived(localChannelData, CRSF_NUM_CHANNELS);\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

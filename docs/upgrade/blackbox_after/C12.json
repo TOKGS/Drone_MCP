@@ -1,0 +1,131 @@
+{
+  "case": "C12",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "ExpressLRS packet rate",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 56,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "ExpressLRS packet rate",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 57930.7,
+  "duration_ms": 68.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"ExpressLRS packet rate\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"expresslrs_docs#a6fe567910933155\",\n      \"source_id\": \"expresslrs_docs\",\n      \"repo\": \"ExpressLRS/Docs\",\n      \"ref\": \"5ed656b6ebc7a38b6012297cf40fe5bc87232bed\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"init-rate.md\",\n      \"url\": \"https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/info/init-rate.md#L1-L6\",\n      \"path\": \"docs/info/init-rate.md\",\n      \"lines\": [\n        1,\n        6\n      ],\n      \"version\": \"ELRS Docs@5ed656b (2026-10-12)\",\n      \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n      \"heading_path\": \"\",\n      \"excerpt\": \"---\\ntemplate: main.html\\ndescription: ExpressLRS Init Rate or the Packet Rate that the receiver will start checking for the Sync Packet.\\n---\\n\\n![Info Banner](https://raw.githubusercontent.com/ExpressLRS/ExpressLRS-Hardware/master/img/information.png)\",\n      \"untrusted\": true,\n      \"score\": -18.767\n    },\n    {\n      \"cite_id\": \"expresslrs_docs#85c54af5c9d78bf3\",\n      \"source_id\": \"expresslrs_docs\",\n      \"repo\": \"ExpressLRS/Docs\",\n      \"ref\": \"5ed656b6ebc7a38b6012297cf40fe5bc87232bed\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"lua-howto.md\",\n      \"url\": \"https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/quick-start/transmitters/lua-howto.md#L43-L52\",\n      \"path\": \"docs/quick-start/transmitters/lua-howto.md\",\n      \"lines\": [\n        43,\n        52\n      ],\n      \"version\": \"ELRS Docs@5ed656b (2026-10-12)\",\n      \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n      \"heading_path\": \"Running the Lua Script\",\n      \"excerpt\": \"??? failure \\\"Stuck at `Loading...` (click/tap to expand)\\\"\\n    Go back to the [Radio Preparation Guide](tx-prep.md) and make sure the current model is configured for ExpressLRS use.\\n\\n    Also set your Internal or External RF Baudrate to a higher value if the Script still doesn't load after proper configuration of your Model. \\n    \\n    As of 3.3.0:\\n\\n    - 333Hz or faster packet rates require >400K Baudrate for external ELRS modules.\\n    - 250Hz is the fastest packet rate you can use with 400K Baudrate on external modules.\\n    - Best to stick to the fastest baudrate your radio can handle. See the\",\n      \"untrusted\": true,\n      \"score\": -12.6303\n    },\n    {\n      \"cite_id\": \"expresslrs_docs#599d02f1eed756e1\",\n      \"source_id\": \"expresslrs_docs\",\n      \"repo\": \"ExpressLRS/Docs\",\n      \"ref\": \"5ed656b6ebc7a38b6012297cf40fe5bc87232bed\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"x9d-troubleshooting.md\",\n      \"url\": \"https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/hardware/x9d-troubleshooting.md#L10-L12\",\n      \"path\": \"docs/hardware/x9d-troubleshooting.md\",\n      \"lines\": [\n        10,\n        12\n      ],\n      \"version\": \"ELRS Docs@5ed656b (2026-10-12)\",\n      \"ingested_at\": \"2026-10-25T20:13:33+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:33+0700\",\n      \"heading_path\": \"\",\n      \"excerpt\": \"- ExpressLRS Lua script just shows `Loading...`\\n- ExpressLRS Lua script shows unstable behavior, especially on the higher packet rates, showing values different from `0/[SELECTED PACKET RATE]`\\n- Constant Telemetry Lost/Telemetry Recovered Notification.\",\n      \"untrusted\": true,\n      \"score\": -16.6112\n    }\n  ],\n  \"candidates\": [\n    \"expresslrs_docs#a6fe567910933155\",\n    \"expresslrs_docs#85c54af5c9d78bf3\",\n    \"expresslrs_docs#599d02f1eed756e1\",\n    \"expresslrs_docs#34d87707cbd6f1b9\",\n    \"expresslrs_docs#17ea7219c36a93f9\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 3\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "ExpressLRS packet rate",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "expresslrs_docs#a6fe567910933155",
+            "source_id": "expresslrs_docs",
+            "repo": "ExpressLRS/Docs",
+            "ref": "5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "init-rate.md",
+            "url": "https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/info/init-rate.md#L1-L6",
+            "path": "docs/info/init-rate.md",
+            "lines": [
+              1,
+              6
+            ],
+            "version": "ELRS Docs@5ed656b (2026-10-12)",
+            "ingested_at": "2026-10-25T20:13:33+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:33+0700",
+            "heading_path": "",
+            "excerpt": "---\ntemplate: main.html\ndescription: ExpressLRS Init Rate or the Packet Rate that the receiver will start checking for the Sync Packet.\n---\n\n![Info Banner](https://raw.githubusercontent.com/ExpressLRS/ExpressLRS-Hardware/master/img/information.png)",
+            "untrusted": true,
+            "score": -18.767
+          },
+          {
+            "cite_id": "expresslrs_docs#85c54af5c9d78bf3",
+            "source_id": "expresslrs_docs",
+            "repo": "ExpressLRS/Docs",
+            "ref": "5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "lua-howto.md",
+            "url": "https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/quick-start/transmitters/lua-howto.md#L43-L52",
+            "path": "docs/quick-start/transmitters/lua-howto.md",
+            "lines": [
+              43,
+              52
+            ],
+            "version": "ELRS Docs@5ed656b (2026-10-12)",
+            "ingested_at": "2026-10-25T20:13:33+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:33+0700",
+            "heading_path": "Running the Lua Script",
+            "excerpt": "??? failure \"Stuck at `Loading...` (click/tap to expand)\"\n    Go back to the [Radio Preparation Guide](tx-prep.md) and make sure the current model is configured for ExpressLRS use.\n\n    Also set your Internal or External RF Baudrate to a higher value if the Script still doesn't load after proper configuration of your Model. \n    \n    As of 3.3.0:\n\n    - 333Hz or faster packet rates require >400K Baudrate for external ELRS modules.\n    - 250Hz is the fastest packet rate you can use with 400K Baudrate on external modules.\n    - Best to stick to the fastest baudrate your radio can handle. See the",
+            "untrusted": true,
+            "score": -12.6303
+          },
+          {
+            "cite_id": "expresslrs_docs#599d02f1eed756e1",
+            "source_id": "expresslrs_docs",
+            "repo": "ExpressLRS/Docs",
+            "ref": "5ed656b6ebc7a38b6012297cf40fe5bc87232bed",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "x9d-troubleshooting.md",
+            "url": "https://github.com/ExpressLRS/Docs/blob/5ed656b6ebc7a38b6012297cf40fe5bc87232bed/docs/hardware/x9d-troubleshooting.md#L10-L12",
+            "path": "docs/hardware/x9d-troubleshooting.md",
+            "lines": [
+              10,
+              12
+            ],
+            "version": "ELRS Docs@5ed656b (2026-10-12)",
+            "ingested_at": "2026-10-25T20:13:33+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:33+0700",
+            "heading_path": "",
+            "excerpt": "- ExpressLRS Lua script just shows `Loading...`\n- ExpressLRS Lua script shows unstable behavior, especially on the higher packet rates, showing values different from `0/[SELECTED PACKET RATE]`\n- Constant Telemetry Lost/Telemetry Recovered Notification.",
+            "untrusted": true,
+            "score": -16.6112
+          }
+        ],
+        "candidates": [
+          "expresslrs_docs#a6fe567910933155",
+          "expresslrs_docs#85c54af5c9d78bf3",
+          "expresslrs_docs#599d02f1eed756e1",
+          "expresslrs_docs#34d87707cbd6f1b9",
+          "expresslrs_docs#17ea7219c36a93f9"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 3
+      }
+    }
+  }
+}

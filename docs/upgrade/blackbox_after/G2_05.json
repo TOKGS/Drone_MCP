@@ -1,0 +1,59 @@
+{
+  "case": "G2_05",
+  "note": "same content as the C/D hit for ardupilot#0adec6354cbdf85d",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#0adec6354cbdf85d"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1005,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#0adec6354cbdf85d"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 6.6,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#0adec6354cbdf85d\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"AP_RCProtocol_CRSF.h\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h#L36-L112\",\n  \"path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h\",\n  \"lines\": [\n    36,\n    112\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h\",\n  \"excerpt\": \"#define CRSF_TX_TIMEOUT    500000U   // the period after which the transmitter is considered disconnected (matches copters failsafe)\\n#define CRSF_RX_TIMEOUT    150000U   // the period after which the receiver is considered disconnected (>ping frequency)\\n\\nclass AP_RCProtocol_CRSF : public AP_RCProtocol_Backend {\\npublic:\\n    AP_RCProtocol_CRSF(AP_RCProtocol &_frontend);\\n    virtual ~AP_RCProtocol_CRSF();\\n    void process_byte(uint8_t byte, uint32_t baudrate) override;\\n    void process_handshake(uint32_t baudrate) override;\\n    void update(void) override;\\n#if HAL_CRSF_TELEM_ENABLED\\n    void start\",\n  \"untrusted\": true,\n  \"text\": \"#define CRSF_TX_TIMEOUT    500000U   // the period after which the transmitter is considered disconnected (matches copters failsafe)\\n#define CRSF_RX_TIMEOUT    150000U   // the period after which the receiver is considered disconnected (>ping frequency)\\n\\nclass AP_RCProtocol_CRSF : public AP_RCProtocol_Backend {\\npublic:\\n    AP_RCProtocol_CRSF(AP_RCProtocol &_frontend);\\n    virtual ~AP_RCProtocol_CRSF();\\n    void process_byte(uint8_t byte, uint32_t baudrate) override;\\n    void process_handshake(uint32_t baudrate) override;\\n    void update(void) override;\\n#if HAL_CRSF_TELEM_ENABLED\\n    void start_bind(void) override;\\n    bool bind_in_progress(void);\\n#endif\\n    // support for CRSF v3\\n    bool change_baud_rate(uint32_t baudrate);\\n    // bootstrap baudrate\\n    uint32_t get_bootstrap_baud_rate() const {\\n#if AP_RC_CHANNEL_ENABLED\\n        return rc().option_is_enabled(RC_Channels::Option::ELRS_420KBAUD) ? ELRS_BAUDRATE : CRSF_BAUDRATE;\\n#else\\n        return CRSF_BAUDRATE;\\n#endif\\n    }\\n\\n    // is the receiver active, used to detect power loss and baudrate changes\\n    bool is_rx_active() const override {\\n        // later versions of CRSFv3 will send link rate frames every 200ms\\n        // but only before an initial failsafe\\n        return _last_rx_frame_time_us != 0 && AP_HAL::micros() - _last_rx_frame_time_us < CRSF_RX_TIMEOUT;\\n    }\\n\\n    // is the transmitter active, used to adjust telemetry data\\n    bool is_tx_active() const {\\n        // this is the same as the Copter failsafe timeout\\n        return _last_tx_frame_time_us != 0 && AP_HAL::micros() - _last_tx_frame_time_us < CRSF_TX_TIMEOUT;\\n    }\\n\\n    // get singleton instance\\n    static AP_RCProtocol_CRSF* get_singleton() {\\n        return _singleton;\\n    }\\n\\n    // Import shared types from AP_CRSF namespace\\n    using FrameType = AP_CRSF_Protocol::FrameType;\\n    using CommandID = AP_CRSF_Protocol::CommandID;\\n    using DeviceAddress = AP_CRSF_Protocol::DeviceAddress;\\n    using CommandGeneral = AP_CRSF_Protocol::CommandGeneral;\\n    using CommandVTX = AP_CRSF_Protocol::CommandVTX;\\n    using CommandRX = AP_CRSF_Protocol::CommandRX;\\n    using CustomTelemSubTypeID = AP_CRSF_Protocol::CustomTelemSubTypeID;\\n    using ProtocolType = AP_CRSF_Protocol::ProtocolType;\\n    using Frame = AP_CRSF_Protocol::Frame;\\n    using SubsetChannelsFrame = AP_CRSF_Protocol::SubsetChannelsFrame;\\n    using LinkStatisticsTXFrame = AP_CRSF_Protocol::LinkStatisticsTXFrame;\\n\\n    // Commands for CRSF_COMMAND_FC\\n    enum CommandFC {\\n        CRSF_COMMAND_FC_DISARM = 0x01,\\n        CRSF_COMMAND_SCALE_CHANNEL = 0x02,\\n    };\\n\\n    // Commands for CRSF_COMMAND_BLUETOOTH\\n    enum CommandBluetooth {\\n        CRSF_COMMAND_BLUETOOTH_RESET = 0x01,\\n        CRSF_COMMAND_BLUETOOTH_ENABLE = 0x02,\\n        CRSF_COMMAND_BLUETOOTH_ECHO = 0x64,\\n    };\\n\\n    // Commands for CRSF_COMMAND_OSD\\n    enum CommandOSD {\\n        CRSF_COMMAND_OSD_SEND = 0x01,\\n    };\\n\\n    // Commands for CRSF_COMMAND_LED\\n    enum CommandLED {\\n        CRSF_COMMAND_LED_SET_DEFAULT = 0x01,\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#0adec6354cbdf85d",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "AP_RCProtocol_CRSF.h",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h#L36-L112",
+        "path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h",
+        "lines": [
+          36,
+          112
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "libraries/AP_RCProtocol/AP_RCProtocol_CRSF.h",
+        "excerpt": "#define CRSF_TX_TIMEOUT    500000U   // the period after which the transmitter is considered disconnected (matches copters failsafe)\n#define CRSF_RX_TIMEOUT    150000U   // the period after which the receiver is considered disconnected (>ping frequency)\n\nclass AP_RCProtocol_CRSF : public AP_RCProtocol_Backend {\npublic:\n    AP_RCProtocol_CRSF(AP_RCProtocol &_frontend);\n    virtual ~AP_RCProtocol_CRSF();\n    void process_byte(uint8_t byte, uint32_t baudrate) override;\n    void process_handshake(uint32_t baudrate) override;\n    void update(void) override;\n#if HAL_CRSF_TELEM_ENABLED\n    void start",
+        "untrusted": true,
+        "text": "#define CRSF_TX_TIMEOUT    500000U   // the period after which the transmitter is considered disconnected (matches copters failsafe)\n#define CRSF_RX_TIMEOUT    150000U   // the period after which the receiver is considered disconnected (>ping frequency)\n\nclass AP_RCProtocol_CRSF : public AP_RCProtocol_Backend {\npublic:\n    AP_RCProtocol_CRSF(AP_RCProtocol &_frontend);\n    virtual ~AP_RCProtocol_CRSF();\n    void process_byte(uint8_t byte, uint32_t baudrate) override;\n    void process_handshake(uint32_t baudrate) override;\n    void update(void) override;\n#if HAL_CRSF_TELEM_ENABLED\n    void start_bind(void) override;\n    bool bind_in_progress(void);\n#endif\n    // support for CRSF v3\n    bool change_baud_rate(uint32_t baudrate);\n    // bootstrap baudrate\n    uint32_t get_bootstrap_baud_rate() const {\n#if AP_RC_CHANNEL_ENABLED\n        return rc().option_is_enabled(RC_Channels::Option::ELRS_420KBAUD) ? ELRS_BAUDRATE : CRSF_BAUDRATE;\n#else\n        return CRSF_BAUDRATE;\n#endif\n    }\n\n    // is the receiver active, used to detect power loss and baudrate changes\n    bool is_rx_active() const override {\n        // later versions of CRSFv3 will send link rate frames every 200ms\n        // but only before an initial failsafe\n        return _last_rx_frame_time_us != 0 && AP_HAL::micros() - _last_rx_frame_time_us < CRSF_RX_TIMEOUT;\n    }\n\n    // is the transmitter active, used to adjust telemetry data\n    bool is_tx_active() const {\n        // this is the same as the Copter failsafe timeout\n        return _last_tx_frame_time_us != 0 && AP_HAL::micros() - _last_tx_frame_time_us < CRSF_TX_TIMEOUT;\n    }\n\n    // get singleton instance\n    static AP_RCProtocol_CRSF* get_singleton() {\n        return _singleton;\n    }\n\n    // Import shared types from AP_CRSF namespace\n    using FrameType = AP_CRSF_Protocol::FrameType;\n    using CommandID = AP_CRSF_Protocol::CommandID;\n    using DeviceAddress = AP_CRSF_Protocol::DeviceAddress;\n    using CommandGeneral = AP_CRSF_Protocol::CommandGeneral;\n    using CommandVTX = AP_CRSF_Protocol::CommandVTX;\n    using CommandRX = AP_CRSF_Protocol::CommandRX;\n    using CustomTelemSubTypeID = AP_CRSF_Protocol::CustomTelemSubTypeID;\n    using ProtocolType = AP_CRSF_Protocol::ProtocolType;\n    using Frame = AP_CRSF_Protocol::Frame;\n    using SubsetChannelsFrame = AP_CRSF_Protocol::SubsetChannelsFrame;\n    using LinkStatisticsTXFrame = AP_CRSF_Protocol::LinkStatisticsTXFrame;\n\n    // Commands for CRSF_COMMAND_FC\n    enum CommandFC {\n        CRSF_COMMAND_FC_DISARM = 0x01,\n        CRSF_COMMAND_SCALE_CHANNEL = 0x02,\n    };\n\n    // Commands for CRSF_COMMAND_BLUETOOTH\n    enum CommandBluetooth {\n        CRSF_COMMAND_BLUETOOTH_RESET = 0x01,\n        CRSF_COMMAND_BLUETOOTH_ENABLE = 0x02,\n        CRSF_COMMAND_BLUETOOTH_ECHO = 0x64,\n    };\n\n    // Commands for CRSF_COMMAND_OSD\n    enum CommandOSD {\n        CRSF_COMMAND_OSD_SEND = 0x01,\n    };\n\n    // Commands for CRSF_COMMAND_LED\n    enum CommandLED {\n        CRSF_COMMAND_LED_SET_DEFAULT = 0x01,",
+        "served_from": "index"
+      }
+    }
+  }
+}

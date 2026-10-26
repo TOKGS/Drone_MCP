@@ -1,0 +1,63 @@
+version: 1
+generated_by: negative writer (vi + mixed)
+questions:
+  - id: V4-NEGV-001
+    lang: vi
+    category: negative
+    q: "Thoi tiet Da Lat tuan nay co mua khong?"
+    expect_none: true
+  - id: V4-NEGV-002
+    lang: vi
+    category: negative
+    q: "Cong thuc nau bun cha cho bon nguoi an"
+    expect_none: true
+  - id: V4-NEGV-003
+    lang: vi
+    category: negative
+    q: "Gia bitcoin hom nay tang hay giam?"
+    expect_none: true
+  - id: V4-NEGV-004
+    lang: vi
+    category: negative
+    q: "Dat ve xem phim Avengers o rap CGV gia bao nhieu?"
+    expect_none: true
+  - id: V4-NEGV-005
+    lang: vi
+    category: negative
+    q: "Gia vang SJC hom nay bao nhieu mot luong?"
+    expect_none: true
+  - id: V4-NEGV-006
+    lang: vi
+    category: negative
+    q: "Giai phuong trinh x binh phuong tru ba x cong hai bang khong"
+    expect_none: true
+  - id: V4-NEGV-007
+    lang: vi
+    category: negative
+    q: "Công thức nấu phở bò cho gia đình bốn người"
+    expect_none: true
+  - id: V4-NEGV-008
+    lang: vi
+    category: negative
+    q: "Thời tiết Hà Nội cuối tuần này thế nào?"
+    expect_none: true
+  - id: V4-NEGV-009
+    lang: vi
+    category: negative
+    q: "Giá vé máy bay Hà Nội đi Đà Nẵng tháng sau bao nhiêu?"
+    expect_none: true
+  - id: V4-NEGV-010
+    lang: vi
+    category: negative
+    q: "Cập nhật iOS 19 cho iPhone cũ có bị chậm không?"
+    expect_none: true
+  - id: V4-NEGV-011
+    lang: mixed
+    category: negative
+    q: "Cách setup VPN WireGuard trên router OpenWrt"
+    expect_none: true
+  - id: V4-NEGV-012
+    lang: mixed
+    category: negative
+    q: "Genshin Impact tren PS5 co crossplay voi PC khong?"
+    expect_none: true

@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import re
 import sqlite3
+from functools import lru_cache
 from pathlib import Path
 
 import yaml
 
-from . import cite, config, textsanitize
+from . import cite, config, dense, textsanitize
 
 IDENTIFIER = re.compile(r"^[A-Z][A-Z0-9_]{2,}$")
 WORD = re.compile(r"[A-Za-z][A-Za-z0-9_]*")
@@ -32,6 +33,9 @@ ANCHOR_MIN_DOCS = 3
 ANCHOR_WEAK_WEIGHT = 0.25
 ANCHOR_MIN_WEIGHT = 1.0
 ANCHOR_MIN_RATIO = 0.5
+# A query the glossary expanded is Vietnamese, so its unmatched words are Vietnamese, not corpus
+# vocabulary. Two anchored words (or one symbol) are enough evidence in that case.
+ANCHOR_MIN_WEIGHT_EXPANDED = 2.0
 NO_ANCHOR_NOTE = ("query has no anchor in the indexed corpus: its content words are not part of "
                   "the index vocabulary -> out of scope; nothing was invented")
 SCOPE_SOURCES = {
@@ -48,11 +52,20 @@ SCOPE_SOURCES = {
     "forum": [],
 }
 TIER_ORDER = {"T1": 0, "T2": 1, "T3": 2}
-# Simulator-only code models the vehicle, it is not evidence of how the vehicle behaves. Rank it
-# below operational code and documentation instead of letting a model win a real question; the
-# gap to the next result is typically 4-5 bm25 points (G22 ELRS, buzzer).
-SIMULATOR_PATH_PREFIX = "libraries/SITL/"
+# Simulator-only code and the autotest harness model the vehicle, they are not evidence of how it
+# behaves. Rank them below operational code and documentation instead of letting them win a real
+# question; the gap to the next result is typically 4-5 bm25 points.
+SIMULATOR_PATH_PREFIXES = ("libraries/SITL/", "Tools/autotest/")
 SIMULATOR_PENALTY = 5.0
+# Optional dense rerank.  Adding dense-only candidates to the BM25 list was measured on the dev
+# split and made it worse (recall@5 0.833 -> 0.688, P@1 0.542 -> 0.500); reranking only the
+# candidates BM25 already produced helped (P@1 0.542 -> 0.625, MRR 0.646 -> 0.692 at weight 2.0).
+# Similarity is a cosine in [-1, 1] and the BM25 ranks span tens of points, so the weight is small.
+DENSE_RERANK_WEIGHT = 2.0
+DENSE_RERANK_CANDIDATES = 200
+# A ranked candidate carries a negative bm25-like number (lower is better). The declaring chunk of
+# a parameter that the query names outright enters with this score, so it beats a chunk that only
+# mentions the name unless the mention is an even stronger identifier match.
 # Query words that carry no retrieval signal: without this, "how do I bake bread" matched
 # half the corpus and an out-of-corpus question wrongly returned found:true.
 STOPWORDS = {
@@ -66,15 +79,28 @@ STOPWORDS = {
 }
 
 
-def load_glossary() -> dict[str, list[str]]:
-    path = config.glossary_path()
-    if not path.exists():
-        return {}
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+@lru_cache(maxsize=4)
+def _read_glossary(path: str, mtime_ns: int, size: int) -> dict[str, list[str]]:
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
     terms: dict[str, list[str]] = {}
     for entry in data.get("terms", []):
         terms[entry["vi"].lower()] = [exp.lower() for exp in entry["en"]]
     return terms
+
+
+def load_glossary() -> dict[str, list[str]]:
+    """Parsed once per (path, mtime, size): the file is data and may be edited between runs."""
+    path = config.glossary_path()
+    if not path.exists():
+        return {}
+    stat = path.stat()
+    return _read_glossary(str(path), stat.st_mtime_ns, stat.st_size)
+
+
+@lru_cache(maxsize=4)
+def _read_scope(path: str, mtime_ns: int, size: int) -> dict:
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
+    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []]}
 
 
 def load_scope() -> dict:
@@ -82,8 +108,8 @@ def load_scope() -> dict:
     path = config.repo_root() / "scope.yaml"
     if not path.exists():
         return {"out_of_scope_names": []}
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []]}
+    stat = path.stat()
+    return _read_scope(str(path), stat.st_mtime_ns, stat.st_size)
 
 
 def _word_tokens(text: str) -> list[str]:
@@ -244,6 +270,14 @@ def _heading_extra(heading_path: str, tokens: set[str]) -> int:
     return sum(1 for word in words if word not in tokens)
 
 
+def _dense_reranked_scores(merged: dict[str, tuple[sqlite3.Row, float]],
+                           dense_hits: list[tuple[str, float]]) -> dict[str, float]:
+    """Cosine similarity reorders the candidates BM25 produced; it never adds a candidate."""
+    similarity = dict(dense_hits)
+    return {row["cite_hash"]: rank - DENSE_RERANK_WEIGHT * similarity.get(row["cite_hash"], 0.0)
+            for row, rank in merged.values()}
+
+
 def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
            version: str | None = None, tier_max: str = "T1", limit: int = 8) -> dict:
     expanded, applied = expand_query(query)
@@ -262,7 +296,15 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
 
     if scope != "local":  # the local overlay is deliberately small, it needs no corpus vocabulary
         weight, support = _corpus_anchor(con, query, applied)
-        if weight < ANCHOR_MIN_WEIGHT or support < ANCHOR_MIN_RATIO:
+        # Vietnamese typed without diacritics is ASCII, so the tokenizer counts its words as content
+        # words an English corpus cannot contain, and the support ratio rejected real questions. When
+        # the glossary fired the query is Vietnamese by construction: require a stronger total anchor
+        # weight instead of a ratio over words that were never going to match.
+        grounded = (weight >= ANCHOR_MIN_WEIGHT and support >= ANCHOR_MIN_RATIO)
+        if applied:
+            # Otherwise a Vietnamese query that used to pass on the ratio must keep passing.
+            grounded = grounded or weight >= ANCHOR_MIN_WEIGHT_EXPANDED
+        if not grounded:
             return {"found": False, "query": query,
                     "query_expanded": expanded if applied else None, "expansions": applied,
                     "scope": scope, "version_filter": version, "results": [],
@@ -270,6 +312,10 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
                     "scope_notes": scope_notes(query, [], labels=_version_labels(con),
                                                applied=applied),
                     "confidence": "low", "note": NO_ANCHOR_NOTE}
+
+    # The local overlay is the user's own files and has no vectors; do not fuse it.
+    dense_hits = (dense.search(con, query, limit=DENSE_RERANK_CANDIDATES)
+                  if scope != "local" and dense.enabled(con) else [])
 
     sql = (
         "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
@@ -299,13 +345,14 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
     # candidate set with unrelated files. A LIKE pass over the verbatim column finds the
     # files that actually spell the identifier.
     if identifiers:
-        like = " OR ".join("c.text LIKE ?" for _ in identifiers)
+        stable_identifiers = sorted(identifiers)
+        like = " OR ".join("c.text LIKE ?" for _ in stable_identifiers)
         extra_sql = (
             "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
             "       c.line_start, c.line_end, -8.0 AS rank"
             "  FROM chunks c JOIN documents d ON d.id = c.document_id"
             f" WHERE ({like})")
-        extra_params: list[object] = [f"%{token}%" for token in identifiers]
+        extra_params: list[object] = [f"%{token}%" for token in stable_identifiers]
         if allowed_sources:
             extra_sql += f" AND d.source_id IN ({','.join('?' * len(allowed_sources))})"
             extra_params.extend(allowed_sources)
@@ -313,11 +360,32 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         for row in con.execute(extra_sql, extra_params):
             merged.setdefault(row["cite_hash"], (row, 0.0))
 
+    # A parameter named in the query is answered by the file that declares it, not by the file
+    # that merely mentions it: "where is SCR_VM_I_COUNT" lost to a Lua example that uses it.
+    # The params table records the declaring chunk, so its cite_hash is a direct candidate and it
+    # is ranked ahead of the rest (bm25 magnitudes vary too much for a fixed bonus to be reliable).
+    declarers: set[str] = set()
+    if identifiers:
+        decl_sql = (
+            "SELECT c.cite_hash, p.source_id, p.path, c.text, c.heading_path,"
+            "       c.line_start, c.line_end, 0.0 AS rank"
+            "  FROM params p JOIN chunks c ON c.cite_hash = p.cite_hash"
+            " WHERE p.param_name = ? OR p.param_name LIKE ? LIMIT 15")
+        for token in sorted(identifiers):
+            for row in con.execute(decl_sql, (token, f"{token}%")):
+                declarers.add(row["cite_hash"])
+                merged.setdefault(row["cite_hash"], (row, 0.0))
+
+    if dense_hits:
+        base_scores = _dense_reranked_scores(merged, dense_hits)
+    else:
+        base_scores = {row["cite_hash"]: rank for row, rank in merged.values()}
+
     scored: list[tuple[float, sqlite3.Row]] = []
     for row, rank in merged.values():
         if TIER_ORDER.get(tiers.get(row["source_id"], "T3"), 0) > max_tier:
             continue
-        score = rank                          # lower is better in sqlite bm25
+        score = base_scores.get(row["cite_hash"], rank)     # lower is better
         score -= 6.0 * sum(1 for token in identifiers if token in row["text"])
         # A file named after an identifier (common-rc-options.rst for RC_OPTIONS) is the
         # canonical page for it; without this the parameter-name page loses to incidental
@@ -332,10 +400,17 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         # words scattered through prose, so reward the chunk whose own heading carries every token.
         if path_tokens and heading_hits == len(path_tokens):
             score -= 5.0
-        if row["path"].startswith(SIMULATOR_PATH_PREFIX):
+        if row["path"].startswith(SIMULATOR_PATH_PREFIXES):
             score += SIMULATOR_PENALTY
         scored.append((score, row))
-    scored.sort(key=lambda item: item[0])
+    # A parameter's declaring chunk wins outright. The rank is computed after the other boosts, so
+    # it does not depend on the bm25 scale: the file that declares the parameter answers "where is
+    # this parameter", even when another file mentions it more often.
+    if declarers:
+        floor = min(score for score, _row in scored)
+        scored = [(floor - 1.0 if row["cite_hash"] in declarers else score, row)
+                  for score, row in scored]
+    scored.sort(key=lambda item: (item[0], item[1]["cite_hash"]))
 
     # Rank DOCUMENTS, not chunks: a long page can put five chunks in the top five and hide the
     # file the caller actually needs. Keep the best chunk per document, best documents first.
@@ -345,13 +420,14 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
 
     results = []
     query_tokens = {token.lower() for token in tokens}
-    for items in sorted(by_path.values(), key=lambda group: group[0][0]):
+    for items in sorted(by_path.values(),
+                       key=lambda group: (group[0][0], group[0][1]["cite_hash"])):
         # Among the chunks of the document that ranked first, prefer the one that spells the query
         # words as words, then the one without a narrower heading, then the better bm25 score.
         score, row = min(items, key=lambda item: (-_boundary_hits(item[1]["text"], query_tokens),
                                                  _heading_extra(item[1]["heading_path"],
                                                                 query_tokens),
-                                                 item[0]))
+                                                 item[0], item[1]["cite_hash"]))
         citation = cite.build_citation(con, cite.make_cite_id(row["source_id"], row["cite_hash"]))
         citation["excerpt"] = textsanitize.sanitize_excerpt(citation["excerpt"])
         citation["score"] = round(score, 4)
@@ -424,5 +500,6 @@ def index_status(con: sqlite3.Connection) -> dict:
         "index_mb": round(path.stat().st_size / 1048576, 1) if path.exists() else 0,
         "last_ingest": ingested,
         "stale_warning_days": 90,
+        "dense": dense.stats(con),
         "note": "offline mode: no network access at serve time",
     }

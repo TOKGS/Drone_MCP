@@ -387,3 +387,46 @@ def test_stopwords_never_reach_the_index_query():
     for stopword in ("how", "the", "this", "in"):
         assert stopword not in tokens
     assert "failsafe" in tokens
+
+
+def test_a_named_parameter_answers_from_its_declaring_file(con):
+    """A parameter named outright is answered by the file that declares it, not by a file that
+    mentions it more often (a Lua example that used SCR_VM_I_COUNT won before this rule)."""
+    declared = con.execute("SELECT path FROM params WHERE param_name = 'RC_OPTIONS'").fetchone()[0]
+    payload = query.search(con, "RC_OPTIONS parameter what does it configure", limit=5)
+    assert payload["results"][0]["path"] == declared
+
+
+def test_vietnamese_without_diacritics_can_pass_the_anchor_gate(con):
+    """ASCII Vietnamese words used to sink the support ratio; a glossary match now grounds it."""
+    payload = query.search(con, "tham so arming check nam o file nao", limit=5)
+    assert payload["found"] is True
+    assert payload["expansions"], "the glossary must have fired for this wording"
+
+
+def test_an_out_of_scope_vietnamese_question_is_still_refused(con):
+    payload = query.search(con, "cong thuc nau pho bo cho bon nguoi an", limit=5)
+    assert payload["found"] is False
+    assert payload["results"] == []
+
+
+def test_the_same_query_returns_the_same_payload_in_two_processes():
+    """Set iteration used to decide tie order, so two processes could disagree (hash seed).
+    Identifiers are iterated sorted and score ties break on cite_hash."""
+    import os
+    import subprocess
+
+    script = (
+        "import json, sys; sys.path.insert(0, 'src');"
+        "from ardupilot_research_mcp import db, query;"
+        "print(json.dumps(query.search(db.connect(),"
+        " 'RC_OPTIONS and EAHRS_TYPE and SCR_VM_I_COUNT where declared', limit=5),"
+        " sort_keys=True, ensure_ascii=True))")
+    outputs = []
+    for seed in ("0", "1"):
+        env = dict(os.environ, PYTHONHASHSEED=seed, PYTHONUTF8="1")
+        result = subprocess.run([sys.executable, "-c", script], cwd=str(REPO), env=env,
+                                capture_output=True, text=True)
+        assert result.returncode == 0, result.stderr[-400:]
+        outputs.append(result.stdout)
+    assert outputs[0] and outputs[0] == outputs[1]

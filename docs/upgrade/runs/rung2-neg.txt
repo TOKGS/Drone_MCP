@@ -1,0 +1,15 @@
+dense: loaded 86262 vectors (126 MB) in 6.6s
+set=eval_v4_neg_vi.yaml questions=12 k=5
+sha256: verified against eval-v4-neg-vi.sha256 (154874694bd5e6f0...)
+negative-pass = 0.750
+
+per category
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+negative        12         -       -       -          -     0.750
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+mixed            2         -       -       -          -     0.500
+vi              10         -       -       -          -     0.800
+
+wrote D:\Skill_tulan\ardupilot-research-mcp\docs\upgrade\runs\rung2-neg.json

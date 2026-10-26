@@ -15,6 +15,9 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+# Dense retrieval (Rung 2). Answer time still works without them: query.search
+# falls back to BM25 and index_status reports dense: {present: false}.
+embeddings = ["onnxruntime>=1.20", "tokenizers>=0.20", "numpy>=1.26"]
 
 [project.scripts]
 ardupilot-research-mcp = "ardupilot_research_mcp.server:main"

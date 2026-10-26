@@ -1,0 +1,5 @@
+$ ARM_DENSE=1 (main index has no chunk_vectors)
+{"found": true, "paths": ["libraries/RC_Channel/RC_Channels_VarInfo.h", "common/source/docs/common-rc-options.rst", "docs/quick-start/ardupilot-setup.md"], "dense": {"present": false, "vectors": 0, "dim": 0, "size_mb": 0.0, "model": null, "built_at": null, "requested": true, "state": "requested-but-unavailable", "unavailable_reason": "no chunk_vectors table (run: python -m research.build_vectors)"}}
+
+[stderr]
+dense: ARM_DENSE is set but the retriever is unavailable: no chunk_vectors table (run: python -m research.build_vectors); using BM25

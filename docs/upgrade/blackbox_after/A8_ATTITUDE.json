@@ -1,0 +1,111 @@
+{
+  "case": "A8_ATTITUDE",
+  "note": "msgid must match the pinned XML id for ATTITUDE",
+  "tool": "mavlink_message",
+  "arguments": {
+    "name_or_id": "ATTITUDE"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 13,
+    "method": "tools/call",
+    "params": {
+      "name": "mavlink_message",
+      "arguments": {
+        "name_or_id": "ATTITUDE"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"ATTITUDE\",\n  \"kind\": \"message\",\n  \"resolved_by\": \"name\",\n  \"msgid\": 30,\n  \"name\": \"ATTITUDE\",\n  \"description\": \"The attitude in the aeronautical frame (right-handed, Z-down, Y-right, X-front, ZYX, intrinsic).\",\n  \"fields\": [\n    {\n      \"type\": \"uint32_t\",\n      \"name\": \"time_boot_ms\",\n      \"units\": \"ms\",\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"roll\",\n      \"units\": \"rad\",\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"pitch\",\n      \"units\": \"rad\",\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"yaw\",\n      \"units\": \"rad\",\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"rollspeed\",\n      \"units\": \"rad/s\",\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"pitchspeed\",\n      \"units\": \"rad/s\",\n      \"description\": null\n    },\n    {\n      \"type\": \"float\",\n      \"name\": \"yawspeed\",\n      \"units\": \"rad/s\",\n      \"description\": null\n    }\n  ],\n  \"citation\": {\n    \"cite_id\": \"mavlink#ccffbab4c3b3c12d\",\n    \"source_id\": \"mavlink\",\n    \"repo\": \"mavlink/mavlink\",\n    \"ref\": \"eec8824212c1fe8c5d8f5181fcfdef54ee219b63\",\n    \"channel\": \"snapshot\",\n    \"unreleased\": true,\n    \"pinned\": true,\n    \"title\": \"common.xml\",\n    \"url\": \"https://github.com/mavlink/mavlink/blob/eec8824212c1fe8c5d8f5181fcfdef54ee219b63/message_definitions/v1.0/common.xml#L5733-L5761\",\n    \"path\": \"message_definitions/v1.0/common.xml\",\n    \"lines\": [\n      5733,\n      5761\n    ],\n    \"version\": \"mavlink@eec8824 (2026-10-22)\",\n    \"ingested_at\": \"2026-10-25T20:13:30+0700\",\n    \"tier\": \"T1\",\n    \"license\": \"(L)GPL-3.0 generator; MIT generated code; XML definitions unstated\",\n    \"retrieved_at\": \"2026-10-25T20:13:30+0700\",\n    \"heading_path\": \"message_definitions/v1.0/common.xml\",\n    \"excerpt\": \"    <message id=\\\"30\\\" name=\\\"ATTITUDE\\\">\\n      <description>The attitude in the aeronautical frame (right-handed, Z-down, Y-right, X-front, ZYX, intrinsic).</description>\\n      <field type=\\\"uint32_t\\\" name=\\\"time_boot_ms\\\" units=\\\"ms\\\">Timestamp (time since system boot).</field>\\n      <field type=\\\"float\\\" name=\\\"roll\\\" units=\\\"rad\\\">Roll angle (-pi..+pi)</field>\\n      <field type=\\\"float\\\" name=\\\"pitch\\\" units=\\\"rad\\\">Pitch angle (-pi..+pi)</field>\\n      <field type=\\\"float\\\" name=\\\"yaw\\\" units=\\\"rad\\\">Yaw angle (-pi..+pi)</field>\\n      <field type=\\\"float\\\" name=\\\"rollspeed\\\" units=\\\"rad/s\\\">Roll angular speed</field>\\n    \",\n    \"untrusted\": true\n  },\n  \"untrusted\": true\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "ATTITUDE",
+        "kind": "message",
+        "resolved_by": "name",
+        "msgid": 30,
+        "name": "ATTITUDE",
+        "description": "The attitude in the aeronautical frame (right-handed, Z-down, Y-right, X-front, ZYX, intrinsic).",
+        "fields": [
+          {
+            "type": "uint32_t",
+            "name": "time_boot_ms",
+            "units": "ms",
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "roll",
+            "units": "rad",
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "pitch",
+            "units": "rad",
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "yaw",
+            "units": "rad",
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "rollspeed",
+            "units": "rad/s",
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "pitchspeed",
+            "units": "rad/s",
+            "description": null
+          },
+          {
+            "type": "float",
+            "name": "yawspeed",
+            "units": "rad/s",
+            "description": null
+          }
+        ],
+        "citation": {
+          "cite_id": "mavlink#ccffbab4c3b3c12d",
+          "source_id": "mavlink",
+          "repo": "mavlink/mavlink",
+          "ref": "eec8824212c1fe8c5d8f5181fcfdef54ee219b63",
+          "channel": "snapshot",
+          "unreleased": true,
+          "pinned": true,
+          "title": "common.xml",
+          "url": "https://github.com/mavlink/mavlink/blob/eec8824212c1fe8c5d8f5181fcfdef54ee219b63/message_definitions/v1.0/common.xml#L5733-L5761",
+          "path": "message_definitions/v1.0/common.xml",
+          "lines": [
+            5733,
+            5761
+          ],
+          "version": "mavlink@eec8824 (2026-10-22)",
+          "ingested_at": "2026-10-25T20:13:30+0700",
+          "tier": "T1",
+          "license": "(L)GPL-3.0 generator; MIT generated code; XML definitions unstated",
+          "retrieved_at": "2026-10-25T20:13:30+0700",
+          "heading_path": "message_definitions/v1.0/common.xml",
+          "excerpt": "    <message id=\"30\" name=\"ATTITUDE\">\n      <description>The attitude in the aeronautical frame (right-handed, Z-down, Y-right, X-front, ZYX, intrinsic).</description>\n      <field type=\"uint32_t\" name=\"time_boot_ms\" units=\"ms\">Timestamp (time since system boot).</field>\n      <field type=\"float\" name=\"roll\" units=\"rad\">Roll angle (-pi..+pi)</field>\n      <field type=\"float\" name=\"pitch\" units=\"rad\">Pitch angle (-pi..+pi)</field>\n      <field type=\"float\" name=\"yaw\" units=\"rad\">Yaw angle (-pi..+pi)</field>\n      <field type=\"float\" name=\"rollspeed\" units=\"rad/s\">Roll angular speed</field>\n    ",
+          "untrusted": true
+        },
+        "untrusted": true
+      }
+    }
+  }
+}

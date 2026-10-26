@@ -28,6 +28,8 @@ STAGES: list[tuple[str, list[str]]] = [
     ("ingest", ["-m", "ardupilot_research_mcp.ingest.cli", "--all", "--rebuild-index"]),
     ("build params", ["-m", "research.build_params"]),
     ("build mavlink", ["-m", "research.build_mavlink"]),
+    # Optional: skipped cleanly when the model was never downloaded.
+    ("build vectors", ["-m", "research.build_vectors", "--optional"]),
     ("verify index", ["-m", "ardupilot_research_mcp.ingest.cli", "--verify"]),
 ]
 

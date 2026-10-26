@@ -13,7 +13,7 @@ nguyên văn, hoặc nói `found:false`.
 
 ```
 python -m ardupilot_research_mcp.server     # MCP stdio, 14 tool
-python -m pytest -q                         # 141 passed
+python -m pytest -q                         # 184 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP`. Package `ardupilot-research-mcp` v0.1.0, Python 3.10 trở lên.
@@ -86,10 +86,12 @@ python -m ardupilot_research_mcp.ingest.cli --all --rebuild-index
 python -m research.build_params      # @Param, @Bitmask và @Default vào bảng params
 python -m research.build_mavlink     # XML MAVLink vào bảng message và enum
 python -m ardupilot_research_mcp.ingest.cli --verify
+# tùy chọn, chỉ cho semantic retrieval: python -m research.build_vectors   (khoảng 68 phút)
 ```
 
 Mất khoảng năm phút và tạo `data/index.sqlite` 182 MB: 7 356 document thành 86 262 chunk, 5 089
 tham số, 397 message MAVLink và 2 367 enum entry.
+Stage vector là tùy chọn: thêm 63 MB và khoảng một giờ CPU, mọi thứ khác vẫn chạy khi không có nó.
 
 `--resume` là mặc định, bỏ qua file đã index theo hash. `--rebuild-index` tạo lại file SQLite.
 
@@ -287,13 +289,16 @@ wiki nhiều markup vẫn khớp câu hỏi văn xuôi mà không làm sai đo�
 
 ## Cấu hình
 
-Ba biến môi trường, mặc định lấy theo checkout:
+Sáu biến môi trường, mặc định lấy theo checkout:
 
 | Biến | Mặc định | Ý nghĩa |
 |---|---|---|
 | `ARM_REPO_ROOT` | checkout chứa `src/` | nơi có `sources.yaml`, `glossary.vi-en.yaml`, `scope.yaml` |
 | `ARM_DATA_DIR` | `<repo>/data` | nơi có `index.sqlite`, `corpus/`, `local/` |
 | `GOVERNOR_HOME` | `<repo>/research` | nơi có sổ cái quota |
+| `ARM_SOURCES` | `<repo>/sources.yaml` | bộ pin khác, ví dụ `sources-4.6.yaml` |
+| `ARM_DENSE` | không đặt, tắt | `1` bật rerank ngữ nghĩa tùy chọn (xem bên dưới) |
+| `ARM_MODEL_DIR` | `<data>/models/multilingual-e5-small` | thư mục model ONNX và tokenizer |
 
 Vì index và ledger phân giải từ các biến này, bạn giữ được nhiều bản độc lập trên cùng máy, ví dụ
 mỗi worktree một bản:
@@ -443,7 +448,7 @@ Rồi hỏi: *"tra RC_OPTIONS và cho biết bit nào bật ELRS 420kbaud"*. Câ
 ## Test và cổng kiểm
 
 ```powershell
-python -m pytest -q                                     # 141 passed
+python -m pytest -q                                     # 184 passed
 python scripts\check_traceability.py                    # yêu cầu, test, kết quả, failing=0
 python scripts\fidelity_scan.py                         # 86 262 chunk, 0 mismatch, PASS
 python scripts\check_param_citations.py                 # 5 089 tham số, 0 vi phạm
@@ -460,7 +465,7 @@ python scripts\mutation_check.py                        # điểm mutation
 
 | Cổng | Kết quả |
 |---|---|
-| `pytest -q` | 141 passed, 1 skipped |
+| `pytest -q` | 184 passed, 1 skipped |
 | `fidelity_scan.py` | 86 262 chunk, 0 mismatch, PASS |
 | `check_param_citations.py` | 5 089 kiểm, 0 vi phạm |
 | `check_traceability.py` | 22 yêu cầu, failing=0 |
@@ -481,8 +486,8 @@ nên không test nào phân biệt được nó với bản gốc.
 `tests/conftest.py` reset guard tốc độ giữa các test. Guard sản phẩm vẫn giữ 60 lần gọi mỗi phút.
 
 Cả `data/index.sqlite` và `data/corpus` đều nằm trong gitignore, nên clone mới tự thích nghi thay vì
-fail. Chỉ có index thì test đối chiếu với file nguồn bị skip, cho 133 passed và 1 skipped. Có cả
-corpus thì chạy đủ 134.
+fail: module nào cần index hoặc corpus thì tự skip. Có đủ cả hai thì bộ test chạy 184 passed và 1
+skipped; test bị skip là test thoát khỏi thư mục bằng symlink trên tài khoản Windows này.
 
 ## Chất lượng đo được
 
@@ -495,6 +500,18 @@ corpus thì chạy đủ 134.
 
 Tập công bằng là v3 (`docs/eval-heldout-v3.md`). v1 và v2 giữ lại để trung thực và không dùng để
 tính điểm. Hash ở `docs/heldout*.sha256`, evaluator từ chối chạy nếu tập bị đổi.
+
+Bộ đo hiện tại là eval v4: 125 câu viết từ bằng chứng corpus, chia 53 câu dev và 72 câu held-out
+đóng băng (`docs/eval-v4.md`). Kết quả held-out, mỗi cấu hình một dòng:
+
+| cấu hình | recall@5 | P@1 | MRR | chunk-hit@5 | negative-pass |
+|---|---|---|---|---|---|
+| baseline Phase 1 | 0.692 | 0.369 | 0.493 | 0.369 | 0.571 |
+| Rung 1 từ khóa, bản mặc định | 0.723 | 0.323 | 0.475 | 0.369 | 0.571 |
+| Rung 2 rerank ngữ nghĩa, tùy chọn | 0.692 | 0.277 | 0.439 | 0.354 | 0.571 |
+
+Điểm yếu là tập tiếng Việt: recall@5 0.516 so với 0.906 của tiếng Anh ở bản mặc định. Theo nhóm và
+theo ngôn ngữ: `docs/upgrade/rung1.md` và `docs/upgrade/rung2.md`.
 
 Một người kiểm thử độc lập đóng băng 108 case mức tool (`tests/blackbox_cases.md`, SHA-256
 `1b53e69…dcaf27`), chạy qua một phiên stdio và viết `docs/blackbox/REPORT.md`, kết quả 80 pass và 28
@@ -513,6 +530,27 @@ Năm script chấm điểm cũng được chạy hai lần trên cùng raw và c
 92 trên 16 không phụ thuộc thứ tự chạy hay thời điểm (`docs/blackbox/run2/determinism.md`).
 Việc chọn chunk trong document thắng giờ ưu tiên khớp nguyên từ và chunk không có heading hẹp
 hơn, nên C1 từ chỗ gần trúng thành trích đúng đoạn `0xD5`.
+
+## Tùy chọn: semantic retrieval
+
+Một retriever ONNX e5-small có thể rerank danh sách ứng viên của BM25. Nó tắt mặc định: đo trên eval
+v4 đóng băng thì nó không thắng được cách xếp hạng thường (`docs/upgrade/rung2.md`).
+
+```powershell
+pip install -e ".[embeddings]"      # onnxruntime, tokenizers, numpy
+python -m research.build_vectors    # 86 262 chunk, 63 MB, khoảng 68 phút trên 8 core
+$env:ARM_DENSE = "1"                # bật tùy chọn; không đặt thì chỉ dùng BM25
+```
+
+Model là `intfloat/multilingual-e5-small` (ONNX, 448.5 MB, MIT, xem `docs/license-notes.md`), đặt ở
+`data/models/multilingual-e5-small/`; đổi `ARM_MODEL_DIR` nếu để chỗ khác. Index tăng 63 MB và lần
+search đầu tiên của mỗi tiến trình mất khoảng 7 giây để nạp vector.
+
+Đánh đổi đo được trên held-out v4: recall@5 0.692 so với 0.723 và MRR 0.439 so với 0.475 của bản mặc
+định, nên chỉ bật khi câu hỏi của bạn thiên về ngữ nghĩa hơn là tên định danh. Thiếu extras, model
+hoặc bảng `chunk_vectors` thì luôn quay về BM25; đặt `ARM_DENSE=1` mà thiếu tài nguyên sẽ in một
+cảnh báo nêu lý do, và `index_status` báo
+`dense: {state: "requested-but-unavailable", unavailable_reason: ...}`.
 
 ## Tái lập
 
