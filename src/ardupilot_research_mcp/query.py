@@ -313,13 +313,14 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
     # candidate set with unrelated files. A LIKE pass over the verbatim column finds the
     # files that actually spell the identifier.
     if identifiers:
-        like = " OR ".join("c.text LIKE ?" for _ in identifiers)
+        stable_identifiers = sorted(identifiers)
+        like = " OR ".join("c.text LIKE ?" for _ in stable_identifiers)
         extra_sql = (
             "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
             "       c.line_start, c.line_end, -8.0 AS rank"
             "  FROM chunks c JOIN documents d ON d.id = c.document_id"
             f" WHERE ({like})")
-        extra_params: list[object] = [f"%{token}%" for token in identifiers]
+        extra_params: list[object] = [f"%{token}%" for token in stable_identifiers]
         if allowed_sources:
             extra_sql += f" AND d.source_id IN ({','.join('?' * len(allowed_sources))})"
             extra_params.extend(allowed_sources)
@@ -338,7 +339,7 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
             "       c.line_start, c.line_end, 0.0 AS rank"
             "  FROM params p JOIN chunks c ON c.cite_hash = p.cite_hash"
             " WHERE p.param_name = ? OR p.param_name LIKE ? LIMIT 15")
-        for token in identifiers:
+        for token in sorted(identifiers):
             for row in con.execute(decl_sql, (token, f"{token}%")):
                 declarers.add(row["cite_hash"])
                 merged.setdefault(row["cite_hash"], (row, 0.0))
@@ -372,7 +373,7 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         floor = min(score for score, _row in scored)
         scored = [(floor - 1.0 if row["cite_hash"] in declarers else score, row)
                   for score, row in scored]
-    scored.sort(key=lambda item: item[0])
+    scored.sort(key=lambda item: (item[0], item[1]["cite_hash"]))
 
     # Rank DOCUMENTS, not chunks: a long page can put five chunks in the top five and hide the
     # file the caller actually needs. Keep the best chunk per document, best documents first.
@@ -382,13 +383,14 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
 
     results = []
     query_tokens = {token.lower() for token in tokens}
-    for items in sorted(by_path.values(), key=lambda group: group[0][0]):
+    for items in sorted(by_path.values(),
+                       key=lambda group: (group[0][0], group[0][1]["cite_hash"])):
         # Among the chunks of the document that ranked first, prefer the one that spells the query
         # words as words, then the one without a narrower heading, then the better bm25 score.
         score, row = min(items, key=lambda item: (-_boundary_hits(item[1]["text"], query_tokens),
                                                  _heading_extra(item[1]["heading_path"],
                                                                 query_tokens),
-                                                 item[0]))
+                                                 item[0], item[1]["cite_hash"]))
         citation = cite.build_citation(con, cite.make_cite_id(row["source_id"], row["cite_hash"]))
         citation["excerpt"] = textsanitize.sanitize_excerpt(citation["excerpt"])
         citation["score"] = round(score, 4)

@@ -11,12 +11,12 @@
     "positives": 65,
     "negatives": 7,
     "recall_at_k": 0.7230769230769231,
-    "precision_at_1": 0.35384615384615387,
-    "mrr": 0.48999999999999994,
+    "precision_at_1": 0.3230769230769231,
+    "mrr": 0.47461538461538455,
     "chunk_hit": 0.36923076923076925,
     "negative_pass": 0.5714285714285714,
     "hits": 47,
-    "precision_1_count": 23
+    "precision_1_count": 21
   },
   "per_category": {
     "code": {
@@ -24,12 +24,12 @@
       "positives": 13,
       "negatives": 0,
       "recall_at_k": 0.8461538461538461,
-      "precision_at_1": 0.38461538461538464,
-      "mrr": 0.5602564102564103,
+      "precision_at_1": 0.3076923076923077,
+      "mrr": 0.5217948717948718,
       "chunk_hit": 0.23076923076923078,
       "negative_pass": null,
       "hits": 11,
-      "precision_1_count": 5
+      "precision_1_count": 4
     },
     "elrs_edgetx": {
       "questions": 6,
@@ -72,12 +72,12 @@
       "positives": 13,
       "negatives": 0,
       "recall_at_k": 0.5384615384615384,
-      "precision_at_1": 0.46153846153846156,
-      "mrr": 0.4807692307692308,
+      "precision_at_1": 0.38461538461538464,
+      "mrr": 0.4423076923076923,
       "chunk_hit": 0.07692307692307693,
       "negative_pass": null,
       "hits": 7,
-      "precision_1_count": 6
+      "precision_1_count": 5
     },
     "protocol": {
       "questions": 9,
@@ -122,12 +122,12 @@
       "positives": 32,
       "negatives": 5,
       "recall_at_k": 0.90625,
-      "precision_at_1": 0.5625,
-      "mrr": 0.69375,
+      "precision_at_1": 0.53125,
+      "mrr": 0.678125,
       "chunk_hit": 0.40625,
       "negative_pass": 0.4,
       "hits": 29,
-      "precision_1_count": 18
+      "precision_1_count": 17
     },
     "mixed": {
       "questions": 2,
@@ -146,12 +146,12 @@
       "positives": 31,
       "negatives": 2,
       "recall_at_k": 0.5161290322580645,
-      "precision_at_1": 0.12903225806451613,
-      "mrr": 0.2725806451612903,
+      "precision_at_1": 0.0967741935483871,
+      "mrr": 0.2564516129032258,
       "chunk_hit": 0.2903225806451613,
       "negative_pass": 1.0,
       "hits": 16,
-      "precision_1_count": 4
+      "precision_1_count": 3
     }
   },
   "rows": null

@@ -408,3 +408,25 @@ def test_an_out_of_scope_vietnamese_question_is_still_refused(con):
     payload = query.search(con, "cong thuc nau pho bo cho bon nguoi an", limit=5)
     assert payload["found"] is False
     assert payload["results"] == []
+
+
+def test_the_same_query_returns_the_same_payload_in_two_processes():
+    """Set iteration used to decide tie order, so two processes could disagree (hash seed).
+    Identifiers are iterated sorted and score ties break on cite_hash."""
+    import os
+    import subprocess
+
+    script = (
+        "import json, sys; sys.path.insert(0, 'src');"
+        "from ardupilot_research_mcp import db, query;"
+        "print(json.dumps(query.search(db.connect(),"
+        " 'RC_OPTIONS and EAHRS_TYPE and SCR_VM_I_COUNT where declared', limit=5),"
+        " sort_keys=True, ensure_ascii=True))")
+    outputs = []
+    for seed in ("0", "1"):
+        env = dict(os.environ, PYTHONHASHSEED=seed, PYTHONUTF8="1")
+        result = subprocess.run([sys.executable, "-c", script], cwd=str(REPO), env=env,
+                                capture_output=True, text=True)
+        assert result.returncode == 0, result.stderr[-400:]
+        outputs.append(result.stdout)
+    assert outputs[0] and outputs[0] == outputs[1]

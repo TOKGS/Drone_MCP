@@ -104,7 +104,7 @@ wheel workaround (or one approved install outside the sandbox).
 - [x] P1-E freeze                      owner: lead  commit: 7d6a4c3  evidence: docs/eval-v4-dev.sha256 `7f22f9cf...`, docs/eval-v4-heldout.sha256 `cf9d2035...`, scratch deleted
 - [x] P1-F baseline v4                owner: lead  commit: 7d6a4c3  evidence: docs/upgrade/baseline/{dev,heldout,golden,v3}.json + docs/eval-v4.md
 - [x] Rung 0 baseline                 owner: lead  commit: 24a91fa  evidence: docs/upgrade/baseline/
-- [x] Rung 1 lexical                  owner: lead  commit: 96ebc24  evidence: dev 0.583->0.833 recall, held-out 0.692->0.723, negatives held, bench 229.3 ms
+- [x] Rung 1 lexical                  owner: lead  commit: 96ebc24  evidence: dev 0.583->0.833 recall, held-out 0.692->0.723, negatives held, bench 237.5 ms
 - [ ] Rung 2 dense + fusion           owner:      commit:      evidence:
 - [ ] Rung 3 rerank (optional)        owner:      commit:      evidence:
 - [ ] WP-G docs and gates             owner:      commit:      evidence:
@@ -157,22 +157,22 @@ Phase 1 exit criteria, each with the command that shows it:
 
 ## Rung 1 result (raw)
 
-`tests/eval_v4_dev.yaml` (tunable): recall@5 0.583 -> 0.833, P@1 0.375 -> 0.562, MRR 0.452 -> 0.657,
+`tests/eval_v4_dev.yaml` (tunable): recall@5 0.583 -> 0.833, P@1 0.375 -> 0.542, MRR 0.452 -> 0.646,
 chunk-hit@5 0.312 -> 0.354, negative-pass 0.200 (unchanged).
 
 `tests/eval_v4_heldout.yaml` (measured once, for the final configuration):
 
 ```
 recall@5 = 47/65 = 0.723      (baseline 0.692)
-precision@1 = 23/65 = 0.354   (baseline 0.369)
-MRR = 0.490                   (baseline 0.493)
+precision@1 = 21/65 = 0.323   (baseline 0.369)
+MRR = 0.475                   (baseline 0.493)
 chunk-hit@5 = 0.369           (baseline 0.369)
 negative-pass = 0.571         (baseline 0.571, floor held)
 ```
 
 `tests/eval_v4_neg_vi.yaml`: negative-pass 0.750 (baseline 0.750, floor held).
 `tests/golden.yaml` 1.000/0.800/0.886 (was 1.000/0.767/0.859); `tests/heldout_v3.yaml`
-0.933/0.833/0.868 unchanged; `scripts/bench.py` search_docs p95 229.3 ms, PASS.
+0.933/0.833/0.868 unchanged; `scripts/bench.py` search_docs p95 237.5 ms, PASS.
 
 Ablation per step and the rejected variants are in `docs/upgrade/rung1.md`; kept/rejected techniques
 in `docs/upgrade/DECISIONS.md`; raw runs in `docs/upgrade/runs/rung1-*`.
@@ -183,6 +183,9 @@ in `docs/upgrade/DECISIONS.md`; raw runs in `docs/upgrade/runs/rung1-*`.
 - 2026-10-26: Rung 1 kept four changes (glossary growth, parameter-declaration priority,
   Vietnamese anchor relaxation, test-harness penalty). Held-out P@1/MRR moved -0.015/-0.003
   while recall@5 rose +0.031; disclosed rather than hidden, details in docs/upgrade/rung1.md.
+- 2026-10-26: Rung 1 also fixed a determinism defect found while re-checking: identifier passes
+  iterated a set and ties broke on dict order, so PYTHONHASHSEED decided part of the ranking.
+  Ties now break on cite_hash and a two-process test pins it (docs/upgrade/DECISIONS.md).
 - 2026-10-26: work on `feat/eval-v4-hybrid-retrieval`, one commit per rung so each can be reverted.
 - 2026-10-26: model staged at `data/models/multilingual-e5-small/` (gitignored) so the build stage can
   skip a 448.5 MB download while the pipeline is written. The build script must still download it when
