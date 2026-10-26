@@ -69,6 +69,20 @@ def test_identifier_query_prefers_the_named_page() -> None:
         con.close()
 
 
+def test_identifier_in_the_source_text_outranks_a_path_match():
+    """The text-identifier boost (M15): LAND_TYPE is spelled in AP_Landing.cpp, whose path does
+    not contain it; without the boost a wiki page that only shares the words wins the top spot.
+    The query is the v4 dev question V4-B2-011 (dev is tunable); it is here as a mutation guard."""
+    con = db.connect()
+    try:
+        payload = query.search(
+            con, "Copter hiện Landing configuration error, invalid LAND_TYPE thì thông điệp đó nằm ở file nào?",
+            limit=3)
+        assert payload["results"][0]["path"] == "libraries/AP_Landing/AP_Landing.cpp"
+    finally:
+        con.close()
+
+
 def test_vietnamese_query_is_expanded() -> None:
     con = db.connect()
     try:
