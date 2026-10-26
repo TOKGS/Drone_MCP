@@ -63,6 +63,9 @@ SIMULATOR_PENALTY = 5.0
 # Similarity is a cosine in [-1, 1] and the BM25 ranks span tens of points, so the weight is small.
 DENSE_RERANK_WEIGHT = 2.0
 DENSE_RERANK_CANDIDATES = 200
+# V2 document prior: the cosine to the best-matching document (path words plus headings, one vector
+# per document) is subtracted from every chunk of that document. Same opt-in as the dense rerank.
+DOC_PRIOR_WEIGHT = 2.0
 # A ranked candidate carries a negative bm25-like number (lower is better). The declaring chunk of
 # a parameter that the query names outright enters with this score, so it beats a chunk that only
 # mentions the name unless the mention is an even stronger identifier match.
@@ -354,6 +357,13 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
     # The local overlay is the user's own files and has no vectors; do not fuse it.
     dense_hits = (dense.search(con, query, limit=DENSE_RERANK_CANDIDATES)
                   if scope != "local" and dense.enabled(con) else [])
+    # V2 measured the document prior on the dev sets and it lost (v5-vi dev recall@5 0.558 -> 0.535,
+    # MRR 0.416 -> 0.405; v4 dev recall@5 0.833 -> 0.812), so it is off even under ARM_DENSE=1 and
+    # only ARM_DOC_PRIOR=1 turns it on, to keep the measurement reproducible.
+    doc_prior: dict[str, float] = (
+        dict(dense.search_docs(con, query, limit=dense.DOC_CANDIDATES))
+        if (scope != "local" and dense_hits and dense.docs_requested()
+            and dense.docs_available(con)) else {})
 
     sql = (
         "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
@@ -424,6 +434,10 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         if TIER_ORDER.get(tiers.get(row["source_id"], "T3"), 0) > max_tier:
             continue
         score = base_scores.get(row["cite_hash"], rank)     # lower is better
+        if doc_prior:
+            # Topic similarity is a weak prior next to the lexical evidence; it reorders documents
+            # that are already candidates and never adds one.
+            score -= DOC_PRIOR_WEIGHT * doc_prior.get(row["path"], 0.0)
         score -= 6.0 * sum(1 for token in identifiers if token in row["text"])
         # A file named after an identifier (common-rc-options.rst for RC_OPTIONS) is the
         # canonical page for it; without this the parameter-name page loses to incidental
