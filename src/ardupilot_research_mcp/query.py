@@ -108,14 +108,15 @@ def load_glossary() -> dict[str, list[str]]:
 @lru_cache(maxsize=4)
 def _read_scope(path: str, mtime_ns: int, size: int) -> dict:
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
-    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []]}
+    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []],
+            "in_scope_names": [str(name) for name in data.get("in_scope_names") or []]}
 
 
 def load_scope() -> dict:
-    """Out-of-scope product names from scope.yaml (data, never hardcoded in this module)."""
+    """Scope names from scope.yaml (data, never hardcoded in this module)."""
     path = config.repo_root() / "scope.yaml"
     if not path.exists():
-        return {"out_of_scope_names": []}
+        return {"out_of_scope_names": [], "in_scope_names": []}
     stat = path.stat()
     return _read_scope(str(path), stat.st_mtime_ns, stat.st_size)
 
@@ -243,6 +244,21 @@ def named_out_of_scope_product(query: str) -> str | None:
     return None
 
 
+def mentions_in_scope_name(query: str) -> bool:
+    """True when the query names something the pinned corpus documents.
+
+    The corpus talks *about* other stacks ("How do I configure ExpressLRS in Betaflight?"), so a
+    foreign name alone does not make the question unanswerable. Diacritics are folded here because a
+    user types "ardupilot" or "ArduPilot" for the same thing; the out-of-scope match stays
+    case-sensitive and this check does not run through it.
+    """
+    folded = vi.fold(query)
+    for name in load_scope()["in_scope_names"]:
+        if re.search(rf"(?<!\w){re.escape(vi.fold(name))}(?!\w)", folded):
+            return True
+    return False
+
+
 def _document_frequency(con: sqlite3.Connection, token: str,
                         cap: int = ANCHOR_MIN_DOCS) -> int:
     """Number of documents containing the token, capped at `cap` so FTS can stop early."""
@@ -324,11 +340,12 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
                 "note": f"scope {scope!r} has no indexed source yet"}
     max_tier = TIER_ORDER.get(tier_max, 0)
 
-    if scope != "local" and (named := named_out_of_scope_product(query)):
-        # The query is about a product the pinned corpus does not document. Nearby ArduPilot text is
-        # not an answer ("Betaflight GPS rescue" must not return AP_GPS), so refuse instead of
-        # returning a plausible-looking list. The note is the same data-driven one the scope notes
-        # use; this only decides found:false instead of degrees of "nearby".
+    named = named_out_of_scope_product(query) if scope != "local" else None
+    if named and not mentions_in_scope_name(query):
+        # The query is about a product the pinned corpus does not document, and it names nothing the
+        # corpus does document. Nearby ArduPilot text is not an answer ("Betaflight GPS rescue" must
+        # not return AP_GPS), so refuse instead of returning a plausible-looking list. A question
+        # that names an in-scope product as well is answerable and goes through the normal path.
         return {"found": False, "query": query, "results": [], "candidates": [],
                 "scope_notes": scope_notes(query, [], labels=_version_labels(con),
                                            applied=applied),

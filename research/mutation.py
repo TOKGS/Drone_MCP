@@ -93,10 +93,9 @@ MUTANTS = [
            ["tests/test_dense.py"], "dense rerank sign inverted"),
     Mutant("M20", "vi.py", "if target is None and evidence:", "if target is None:",
            ["tests/test_vi.py"], "ambiguous chat spelling expands without Vietnamese evidence"),
-    Mutant("M21", "query.py",
-           'if scope != "local" and (named := named_out_of_scope_product(query)):',
-           "if False:", ["tests/test_query.py"],
-           "an out-of-scope product answers with nearby corpus text again"),
+    Mutant("M21", "query.py", "if named and not mentions_in_scope_name(query):",
+           "if named:", ["tests/test_query.py"],
+           "a question that names an in-scope product and a foreign one is refused again"),
 ]
 
 

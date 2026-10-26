@@ -133,7 +133,8 @@ def test_per_category_and_per_lang_tables_are_grouped() -> None:
 
 
 # ------------------------------------------------------------------ v5-vi freezedef test_the_v5_sets_are_pinned() -> None:
-    for name in ("tests/eval_v5_vi_dev.yaml", "tests/eval_v5_vi_heldout.yaml"):
+    for name in ("tests/eval_v5_vi_dev.yaml", "tests/eval_v5_vi_heldout.yaml",
+                 "tests/eval_v5_mention.yaml"):
         path = ev.REPO / name
         found = ev.find_sha_line(path)
         assert found is not None, name

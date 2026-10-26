@@ -1,8 +1,13 @@
-# Names that are NOT documented by the pinned corpus. When one appears in a query the search
-# payload carries a scope note instead of suggesting the corpus covers it.
-# The corpus pins ArduPilot (Copter source + wiki), ExpressLRS, EdgeTX, the CRSF spec and MAVLink.
-# Adding a name here is a data change, never a code change: nothing in src/ hardcodes a product.
 version: 1
+
+# Names the pinned corpus does NOT document. A query that names one of these is refused with
+# found:false, because nearby ArduPilot text is not an answer ("Betaflight GPS rescue" must not
+# return AP_GPS). The spelling is matched exactly (case-sensitive): "inav alt" is an ArduPilot
+# PreArm parameter, "iNav" is another flight stack.
+#
+# The refusal only fires when the query names nothing the corpus DOES document (in_scope_names
+# below): "How do I configure ExpressLRS in Betaflight?" and "Khác nhau giữa ArduPilot và PX4" are
+# answerable questions about this corpus that happen to mention another product.
 out_of_scope_names:
   - PX4
   - Betaflight
@@ -10,3 +15,29 @@ out_of_scope_names:
   - Cleanflight
   - KISS
   - QGroundControl
+
+# Names the pinned corpus documents (products, vehicle types, protocols, tools). Matched
+# case-insensitively and with diacritics folded. Keep them product-level: a generic word here
+# would neutralise the refusal above.
+in_scope_names:
+  - ArduPilot
+  - ArduCopter
+  - Copter
+  - ArduPlane
+  - Plane
+  - ArduRover
+  - Rover
+  - ArduSub
+  - ExpressLRS
+  - ELRS
+  - EdgeTX
+  - OpenTX
+  - CRSF
+  - MAVLink
+  - Mission Planner
+  - Pixhawk
+  - CubeOrange
+  - MatekH743
+  - ChibiOS
+  - SITL
+  - MAVProxy

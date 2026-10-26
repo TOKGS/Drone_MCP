@@ -14,7 +14,7 @@ either carry a `cite_id`, a pinned permalink, an exact line range and a verbatim
 
 ```
 python -m ardupilot_research_mcp.server     # stdio MCP server, 14 tools
-python -m pytest -q                         # 221 passed
+python -m pytest -q                         # 223 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP`. Package `ardupilot-research-mcp` v0.1.0, Python 3.10 or newer.
@@ -466,7 +466,7 @@ PATH, `PYTHONPATH`, cwd, environment variables and the `cmd /c` wrapper.
 ## Tests and gates
 
 ```powershell
-python -m pytest -q                                     # 221 passed
+python -m pytest -q                                     # 223 passed
 python scripts\check_traceability.py                    # requirement to test to result, failing=0
 python scripts\fidelity_scan.py                         # 86 262 chunks, 0 mismatch, PASS
 python scripts\check_param_citations.py                 # 5 089 parameters, 0 violations
@@ -483,7 +483,7 @@ Last measured on the merged tree with the index rebuilt from scratch:
 
 | Gate | Result |
 |---|---|
-| `pytest -q` | 221 passed, 1 skipped |
+| `pytest -q` | 223 passed, 1 skipped |
 | `fidelity_scan.py` | 86 262 chunks, 0 mismatch, PASS |
 | `check_param_citations.py` | 5 089 checked, 0 violations |
 | `check_traceability.py` | 22 requirements, failing=0 |
@@ -502,7 +502,7 @@ per minute in production.
 
 Both `data/index.sqlite` and `data/corpus` are gitignored, so a fresh clone adapts instead of
 failing: modules that need the index or the corpus skip themselves. With both present the suite runs
-221 passed and 1 skipped; the skip is the directory-symlink escape test on this Windows account.
+223 passed and 1 skipped; the skip is the directory-symlink escape test on this Windows account.
 
 ## Measured quality
 
@@ -674,7 +674,7 @@ Binaries, images, fonts, archives, `.hex` and `.apj` files never enter the corpu
 
 v0.1.0, first complete pass, 2026-10-25.
 
-- 14 tools over stdio, read-only and offline, 221 tests, 86 262 chunks with no fidelity mismatch.
+- 14 tools over stdio, read-only and offline, 223 tests, 86 262 chunks with no fidelity mismatch.
 - Parameter table rebuilt from pinned metadata: 230 to 5 089 parameters, citation violations 3 891 to
   0, defaults 0 to 4 703 raw with 3 003 resolved.
 - Safety gate rewritten as data with folded bilingual matching: false negatives went from 3 of 11 to

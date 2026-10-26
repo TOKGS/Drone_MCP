@@ -186,6 +186,24 @@ def test_a_lowercase_parameter_name_is_not_a_product_name(con) -> None:
     assert payload["found"] is True
 
 
+def test_a_question_that_names_an_in_scope_product_is_answered(con) -> None:
+    """The corpus documents these products, so naming a foreign one alongside them is not a refusal."""
+    for text in ("How do I configure ExpressLRS in Betaflight?",
+                 "Khác nhau giữa ArduPilot và PX4 về failsafe là gì",
+                 "Chuyen tu Betaflight sang ArduPilot can doi gi",
+                 "MAVLink dùng chung với QGroundControl thế nào"):
+        payload = query.search(con, text, limit=3)
+        assert payload["found"] is True, (text, payload.get("note"))
+        assert payload["results"], text
+
+
+def test_a_foreign_product_question_with_no_in_scope_name_is_still_refused(con) -> None:
+    payload = query.search(con, "Betaflight GPS Rescue dat bao nhieu met thi no tu RTH?", limit=3)
+    assert payload["found"] is False
+    assert payload["results"] == []
+    assert "Betaflight" in payload["note"]
+
+
 def test_unknown_version_is_flagged_with_the_pinned_labels(con) -> None:
     labels = [row["version_label"] or row["ref"] for row in
               con.execute("SELECT ref, version_label FROM sources")]

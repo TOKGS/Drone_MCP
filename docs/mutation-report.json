@@ -6,7 +6,7 @@
       "note": "cite_id length changes",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 2 passed in 0.28s"
+      "detail": "1 failed, 2 passed in 0.34s"
     },
     {
       "id": "M02",
@@ -14,7 +14,7 @@
       "note": "channel rule inverted",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 2 passed in 0.30s"
+      "detail": "1 failed, 2 passed in 0.29s"
     },
     {
       "id": "M03",
@@ -22,7 +22,7 @@
       "note": "quote verification inverted",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 3 passed in 0.30s"
+      "detail": "1 failed, 3 passed in 0.32s"
     },
     {
       "id": "M04",
@@ -30,7 +30,7 @@
       "note": "wrong CRC polynomial",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed in 1.27s"
+      "detail": "1 failed in 1.23s"
     },
     {
       "id": "M05",
@@ -38,7 +38,7 @@
       "note": "CRC bit test inverted",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed in 1.33s"
+      "detail": "1 failed in 1.18s"
     },
     {
       "id": "M06",
@@ -46,7 +46,7 @@
       "note": "microsecond conversion off by one",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 2 passed in 1.25s"
+      "detail": "1 failed, 2 passed in 1.30s"
     },
     {
       "id": "M07",
@@ -54,7 +54,7 @@
       "note": "channel bit width wrong",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 2 passed in 1.44s"
+      "detail": "1 failed, 2 passed in 1.29s"
     },
     {
       "id": "M08",
@@ -62,7 +62,7 @@
       "note": "sync detection inverted",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 1 passed in 1.26s"
+      "detail": "1 failed, 1 passed in 1.21s"
     },
     {
       "id": "M09",
@@ -78,7 +78,7 @@
       "note": "length check inverted",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 8 passed in 1.29s"
+      "detail": "1 failed, 8 passed in 1.34s"
     },
     {
       "id": "M11",
@@ -86,7 +86,7 @@
       "note": "verb plus object rule demoted",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 2 passed in 0.47s"
+      "detail": "1 failed, 2 passed in 0.44s"
     },
     {
       "id": "M12",
@@ -94,7 +94,7 @@
       "note": "refusal excerpt filter disabled (equivalent: dangerous_excerpt regex catches the same sentences)",
       "equivalent": true,
       "status": "SURVIVED",
-      "detail": "31 passed in 2.39s"
+      "detail": "31 passed in 2.48s"
     },
     {
       "id": "M13",
@@ -102,7 +102,7 @@
       "note": "path containment inverted",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 10 passed in 1.31s"
+      "detail": "1 failed, 10 passed in 1.43s"
     },
     {
       "id": "M14",
@@ -110,7 +110,7 @@
       "note": "stopword filter removed",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 33 passed in 12.66s"
+      "detail": "1 failed, 35 passed in 13.73s"
     },
     {
       "id": "M15",
@@ -118,7 +118,7 @@
       "note": "identifier boost removed",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 3 passed in 1.12s"
+      "detail": "1 failed, 3 passed in 1.03s"
     },
     {
       "id": "M16",
@@ -134,7 +134,7 @@
       "note": "missing table/model reported as available",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed in 0.39s"
+      "detail": "1 failed in 0.45s"
     },
     {
       "id": "M18",
@@ -142,7 +142,7 @@
       "note": "requested-but-unavailable warning repeats every query",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 1 passed in 0.39s"
+      "detail": "1 failed, 1 passed in 0.40s"
     },
     {
       "id": "M19",
@@ -150,7 +150,7 @@
       "note": "dense rerank sign inverted",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 8 passed in 0.51s"
+      "detail": "1 failed, 8 passed in 0.56s"
     },
     {
       "id": "M20",
@@ -163,10 +163,10 @@
     {
       "id": "M21",
       "file": "query.py",
-      "note": "an out-of-scope product answers with nearby corpus text again",
+      "note": "a question that names an in-scope product and a foreign one is refused again",
       "equivalent": false,
       "status": "killed",
-      "detail": "1 failed, 8 passed in 1.93s"
+      "detail": ""
     }
   ],
   "total": 20,

@@ -136,6 +136,17 @@ normaliser was aimed at; the dev split moved more (`ascii-only` recall@5 0.417 -
 0.579 unchanged) than the held-out split did. The ship bar (MRR +0.05) was not met; section 9 of
 `PHASE3_REPORT.md` records that plainly.
 
+## Companion set: v5-mention
+
+`tests/eval_v5_mention.yaml` (18 positive questions, frozen by `docs/eval-v5-mention.sha256`) measures
+a different property: the answer is in the corpus, the question asks about a corpus product
+(ArduPilot, Copter, ExpressLRS, ELRS, EdgeTX, CRSF, MAVLink, Mission Planner, ...) and it also names
+a product the corpus does not document (PX4, Betaflight, iNav, Cleanflight, KISS, QGroundControl).
+Such a question must be answered, not refused. It exists because the first Phase 3 scope rule
+refused on the foreign name alone and lost 9 of these 18; the counts and the three runs are in
+`docs/upgrade/PHASE3_REPORT.md` section 3a. The set is not tuned: it was written, validated, frozen,
+run once for the shipped configuration and once for the `master` baseline.
+
 ## What the baseline says about the ruler
 
 - The set is harder than v4's Vietnamese subset: held-out recall@5 0.581 here against 0.516 there
