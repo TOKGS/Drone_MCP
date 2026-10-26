@@ -43,14 +43,14 @@ budget: search_docs p95 <= 400 ms, measured 232.3 ms      bench: PASS
 - [x] A5 experiment index paragraph (docs)                                owner: lead  commit: 6c8121a  evidence: `docs/upgrade/rung2.md` section "Experiment index"
 - [x] A6 eval-v4 regression-guard note                                    owner: lead  commit: d2f5b4a  evidence: note at the top of `docs/eval-v4.md`
 - [x] A-GATE pytest, check_readmes, check_traceability, fidelity, audit_safety  owner: lead  commit: 42e40dd  evidence: 191 passed 1 skipped; readme PASS; requirements=22 failing=0; fidelity TOTAL 86262 0 PASS; audit_safety exit 0 for the six inputs (`gates/phase3_partA_*.txt`)
-- [x] B0-tools make_eval_v5 + validator cross-set overlap + tests        owner: lead  commit: <B0>  evidence: `--strict-v5` + `--cross-check` in `research/validate_eval_set.py`, `research/make_eval_v5.py`, 5 tests in `tests/test_eval_v5.py`
-- [x] B0-w1 fragment param/hwdef/protocol                                owner: writer-1  commit: <B0>  evidence: 45 questions (20/10/15), diacritics_free=25, `errors: 0`
-- [x] B0-w2 fragment code/wiki/elrs_edgetx                               owner: writer-2  commit: <B0>  evidence: 50 questions (20/20/10), diacritics_free=28, `errors: 0`
-- [x] B0-w3 fragment troubleshoot/negative                               owner: writer-3  commit: <B0>  evidence: 25 questions (10/15), diacritics_free=14, `errors: 0`
-- [x] B0-merge validate, stratified split, freeze sha (dev + held-out)    owner: lead  commit: <B0>  evidence: 120 questions, dev 49 / held-out 71, no-diacritics 67 (55.8%), negatives 15, overlaps 6 to 3 to 0; sha `0df27ec4...` / `19f0e46a...`
-- [x] B0-tamper evaluator refuses a tampered v5 set                       owner: lead  commit: <B0>  evidence: `test_the_v5_sets_are_pinned` and `test_a_tampered_v5_copy_is_refused` (12 passed in `tests/test_eval_retrieval.py`); both baseline runs printed `sha256: verified`
-- [x] B0-baseline default and opt-in dense on both v5 splits -> baseline3/  owner: lead  commit: <B0>  evidence: dev default 0.488/0.256/0.354/0.302/0.500, dev dense 0.512/0.279/0.381/0.326/0.500; held-out default 0.581/0.387/0.447/0.242/0.556, held-out dense 0.581/0.387/0.444/0.242/0.556
-- [x] B0-docs docs/eval-v5-vi.md                                         owner: lead  commit: <B0>  evidence: protocol, counts, both baseline tables, what the ruler says, limits
+- [x] B0-tools make_eval_v5 + validator cross-set overlap + tests        owner: lead  commit: 59ad485  evidence: `--strict-v5` + `--cross-check` in `research/validate_eval_set.py`, `research/make_eval_v5.py`, 5 tests in `tests/test_eval_v5.py`
+- [x] B0-w1 fragment param/hwdef/protocol                                owner: writer-1  commit: 59ad485  evidence: 45 questions (20/10/15), diacritics_free=25, `errors: 0`
+- [x] B0-w2 fragment code/wiki/elrs_edgetx                               owner: writer-2  commit: 59ad485  evidence: 50 questions (20/20/10), diacritics_free=28, `errors: 0`
+- [x] B0-w3 fragment troubleshoot/negative                               owner: writer-3  commit: 59ad485  evidence: 25 questions (10/15), diacritics_free=14, `errors: 0`
+- [x] B0-merge validate, stratified split, freeze sha (dev + held-out)    owner: lead  commit: 59ad485  evidence: 120 questions, dev 49 / held-out 71, no-diacritics 67 (55.8%), negatives 15, overlaps 6 to 3 to 0; sha `0df27ec4...` / `19f0e46a...`
+- [x] B0-tamper evaluator refuses a tampered v5 set                       owner: lead  commit: 59ad485  evidence: `test_the_v5_sets_are_pinned` and `test_a_tampered_v5_copy_is_refused` (12 passed in `tests/test_eval_retrieval.py`); both baseline runs printed `sha256: verified`
+- [x] B0-baseline default and opt-in dense on both v5 splits -> baseline3/  owner: lead  commit: 1a1730f  evidence: dev default 0.488/0.256/0.354/0.302/0.500, dev dense 0.512/0.279/0.381/0.326/0.500; held-out default 0.581/0.387/0.447/0.242/0.556, held-out dense 0.581/0.387/0.444/0.242/0.556
+- [x] B0-docs docs/eval-v5-vi.md                                         owner: lead  commit: 59ad485  evidence: protocol, counts, both baseline tables, what the ruler says, limits
 - [ ] B1-V1 normaliser + mined glossary (vi)                              owner:  commit:  evidence:
 - [ ] B1-V2 doc-level vectors as prior                                    owner:  commit:  evidence:
 - [ ] B1-V3 expansion term weighting                                      owner:  commit:  evidence:
