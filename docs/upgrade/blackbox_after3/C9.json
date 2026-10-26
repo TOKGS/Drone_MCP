@@ -1,0 +1,181 @@
+{
+  "case": "C9",
+  "note": "one of top-5 paths must contain the expected string",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "throttle failsafe radio failsafe Copter",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 53,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "throttle failsafe radio failsafe Copter",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 62.2,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"throttle failsafe radio failsafe Copter\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#447e74881c122b70\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"radio-failsafe.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/radio-failsafe.rst#L7-L9\",\n      \"path\": \"copter/source/docs/radio-failsafe.rst\",\n      \"lines\": [\n        7,\n        9\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Radio Failsafe\",\n      \"excerpt\": \"Copter supports several configurable failsafe options in cases where contact between the Pilot's RC transmitter and the autopilot's receiver is lost.  This page explains this failsafe's setup and testing.  Note the \\\"Radio failsafe\\\" was previously called \\\"Throttle failsafe\\\" because of the way in which some receivers use the throttle channel to signal the loss of contact.\\n\\n.. warning::\",\n      \"untrusted\": true,\n      \"score\": -39.7305\n    },\n    {\n      \"cite_id\": \"ardupilot#06e306d5cc01227c\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"radio.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/radio.cpp#L131-L172\",\n      \"path\": \"ArduCopter/radio.cpp\",\n      \"lines\": [\n        131,\n        172\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduCopter/radio.cpp\",\n      \"excerpt\": \"    LOGGER_WRITE_ERROR(LogErrorSubsystem::RADIO, LogErrorCode::RADIO_LATE_FRAME);\\n    set_failsafe_radio(true);\\n}\\n\\n#define FS_COUNTER 3        // radio failsafe kicks in after 3 consecutive throttle values below failsafe_throttle_value\\nvoid Copter::set_throttle_and_failsafe(uint16_t throttle_pwm)\\n{\\n    // if failsafe not enabled pass through throttle and exit\\n    if(g.failsafe_throttle == FS_THR_DISABLED) {\\n        set_failsafe_radio(false);\\n        return;\\n    }\\n\\n    //check for low throttle value\\n    if (throttle_pwm < (uint16_t)g.failsafe_throttle_value) {\\n\\n        // if we are already in f\",\n      \"untrusted\": true,\n      \"score\": -38.4749\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#0edb3f4303a81a05\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"radio-failsafe.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/sub/source/docs/radio-failsafe.rst#L7-L11\",\n      \"path\": \"sub/source/docs/radio-failsafe.rst\",\n      \"lines\": [\n        7,\n        11\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Radio Failsafe\",\n      \"excerpt\": \".. note:: RC control is not enabled by default so items in this section would not be applicable. See :ref:`Sub Defaults<sub-defaults>` section to enable.\\n\\nSub supports several configurable failsafe options in cases where contact between the Pilot's RC transmitter and the autopilot's receiver is lost.  This page explains this failsafe's setup and testing.  Note the \\\"Radio failsafe\\\" was previously called \\\"Throttle failsafe\\\" because of the way in which some receivers use the throttle channel to signal the loss of contact.\\n\\n.. note::\",\n      \"untrusted\": true,\n      \"score\": -34.1821\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#fcaa24049fcda811\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"rover-failsafes.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/rover/source/docs/rover-failsafes.rst#L12-L17\",\n      \"path\": \"rover/source/docs/rover-failsafes.rst\",\n      \"lines\": [\n        12,\n        17\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Radio Failsafe (aka Throttle Failsafe)\",\n      \"excerpt\": \".. image:: ../images/rover-failsafe-rc.jpg\\n    :target: ../_images/rover-failsafe-rc.jpg\\n\\nThis failsafe is triggered if the connection between the user's transmitter and the receiver on the vehicle is lost for at least :ref:`FS_TIMEOUT <FS_TIMEOUT>` seconds (default = 1 sec).\\n\\n- the loss of transmitter/receiver connection is detected by:\",\n      \"untrusted\": true,\n      \"score\": -33.8995\n    },\n    {\n      \"cite_id\": \"ardupilot#71f3b82d1e3b381d\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"RC_Channel_Copter.cpp\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/RC_Channel_Copter.cpp#L36-L64\",\n      \"path\": \"ArduCopter/RC_Channel_Copter.cpp\",\n      \"lines\": [\n        36,\n        64\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"ArduCopter/RC_Channel_Copter.cpp\",\n      \"excerpt\": \"        }\\n    }\\n}\\n\\nbool RC_Channels_Copter::in_rc_failsafe() const\\n{\\n    return copter.failsafe.radio;\\n}\\n\\nbool RC_Channels_Copter::has_valid_input() const\\n{\\n    if (in_rc_failsafe()) {\\n        return false;\\n    }\\n    if (copter.failsafe.radio_counter != 0) {\\n        return false;\\n    }\\n    return RC_Channels::has_valid_input();\\n}\\n\\n// returns true if throttle arming checks should be run\\nbool RC_Channels_Copter::arming_check_throttle() const {\\n    if ((copter.g.throttle_behavior & THR_BEHAVE_FEEDBACK_FROM_MID_STICK) != 0) {\\n        // center sprung throttle configured, dont run AP_Arming check\\n \",\n      \"untrusted\": true,\n      \"score\": -33.0489\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot_wiki#447e74881c122b70\",\n    \"ardupilot#06e306d5cc01227c\",\n    \"ardupilot_wiki#0edb3f4303a81a05\",\n    \"ardupilot_wiki#fcaa24049fcda811\",\n    \"ardupilot#71f3b82d1e3b381d\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 5\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "throttle failsafe radio failsafe Copter",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot_wiki#447e74881c122b70",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "radio-failsafe.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/copter/source/docs/radio-failsafe.rst#L7-L9",
+            "path": "copter/source/docs/radio-failsafe.rst",
+            "lines": [
+              7,
+              9
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Radio Failsafe",
+            "excerpt": "Copter supports several configurable failsafe options in cases where contact between the Pilot's RC transmitter and the autopilot's receiver is lost.  This page explains this failsafe's setup and testing.  Note the \"Radio failsafe\" was previously called \"Throttle failsafe\" because of the way in which some receivers use the throttle channel to signal the loss of contact.\n\n.. warning::",
+            "untrusted": true,
+            "score": -39.7305
+          },
+          {
+            "cite_id": "ardupilot#06e306d5cc01227c",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "radio.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/radio.cpp#L131-L172",
+            "path": "ArduCopter/radio.cpp",
+            "lines": [
+              131,
+              172
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduCopter/radio.cpp",
+            "excerpt": "    LOGGER_WRITE_ERROR(LogErrorSubsystem::RADIO, LogErrorCode::RADIO_LATE_FRAME);\n    set_failsafe_radio(true);\n}\n\n#define FS_COUNTER 3        // radio failsafe kicks in after 3 consecutive throttle values below failsafe_throttle_value\nvoid Copter::set_throttle_and_failsafe(uint16_t throttle_pwm)\n{\n    // if failsafe not enabled pass through throttle and exit\n    if(g.failsafe_throttle == FS_THR_DISABLED) {\n        set_failsafe_radio(false);\n        return;\n    }\n\n    //check for low throttle value\n    if (throttle_pwm < (uint16_t)g.failsafe_throttle_value) {\n\n        // if we are already in f",
+            "untrusted": true,
+            "score": -38.4749
+          },
+          {
+            "cite_id": "ardupilot_wiki#0edb3f4303a81a05",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "radio-failsafe.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/sub/source/docs/radio-failsafe.rst#L7-L11",
+            "path": "sub/source/docs/radio-failsafe.rst",
+            "lines": [
+              7,
+              11
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Radio Failsafe",
+            "excerpt": ".. note:: RC control is not enabled by default so items in this section would not be applicable. See :ref:`Sub Defaults<sub-defaults>` section to enable.\n\nSub supports several configurable failsafe options in cases where contact between the Pilot's RC transmitter and the autopilot's receiver is lost.  This page explains this failsafe's setup and testing.  Note the \"Radio failsafe\" was previously called \"Throttle failsafe\" because of the way in which some receivers use the throttle channel to signal the loss of contact.\n\n.. note::",
+            "untrusted": true,
+            "score": -34.1821
+          },
+          {
+            "cite_id": "ardupilot_wiki#fcaa24049fcda811",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "rover-failsafes.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/rover/source/docs/rover-failsafes.rst#L12-L17",
+            "path": "rover/source/docs/rover-failsafes.rst",
+            "lines": [
+              12,
+              17
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Radio Failsafe (aka Throttle Failsafe)",
+            "excerpt": ".. image:: ../images/rover-failsafe-rc.jpg\n    :target: ../_images/rover-failsafe-rc.jpg\n\nThis failsafe is triggered if the connection between the user's transmitter and the receiver on the vehicle is lost for at least :ref:`FS_TIMEOUT <FS_TIMEOUT>` seconds (default = 1 sec).\n\n- the loss of transmitter/receiver connection is detected by:",
+            "untrusted": true,
+            "score": -33.8995
+          },
+          {
+            "cite_id": "ardupilot#71f3b82d1e3b381d",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "RC_Channel_Copter.cpp",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/RC_Channel_Copter.cpp#L36-L64",
+            "path": "ArduCopter/RC_Channel_Copter.cpp",
+            "lines": [
+              36,
+              64
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "ArduCopter/RC_Channel_Copter.cpp",
+            "excerpt": "        }\n    }\n}\n\nbool RC_Channels_Copter::in_rc_failsafe() const\n{\n    return copter.failsafe.radio;\n}\n\nbool RC_Channels_Copter::has_valid_input() const\n{\n    if (in_rc_failsafe()) {\n        return false;\n    }\n    if (copter.failsafe.radio_counter != 0) {\n        return false;\n    }\n    return RC_Channels::has_valid_input();\n}\n\n// returns true if throttle arming checks should be run\nbool RC_Channels_Copter::arming_check_throttle() const {\n    if ((copter.g.throttle_behavior & THR_BEHAVE_FEEDBACK_FROM_MID_STICK) != 0) {\n        // center sprung throttle configured, dont run AP_Arming check\n ",
+            "untrusted": true,
+            "score": -33.0489
+          }
+        ],
+        "candidates": [
+          "ardupilot_wiki#447e74881c122b70",
+          "ardupilot#06e306d5cc01227c",
+          "ardupilot_wiki#0edb3f4303a81a05",
+          "ardupilot_wiki#fcaa24049fcda811",
+          "ardupilot#71f3b82d1e3b381d"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 5
+      }
+    }
+  }
+}

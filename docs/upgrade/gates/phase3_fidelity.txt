@@ -1,0 +1,24 @@
+source            chunker     chunks  mismatch
+----------------------------------------------
+ardupilot         block          226         0
+ardupilot         code         38732         0
+ardupilot         hwdef         2283         0
+ardupilot         markdown      8841         0
+ardupilot_wiki    block           45         0
+ardupilot_wiki    code           544         0
+ardupilot_wiki    markdown     25442         0
+crsf_spec         code             7         0
+crsf_spec         markdown       150         0
+edgetx            code           681         0
+edgetx            markdown       164         0
+expresslrs        block           22         0
+expresslrs        code          4834         0
+expresslrs        markdown        64         0
+expresslrs_docs   code             1         0
+expresslrs_docs   markdown      3235         0
+mavlink           block          432         0
+mavlink           code           540         0
+mavlink           markdown        19         0
+----------------------------------------------
+TOTAL                          86262         0
+fidelity: PASS

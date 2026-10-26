@@ -51,13 +51,13 @@ budget: search_docs p95 <= 400 ms, measured 232.3 ms      bench: PASS
 - [x] B0-tamper evaluator refuses a tampered v5 set                       owner: lead  commit: 59ad485  evidence: `test_the_v5_sets_are_pinned` and `test_a_tampered_v5_copy_is_refused` (12 passed in `tests/test_eval_retrieval.py`); both baseline runs printed `sha256: verified`
 - [x] B0-baseline default and opt-in dense on both v5 splits -> baseline3/  owner: lead  commit: 1a1730f  evidence: dev default 0.488/0.256/0.354/0.302/0.500, dev dense 0.512/0.279/0.381/0.326/0.500; held-out default 0.581/0.387/0.447/0.242/0.556, held-out dense 0.581/0.387/0.444/0.242/0.556
 - [x] B0-docs docs/eval-v5-vi.md                                         owner: lead  commit: 59ad485  evidence: protocol, counts, both baseline tables, what the ruler says, limits
-- [ ] B1-V1 normaliser + mined glossary (vi)                              owner:  commit:  evidence:
-- [ ] B1-V2 doc-level vectors as prior                                    owner:  commit:  evidence:
-- [ ] B1-V3 expansion term weighting                                      owner:  commit:  evidence:
-- [ ] B1-V4 256/512-token chunk rebuild (optional)                        owner:  commit:  evidence:
-- [ ] B1-V5 recover the Rung 1 rank-1 regression on dev only              owner:  commit:  evidence:
-- [ ] SHIP final run once per held-out set + gate section 8               owner:  commit:  evidence:
-- [ ] REPORT docs/upgrade/PHASE3_REPORT.md, 12 sections                   owner:  commit:  evidence:
+- [x] B1-V1 normaliser + folded glossary + out-of-scope refusal           owner: lead  commit: ef447bf  evidence: v5-vi dev 0.535/0.279/0.389, v4 dev 0.833/0.645, neg 0.500/0.600; kept
+- [x] B1-V2 doc-level vectors as prior                                    owner: lead  commit: 617e9b5  evidence: 7 356 docs, 2.8 min, 5.4 MB; prior behind ARM_DOC_PRIOR=1; v5 dev MRR 0.416 -> 0.408 and recall 0.558 -> 0.535, rejected
+- [x] B1-V3 expansion term weighting                                      owner: lead  commit: 617e9b5  evidence: v4 dev recall 0.833 -> 0.708, golden 1.000 -> 0.967; rejected and reverted
+- [x] B1-V4 256/512-token chunk rebuild (optional)                        owner: lead  commit: none  evidence: not attempted; measured estimate 164 min at 256 tokens (8.8 chunks/s)
+- [x] B1-V5 recover the Rung 1 rank-1 regression on dev only              owner: lead  commit: 617e9b5  evidence: v5 dev 0.535 -> 0.442, v4 dev 0.833 -> 0.771; rejected and reverted
+- [x] SHIP final run once per held-out set + gate section 8               owner: lead  commit: <SHIP>  evidence: v5 held-out 0.581/0.387/0.451/0.242/0.778, v4 held-out 0.738/0.323/0.482/0.369/0.714, neg_vi 0.750; all gates in gates/phase3_*
+- [x] REPORT docs/upgrade/PHASE3_REPORT.md, 12 sections                   owner: lead  commit: <SHIP>  evidence: 12 sections, ship bar disclosed as not met
 
 ## Decisions (what you chose and why, one line each)
 
@@ -114,3 +114,21 @@ recall@5 = 0.512   P@1 = 0.279   MRR = 0.381   chunk-hit@5 = 0.326   negative-pa
 docs/upgrade/baseline3/v5_vi_heldout_dense.txt
 recall@5 = 0.581   P@1 = 0.387   MRR = 0.444   chunk-hit@5 = 0.242   negative-pass = 0.556
 ```
+
+## Phase 3 final results (raw in docs/upgrade/runs/final-*.txt)
+
+```
+python -m research.eval_retrieval --set tests/eval_v5_vi_heldout.yaml --aggregate-only --no-floor
+recall@5 = 36/62 = 0.581   precision@1 = 24/62 = 0.387   MRR = 0.451
+chunk-hit@5 = 0.242        negative-pass = 0.778        (B0 baseline: 0.581/0.387/0.447/0.242/0.556)
+
+python -m research.eval_retrieval --set tests/eval_v4_heldout.yaml --aggregate-only --no-floor
+recall@5 = 48/65 = 0.738   precision@1 = 21/65 = 0.323   MRR = 0.482
+chunk-hit@5 = 0.369        negative-pass = 0.714        (Rung 1: 0.723/0.323/0.475/0.369/0.571)
+
+python -m research.eval_retrieval --set tests/eval_v4_neg_vi.yaml --aggregate-only --no-floor
+negative-pass = 0.750                                   (unchanged)
+```
+
+Ship bar (MRR +0.05 on v5-vi held-out) measured +0.004: **not met**, disclosed in section 9 of
+`PHASE3_REPORT.md`.

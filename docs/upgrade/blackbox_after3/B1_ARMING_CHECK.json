@@ -1,0 +1,62 @@
+{
+  "case": "B1_ARMING_CHECK",
+  "note": "found + description/default must match the pinned tag",
+  "tool": "lookup_param",
+  "arguments": {
+    "name_or_pattern": "ARMING_CHECK"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 35,
+    "method": "tools/call",
+    "params": {
+      "name": "lookup_param",
+      "arguments": {
+        "name_or_pattern": "ARMING_CHECK"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 67.3,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": false,\n  \"query\": \"ARMING_CHECK\",\n  \"vehicle\": \"ArduCopter\",\n  \"params\": [],\n  \"candidates\": [\n    \"FHLD_XY_P\",\n    \"FHLD_XY_I\",\n    \"FHLD_XY_IMAX\",\n    \"FHLD_XY_FILT_HZ\",\n    \"FHLD_FLOW_MAX\",\n    \"FHLD_FILT_HZ\",\n    \"FHLD_QUAL_MIN\",\n    \"FHLD_BRAKE_RATE\",\n    \"LAND_SPD_MS\",\n    \"LAND_SPD_HIGH_MS\"\n  ],\n  \"renamed_hint\": {\n    \"old\": \"ARMING_CHECK\",\n    \"new\": \"ARMING_SKIPCHK\",\n    \"path\": \"ArduCopter/ReleaseNotes.txt\",\n    \"lines\": [\n      653,\n      660\n    ],\n    \"cite_id\": \"ardupilot#a7c140550d6633ee\"\n  },\n  \"note\": \"no parameter matched; nothing was invented; the pinned release notes record ARMING_CHECK replaced with ARMING_SKIPCHK\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": false,
+        "query": "ARMING_CHECK",
+        "vehicle": "ArduCopter",
+        "params": [],
+        "candidates": [
+          "FHLD_XY_P",
+          "FHLD_XY_I",
+          "FHLD_XY_IMAX",
+          "FHLD_XY_FILT_HZ",
+          "FHLD_FLOW_MAX",
+          "FHLD_FILT_HZ",
+          "FHLD_QUAL_MIN",
+          "FHLD_BRAKE_RATE",
+          "LAND_SPD_MS",
+          "LAND_SPD_HIGH_MS"
+        ],
+        "renamed_hint": {
+          "old": "ARMING_CHECK",
+          "new": "ARMING_SKIPCHK",
+          "path": "ArduCopter/ReleaseNotes.txt",
+          "lines": [
+            653,
+            660
+          ],
+          "cite_id": "ardupilot#a7c140550d6633ee"
+        },
+        "note": "no parameter matched; nothing was invented; the pinned release notes record ARMING_CHECK replaced with ARMING_SKIPCHK"
+      }
+    }
+  }
+}

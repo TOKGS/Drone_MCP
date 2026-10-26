@@ -1,0 +1,59 @@
+{
+  "case": "G2_03",
+  "note": "same content as the C/D hit for ardupilot#142130b05a0e89ba",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#142130b05a0e89ba"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1003,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#142130b05a0e89ba"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 10.6,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#142130b05a0e89ba\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"mode_land.cpp\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/mode_land.cpp#L106-L146\",\n  \"path\": \"ArduCopter/mode_land.cpp\",\n  \"lines\": [\n    106,\n    146\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"ArduCopter/mode_land.cpp\",\n  \"excerpt\": \"    return true;\\n}\\n\\n// land_run - runs the land controller\\n// should be called at 100hz or more\\nvoid ModeLand::run()\\n{\\n    if (control_position) {\\n        gps_run();\\n    } else {\\n        nogps_run();\\n    }\\n}\\n\\n// land_gps_run - runs the land controller\\n//      horizontal position controlled with loiter controller\\n//      should be called at 100hz or more\\nvoid ModeLand::gps_run()\\n{\\n    // disarm when the landing detector says we've landed\\n    if (copter.ap.land_complete && motors->get_spool_state() == AP_Motors::SpoolState::GROUND_IDLE) {\\n        copter.arming.disarm(AP_Arming::Method::LANDED);\\n\",\n  \"untrusted\": true,\n  \"text\": \"    return true;\\n}\\n\\n// land_run - runs the land controller\\n// should be called at 100hz or more\\nvoid ModeLand::run()\\n{\\n    if (control_position) {\\n        gps_run();\\n    } else {\\n        nogps_run();\\n    }\\n}\\n\\n// land_gps_run - runs the land controller\\n//      horizontal position controlled with loiter controller\\n//      should be called at 100hz or more\\nvoid ModeLand::gps_run()\\n{\\n    // disarm when the landing detector says we've landed\\n    if (copter.ap.land_complete && motors->get_spool_state() == AP_Motors::SpoolState::GROUND_IDLE) {\\n        copter.arming.disarm(AP_Arming::Method::LANDED);\\n    }\\n\\n    // Land State Machine Determination\\n    if (is_disarmed_or_landed()) {\\n        make_safe_ground_handling();\\n    } else {\\n        // set motors to full range\\n        motors->set_desired_spool_state(AP_Motors::DesiredSpoolState::THROTTLE_UNLIMITED);\\n\\n        // pause before beginning land descent\\n        if (land_pause && millis()-land_start_time >= LAND_WITH_DELAY_MS) {\\n            land_pause = false;\\n        }\\n\\n        // run normal landing or precision landing (if enabled)\\n        land_run_normal_or_precland(land_pause);\\n    }\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#142130b05a0e89ba",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "mode_land.cpp",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/mode_land.cpp#L106-L146",
+        "path": "ArduCopter/mode_land.cpp",
+        "lines": [
+          106,
+          146
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "ArduCopter/mode_land.cpp",
+        "excerpt": "    return true;\n}\n\n// land_run - runs the land controller\n// should be called at 100hz or more\nvoid ModeLand::run()\n{\n    if (control_position) {\n        gps_run();\n    } else {\n        nogps_run();\n    }\n}\n\n// land_gps_run - runs the land controller\n//      horizontal position controlled with loiter controller\n//      should be called at 100hz or more\nvoid ModeLand::gps_run()\n{\n    // disarm when the landing detector says we've landed\n    if (copter.ap.land_complete && motors->get_spool_state() == AP_Motors::SpoolState::GROUND_IDLE) {\n        copter.arming.disarm(AP_Arming::Method::LANDED);\n",
+        "untrusted": true,
+        "text": "    return true;\n}\n\n// land_run - runs the land controller\n// should be called at 100hz or more\nvoid ModeLand::run()\n{\n    if (control_position) {\n        gps_run();\n    } else {\n        nogps_run();\n    }\n}\n\n// land_gps_run - runs the land controller\n//      horizontal position controlled with loiter controller\n//      should be called at 100hz or more\nvoid ModeLand::gps_run()\n{\n    // disarm when the landing detector says we've landed\n    if (copter.ap.land_complete && motors->get_spool_state() == AP_Motors::SpoolState::GROUND_IDLE) {\n        copter.arming.disarm(AP_Arming::Method::LANDED);\n    }\n\n    // Land State Machine Determination\n    if (is_disarmed_or_landed()) {\n        make_safe_ground_handling();\n    } else {\n        // set motors to full range\n        motors->set_desired_spool_state(AP_Motors::DesiredSpoolState::THROTTLE_UNLIMITED);\n\n        // pause before beginning land descent\n        if (land_pause && millis()-land_start_time >= LAND_WITH_DELAY_MS) {\n            land_pause = false;\n        }\n\n        // run normal landing or precision landing (if enabled)\n        land_run_normal_or_precland(land_pause);\n    }\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

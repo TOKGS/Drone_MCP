@@ -1,0 +1,156 @@
+{
+  "case": "D5",
+  "note": "out-of-corpus: found:false or an explicit scope/version caveat",
+  "tool": "search_docs",
+  "arguments": {
+    "query": "how to bypass geofence",
+    "limit": 5
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 61,
+    "method": "tools/call",
+    "params": {
+      "name": "search_docs",
+      "arguments": {
+        "query": "how to bypass geofence",
+        "limit": 5
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 16.7,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"how to bypass geofence\",\n  \"query_expanded\": null,\n  \"expansions\": [],\n  \"scope\": \"all\",\n  \"version_filter\": null,\n  \"results\": [\n    {\n      \"cite_id\": \"ardupilot_wiki#b950c289deb1927c\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"common-ac2_simple_geofence.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-ac2_simple_geofence.rst#L38-L41\",\n      \"path\": \"common/source/docs/common-ac2_simple_geofence.rst\",\n      \"lines\": [\n        38,\n        41\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Parameter associated with Cylindrical Fence > Copter GeoFence Tab\",\n      \"excerpt\": \"Copter and Traditional Heli , when connected to Mission Planner, present a CONFIG tab called GeoFence which provides another way to access these parameters in those vehicles.\\n\\n.. image:: ../../../images/Fence_MPSetup.png\\n    :target: ../_images/Fence_MPSetup.png\",\n      \"untrusted\": true,\n      \"score\": -15.9854\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#706ac7792efb9304\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"geofence.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/mavproxy/source/docs/uav_configuration/geofence.rst#L5-L14\",\n      \"path\": \"mavproxy/source/docs/uav_configuration/geofence.rst\",\n      \"lines\": [\n        5,\n        14\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Geofence\",\n      \"excerpt\": \"The geofence represents a hard limit to where the UAV will not fly\\nbeyond. It is useful for preventing runaway UAVs (barring other\\nsoftware/hardware issues). If it breaches the fence the failsafe will be\\nactivated, returning it to the home point.\\n\\nIt is represented as an arbitrary polygon of waypoints around the flying\\narea in a fixed-wing vehicle. In ArduCopter, it is a radius and altitude\\nparameter(s) representing a cylinder around the flying area.\\n\\nA fence menu is available on the GUI console.\",\n      \"untrusted\": true,\n      \"score\": -15.0977\n    },\n    {\n      \"cite_id\": \"ardupilot_wiki#03737a77b18e131b\",\n      \"source_id\": \"ardupilot_wiki\",\n      \"repo\": \"ArduPilot/ardupilot_wiki\",\n      \"ref\": \"828de1f225dace34b482e63abaab15d25b2b1732\",\n      \"channel\": \"snapshot\",\n      \"unreleased\": true,\n      \"pinned\": true,\n      \"title\": \"advanced-failsafe-configuration.rst\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/advanced-failsafe-configuration.rst#L108-L114\",\n      \"path\": \"plane/source/docs/advanced-failsafe-configuration.rst\",\n      \"lines\": [\n        108,\n        114\n      ],\n      \"version\": \"wiki@828de1f (2026-10-24)\",\n      \"ingested_at\": \"2026-10-25T20:13:23+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"CC-BY-SA-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:23+0700\",\n      \"heading_path\": \"Advanced Failsafe Configuration > Types of Failsafe Events > Geofence Breach\",\n      \"excerpt\": \"If a :ref:`geofence <common-geofencing-landing-page>` is enabled then the AFS failsafe module\\nwill monitor the aircraft for a breach of the boundaries of the geofence\\n(and lower and upper geofence altitudes if set). If a breach happens\\nthen the AFS system will immediately terminate the flight (see\\ntermination above).\\n\\nIn addition, if the total straight-line distance from arming point exceeds the :ref:`AFS_MAX_RANGE<AFS_MAX_RANGE>` distance, then termination will occur.\",\n      \"untrusted\": true,\n      \"score\": -14.1366\n    },\n    {\n      \"cite_id\": \"ardupilot#6e70f8f6924857eb\",\n      \"source_id\": \"ardupilot\",\n      \"repo\": \"ArduPilot/ardupilot\",\n      \"ref\": \"Copter-4.7.2\",\n      \"channel\": \"stable\",\n      \"unreleased\": false,\n      \"pinned\": true,\n      \"title\": \"ReleaseNotes.txt\",\n      \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduPlane/ReleaseNotes.txt#L7677-L7683\",\n      \"path\": \"ArduPlane/ReleaseNotes.txt\",\n      \"lines\": [\n        7677,\n        7683\n      ],\n      \"version\": \"Copter-4.7.2\",\n      \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n      \"tier\": \"T1\",\n      \"license\": \"GPL-3.0\",\n      \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n      \"heading_path\": \"Geofence improvements\",\n      \"excerpt\": \"The second new parameter is FENCE_AUTOENABLE, which allows you to\\nautomatically enable a geofence on takeoff, and disable when doing an\\nautomatic landing. That is very useful for fully automated missions.\\n\\nThe third new geofence parameter is FENCE_RETALT, which allows you to\\nspecify a return altitude on fence breach. This can be used to\\noverride the default (half way between min and max fence altitude).\",\n      \"untrusted\": true,\n      \"score\": -13.9957\n    }\n  ],\n  \"candidates\": [\n    \"ardupilot_wiki#b950c289deb1927c\",\n    \"ardupilot_wiki#706ac7792efb9304\",\n    \"ardupilot_wiki#03737a77b18e131b\",\n    \"ardupilot#6e70f8f6924857eb\",\n    \"ardupilot_wiki#e95a43a6d4af29e8\"\n  ],\n  \"scope_notes\": [],\n  \"confidence\": \"high\",\n  \"note\": null,\n  \"result_count\": 4\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "how to bypass geofence",
+        "query_expanded": null,
+        "expansions": [],
+        "scope": "all",
+        "version_filter": null,
+        "results": [
+          {
+            "cite_id": "ardupilot_wiki#b950c289deb1927c",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "common-ac2_simple_geofence.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/common/source/docs/common-ac2_simple_geofence.rst#L38-L41",
+            "path": "common/source/docs/common-ac2_simple_geofence.rst",
+            "lines": [
+              38,
+              41
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Parameter associated with Cylindrical Fence > Copter GeoFence Tab",
+            "excerpt": "Copter and Traditional Heli , when connected to Mission Planner, present a CONFIG tab called GeoFence which provides another way to access these parameters in those vehicles.\n\n.. image:: ../../../images/Fence_MPSetup.png\n    :target: ../_images/Fence_MPSetup.png",
+            "untrusted": true,
+            "score": -15.9854
+          },
+          {
+            "cite_id": "ardupilot_wiki#706ac7792efb9304",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "geofence.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/mavproxy/source/docs/uav_configuration/geofence.rst#L5-L14",
+            "path": "mavproxy/source/docs/uav_configuration/geofence.rst",
+            "lines": [
+              5,
+              14
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Geofence",
+            "excerpt": "The geofence represents a hard limit to where the UAV will not fly\nbeyond. It is useful for preventing runaway UAVs (barring other\nsoftware/hardware issues). If it breaches the fence the failsafe will be\nactivated, returning it to the home point.\n\nIt is represented as an arbitrary polygon of waypoints around the flying\narea in a fixed-wing vehicle. In ArduCopter, it is a radius and altitude\nparameter(s) representing a cylinder around the flying area.\n\nA fence menu is available on the GUI console.",
+            "untrusted": true,
+            "score": -15.0977
+          },
+          {
+            "cite_id": "ardupilot_wiki#03737a77b18e131b",
+            "source_id": "ardupilot_wiki",
+            "repo": "ArduPilot/ardupilot_wiki",
+            "ref": "828de1f225dace34b482e63abaab15d25b2b1732",
+            "channel": "snapshot",
+            "unreleased": true,
+            "pinned": true,
+            "title": "advanced-failsafe-configuration.rst",
+            "url": "https://github.com/ArduPilot/ardupilot_wiki/blob/828de1f225dace34b482e63abaab15d25b2b1732/plane/source/docs/advanced-failsafe-configuration.rst#L108-L114",
+            "path": "plane/source/docs/advanced-failsafe-configuration.rst",
+            "lines": [
+              108,
+              114
+            ],
+            "version": "wiki@828de1f (2026-10-24)",
+            "ingested_at": "2026-10-25T20:13:23+0700",
+            "tier": "T1",
+            "license": "CC-BY-SA-3.0",
+            "retrieved_at": "2026-10-25T20:13:23+0700",
+            "heading_path": "Advanced Failsafe Configuration > Types of Failsafe Events > Geofence Breach",
+            "excerpt": "If a :ref:`geofence <common-geofencing-landing-page>` is enabled then the AFS failsafe module\nwill monitor the aircraft for a breach of the boundaries of the geofence\n(and lower and upper geofence altitudes if set). If a breach happens\nthen the AFS system will immediately terminate the flight (see\ntermination above).\n\nIn addition, if the total straight-line distance from arming point exceeds the :ref:`AFS_MAX_RANGE<AFS_MAX_RANGE>` distance, then termination will occur.",
+            "untrusted": true,
+            "score": -14.1366
+          },
+          {
+            "cite_id": "ardupilot#6e70f8f6924857eb",
+            "source_id": "ardupilot",
+            "repo": "ArduPilot/ardupilot",
+            "ref": "Copter-4.7.2",
+            "channel": "stable",
+            "unreleased": false,
+            "pinned": true,
+            "title": "ReleaseNotes.txt",
+            "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduPlane/ReleaseNotes.txt#L7677-L7683",
+            "path": "ArduPlane/ReleaseNotes.txt",
+            "lines": [
+              7677,
+              7683
+            ],
+            "version": "Copter-4.7.2",
+            "ingested_at": "2026-10-25T20:13:02+0700",
+            "tier": "T1",
+            "license": "GPL-3.0",
+            "retrieved_at": "2026-10-25T20:13:02+0700",
+            "heading_path": "Geofence improvements",
+            "excerpt": "The second new parameter is FENCE_AUTOENABLE, which allows you to\nautomatically enable a geofence on takeoff, and disable when doing an\nautomatic landing. That is very useful for fully automated missions.\n\nThe third new geofence parameter is FENCE_RETALT, which allows you to\nspecify a return altitude on fence breach. This can be used to\noverride the default (half way between min and max fence altitude).",
+            "untrusted": true,
+            "score": -13.9957
+          }
+        ],
+        "candidates": [
+          "ardupilot_wiki#b950c289deb1927c",
+          "ardupilot_wiki#706ac7792efb9304",
+          "ardupilot_wiki#03737a77b18e131b",
+          "ardupilot#6e70f8f6924857eb",
+          "ardupilot_wiki#e95a43a6d4af29e8"
+        ],
+        "scope_notes": [],
+        "confidence": "high",
+        "note": null,
+        "result_count": 4
+      }
+    }
+  }
+}

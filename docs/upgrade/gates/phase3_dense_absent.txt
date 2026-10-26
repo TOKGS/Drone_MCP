@@ -1,0 +1,6 @@
+index: D:\Skill_tulan\ardupilot-research-mcp\data\index.sqlite
+dense state: requested-but-unavailable | requested: True | reason: no chunk_vectors table (run: python -m research.build_vectors)
+found: True | results: 3
+top: ['libraries/RC_Channel/RC_Channels_VarInfo.h', 'docs/quick-start/ardupilot-setup.md', 'common/source/docs/common-tbs-rc.rst']
+status dense state: n/a
+dense: ARM_DENSE is set but the retriever is unavailable: no chunk_vectors table (run: python -m research.build_vectors); using BM25

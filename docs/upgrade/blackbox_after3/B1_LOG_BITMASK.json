@@ -1,0 +1,172 @@
+{
+  "case": "B1_LOG_BITMASK",
+  "note": "found + description/default must match the pinned tag",
+  "tool": "lookup_param",
+  "arguments": {
+    "name_or_pattern": "LOG_BITMASK"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 37,
+    "method": "tools/call",
+    "params": {
+      "name": "lookup_param",
+      "arguments": {
+        "name_or_pattern": "LOG_BITMASK"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 97.0,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"found\": true,\n  \"query\": \"LOG_BITMASK\",\n  \"vehicle\": \"ArduCopter\",\n  \"version_filter\": null,\n  \"resolved_by\": \"exact\",\n  \"params\": [\n    {\n      \"citation\": {\n        \"cite_id\": \"ardupilot#cc51e646ec343acb\",\n        \"source_id\": \"ardupilot\",\n        \"repo\": \"ArduPilot/ardupilot\",\n        \"ref\": \"Copter-4.7.2\",\n        \"channel\": \"stable\",\n        \"unreleased\": false,\n        \"pinned\": true,\n        \"title\": \"Parameters.cpp\",\n        \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L199-L232\",\n        \"path\": \"ArduCopter/Parameters.cpp\",\n        \"lines\": [\n          199,\n          232\n        ],\n        \"version\": \"Copter-4.7.2\",\n        \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n        \"tier\": \"T1\",\n        \"license\": \"GPL-3.0\",\n        \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n        \"heading_path\": \"ArduCopter/Parameters.cpp\",\n        \"excerpt\": \"    // @Param: LOG_BITMASK\\n    // @DisplayName: Log bitmask\\n    // @Description: Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535. Note that if you want to reduce log sizes you should consider using LOG_FILE_RATEMAX instead of disabling logging items with this parameter.\\n    // @Bitmask: 0:Fast Attitude,1:Medium Attitude,2:GPS,3:System Performance,4:Control Tuning,5:Navigation Tuning,6:RC input,7:IMU,8:Mission Commands,9:Battery Monitor,10:RC\",\n        \"untrusted\": true,\n        \"excerpt_starts_at_line\": 207\n      },\n      \"name\": \"LOG_BITMASK\",\n      \"name_raw\": \"LOG_BITMASK\",\n      \"name_suffix\": \"LOG_BITMASK\",\n      \"prefix\": \"\",\n      \"prefix_origin\": \"ArduCopter/Parameters.cpp:1\",\n      \"display_name\": \"Log bitmask\",\n      \"description\": \"Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535. Note that if you want to reduce log sizes you should consider using LOG_FILE_RATEMAX instead of disabling logging items with this parameter.\",\n      \"vehicle\": \"ArduCopter\",\n      \"version\": \"Copter-4.7.2\",\n      \"units\": null,\n      \"range\": null,\n      \"default_raw\": \"DEFAULT_LOG_BITMASK\",\n      \"default\": null,\n      \"default_resolved\": false,\n      \"reboot_required\": false,\n      \"values\": null,\n      \"bitmask\": [\n        {\n          \"bit\": 0,\n          \"name\": \"Fast Attitude\"\n        },\n        {\n          \"bit\": 1,\n          \"name\": \"Medium Attitude\"\n        },\n        {\n          \"bit\": 2,\n          \"name\": \"GPS\"\n        },\n        {\n          \"bit\": 3,\n          \"name\": \"System Performance\"\n        },\n        {\n          \"bit\": 4,\n          \"name\": \"Control Tuning\"\n        },\n        {\n          \"bit\": 5,\n          \"name\": \"Navigation Tuning\"\n        },\n        {\n          \"bit\": 6,\n          \"name\": \"RC input\"\n        },\n        {\n          \"bit\": 7,\n          \"name\": \"IMU\"\n        },\n        {\n          \"bit\": 8,\n          \"name\": \"Mission Commands\"\n        },\n        {\n          \"bit\": 9,\n          \"name\": \"Battery Monitor\"\n        },\n        {\n          \"bit\": 10,\n          \"name\": \"RC output\"\n        },\n        {\n          \"bit\": 11,\n          \"name\": \"Optical Flow\"\n        },\n        {\n          \"bit\": 12,\n          \"name\": \"PID\"\n        },\n        {\n          \"bit\": 13,\n          \"name\": \"Compass\"\n        },\n        {\n          \"bit\": 15,\n          \"name\": \"Camera\"\n        },\n        {\n          \"bit\": 17,\n          \"name\": \"Motors\"\n        },\n        {\n          \"bit\": 18,\n          \"name\": \"Fast IMU\"\n        },\n        {\n          \"bit\": 19,\n          \"name\": \"Raw IMU\"\n        },\n        {\n          \"bit\": 20,\n          \"name\": \"Video Stabilization\"\n        },\n        {\n          \"bit\": 21,\n          \"name\": \"Fast harmonic notch logging\"\n        }\n      ],\n      \"resolved_by\": \"exact\"\n    }\n  ],\n  \"candidates\": [\n    \"LOG_BITMASK\"\n  ],\n  \"note\": null\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "found": true,
+        "query": "LOG_BITMASK",
+        "vehicle": "ArduCopter",
+        "version_filter": null,
+        "resolved_by": "exact",
+        "params": [
+          {
+            "citation": {
+              "cite_id": "ardupilot#cc51e646ec343acb",
+              "source_id": "ardupilot",
+              "repo": "ArduPilot/ardupilot",
+              "ref": "Copter-4.7.2",
+              "channel": "stable",
+              "unreleased": false,
+              "pinned": true,
+              "title": "Parameters.cpp",
+              "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/Parameters.cpp#L199-L232",
+              "path": "ArduCopter/Parameters.cpp",
+              "lines": [
+                199,
+                232
+              ],
+              "version": "Copter-4.7.2",
+              "ingested_at": "2026-10-25T20:13:02+0700",
+              "tier": "T1",
+              "license": "GPL-3.0",
+              "retrieved_at": "2026-10-25T20:13:02+0700",
+              "heading_path": "ArduCopter/Parameters.cpp",
+              "excerpt": "    // @Param: LOG_BITMASK\n    // @DisplayName: Log bitmask\n    // @Description: Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535. Note that if you want to reduce log sizes you should consider using LOG_FILE_RATEMAX instead of disabling logging items with this parameter.\n    // @Bitmask: 0:Fast Attitude,1:Medium Attitude,2:GPS,3:System Performance,4:Control Tuning,5:Navigation Tuning,6:RC input,7:IMU,8:Mission Commands,9:Battery Monitor,10:RC",
+              "untrusted": true,
+              "excerpt_starts_at_line": 207
+            },
+            "name": "LOG_BITMASK",
+            "name_raw": "LOG_BITMASK",
+            "name_suffix": "LOG_BITMASK",
+            "prefix": "",
+            "prefix_origin": "ArduCopter/Parameters.cpp:1",
+            "display_name": "Log bitmask",
+            "description": "Bitmap of what on-board log types to enable. This value is made up of the sum of each of the log types you want to be saved. It is usually best just to enable all basiclog types by setting this to 65535. Note that if you want to reduce log sizes you should consider using LOG_FILE_RATEMAX instead of disabling logging items with this parameter.",
+            "vehicle": "ArduCopter",
+            "version": "Copter-4.7.2",
+            "units": null,
+            "range": null,
+            "default_raw": "DEFAULT_LOG_BITMASK",
+            "default": null,
+            "default_resolved": false,
+            "reboot_required": false,
+            "values": null,
+            "bitmask": [
+              {
+                "bit": 0,
+                "name": "Fast Attitude"
+              },
+              {
+                "bit": 1,
+                "name": "Medium Attitude"
+              },
+              {
+                "bit": 2,
+                "name": "GPS"
+              },
+              {
+                "bit": 3,
+                "name": "System Performance"
+              },
+              {
+                "bit": 4,
+                "name": "Control Tuning"
+              },
+              {
+                "bit": 5,
+                "name": "Navigation Tuning"
+              },
+              {
+                "bit": 6,
+                "name": "RC input"
+              },
+              {
+                "bit": 7,
+                "name": "IMU"
+              },
+              {
+                "bit": 8,
+                "name": "Mission Commands"
+              },
+              {
+                "bit": 9,
+                "name": "Battery Monitor"
+              },
+              {
+                "bit": 10,
+                "name": "RC output"
+              },
+              {
+                "bit": 11,
+                "name": "Optical Flow"
+              },
+              {
+                "bit": 12,
+                "name": "PID"
+              },
+              {
+                "bit": 13,
+                "name": "Compass"
+              },
+              {
+                "bit": 15,
+                "name": "Camera"
+              },
+              {
+                "bit": 17,
+                "name": "Motors"
+              },
+              {
+                "bit": 18,
+                "name": "Fast IMU"
+              },
+              {
+                "bit": 19,
+                "name": "Raw IMU"
+              },
+              {
+                "bit": 20,
+                "name": "Video Stabilization"
+              },
+              {
+                "bit": 21,
+                "name": "Fast harmonic notch logging"
+              }
+            ],
+            "resolved_by": "exact"
+          }
+        ],
+        "candidates": [
+          "LOG_BITMASK"
+        ],
+        "note": null
+      }
+    }
+  }
+}

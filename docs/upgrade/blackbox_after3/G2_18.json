@@ -1,0 +1,59 @@
+{
+  "case": "G2_18",
+  "note": "same content as the C/D hit for ardupilot#9db38568cd9df5e4",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#9db38568cd9df5e4"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1018,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#9db38568cd9df5e4"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.1,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#9db38568cd9df5e4\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"mode_rtl.cpp\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/mode_rtl.cpp#L69-L105\",\n  \"path\": \"ArduCopter/mode_rtl.cpp\",\n  \"lines\": [\n    69,\n    105\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"ArduCopter/mode_rtl.cpp\",\n  \"excerpt\": \"    };\\n    AP_Param::convert_old_parameters_scaled(conversion_info, ARRAY_SIZE(conversion_info), 0.01, 0);\\n}\\n\\n/*\\n * Init and run calls for RTL flight mode\\n *\\n * There are two parts to RTL, the high level decision making which controls which state we are in\\n * and the lower implementation of the waypoint or landing controllers within those states\\n */\\n\\n// rtl_init - initialise rtl controller\\nbool ModeRTL::init(bool ignore_checks)\\n{\\n    if (!ignore_checks) {\\n        if (!AP::ahrs().home_is_set()) {\\n            return false;\\n        }\\n    }\\n    // initialise waypoint and spline controller\\n    wp_n\",\n  \"untrusted\": true,\n  \"text\": \"    };\\n    AP_Param::convert_old_parameters_scaled(conversion_info, ARRAY_SIZE(conversion_info), 0.01, 0);\\n}\\n\\n/*\\n * Init and run calls for RTL flight mode\\n *\\n * There are two parts to RTL, the high level decision making which controls which state we are in\\n * and the lower implementation of the waypoint or landing controllers within those states\\n */\\n\\n// rtl_init - initialise rtl controller\\nbool ModeRTL::init(bool ignore_checks)\\n{\\n    if (!ignore_checks) {\\n        if (!AP::ahrs().home_is_set()) {\\n            return false;\\n        }\\n    }\\n    // initialise waypoint and spline controller\\n    wp_nav->wp_and_spline_init_m(speed_ms.get());\\n    _state = SubMode::STARTING;\\n    _state_complete = true; // see run() method below\\n    terrain_following_allowed = !copter.failsafe.terrain;\\n    // reset flag indicating if pilot has applied roll or pitch inputs during landing\\n    copter.ap.land_repo_active = false;\\n\\n    // this will be set true if prec land is later active\\n    copter.ap.prec_land_active = false;\\n\\n#if AC_PRECLAND_ENABLED\\n    // initialise precland state machine\\n    copter.precland_statemachine.init();\\n#endif\\n\\n    return true;\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#9db38568cd9df5e4",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "mode_rtl.cpp",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/mode_rtl.cpp#L69-L105",
+        "path": "ArduCopter/mode_rtl.cpp",
+        "lines": [
+          69,
+          105
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "ArduCopter/mode_rtl.cpp",
+        "excerpt": "    };\n    AP_Param::convert_old_parameters_scaled(conversion_info, ARRAY_SIZE(conversion_info), 0.01, 0);\n}\n\n/*\n * Init and run calls for RTL flight mode\n *\n * There are two parts to RTL, the high level decision making which controls which state we are in\n * and the lower implementation of the waypoint or landing controllers within those states\n */\n\n// rtl_init - initialise rtl controller\nbool ModeRTL::init(bool ignore_checks)\n{\n    if (!ignore_checks) {\n        if (!AP::ahrs().home_is_set()) {\n            return false;\n        }\n    }\n    // initialise waypoint and spline controller\n    wp_n",
+        "untrusted": true,
+        "text": "    };\n    AP_Param::convert_old_parameters_scaled(conversion_info, ARRAY_SIZE(conversion_info), 0.01, 0);\n}\n\n/*\n * Init and run calls for RTL flight mode\n *\n * There are two parts to RTL, the high level decision making which controls which state we are in\n * and the lower implementation of the waypoint or landing controllers within those states\n */\n\n// rtl_init - initialise rtl controller\nbool ModeRTL::init(bool ignore_checks)\n{\n    if (!ignore_checks) {\n        if (!AP::ahrs().home_is_set()) {\n            return false;\n        }\n    }\n    // initialise waypoint and spline controller\n    wp_nav->wp_and_spline_init_m(speed_ms.get());\n    _state = SubMode::STARTING;\n    _state_complete = true; // see run() method below\n    terrain_following_allowed = !copter.failsafe.terrain;\n    // reset flag indicating if pilot has applied roll or pitch inputs during landing\n    copter.ap.land_repo_active = false;\n\n    // this will be set true if prec land is later active\n    copter.ap.prec_land_active = false;\n\n#if AC_PRECLAND_ENABLED\n    // initialise precland state machine\n    copter.precland_statemachine.init();\n#endif\n\n    return true;\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}

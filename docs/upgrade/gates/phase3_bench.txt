@@ -1,0 +1,9 @@
+call                   n   p50 ms   p95 ms   max ms
+---------------------------------------------------
+search_docs           30     56.4    196.3    271.7
+lookup_param           5     41.4     46.7     46.7
+decode_crsf_frame      5      1.8      2.0      2.0
+---------------------------------------------------
+cold start (first search, includes model + vector load): 66 ms
+budget: search_docs p95 <= 400 ms, measured 196.3 ms
+bench: PASS

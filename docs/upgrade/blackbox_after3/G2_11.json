@@ -1,0 +1,59 @@
+{
+  "case": "G2_11",
+  "note": "same content as the C/D hit for ardupilot#06e306d5cc01227c",
+  "tool": "get_chunk",
+  "arguments": {
+    "cite_id": "ardupilot#06e306d5cc01227c"
+  },
+  "request_jsonrpc": {
+    "jsonrpc": "2.0",
+    "id": 1011,
+    "method": "tools/call",
+    "params": {
+      "name": "get_chunk",
+      "arguments": {
+        "cite_id": "ardupilot#06e306d5cc01227c"
+      }
+    }
+  },
+  "client_pacing_wait_ms_before_call": 0.0,
+  "duration_ms": 9.2,
+  "transport_error": null,
+  "response": {
+    "isError": false,
+    "content": [
+      {
+        "type": "text",
+        "text": "{\n  \"cite_id\": \"ardupilot#06e306d5cc01227c\",\n  \"source_id\": \"ardupilot\",\n  \"repo\": \"ArduPilot/ardupilot\",\n  \"ref\": \"Copter-4.7.2\",\n  \"channel\": \"stable\",\n  \"unreleased\": false,\n  \"pinned\": true,\n  \"title\": \"radio.cpp\",\n  \"url\": \"https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/radio.cpp#L131-L172\",\n  \"path\": \"ArduCopter/radio.cpp\",\n  \"lines\": [\n    131,\n    172\n  ],\n  \"version\": \"Copter-4.7.2\",\n  \"ingested_at\": \"2026-10-25T20:13:02+0700\",\n  \"tier\": \"T1\",\n  \"license\": \"GPL-3.0\",\n  \"retrieved_at\": \"2026-10-25T20:13:02+0700\",\n  \"heading_path\": \"ArduCopter/radio.cpp\",\n  \"excerpt\": \"    LOGGER_WRITE_ERROR(LogErrorSubsystem::RADIO, LogErrorCode::RADIO_LATE_FRAME);\\n    set_failsafe_radio(true);\\n}\\n\\n#define FS_COUNTER 3        // radio failsafe kicks in after 3 consecutive throttle values below failsafe_throttle_value\\nvoid Copter::set_throttle_and_failsafe(uint16_t throttle_pwm)\\n{\\n    // if failsafe not enabled pass through throttle and exit\\n    if(g.failsafe_throttle == FS_THR_DISABLED) {\\n        set_failsafe_radio(false);\\n        return;\\n    }\\n\\n    //check for low throttle value\\n    if (throttle_pwm < (uint16_t)g.failsafe_throttle_value) {\\n\\n        // if we are already in f\",\n  \"untrusted\": true,\n  \"text\": \"    LOGGER_WRITE_ERROR(LogErrorSubsystem::RADIO, LogErrorCode::RADIO_LATE_FRAME);\\n    set_failsafe_radio(true);\\n}\\n\\n#define FS_COUNTER 3        // radio failsafe kicks in after 3 consecutive throttle values below failsafe_throttle_value\\nvoid Copter::set_throttle_and_failsafe(uint16_t throttle_pwm)\\n{\\n    // if failsafe not enabled pass through throttle and exit\\n    if(g.failsafe_throttle == FS_THR_DISABLED) {\\n        set_failsafe_radio(false);\\n        return;\\n    }\\n\\n    //check for low throttle value\\n    if (throttle_pwm < (uint16_t)g.failsafe_throttle_value) {\\n\\n        // if we are already in failsafe or motors not armed pass through throttle and exit\\n        if (failsafe.radio || !(rc().has_ever_seen_rc_input() || motors->armed())) {\\n            return;\\n        }\\n\\n        // check for 3 low throttle values\\n        // Note: we do not pass through the low throttle until 3 low throttle values are received\\n        failsafe.radio_counter++;\\n        if( failsafe.radio_counter >= FS_COUNTER ) {\\n            failsafe.radio_counter = FS_COUNTER;  // check to ensure we don't overflow the counter\\n            set_failsafe_radio(true);\\n        }\\n    }else{\\n        // we have a good throttle so reduce failsafe counter\\n        failsafe.radio_counter--;\\n        if( failsafe.radio_counter <= 0 ) {\\n            failsafe.radio_counter = 0;   // check to ensure we don't underflow the counter\\n\\n            // disengage failsafe after three (nearly) consecutive valid throttle values\\n            if (failsafe.radio) {\\n                set_failsafe_radio(false);\\n            }\\n        }\\n        // pass through throttle\\n    }\\n}\",\n  \"served_from\": \"index\"\n}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "cite_id": "ardupilot#06e306d5cc01227c",
+        "source_id": "ardupilot",
+        "repo": "ArduPilot/ardupilot",
+        "ref": "Copter-4.7.2",
+        "channel": "stable",
+        "unreleased": false,
+        "pinned": true,
+        "title": "radio.cpp",
+        "url": "https://github.com/ArduPilot/ardupilot/blob/Copter-4.7.2/ArduCopter/radio.cpp#L131-L172",
+        "path": "ArduCopter/radio.cpp",
+        "lines": [
+          131,
+          172
+        ],
+        "version": "Copter-4.7.2",
+        "ingested_at": "2026-10-25T20:13:02+0700",
+        "tier": "T1",
+        "license": "GPL-3.0",
+        "retrieved_at": "2026-10-25T20:13:02+0700",
+        "heading_path": "ArduCopter/radio.cpp",
+        "excerpt": "    LOGGER_WRITE_ERROR(LogErrorSubsystem::RADIO, LogErrorCode::RADIO_LATE_FRAME);\n    set_failsafe_radio(true);\n}\n\n#define FS_COUNTER 3        // radio failsafe kicks in after 3 consecutive throttle values below failsafe_throttle_value\nvoid Copter::set_throttle_and_failsafe(uint16_t throttle_pwm)\n{\n    // if failsafe not enabled pass through throttle and exit\n    if(g.failsafe_throttle == FS_THR_DISABLED) {\n        set_failsafe_radio(false);\n        return;\n    }\n\n    //check for low throttle value\n    if (throttle_pwm < (uint16_t)g.failsafe_throttle_value) {\n\n        // if we are already in f",
+        "untrusted": true,
+        "text": "    LOGGER_WRITE_ERROR(LogErrorSubsystem::RADIO, LogErrorCode::RADIO_LATE_FRAME);\n    set_failsafe_radio(true);\n}\n\n#define FS_COUNTER 3        // radio failsafe kicks in after 3 consecutive throttle values below failsafe_throttle_value\nvoid Copter::set_throttle_and_failsafe(uint16_t throttle_pwm)\n{\n    // if failsafe not enabled pass through throttle and exit\n    if(g.failsafe_throttle == FS_THR_DISABLED) {\n        set_failsafe_radio(false);\n        return;\n    }\n\n    //check for low throttle value\n    if (throttle_pwm < (uint16_t)g.failsafe_throttle_value) {\n\n        // if we are already in failsafe or motors not armed pass through throttle and exit\n        if (failsafe.radio || !(rc().has_ever_seen_rc_input() || motors->armed())) {\n            return;\n        }\n\n        // check for 3 low throttle values\n        // Note: we do not pass through the low throttle until 3 low throttle values are received\n        failsafe.radio_counter++;\n        if( failsafe.radio_counter >= FS_COUNTER ) {\n            failsafe.radio_counter = FS_COUNTER;  // check to ensure we don't overflow the counter\n            set_failsafe_radio(true);\n        }\n    }else{\n        // we have a good throttle so reduce failsafe counter\n        failsafe.radio_counter--;\n        if( failsafe.radio_counter <= 0 ) {\n            failsafe.radio_counter = 0;   // check to ensure we don't underflow the counter\n\n            // disengage failsafe after three (nearly) consecutive valid throttle values\n            if (failsafe.radio) {\n                set_failsafe_radio(false);\n            }\n        }\n        // pass through throttle\n    }\n}",
+        "served_from": "index"
+      }
+    }
+  }
+}
