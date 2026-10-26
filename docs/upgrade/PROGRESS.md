@@ -105,7 +105,7 @@ wheel workaround (or one approved install outside the sandbox).
 - [x] P1-F baseline v4                owner: lead  commit: 7d6a4c3  evidence: docs/upgrade/baseline/{dev,heldout,golden,v3}.json + docs/eval-v4.md
 - [x] Rung 0 baseline                 owner: lead  commit: 24a91fa  evidence: docs/upgrade/baseline/
 - [x] Rung 1 lexical                  owner: lead  commit: ade40be (code) + 96ebc24  evidence: dev 0.583->0.833 recall, held-out 0.692->0.723, negatives held, bench 237.5 ms
-- [x] Rung 2 dense + fusion           owner: lead  commit: (rung2 commit)  evidence: built + measured; held-out 0.692/0.277/0.439 -> rejected as default, opt-in ARM_DENSE=1
+- [x] Rung 2 dense + fusion           owner: lead  commit: c6527fd  evidence: built + measured; held-out 0.692/0.277/0.439 -> rejected as default, opt-in ARM_DENSE=1
 - [ ] Rung 3 rerank (optional)        owner:      commit:      evidence:
 - [ ] WP-G docs and gates             owner:      commit:      evidence:
 
