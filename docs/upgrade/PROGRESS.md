@@ -107,7 +107,7 @@ wheel workaround (or one approved install outside the sandbox).
 - [x] Rung 1 lexical                  owner: lead  commit: ade40be (code) + 96ebc24  evidence: dev 0.583->0.833 recall, held-out 0.692->0.723, negatives held, bench 237.5 ms
 - [x] Rung 2 dense + fusion           owner: lead  commit: c6527fd  evidence: built + measured; held-out 0.692/0.277/0.439 -> rejected as default, opt-in ARM_DENSE=1
 - [x] Rung 3 rerank (optional)        owner: -    commit: -    evidence: skipped by the brief's own condition (only if Rung 2 helps); Rung 2 did not help
-- [x] WP-G docs and gates             owner: lead  commit: (wp-g commit)  evidence: README.md + README.vi.md (184 tests, eval v4 table, optional dense section, 6 env vars, vector stage), CLAUDE.md, docs/eval-v4.md, docs/variant-4.6.md, UPGRADE_REPORT.md, all section-8 gates run
+- [x] WP-G docs and gates             owner: lead  commit: f743d9e  evidence: README.md + README.vi.md (184 tests, eval v4 table, optional dense section, 6 env vars, vector stage), CLAUDE.md, docs/eval-v4.md, docs/variant-4.6.md, UPGRADE_REPORT.md, all section-8 gates run
 
 ## Phase 1 result (raw)
 
