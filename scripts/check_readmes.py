@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Keep the two READMEs honest and free of AI-writing tells.
 
-Three checks, all stdlib:
+Four checks, all stdlib:
 
 1. no em dash, en dash or ` -- ` in prose (code blocks and inline code are ignored)
 2. no stock AI phrases that this project decided to avoid
 3. the numbers that appear in both files agree, and internal anchors resolve
+4. every "N tests" / "N passed" number equals the count `pytest --collect-only -q` reports,
+   allowing for the one test that skips itself on Windows accounts without the symlink
+   privilege (`tests/test_hardening.py`)
 
 Exit code 1 on any violation, so it can run in CI next to check_traceability.py.
 """
@@ -13,6 +16,7 @@ Exit code 1 on any violation, so it can run in CI next to check_traceability.py.
 from __future__ import annotations
 
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -29,7 +33,6 @@ TELLS = [
 # One entry per number that must match in both files: label, pattern, human hint.
 NUMBERS = [
     ("tool count", r"\b14 (?:tools|tool)\b", "14 tools"),
-    ("test count", r"\b184 (?:passed|tests|test)\b", "184"),
     ("chunks", r"86 ?262", "86 262"),
     ("documents", r"7 ?356", "7 356"),
     ("params", r"5 ?089", "5 089"),
@@ -37,6 +40,11 @@ NUMBERS = [
     ("pins", r"\b7 (?:sources|nguồn)\b", "7 sources"),
     ("heldout recall", r"0[.,]933", "0.933"),
 ]
+
+# The symlink-escape test skips on a Windows account that can not create directory symlinks, so
+# the passed count is the collected count minus one on some machines and the full count on CI.
+DOCUMENTED_SKIPS = 1
+TEST_COUNT = re.compile(r"\b(\d+)\s+(?:passed|tests?|test)\b", re.I)
 
 
 def prose_of(text: str) -> str:
@@ -52,8 +60,33 @@ def anchors(text: str) -> set[str]:
     return {slug(h) for h in re.findall(r"^## (.+)$", text, flags=re.M)}
 
 
+def collected_tests(repo: Path = REPO) -> int | None:
+    """What `pytest --collect-only -q` sees, or None when pytest cannot run here."""
+    try:
+        proc = subprocess.run([sys.executable, "-m", "pytest", "--collect-only", "-q"],
+                              cwd=repo, capture_output=True, text=True, timeout=300)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    found = re.findall(r"(\d+) tests? collected", proc.stdout + proc.stderr)
+    return int(found[-1]) if found else None
+
+
+def test_number_problems(name: str, text: str, allowed: set[int]) -> list[str]:
+    """Every "N tests" / "N passed" in a file must be one of the allowed counts."""
+    numbers = {int(value) for value in TEST_COUNT.findall(text)}
+    if not numbers:
+        return [f"{name}: no test count found"]
+    return [f"{name}: test count {number} but the suite has {sorted(allowed)}"
+            for number in sorted(numbers - allowed)]
+
+
 def main() -> int:
     problems: list[str] = []
+    collected = collected_tests()
+    allowed = {collected - DOCUMENTED_SKIPS, collected} if collected else set()
+    if collected is None:
+        problems.append("could not run `pytest --collect-only` to check the test count")
+
     for path in FILES:
         if not path.exists():
             problems.append(f"{path.name}: missing")
@@ -81,6 +114,8 @@ def main() -> int:
         for label, pattern, hint in NUMBERS:
             if not re.search(pattern, text):
                 problems.append(f"{path.name}: {label} {hint!r} not found")
+        if allowed:
+            problems.extend(test_number_problems(path.name, text, allowed))
 
     print(f"{'file':<16}{'lines':>7}{'anchors':>9}")
     print("-" * 32)
@@ -90,6 +125,7 @@ def main() -> int:
         text = path.read_text(encoding="utf-8")
         print(f"{path.name:<16}{text.count(chr(10)):>7}{len(anchors(text)):>9}")
     print("-" * 32)
+    print(f"collected tests: {collected}  accepted passed counts: {sorted(allowed)}")
     for item in problems:
         print(f"  problem: {item}")
     print("readme check:", "PASS" if not problems else "FAIL")
