@@ -1,5 +1,11 @@
 # Eval set v4: a 125-question ruler for retrieval
 
+> **Regression guard from Phase 3 on.** The frozen half has been measured 6 times: 5 runs are logged
+> in `docs/upgrade/DECISIONS.md` (one run per kept configuration) and the Phase 3 section 0 check
+> reproduced the Rung 1 row. It no longer judges retrieval changes; run it at most **once per kept
+> configuration** with `--aggregate-only`, never to choose between options, and do not open the file.
+> The Phase 3 ruler is the Vietnamese set in `docs/eval-v5-vi.md`.
+
 Written as part of Phase 1 of `docs/upgrade/DEEPSEEK_BRIEF.md`. The point of v4 is that v3 has
 30 questions (one question is 3.3 points of recall) and its questions were generated from headings
 ("Where is X documented?"), so it measures the retriever on its own vocabulary. v4 holds real
