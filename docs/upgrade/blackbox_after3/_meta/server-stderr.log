@@ -1,6 +1,6 @@
-[10/26/26 14:40:31] INFO     Processing request of type           server.py:733
+[10/26/26 16:27:10] INFO     Processing request of type           server.py:733
                              ListToolsRequest                                  
-                    INFO     Processing request of type           server.py:733
+[10/26/26 16:27:11] INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
@@ -65,8 +65,6 @@
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
-                             CallToolRequest                                   
-[10/26/26 14:40:32] INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
@@ -76,7 +74,7 @@
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
-                    INFO     Processing request of type           server.py:733
+[10/26/26 16:27:12] INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
@@ -98,11 +96,13 @@
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
-[10/26/26 14:40:33] INFO     Processing request of type           server.py:733
+                    INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
+[10/26/26 16:27:13] INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
@@ -110,7 +110,7 @@
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
-[10/26/26 14:41:31] INFO     Processing request of type           server.py:733
+[10/26/26 16:28:11] INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
@@ -124,8 +124,6 @@
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
-[10/26/26 14:41:32] INFO     Processing request of type           server.py:733
-                             CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
@@ -138,7 +136,7 @@
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
-                    INFO     Processing request of type           server.py:733
+[10/26/26 16:28:12] INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
@@ -150,7 +148,7 @@
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
-[10/26/26 14:41:33] INFO     Processing request of type           server.py:733
+                    INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
@@ -170,6 +168,8 @@
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
+[10/26/26 16:28:13] INFO     Processing request of type           server.py:733
+                             CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
@@ -216,7 +216,7 @@
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
-[10/26/26 14:41:34] INFO     Processing request of type           server.py:733
+                    INFO     Processing request of type           server.py:733
                              CallToolRequest                                   
                     INFO     Processing request of type           server.py:733
                              CallToolRequest                                   

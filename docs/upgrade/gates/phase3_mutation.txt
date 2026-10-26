@@ -17,7 +17,22 @@ M16  killed    dense auto-enables without the opt-in flag
 M17  killed    missing table/model reported as available
 M18  killed    requested-but-unavailable warning repeats every query
 M19  killed    dense rerank sign inverted
+M20  killed    ambiguous chat spelling expands without Vietnamese evidence
+M21  killed    a question that names an in-scope product and a foreign one is refused again
 
-mutants=18 killed=18 survived=0 errors=0 equivalent=1 score=1.000
+mutants=20 killed=20 survived=0 errors=0 equivalent=1 score=1.000
+stderr: Exception in thread Thread-41 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\ADMIN\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\ADMIN\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\ADMIN\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+  File "C:\Users\ADMIN\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 23, in decode
+    return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeDecodeError: 'charmap' codec can't decode byte 0x81 in position 558: character maps to <undefined>
 
-killed=18/18 score=1.000 target=0.90 survivors=none equivalent=['M12']
+killed=20/20 score=1.000 target=0.90 survivors=none equivalent=['M12']

@@ -66,6 +66,29 @@ Validator on both merged files: `errors: 0`, `overlaps=0`; the evaluator refuses
 `sha256: verified against ...`). **5 of the 120 questions were rewritten by the lead** after the
 cross-set check rejected them against a v4 question; the ids are listed in `docs/eval-v5-vi.md`.
 
+### 3a. The mention set (re-audit, `tests/eval_v5_mention.yaml`)
+
+The first audit of Phase 3 found a design error in V1: it refused **any** question that named
+PX4/Betaflight/iNav, even when the question asked about the pinned corpus ("How do I configure
+ExpressLRS in Betaflight?", "Khác nhau giữa ArduPilot và PX4 về failsafe là gì"). The corpus talks
+about those stacks (47 ELRS documents and 34 wiki pages mention Betaflight, 86 wiki pages mention
+PX4), so the ruler for that defect is a separate positive set:
+
+```console
+python -m research.validate_eval_set --set tests/eval_v5_mention.yaml --cross-check <4 sets, 186 q>
+set=eval_v5_mention.yaml questions=18 db=checked
+categories: code=1 elrs_edgetx=4 hwdef=2 param=2 protocol=3 troubleshoot=1 wiki=5
+langs: en=6 vi=12   snippets=18 negatives=0 diacritics_false=7   errors: 0
+cross-check: 18 questions vs 186 from 4 set(s), overlaps=0
+sha256 eval_v5_mention.yaml = d5ce8ab41e514d7ce8e3d2f9cd3a5fd5846b388e9bd43dc4c45e66664283a403
+```
+
+Every question asks about a corpus product, and 9 of 18 also name an out-of-scope one. Written by a
+fresh agent (no `query.py`, no eval output), validated, then frozen by
+`docs/eval-v5-mention.sha256`; the evaluator verified that hash on all three runs below. Two
+questions (`V5-MENTION-008`, `V5-MENTION-011`) were rewritten by the lead because the cross-check
+flagged them as close to a v4 question.
+
 ## 4. Ladder table
 
 Full reasoning and the rejected-inside-V1 numbers are in `docs/upgrade/rungs3.md`. Each rung was
@@ -80,6 +103,21 @@ measured on the two dev sets only; the held-out sets were run once, for the fina
 | V3 expansion weighting | 0.512 / 0.279 / 0.378 | 0.500 | 0.708 / 0.577 | 0.600 | rejected |
 | V4 256/512-token rebuild | - | - | - | - | not attempted (164 min estimate at 256 tokens) |
 | V5 declaration gating | 0.442 / 0.186 / 0.290 | 0.500 | 0.771 / 0.593 | 0.600 | rejected |
+
+The scope rule was repaired after the audit and the ladder rows above were re-measured with the
+repair in place; they did not move (v5-vi dev 0.535 / 0.279 / 0.389, v4 dev 0.833 / 0.645,
+`eval_v4_neg_vi` 0.750), because no dev question names a foreign product together with a corpus
+product. The mention set is what moved:
+
+| configuration on `tests/eval_v5_mention.yaml` (18 positives) | answered | name-rule refusals | recall@5 | P@1 | MRR |
+|---|---|---|---|---|---|
+| audited V1 (refuse on any foreign name) | 8 | **9** | 0.278 | 0.111 | 0.185 |
+| shipped (refuse only without a corpus name) | 16 | **0** | 0.556 | 0.333 | 0.421 |
+| `master` baseline (no scope refusal at all) | 16 | 0 | 0.556 | 0.333 | 0.421 |
+
+The two questions still refused are refused by the **anchor gate** (their content words are not
+corpus vocabulary), not by the name rule, and they are refused on `master` too. Raw:
+`docs/upgrade/runs/mention-final.txt`, `mention-master.txt`, `mention-audited-v1.txt`.
 
 golden and v3 stayed at 1.000 / 0.800 / 0.881 and 0.933 / 0.833 / 0.868 after V1 (golden MRR -0.005,
 inside the 0.01 tolerance); the rejected rungs also show their golden/v3 damage in `rungs3.md`.
@@ -114,18 +152,21 @@ MRR, `elrs_edgetx` is unchanged, no category drops recall@5. `eval_v4_neg_vi`: 0
 ## 6. Gate results (raw)
 
 ```console
-pytest -q                              221 passed, 1 skipped in 43.91s
-scripts/check_readmes.py               readme check: PASS   (collected 222, accepted 221/222)
+pytest -q                              223 passed, 1 skipped in 54.86s
+scripts/check_readmes.py               readme check: PASS   (collected 224, accepted 223/224)
 scripts/check_traceability.py          requirements=22 failing=0
 scripts/fidelity_scan.py               TOTAL 86262 0 ; fidelity: PASS
 scripts/check_param_citations.py       params checked: 5089 ; citation violations: 0
 research.verify_citations              chunk/line verification: PASS
 research.audit_safety                  exit 0, six inputs (5 refused, 1 informational)
-scripts/bench.py                       search_docs p95 196.3 ms ; cold start 66 ms ; bench: PASS
+scripts/bench.py                       search_docs p95 225.4 ms ; cold start 83 ms ; bench: PASS
 scripts/mutation_check.py              mutants=20 killed=20 survived=0 errors=0 equivalent=1 score=1.000
 eval golden.yaml --aggregate-only      1.000 / 0.800 / 0.881
 eval heldout_v3.yaml --aggregate-only  0.933 / 0.833 / 0.868
 eval eval_v4_dev --aggregate-only      0.833 / 0.542 / 0.645 / chunk 0.375 / neg 0.600
+eval eval_v5_mention (shipped)         0.556 / 0.333 / 0.421 / chunk 0.278, name-rule refusals 0
+eval eval_v5_mention (master baseline) 0.556 / 0.333 / 0.421 / chunk 0.278
+eval eval_v5_mention (audited V1)      0.278 / 0.111 / 0.185, name-rule refusals 9
 blackbox_run --out blackbox_after3     cases_run=110
 compare vs blackbox_after              110 compared, 109 identical, 1 changed, 0 regressions
 safety + offline, dense off            45 passed
@@ -150,6 +191,14 @@ Full table in `docs/upgrade/DECISIONS.md` (Phase 3 section). The ones that shape
 - **Rung 1's rank-1 regression is not recovered.** V5's general rule (declaration priority only for
   a parameter-shaped query) was much worse than what Rung 1 does; the regression stays and is
   reported.
+- **The scope refusal needs a corpus name, not just the absence of a foreign one.** The first V1
+  shipped `found:false` for any query naming PX4/Betaflight/iNav, which refused answerable questions
+  and cost the mention set 9 of 18. The rule is now: refuse only when a foreign name is present
+  **and** no `in_scope_names` entry is; the list lives in `scope.yaml` (data, not code), foreign
+  names keep the case-sensitive match, corpus names are matched case-insensitively with diacritics
+  folded. Unit tests pin the four audit examples and the pure Betaflight question.
+  `tests/test_query.py::test_a_question_that_names_an_in_scope_product_is_answered` and the mutant
+  `M21` (which removes the second condition) keep it honest.
 - **The 24 KB cap stays as it is** (A4): `search_docs` results are already in relevance order, so the
   tail is the least relevant item; a coverage-aware trim would need a score on every tool's items.
 
@@ -173,6 +222,12 @@ Full table in `docs/upgrade/DECISIONS.md` (Phase 3 section). The ones that shape
    0.556 to 0.778 on the set built to catch false answers (and 0.571 -> 0.714 on the v4 guard). A
    flag that leaves a known-wrong refusal off by default would be the worse trade, so the change is
    the default and this paragraph is the disclosure. The Vietnamese ranking gap is **not** closed.
+   What V1 ships, exactly: (a) `vi.py` chat normalisation (abbreviations, repeated letters) applied
+   to matching only, display text untouched; (b) multi-word glossary keys also match with diacritics
+   folded; (c) `found:false` for a foreign product **only when the query names nothing the corpus
+   documents** (`scope.yaml` `in_scope_names`), with the case-sensitive spelling rule for foreign
+   names unchanged. Nothing else changed: the anchor gate, the boosts, the dense path and the
+   safety rules are byte-identical to the audited V1.
 2. **Held-out v4 run count.** Section 0 of the brief ran it once (`--aggregate-only`, run 7) and the
    final configuration ran it once (run 8). Both are logged; nothing else touched the file.
 3. **Writers shared the working tree, not separate worktrees.** Each writer owned exactly one
@@ -199,6 +254,9 @@ Full table in `docs/upgrade/DECISIONS.md` (Phase 3 section). The ones that shape
   held-out equivalent is not visible under `--aggregate-only`.
 - Safety: the no-equals-sign zeroing form is answered (section 7); the seven chat-style forms that
   the rules do cover are pinned in `tests/test_safety_vi_chat.py`.
+- The mention set is 18 questions with 7 categories; one question is 0.056 of its recall. Two of its
+  questions are still refused by the anchor gate (not by the name rule) and two were rewritten by
+  the lead. It shows the design error is fixed, not that mention questions retrieve well.
 - Bench numbers depend on machine load; the shipped path's number below is from a run where the load
   was recorded.
 

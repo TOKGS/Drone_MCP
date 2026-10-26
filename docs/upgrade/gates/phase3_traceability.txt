@@ -23,5 +23,5 @@ offline: no network import outside ingest/                test      PASS      te
 offline: serving still works with the corpus deleted      test      PASS      tests/test_distil.py::test_serving_works_after_corpus_is_deleted
 safety: no shell=True / os.system in src/                 test      PASS      tests/test_offline.py::test_no_shell_true_or_os_system
 
-requirements=22 failing=0 known_tests=202
-pytest_collect: exit=0 last=222 tests collected in 1.36s
+requirements=22 failing=0 known_tests=204
+pytest_collect: exit=0 last=224 tests collected in 2.12s

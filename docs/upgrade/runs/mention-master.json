@@ -1,0 +1,134 @@
+{
+  "set": "eval_v5_mention.yaml",
+  "sha256": "d5ce8ab41e514d7ce8e3d2f9cd3a5fd5846b388e9bd43dc4c45e66664283a403",
+  "sha_verified": true,
+  "k": 5,
+  "questions": 18,
+  "positives": 18,
+  "negatives": 0,
+  "overall": {
+    "questions": 18,
+    "positives": 18,
+    "negatives": 0,
+    "recall_at_k": 0.5555555555555556,
+    "precision_at_1": 0.3333333333333333,
+    "mrr": 0.4212962962962963,
+    "chunk_hit": 0.2777777777777778,
+    "negative_pass": null,
+    "hits": 10,
+    "precision_1_count": 6
+  },
+  "per_category": {
+    "code": {
+      "questions": 1,
+      "positives": 1,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 1.0,
+      "mrr": 1.0,
+      "chunk_hit": 1.0,
+      "negative_pass": null,
+      "hits": 1,
+      "precision_1_count": 1
+    },
+    "elrs_edgetx": {
+      "questions": 4,
+      "positives": 4,
+      "negatives": 0,
+      "recall_at_k": 0.5,
+      "precision_at_1": 0.25,
+      "mrr": 0.375,
+      "chunk_hit": 0.25,
+      "negative_pass": null,
+      "hits": 2,
+      "precision_1_count": 1
+    },
+    "hwdef": {
+      "questions": 2,
+      "positives": 2,
+      "negatives": 0,
+      "recall_at_k": 0.5,
+      "precision_at_1": 0.0,
+      "mrr": 0.16666666666666666,
+      "chunk_hit": 0.0,
+      "negative_pass": null,
+      "hits": 1,
+      "precision_1_count": 0
+    },
+    "param": {
+      "questions": 2,
+      "positives": 2,
+      "negatives": 0,
+      "recall_at_k": 0.5,
+      "precision_at_1": 0.5,
+      "mrr": 0.5,
+      "chunk_hit": 0.0,
+      "negative_pass": null,
+      "hits": 1,
+      "precision_1_count": 1
+    },
+    "protocol": {
+      "questions": 3,
+      "positives": 3,
+      "negatives": 0,
+      "recall_at_k": 0.6666666666666666,
+      "precision_at_1": 0.3333333333333333,
+      "mrr": 0.5,
+      "chunk_hit": 0.6666666666666666,
+      "negative_pass": null,
+      "hits": 2,
+      "precision_1_count": 1
+    },
+    "troubleshoot": {
+      "questions": 1,
+      "positives": 1,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 1.0,
+      "mrr": 1.0,
+      "chunk_hit": 0.0,
+      "negative_pass": null,
+      "hits": 1,
+      "precision_1_count": 1
+    },
+    "wiki": {
+      "questions": 5,
+      "positives": 5,
+      "negatives": 0,
+      "recall_at_k": 0.4,
+      "precision_at_1": 0.2,
+      "mrr": 0.25,
+      "chunk_hit": 0.2,
+      "negative_pass": null,
+      "hits": 2,
+      "precision_1_count": 1
+    }
+  },
+  "per_lang": {
+    "en": {
+      "questions": 6,
+      "positives": 6,
+      "negatives": 0,
+      "recall_at_k": 0.6666666666666666,
+      "precision_at_1": 0.5,
+      "mrr": 0.5555555555555556,
+      "chunk_hit": 0.16666666666666666,
+      "negative_pass": null,
+      "hits": 4,
+      "precision_1_count": 3
+    },
+    "vi": {
+      "questions": 12,
+      "positives": 12,
+      "negatives": 0,
+      "recall_at_k": 0.5,
+      "precision_at_1": 0.25,
+      "mrr": 0.3541666666666667,
+      "chunk_hit": 0.3333333333333333,
+      "negative_pass": null,
+      "hits": 6,
+      "precision_1_count": 3
+    }
+  },
+  "rows": null
+}

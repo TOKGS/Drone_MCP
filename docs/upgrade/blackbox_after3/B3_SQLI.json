@@ -17,7 +17,7 @@
     }
   },
   "client_pacing_wait_ms_before_call": 0.0,
-  "duration_ms": 55.8,
+  "duration_ms": 55.3,
   "transport_error": null,
   "response": {
     "isError": false,
