@@ -25,3 +25,6 @@ artifacts/
 
 # per-machine client config: paths differ per checkout, so only the example is committed
 .mcp.json
+
+# upgrade scratch (question fragments, deleted after merge)
+docs/upgrade/scratch/
