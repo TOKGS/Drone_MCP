@@ -105,7 +105,7 @@ wheel workaround (or one approved install outside the sandbox).
 - [x] P1-F baseline v4                owner: lead  commit: 7d6a4c3  evidence: docs/upgrade/baseline/{dev,heldout,golden,v3}.json + docs/eval-v4.md
 - [x] Rung 0 baseline                 owner: lead  commit: 24a91fa  evidence: docs/upgrade/baseline/
 - [x] Rung 1 lexical                  owner: lead  commit: ade40be (code) + 96ebc24  evidence: dev 0.583->0.833 recall, held-out 0.692->0.723, negatives held, bench 237.5 ms
-- [ ] Rung 2 dense + fusion           owner:      commit:      evidence:
+- [x] Rung 2 dense + fusion           owner: lead  commit: (rung2 commit)  evidence: built + measured; held-out 0.692/0.277/0.439 -> rejected as default, opt-in ARM_DENSE=1
 - [ ] Rung 3 rerank (optional)        owner:      commit:      evidence:
 - [ ] WP-G docs and gates             owner:      commit:      evidence:
 
@@ -178,8 +178,34 @@ Ablation per step and the rejected variants are in `docs/upgrade/rung1.md`; kept
 in `docs/upgrade/DECISIONS.md`; raw runs in `docs/upgrade/runs/rung1-*`.
 
 
+## Rung 2 result (raw)
+
+Built `research/build_vectors.py`, `chunk_vectors` (86 262 float16 vectors, 63.2 MB, 68.3 min at
+21.0 chunks/s), `src/ardupilot_research_mcp/dense.py`, an opt-in rerank in `query.search`, the
+`embeddings` extra and `index_status.dense`.
+
+Dev ablation (tunable): RRF fusion families 0.604 to 0.688 recall@5, all worse than Rung 1's 0.833;
+dense rerank alpha 2.0 gave 0.833 / 0.625 / 0.681 / 0.354.
+
+Held-out, measured once for the kept candidate (dense on):
+
+```
+recall@5 = 45/65 = 0.692   (baseline 0.692, Rung 1 0.723)
+precision@1 = 18/65 = 0.277 (baseline 0.369, Rung 1 0.323)
+MRR = 0.439                (baseline 0.493, Rung 1 0.475)
+chunk-hit@5 = 0.354        (baseline 0.369, Rung 1 0.369)
+negative-pass = 0.571      (floor held; eval_v4_neg_vi 0.750, floor held)
+```
+
+Acceptance for a dense default needs held-out MRR >= 0.543; measured 0.439. So dense ships **off by
+default** (`ARM_DENSE=1` opts in) and the BM25 path is untouched. Table with per-category and
+per-language three-way comparison, the dev ablation ladder and the latency caveat:
+`docs/upgrade/rung2.md`. Raw runs: `docs/upgrade/runs/rung2-*`.
+
+
 ## Decisions
 
+- 2026-10-26: Rung 2 built the dense path and rejected it as the default. Held-out MRR 0.439 against the 0.543 bar; the rerank is opt-in behind ARM_DENSE=1 and the default stays BM25 (docs/upgrade/rung2.md). Bench p95 could not be re-verified on this loaded machine: the Rung 1 code fails the same budget in interleaved runs, so no Rung 2 regression is claimed or inferred.
 - 2026-10-26: Rung 1 kept four changes (glossary growth, parameter-declaration priority,
   Vietnamese anchor relaxation, test-harness penalty). Held-out P@1/MRR moved -0.015/-0.003
   while recall@5 rose +0.031; disclosed rather than hidden, details in docs/upgrade/rung1.md.

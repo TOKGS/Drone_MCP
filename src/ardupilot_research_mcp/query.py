@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import re
 import sqlite3
+from functools import lru_cache
 from pathlib import Path
 
 import yaml
 
-from . import cite, config, textsanitize
+from . import cite, config, dense, textsanitize
 
 IDENTIFIER = re.compile(r"^[A-Z][A-Z0-9_]{2,}$")
 WORD = re.compile(r"[A-Za-z][A-Za-z0-9_]*")
@@ -56,6 +57,12 @@ TIER_ORDER = {"T1": 0, "T2": 1, "T3": 2}
 # question; the gap to the next result is typically 4-5 bm25 points.
 SIMULATOR_PATH_PREFIXES = ("libraries/SITL/", "Tools/autotest/")
 SIMULATOR_PENALTY = 5.0
+# Optional dense rerank.  Adding dense-only candidates to the BM25 list was measured on the dev
+# split and made it worse (recall@5 0.833 -> 0.688, P@1 0.542 -> 0.500); reranking only the
+# candidates BM25 already produced helped (P@1 0.542 -> 0.625, MRR 0.646 -> 0.692 at weight 2.0).
+# Similarity is a cosine in [-1, 1] and the BM25 ranks span tens of points, so the weight is small.
+DENSE_RERANK_WEIGHT = 2.0
+DENSE_RERANK_CANDIDATES = 200
 # A ranked candidate carries a negative bm25-like number (lower is better). The declaring chunk of
 # a parameter that the query names outright enters with this score, so it beats a chunk that only
 # mentions the name unless the mention is an even stronger identifier match.
@@ -72,15 +79,28 @@ STOPWORDS = {
 }
 
 
-def load_glossary() -> dict[str, list[str]]:
-    path = config.glossary_path()
-    if not path.exists():
-        return {}
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+@lru_cache(maxsize=4)
+def _read_glossary(path: str, mtime_ns: int, size: int) -> dict[str, list[str]]:
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
     terms: dict[str, list[str]] = {}
     for entry in data.get("terms", []):
         terms[entry["vi"].lower()] = [exp.lower() for exp in entry["en"]]
     return terms
+
+
+def load_glossary() -> dict[str, list[str]]:
+    """Parsed once per (path, mtime, size): the file is data and may be edited between runs."""
+    path = config.glossary_path()
+    if not path.exists():
+        return {}
+    stat = path.stat()
+    return _read_glossary(str(path), stat.st_mtime_ns, stat.st_size)
+
+
+@lru_cache(maxsize=4)
+def _read_scope(path: str, mtime_ns: int, size: int) -> dict:
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
+    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []]}
 
 
 def load_scope() -> dict:
@@ -88,8 +108,8 @@ def load_scope() -> dict:
     path = config.repo_root() / "scope.yaml"
     if not path.exists():
         return {"out_of_scope_names": []}
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    return {"out_of_scope_names": [str(name) for name in data.get("out_of_scope_names") or []]}
+    stat = path.stat()
+    return _read_scope(str(path), stat.st_mtime_ns, stat.st_size)
 
 
 def _word_tokens(text: str) -> list[str]:
@@ -250,6 +270,14 @@ def _heading_extra(heading_path: str, tokens: set[str]) -> int:
     return sum(1 for word in words if word not in tokens)
 
 
+def _dense_reranked_scores(merged: dict[str, tuple[sqlite3.Row, float]],
+                           dense_hits: list[tuple[str, float]]) -> dict[str, float]:
+    """Cosine similarity reorders the candidates BM25 produced; it never adds a candidate."""
+    similarity = dict(dense_hits)
+    return {row["cite_hash"]: rank - DENSE_RERANK_WEIGHT * similarity.get(row["cite_hash"], 0.0)
+            for row, rank in merged.values()}
+
+
 def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
            version: str | None = None, tier_max: str = "T1", limit: int = 8) -> dict:
     expanded, applied = expand_query(query)
@@ -284,6 +312,10 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
                     "scope_notes": scope_notes(query, [], labels=_version_labels(con),
                                                applied=applied),
                     "confidence": "low", "note": NO_ANCHOR_NOTE}
+
+    # The local overlay is the user's own files and has no vectors; do not fuse it.
+    dense_hits = (dense.search(con, query, limit=DENSE_RERANK_CANDIDATES)
+                  if scope != "local" and dense.enabled(con) else [])
 
     sql = (
         "SELECT c.cite_hash, d.source_id, d.path, c.text, c.heading_path,"
@@ -344,11 +376,16 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
                 declarers.add(row["cite_hash"])
                 merged.setdefault(row["cite_hash"], (row, 0.0))
 
+    if dense_hits:
+        base_scores = _dense_reranked_scores(merged, dense_hits)
+    else:
+        base_scores = {row["cite_hash"]: rank for row, rank in merged.values()}
+
     scored: list[tuple[float, sqlite3.Row]] = []
     for row, rank in merged.values():
         if TIER_ORDER.get(tiers.get(row["source_id"], "T3"), 0) > max_tier:
             continue
-        score = rank                          # lower is better in sqlite bm25
+        score = base_scores.get(row["cite_hash"], rank)     # lower is better
         score -= 6.0 * sum(1 for token in identifiers if token in row["text"])
         # A file named after an identifier (common-rc-options.rst for RC_OPTIONS) is the
         # canonical page for it; without this the parameter-name page loses to incidental
@@ -463,5 +500,6 @@ def index_status(con: sqlite3.Connection) -> dict:
         "index_mb": round(path.stat().st_size / 1048576, 1) if path.exists() else 0,
         "last_ingest": ingested,
         "stale_warning_days": 90,
+        "dense": dense.stats(con),
         "note": "offline mode: no network access at serve time",
     }

@@ -55,6 +55,12 @@ def main(argv: list[str] | None = None) -> int:
     questions = yaml.safe_load((REPO / "tests" / "golden.yaml").read_text(encoding="utf-8"))
     questions = questions if isinstance(questions, list) else questions["questions"]
 
+    # Warm-up: the optional dense retriever loads its matrix on the first search (seconds, one per
+    # process). That cost is reported separately so the p95 describes the warm path.
+    started = time.perf_counter()
+    query.search(con, questions[0]["q"], limit=5)
+    cold_ms = (time.perf_counter() - started) * 1000
+
     search_ms = [timed(query.search, con, item["q"], limit=5)[0] for item in questions]
     param_ms = [timed(lookup_param, "RC_OPTIONS")[0] for _ in range(5)]
     frame_ms = [timed(decode_crsf_frame,
@@ -70,6 +76,7 @@ def main(argv: list[str] | None = None) -> int:
               f"{percentile(values, 0.95):>9.1f}{max(values):>9.1f}")
     p95 = percentile(search_ms, 0.95)
     print("-" * 51)
+    print(f"cold start (first search, includes model + vector load): {cold_ms:.0f} ms")
     print(f"budget: search_docs p95 <= {args.budget_ms:.0f} ms, measured {p95:.1f} ms")
     ok = p95 <= args.budget_ms
     print("bench:", "PASS" if ok else "FAIL")

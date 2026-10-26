@@ -13,6 +13,16 @@ Every license below was read from the license file copied out of the pinned arch
 | `expresslrs_docs` | commit `5ed656b6` (2026-10-12) | T1 | **GPL-3.0** | `LICENSE`: "GNU GENERAL PUBLIC LICENSE / Version 3, 29 June 2007" |
 | `crsf_spec` | commit `a73f7dc5` | T1 | **CC-BY-SA-4.0** | `LICENSE.md`: "CRSF V3 Protocol Specification © 2020 by TBS Avionics Co LTD … licensed under Creative Commons Attribution-ShareAlike 4.0 International" |
 
+## The embedding model (Rung 2, optional)
+
+| model | file | license (verified) | evidence |
+|---|---|---|---|
+| `intfloat/multilingual-e5-small` | `data/models/multilingual-e5-small/` (gitignored) | **MIT** | the model's own `README.md` on Hugging Face carries `license: mit`; downloaded 2026-10-26 |
+
+The model is downloaded once at build time and never committed: `data/` is gitignored. The shipped
+code only holds the ONNX session open at answer time; no model weights are redistributed in this
+repository.
+
 ## What the product does with each license
 
 - **Read-only, no redistribution of the corpus.** `data/` and `research/cache/` are

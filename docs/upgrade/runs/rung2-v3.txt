@@ -1,0 +1,11 @@
+dense: loaded 86262 vectors (126 MB) in 5.5s
+set=heldout_v3.yaml questions=30 k=5
+sha256: verified against heldout-v3.sha256 (d92c70177b38745e...)
+recall@5 = 28/30 = 0.933
+precision@1 = 25/30 = 0.833
+MRR = 0.869
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+en              15     0.867   0.800   0.822          -         -
+vi              15     1.000   0.867   0.917          -         -

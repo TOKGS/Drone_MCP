@@ -1,0 +1,10 @@
+dense: loaded 86262 vectors (126 MB) in 10.8s
+set=golden.yaml questions=30 k=5
+recall@5 = 30/30 = 1.000
+precision@1 = 25/30 = 0.833
+MRR = 0.908
+
+per language
+group            n  recall@5     P@1     MRR  chunk-hit  neg-pass
+en              19     1.000   0.842   0.908          -         -
+vi              11     1.000   0.818   0.909          -         -
