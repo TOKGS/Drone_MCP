@@ -32,6 +32,9 @@ ANCHOR_MIN_DOCS = 3
 ANCHOR_WEAK_WEIGHT = 0.25
 ANCHOR_MIN_WEIGHT = 1.0
 ANCHOR_MIN_RATIO = 0.5
+# A query the glossary expanded is Vietnamese, so its unmatched words are Vietnamese, not corpus
+# vocabulary. Two anchored words (or one symbol) are enough evidence in that case.
+ANCHOR_MIN_WEIGHT_EXPANDED = 2.0
 NO_ANCHOR_NOTE = ("query has no anchor in the indexed corpus: its content words are not part of "
                   "the index vocabulary -> out of scope; nothing was invented")
 SCOPE_SOURCES = {
@@ -48,11 +51,14 @@ SCOPE_SOURCES = {
     "forum": [],
 }
 TIER_ORDER = {"T1": 0, "T2": 1, "T3": 2}
-# Simulator-only code models the vehicle, it is not evidence of how the vehicle behaves. Rank it
-# below operational code and documentation instead of letting a model win a real question; the
-# gap to the next result is typically 4-5 bm25 points (G22 ELRS, buzzer).
-SIMULATOR_PATH_PREFIX = "libraries/SITL/"
+# Simulator-only code and the autotest harness model the vehicle, they are not evidence of how it
+# behaves. Rank them below operational code and documentation instead of letting them win a real
+# question; the gap to the next result is typically 4-5 bm25 points.
+SIMULATOR_PATH_PREFIXES = ("libraries/SITL/", "Tools/autotest/")
 SIMULATOR_PENALTY = 5.0
+# A ranked candidate carries a negative bm25-like number (lower is better). The declaring chunk of
+# a parameter that the query names outright enters with this score, so it beats a chunk that only
+# mentions the name unless the mention is an even stronger identifier match.
 # Query words that carry no retrieval signal: without this, "how do I bake bread" matched
 # half the corpus and an out-of-corpus question wrongly returned found:true.
 STOPWORDS = {
@@ -262,7 +268,15 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
 
     if scope != "local":  # the local overlay is deliberately small, it needs no corpus vocabulary
         weight, support = _corpus_anchor(con, query, applied)
-        if weight < ANCHOR_MIN_WEIGHT or support < ANCHOR_MIN_RATIO:
+        # Vietnamese typed without diacritics is ASCII, so the tokenizer counts its words as content
+        # words an English corpus cannot contain, and the support ratio rejected real questions. When
+        # the glossary fired the query is Vietnamese by construction: require a stronger total anchor
+        # weight instead of a ratio over words that were never going to match.
+        grounded = (weight >= ANCHOR_MIN_WEIGHT and support >= ANCHOR_MIN_RATIO)
+        if applied:
+            # Otherwise a Vietnamese query that used to pass on the ratio must keep passing.
+            grounded = grounded or weight >= ANCHOR_MIN_WEIGHT_EXPANDED
+        if not grounded:
             return {"found": False, "query": query,
                     "query_expanded": expanded if applied else None, "expansions": applied,
                     "scope": scope, "version_filter": version, "results": [],
@@ -313,6 +327,22 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         for row in con.execute(extra_sql, extra_params):
             merged.setdefault(row["cite_hash"], (row, 0.0))
 
+    # A parameter named in the query is answered by the file that declares it, not by the file
+    # that merely mentions it: "where is SCR_VM_I_COUNT" lost to a Lua example that uses it.
+    # The params table records the declaring chunk, so its cite_hash is a direct candidate and it
+    # is ranked ahead of the rest (bm25 magnitudes vary too much for a fixed bonus to be reliable).
+    declarers: set[str] = set()
+    if identifiers:
+        decl_sql = (
+            "SELECT c.cite_hash, p.source_id, p.path, c.text, c.heading_path,"
+            "       c.line_start, c.line_end, 0.0 AS rank"
+            "  FROM params p JOIN chunks c ON c.cite_hash = p.cite_hash"
+            " WHERE p.param_name = ? OR p.param_name LIKE ? LIMIT 15")
+        for token in identifiers:
+            for row in con.execute(decl_sql, (token, f"{token}%")):
+                declarers.add(row["cite_hash"])
+                merged.setdefault(row["cite_hash"], (row, 0.0))
+
     scored: list[tuple[float, sqlite3.Row]] = []
     for row, rank in merged.values():
         if TIER_ORDER.get(tiers.get(row["source_id"], "T3"), 0) > max_tier:
@@ -332,9 +362,16 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         # words scattered through prose, so reward the chunk whose own heading carries every token.
         if path_tokens and heading_hits == len(path_tokens):
             score -= 5.0
-        if row["path"].startswith(SIMULATOR_PATH_PREFIX):
+        if row["path"].startswith(SIMULATOR_PATH_PREFIXES):
             score += SIMULATOR_PENALTY
         scored.append((score, row))
+    # A parameter's declaring chunk wins outright. The rank is computed after the other boosts, so
+    # it does not depend on the bm25 scale: the file that declares the parameter answers "where is
+    # this parameter", even when another file mentions it more often.
+    if declarers:
+        floor = min(score for score, _row in scored)
+        scored = [(floor - 1.0 if row["cite_hash"] in declarers else score, row)
+                  for score, row in scored]
     scored.sort(key=lambda item: item[0])
 
     # Rank DOCUMENTS, not chunks: a long page can put five chunks in the top five and hide the

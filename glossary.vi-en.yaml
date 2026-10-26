@@ -66,3 +66,100 @@ terms:
     en: ["where is", "definition", "source"]
   - vi: "xử lý thế nào"
     en: ["how does", "behaviour", "handling"]
+  # Concepts the v4 dev split asked for in Vietnamese that the corpus only spells in English.
+  # Every entry is a phrase, never a bare common word ("giá", "thời tiết"), so an out-of-scope
+  # question cannot borrow an anchor from it.
+  - vi: "bán kính"
+    en: ["radius"]
+  - vi: "hàng rào"
+    en: ["fence", "geofence"]
+  - vi: "gia tốc thẳng đứng"
+    en: ["vertical acceleration", "accel z"]
+  - vi: "giảm tốc"
+    en: ["deceleration", "brake"]
+  - vi: "phanh"
+    en: ["brake", "braking", "deceleration"]
+  - vi: "bù nhiệt"
+    en: ["temperature compensation", "temp cal", "temperature calibration"]
+  - vi: "học bù nhiệt"
+    en: ["temperature calibration", "temp cal"]
+  - vi: "nhiễu la bàn"
+    en: ["compass interference", "compass motor compensation", "compassmot"]
+  - vi: "công suất phát"
+    en: ["transmit power", "tx power", "dynamic power"]
+  - vi: "dòng pin"
+    en: ["battery current", "batt amps", "current pin"]
+  - vi: "hệ số dòng pin"
+    en: ["amps per volt", "battery current scale"]
+  - vi: "độ nhạy điều khiển"
+    en: ["input tc", "control sensitivity", "attitude control"]
+  - vi: "thái độ"
+    en: ["attitude", "attitude control"]
+  - vi: "kênh RC"
+    en: ["rc channel", "rcmap"]
+  - vi: "điểm smartrtl"
+    en: ["smartrtl points", "srtl points"]
+  - vi: "tốc độ gói tin"
+    en: ["packet rate", "rate"]
+  # Vietnamese typed without diacritics is a real user habit; the same phrases again in ASCII so
+  # the phrase matcher finds them. Data only, the matching code is unchanged.
+  - vi: "kenh"
+    en: ["channel"]
+  - vi: "kenh rc"
+    en: ["rc channel", "rcmap"]
+  - vi: "tham so"
+    en: ["parameter", "param"]
+  - vi: "cam bien"
+    en: ["sensor"]
+  - vi: "la ban"
+    en: ["compass"]
+  - vi: "ac quy"
+    en: ["battery", "batt"]
+  - vi: "dong co"
+    en: ["motor"]
+  - vi: "canh quat"
+    en: ["propeller", "prop"]
+  - vi: "hieu chuan"
+    en: ["calibration", "calibrate"]
+  - vi: "nap firmware"
+    en: ["flash firmware", "upload", "bootloader"]
+  - vi: "mat tin hieu"
+    en: ["RC loss", "failsafe", "link quality"]
+  - vi: "tay cam"
+    en: ["transmitter", "radio", "RC"]
+  - vi: "tan so"
+    en: ["frequency", "rate"]
+  - vi: "rot goi"
+    en: ["packet loss", "link quality", "LQ"]
+  - vi: "toc do goi"
+    en: ["packet rate", "rate"]
+  - vi: "ban do"
+    en: ["map"]
+  - vi: "ghi log"
+    en: ["log", "logging"]
+  - vi: "khong arm duoc"
+    en: ["arming failure", "prearm check", "arm"]
+  - vi: "ban kinh"
+    en: ["radius"]
+  - vi: "hang rao"
+    en: ["fence", "geofence"]
+  - vi: "he so dong pin"
+    en: ["amps per volt", "battery current scale"]
+  - vi: "gia toc thang dung"
+    en: ["vertical acceleration", "accel z"]
+  - vi: "dòng pin"
+    en: ["battery current", "batt amps", "current pin"]
+  - vi: "dong pin"
+    en: ["battery current", "batt amps", "current pin"]
+  - vi: "hàm"
+    en: ["function", "method"]
+  - vi: "ham"
+    en: ["function", "method"]
+  - vi: "đường về nhà"
+    en: ["RTL", "return to launch", "home"]
+  - vi: "duong ve nha"
+    en: ["RTL", "return to launch", "home"]
+  - vi: "ghi lại"
+    en: ["record", "logged", "log"]
+  - vi: "ghi lai"
+    en: ["record", "logged", "log"]
