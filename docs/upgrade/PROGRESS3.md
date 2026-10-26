@@ -36,13 +36,13 @@ budget: search_docs p95 <= 400 ms, measured 232.3 ms      bench: PASS
 
 ## Tasks
 
-- [ ] A1 README status numbers + checker that catches a stale test count   owner: lead  commit:  evidence:
-- [ ] A2 UPGRADE_REPORT mutation count consistent                         owner: lead  commit:  evidence:
-- [ ] A3 mutant M15: kill with a test or flag equivalent                  owner: lead  commit:  evidence:
-- [ ] A4 E_INFO_02 cap investigation, decision recorded                   owner: lead  commit:  evidence:
-- [ ] A5 experiment index paragraph (docs)                                owner: lead  commit:  evidence:
-- [ ] A6 eval-v4 regression-guard note                                    owner: lead  commit:  evidence:
-- [ ] A-GATE pytest, check_readmes, check_traceability, fidelity, audit_safety  owner: lead  commit:  evidence:
+- [x] A1 README status numbers + checker that catches a stale test count   owner: lead  commit: 4d2f6c2  evidence: `readme check: PASS` (collected 192, accepted 191/192); planted `141` fails, `tests/test_check_readmes.py` 6 tests
+- [x] A2 UPGRADE_REPORT mutation count consistent                         owner: lead  commit: a9f1475  evidence: summary now quotes `mutants=18 killed=17 survived=1 errors=0 equivalent=1 score=0.944`
+- [x] A3 mutant M15: kill with a test or flag equivalent                  owner: lead  commit: 2fc598a  evidence: `mutants=18 killed=18 survived=0 errors=0 equivalent=1 score=1.000`; the new test fails when the `6.0` boost is zeroed
+- [x] A4 E_INFO_02 cap investigation, decision recorded                   owner: lead  commit: da1761e  evidence: payload has no `results` key, 10 274 B against a 24 576 B cap, no `truncated_by_guard`; decision in `DECISIONS.md`
+- [x] A5 experiment index paragraph (docs)                                owner: lead  commit: 6c8121a  evidence: `docs/upgrade/rung2.md` section "Experiment index"
+- [x] A6 eval-v4 regression-guard note                                    owner: lead  commit: d2f5b4a  evidence: note at the top of `docs/eval-v4.md`
+- [x] A-GATE pytest, check_readmes, check_traceability, fidelity, audit_safety  owner: lead  commit: <A-GATE>  evidence: 191 passed 1 skipped; readme PASS; requirements=22 failing=0; fidelity TOTAL 86262 0 PASS; audit_safety exit 0 for the six inputs (`gates/phase3_partA_*.txt`)
 - [ ] B0-tools make_eval_v5 + validator cross-set overlap + tests        owner: lead  commit:  evidence:
 - [ ] B0-w1 fragment param/hwdef/protocol                                owner: writer-1  commit:  evidence:
 - [ ] B0-w2 fragment code/wiki/elrs_edgetx                               owner: writer-2  commit:  evidence:
