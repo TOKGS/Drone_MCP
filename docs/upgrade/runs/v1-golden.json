@@ -1,0 +1,88 @@
+{
+  "set": "golden.yaml",
+  "sha256": "f903768dcbef61a4471e991123bba888e40aef3507714d62be0b3b1df728ef4c",
+  "sha_verified": false,
+  "k": 5,
+  "questions": 30,
+  "positives": 30,
+  "negatives": 0,
+  "overall": {
+    "questions": 30,
+    "positives": 30,
+    "negatives": 0,
+    "recall_at_k": 1.0,
+    "precision_at_1": 0.8,
+    "mrr": 0.8805555555555554,
+    "chunk_hit": null,
+    "negative_pass": null,
+    "hits": 30,
+    "precision_1_count": 24
+  },
+  "per_category": {
+    "-": {
+      "questions": 30,
+      "positives": 30,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 0.8,
+      "mrr": 0.8805555555555554,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 30,
+      "precision_1_count": 24
+    }
+  },
+  "per_lang": {
+    "en": {
+      "questions": 19,
+      "positives": 19,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 0.8421052631578947,
+      "mrr": 0.899122807017544,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 19,
+      "precision_1_count": 16
+    },
+    "vi": {
+      "questions": 11,
+      "positives": 11,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 0.7272727272727273,
+      "mrr": 0.8484848484848485,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 11,
+      "precision_1_count": 8
+    }
+  },
+  "per_script": {
+    "ascii-only": {
+      "questions": 19,
+      "positives": 19,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 0.8421052631578947,
+      "mrr": 0.899122807017544,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 19,
+      "precision_1_count": 16
+    },
+    "diacritics": {
+      "questions": 11,
+      "positives": 11,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 0.7272727272727273,
+      "mrr": 0.8484848484848485,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 11,
+      "precision_1_count": 8
+    }
+  },
+  "rows": null
+}

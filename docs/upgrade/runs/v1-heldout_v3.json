@@ -1,0 +1,88 @@
+{
+  "set": "heldout_v3.yaml",
+  "sha256": "d92c70177b38745e2d3b0835b5dccdb4903d80e17a31892aa09e25cb59808960",
+  "sha_verified": true,
+  "k": 5,
+  "questions": 30,
+  "positives": 30,
+  "negatives": 0,
+  "overall": {
+    "questions": 30,
+    "positives": 30,
+    "negatives": 0,
+    "recall_at_k": 0.9333333333333333,
+    "precision_at_1": 0.8333333333333334,
+    "mrr": 0.8677777777777778,
+    "chunk_hit": null,
+    "negative_pass": null,
+    "hits": 28,
+    "precision_1_count": 25
+  },
+  "per_category": {
+    "-": {
+      "questions": 30,
+      "positives": 30,
+      "negatives": 0,
+      "recall_at_k": 0.9333333333333333,
+      "precision_at_1": 0.8333333333333334,
+      "mrr": 0.8677777777777778,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 28,
+      "precision_1_count": 25
+    }
+  },
+  "per_lang": {
+    "en": {
+      "questions": 15,
+      "positives": 15,
+      "negatives": 0,
+      "recall_at_k": 0.8666666666666667,
+      "precision_at_1": 0.8,
+      "mrr": 0.8222222222222223,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 13,
+      "precision_1_count": 12
+    },
+    "vi": {
+      "questions": 15,
+      "positives": 15,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 0.8666666666666667,
+      "mrr": 0.9133333333333333,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 15,
+      "precision_1_count": 13
+    }
+  },
+  "per_script": {
+    "ascii-only": {
+      "questions": 15,
+      "positives": 15,
+      "negatives": 0,
+      "recall_at_k": 0.8666666666666667,
+      "precision_at_1": 0.8,
+      "mrr": 0.8222222222222223,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 13,
+      "precision_1_count": 12
+    },
+    "diacritics": {
+      "questions": 15,
+      "positives": 15,
+      "negatives": 0,
+      "recall_at_k": 1.0,
+      "precision_at_1": 0.8666666666666667,
+      "mrr": 0.9133333333333333,
+      "chunk_hit": null,
+      "negative_pass": null,
+      "hits": 15,
+      "precision_1_count": 13
+    }
+  },
+  "rows": null
+}

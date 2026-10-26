@@ -9,7 +9,7 @@ from pathlib import Path
 
 import yaml
 
-from . import cite, config, dense, textsanitize
+from . import cite, config, dense, textsanitize, vi
 
 IDENTIFIER = re.compile(r"^[A-Z][A-Z0-9_]{2,}$")
 WORD = re.compile(r"[A-Za-z][A-Za-z0-9_]*")
@@ -77,6 +77,11 @@ STOPWORDS = {
     "here", "some", "any", "all", "so", "but", "just", "very", "much", "more", "most",
     "la", "là", "có", "cần", "khi", "thì", "và", "của", "cho", "một", "các", "những",
 }
+# Vietnamese function words typed without diacritics ("bao nhieu", "vay", "nhu") are ASCII, so they
+# are not in the English stopword list above. They are NOT added to it: adding them raised the
+# anchor gate's support ratio and let out-of-scope questions through (v5 dev negative-pass 0.500 ->
+# 0.333, eval_v4_neg_vi 0.750 -> 0.583); the kept V1 change is the normaliser and the folded
+# glossary match instead. See docs/upgrade/rungs3.md, V1.
 
 
 @lru_cache(maxsize=4)
@@ -126,16 +131,24 @@ def expand_query(query: str, glossary: dict[str, list[str]] | None = None) -> tu
     r"""Return (expanded query, applied expansions). Vietnamese phrases become English terms.
 
     Matching is per whole `\w+` token, never a word fragment: the key "bit" must not fire inside
-    "bitcoin", while a multi-word key fires on a run of consecutive tokens ("mặt nạ bit").
+    "bitcoin", while a multi-word key fires on a run of consecutive tokens ("mặt nạ bit"). A
+    multi-word key is also matched with diacritics folded, so "khong arm duoc" fires the key
+    "không arm được"; single-word keys keep the exact match, because folding one of them
+    ("pin", "bit") to ASCII would also fire on an English word.
     """
     glossary = load_glossary() if glossary is None else glossary
     words = _word_tokens(query)
+    folded = [vi.fold(token) for token in words]
     expanded = query
     applied: list[str] = []
-    for vi, english in glossary.items():
-        if _contains_phrase(words, _word_tokens(vi)):
-            expanded += " " + " ".join(english)
-            applied.append(f"{vi} -> {'/'.join(english)}")
+    for key, english in glossary.items():
+        key_tokens = _word_tokens(key)
+        if not _contains_phrase(words, key_tokens):
+            if len(key_tokens) < 2 or not _contains_phrase(
+                    folded, [vi.fold(token) for token in key_tokens]):
+                continue
+        expanded += " " + " ".join(english)
+        applied.append(f"{key} -> {'/'.join(english)}")
     return expanded, applied
 
 
@@ -215,6 +228,18 @@ def _version_labels(con: sqlite3.Connection) -> list[str]:
     return [row[0] for row in rows if row[0]]
 
 
+def named_out_of_scope_product(query: str) -> str | None:
+    """The product the query is about, matched on the exact spelling of its name.
+
+    Case matters on purpose: "inav alt" is an ArduPilot PreArm parameter, "iNav" is another flight
+    stack, so a case-insensitive match would refuse a real ArduPilot question.
+    """
+    for name in load_scope()["out_of_scope_names"]:
+        if re.search(rf"(?<!\w){re.escape(name)}(?!\w)", query):
+            return name
+    return None
+
+
 def _document_frequency(con: sqlite3.Connection, token: str,
                         cap: int = ANCHOR_MIN_DOCS) -> int:
     """Number of documents containing the token, capped at `cap` so FTS can stop early."""
@@ -280,7 +305,9 @@ def _dense_reranked_scores(merged: dict[str, tuple[sqlite3.Row, float]],
 
 def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
            version: str | None = None, tier_max: str = "T1", limit: int = 8) -> dict:
-    expanded, applied = expand_query(query)
+    # Chat spellings are rewritten for matching only; the payload keeps what the user typed.
+    match_query = vi.normalise(query)
+    expanded, applied = expand_query(match_query)
     tokens = _tokens(expanded)
     if not tokens:
         return {"found": False, "query": query, "results": [], "candidates": [],
@@ -293,6 +320,17 @@ def search(con: sqlite3.Connection, query: str, *, scope: str = "all",
         return {"found": False, "query": query, "results": [], "candidates": [],
                 "note": f"scope {scope!r} has no indexed source yet"}
     max_tier = TIER_ORDER.get(tier_max, 0)
+
+    if scope != "local" and (named := named_out_of_scope_product(query)):
+        # The query is about a product the pinned corpus does not document. Nearby ArduPilot text is
+        # not an answer ("Betaflight GPS rescue" must not return AP_GPS), so refuse instead of
+        # returning a plausible-looking list. The note is the same data-driven one the scope notes
+        # use; this only decides found:false instead of degrees of "nearby".
+        return {"found": False, "query": query, "results": [], "candidates": [],
+                "scope_notes": scope_notes(query, [], labels=_version_labels(con),
+                                           applied=applied),
+                "confidence": "low",
+                "note": f"câu hỏi về {named}, sản phẩm ngoài kho đã ghim; không có kết quả thay thế"}
 
     if scope != "local":  # the local overlay is deliberately small, it needs no corpus vocabulary
         weight, support = _corpus_anchor(con, query, applied)

@@ -1,0 +1,88 @@
+{
+  "set": "eval_v4_neg_vi.yaml",
+  "sha256": "154874694bd5e6f0d7e060d6219516f56bcb25dcae439e223af2e80e625ba420",
+  "sha_verified": true,
+  "k": 5,
+  "questions": 12,
+  "positives": 0,
+  "negatives": 12,
+  "overall": {
+    "questions": 12,
+    "positives": 0,
+    "negatives": 12,
+    "recall_at_k": null,
+    "precision_at_1": null,
+    "mrr": null,
+    "chunk_hit": null,
+    "negative_pass": 0.75,
+    "hits": 0,
+    "precision_1_count": 0
+  },
+  "per_category": {
+    "negative": {
+      "questions": 12,
+      "positives": 0,
+      "negatives": 12,
+      "recall_at_k": null,
+      "precision_at_1": null,
+      "mrr": null,
+      "chunk_hit": null,
+      "negative_pass": 0.75,
+      "hits": 0,
+      "precision_1_count": 0
+    }
+  },
+  "per_lang": {
+    "mixed": {
+      "questions": 2,
+      "positives": 0,
+      "negatives": 2,
+      "recall_at_k": null,
+      "precision_at_1": null,
+      "mrr": null,
+      "chunk_hit": null,
+      "negative_pass": 0.5,
+      "hits": 0,
+      "precision_1_count": 0
+    },
+    "vi": {
+      "questions": 10,
+      "positives": 0,
+      "negatives": 10,
+      "recall_at_k": null,
+      "precision_at_1": null,
+      "mrr": null,
+      "chunk_hit": null,
+      "negative_pass": 0.8,
+      "hits": 0,
+      "precision_1_count": 0
+    }
+  },
+  "per_script": {
+    "ascii-only": {
+      "questions": 7,
+      "positives": 0,
+      "negatives": 7,
+      "recall_at_k": null,
+      "precision_at_1": null,
+      "mrr": null,
+      "chunk_hit": null,
+      "negative_pass": 1.0,
+      "hits": 0,
+      "precision_1_count": 0
+    },
+    "diacritics": {
+      "questions": 5,
+      "positives": 0,
+      "negatives": 5,
+      "recall_at_k": null,
+      "precision_at_1": null,
+      "mrr": null,
+      "chunk_hit": null,
+      "negative_pass": 0.4,
+      "hits": 0,
+      "precision_1_count": 0
+    }
+  },
+  "rows": null
+}

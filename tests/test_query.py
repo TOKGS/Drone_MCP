@@ -83,6 +83,15 @@ def test_identifier_in_the_source_text_outranks_a_path_match():
         con.close()
 
 
+def test_chat_spelling_is_normalised_for_matching_but_not_for_display():
+    con = db.connect()
+    try:
+        payload = query.search(con, "pin ko sac dc", limit=3)
+        assert payload["query"] == "pin ko sac dc"
+    finally:
+        con.close()
+
+
 def test_vietnamese_query_is_expanded() -> None:
     con = db.connect()
     try:
@@ -167,6 +176,14 @@ def test_foreign_product_names_get_a_scope_note(con) -> None:
         joined = " ".join(payload.get("scope_notes") or [])
         assert f"không có {name}" in joined, (text, payload.get("scope_notes"))
         assert payload["confidence"] == "low", text
+        assert payload["found"] is False, text
+        assert payload["results"] == [], text
+
+
+def test_a_lowercase_parameter_name_is_not_a_product_name(con) -> None:
+    """`inav alt` is an ArduPilot PreArm parameter; only the exact spelling "iNav" is the product."""
+    payload = query.search(con, "PreArm check baro và inav alt", limit=3)
+    assert payload["found"] is True
 
 
 def test_unknown_version_is_flagged_with_the_pinned_labels(con) -> None:
