@@ -276,6 +276,13 @@ python -m research.eval_retrieval --set tests/eval_v4_heldout.yaml --aggregate-o
 python -m research.eval_retrieval --set tests/eval_v4_neg_vi.yaml --aggregate-only --no-floor
 python scripts\bench.py; python scripts\mutation_check.py
 python scripts\blackbox_run.py --out docs\upgrade\blackbox_after3
+# mention set on the master baseline (the audited V1 number is measured by removing the
+# `and not mentions_in_scope_name(query)` condition again, as `docs/upgrade/runs/mention-audited-v1.txt`
+# records):
+git worktree add ..\wt\phase3-master master
+cd ..\wt\phase3-master; $env:ARM_DATA_DIR="D:\Skill_tulan\ardupilot-research-mcp\data"
+python -m research.eval_retrieval --set D:\Skill_tulan\ardupilot-research-mcp\tests\eval_v5_mention.yaml `
+    --verify-sha D:\Skill_tulan\ardupilot-research-mcp\docs\eval-v5-mention.sha256 --aggregate-only --no-floor
 # optional semantic paths (model + experiment index, see docs/upgrade/rung2.md):
 #   python -m research.build_doc_vectors --index data\exp\index.sqlite
 #   $env:ARM_DATA_DIR="...\data\exp"; $env:ARM_MODEL_DIR="...\data\models\multilingual-e5-small"
