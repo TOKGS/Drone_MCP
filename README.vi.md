@@ -198,6 +198,15 @@ Index hiện có 7 nguồn, 7 356 document và 86 262 chunk trong 182,3 MB. `lis
 từng nguồn. License đọc từ file license của từng archive (`docs/license-notes.md`). Corpus không
 bao giờ được commit: `data/` và `research/cache/` nằm trong gitignore.
 
+## Bản ArduPilot 4.6
+
+Drone còn chạy firmware 4.6 nhận khai báo sai từ pin 4.7: `ARMING_CHECK` trả `found:false` vì 4.7
+đổi tên thành `ARMING_SKIPCHK`, và `ATC_ACCEL_*` thành `ATC_ACC_*`. `sources-4.6.yaml` ghim
+`Copter-4.6.2` và dựng vào `data/4.6` (index 169,0 MB, 79 558 chunk, 4 356 tham số,
+`verify: PASS`, recall@5 trên heldout_v3 là 0,933). Chọn bằng `ARM_SOURCES` và `ARM_DATA_DIR`;
+`.mcp.json.example` có entry server thứ hai. Cách dựng, thời gian đo được và phần chưa kiểm chứng:
+[docs/variant-4.6.md](docs/variant-4.6.md).
+
 ## Tham số
 
 `lookup_param` trả lời từ metadata `@Param`, `@Bitmask` và `@Default` trong source ghim.

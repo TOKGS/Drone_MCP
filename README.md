@@ -205,6 +205,16 @@ per-source counts. Licenses were read from each archive's own license file
 (`docs/license-notes.md`). The corpus is never committed: `data/` and `research/cache/` are
 gitignored.
 
+## The ArduPilot 4.6 variant
+
+A drone on 4.6 firmware gets wrong declarations from the 4.7 pin: `ARMING_CHECK` is
+`found:false` there because 4.7 renamed it to `ARMING_SKIPCHK`, and `ATC_ACCEL_*` became
+`ATC_ACC_*`. `sources-4.6.yaml` pins `Copter-4.6.2` instead and builds into `data/4.6`
+(169.0 MB index, 79 558 chunks, 4 356 parameters, `verify: PASS`, heldout_v3 recall@5 0.933).
+Select it with `ARM_SOURCES` and `ARM_DATA_DIR`; `.mcp.json.example` carries the second server
+entry. Build steps, measured timings and what is not verified for this variant:
+[docs/variant-4.6.md](docs/variant-4.6.md).
+
 ## Parameters
 
 `lookup_param` answers from the `@Param`, `@Bitmask` and `@Default` metadata in the pinned source.

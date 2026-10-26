@@ -14,6 +14,7 @@ import argparse
 import fnmatch
 import hashlib
 import json
+import os
 import sys
 import tarfile
 import time
@@ -22,7 +23,8 @@ from pathlib import Path
 import yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SOURCES = REPO_ROOT / "sources.yaml"
+SOURCES = Path(os.environ["ARM_SOURCES"]) if os.environ.get("ARM_SOURCES") \
+    else REPO_ROOT / "sources.yaml"
 
 
 def load_sources() -> dict:
@@ -139,11 +141,13 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--only", default=None)
     parser.add_argument("--force", action="store_true")
+    parser.add_argument("--cache", default=None,
+                        help="tarball directory (a variant pin set keeps its own, default research/cache/repos)")
     args = parser.parse_args(argv)
 
     conf = load_sources()
     meta = download_meta()
-    cache = REPO_ROOT / "research" / "cache" / "repos"
+    cache = Path(args.cache) if args.cache else REPO_ROOT / "research" / "cache" / "repos"
     total_files = total_bytes = 0
     for source in conf["sources"]:
         if args.only and args.only != source["id"]:

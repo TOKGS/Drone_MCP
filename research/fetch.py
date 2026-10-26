@@ -213,16 +213,26 @@ def main(argv: list[str]) -> int:
         print(f"\nwritten {path}")
         return 0
     if command == "download":
-        data = json.loads((gov.home() / "tags.json").read_text(encoding="utf-8"))
-        only = argv[1] if len(argv) > 1 else None
+        rest = list(argv[1:])
+        tags_path = gov.home() / "tags.json"
+        if "--tags" in rest:
+            at = rest.index("--tags")
+            tags_path = Path(rest[at + 1]).resolve()
+            del rest[at:at + 2]
+        data = json.loads(tags_path.read_text(encoding="utf-8"))
+        only = rest[0] if rest else None
         results: dict[str, dict] = {}
-        meta_path = gov.home() / "downloads.json"
+        # `tags.json` keeps the default locations; any other tags file (a variant pin set)
+        # gets its own downloads file and tarball directory, so two pins never share an archive.
+        variant = tags_path.name != "tags.json"
+        meta_path = tags_path.with_name(tags_path.name.replace("tags", "downloads"))
+        cache = gov.home() / "cache" / (tags_path.stem.replace("tags", "repos") if variant else "repos")
         if meta_path.exists():
             results = json.loads(meta_path.read_text(encoding="utf-8"))
         for name, info in data["sources"].items():
             if "tarball" not in info or (only and only != name):
                 continue
-            dest = gov.home() / "cache" / "repos" / f"{name}.tar.gz"
+            dest = cache / f"{name}.tar.gz"
             try:
                 meta = download("codeload", "tarball", info["tarball"], dest)
             except Exception as exc:  # noqa: BLE001 - keep going, report at the end

@@ -32,7 +32,9 @@ def local_root() -> Path:
 
 
 def sources_path() -> Path:
-    return repo_root() / "sources.yaml"
+    """`ARM_SOURCES` selects a variant pin set (e.g. sources-4.6.yaml); default is sources.yaml."""
+    override = os.environ.get("ARM_SOURCES")
+    return Path(override) if override else repo_root() / "sources.yaml"
 
 
 def glossary_path() -> Path:

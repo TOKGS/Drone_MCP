@@ -12,6 +12,20 @@
         "ARM_DATA_DIR": "D:\\path\\to\\ardupilot-research-mcp\\data",
         "ARM_REPO_ROOT": "D:\\path\\to\\ardupilot-research-mcp"
       }
+    },
+    "ardupilot-research-4.6": {
+      "type": "stdio",
+      "command": "C:\\Users\\<YOU>\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "args": [
+        "-m",
+        "ardupilot_research_mcp.server"
+      ],
+      "env": {
+        "PYTHONPATH": "D:\\path\\to\\ardupilot-research-mcp\\src",
+        "ARM_DATA_DIR": "D:\\path\\to\\ardupilot-research-mcp\\data\\4.6",
+        "ARM_REPO_ROOT": "D:\\path\\to\\ardupilot-research-mcp",
+        "ARM_SOURCES": "D:\\path\\to\\ardupilot-research-mcp\\sources-4.6.yaml"
+      }
     }
   }
 }
