@@ -99,8 +99,8 @@ wheel workaround (or one approved install outside the sandbox).
 
 - [x] P1-A evaluator upgrade          owner: lead  commit: (this commit)  evidence: golden 1.000/0.767/0.859, v3 0.933/0.833/0.868, v3 sha256 verified, 10 new tests
 - [ ] P1-B question writers           owner:      commit:      evidence:
-- [ ] P1-C validation script          owner:      commit:      evidence:
-- [ ] P1-D merge and split            owner:      commit:      evidence:
+- [x] P1-C validation script          owner: lead  commit: (this commit)  evidence: selftest fragment -> 6 expected error codes, 7 tests
+- [ ] P1-D merge and split            owner: lead  script ready (research/make_eval_v4.py, 3 tests); split pending the writer fragments
 - [ ] P1-E freeze                      owner:      commit:      evidence:
 - [ ] P1-F baseline v4                owner:      commit:      evidence:
 - [ ] Rung 0 baseline                 owner:      commit:      evidence: docs/upgrade/baseline/
