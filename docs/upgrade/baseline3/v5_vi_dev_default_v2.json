@@ -1,0 +1,172 @@
+{
+  "set": "eval_v5_vi_dev.yaml",
+  "sha256": "0df27ec4b45aa208b5618ba22d69955301d47979504b9ad6caeb3902e55cdf3d",
+  "sha_verified": true,
+  "k": 5,
+  "questions": 49,
+  "positives": 43,
+  "negatives": 6,
+  "overall": {
+    "questions": 49,
+    "positives": 43,
+    "negatives": 6,
+    "recall_at_k": 0.4883720930232558,
+    "precision_at_1": 0.2558139534883721,
+    "mrr": 0.3542635658914728,
+    "chunk_hit": 0.3023255813953488,
+    "negative_pass": 0.5,
+    "hits": 21,
+    "precision_1_count": 11
+  },
+  "per_category": {
+    "code": {
+      "questions": 9,
+      "positives": 9,
+      "negatives": 0,
+      "recall_at_k": 0.4444444444444444,
+      "precision_at_1": 0.2222222222222222,
+      "mrr": 0.3333333333333333,
+      "chunk_hit": 0.1111111111111111,
+      "negative_pass": null,
+      "hits": 4,
+      "precision_1_count": 2
+    },
+    "elrs_edgetx": {
+      "questions": 4,
+      "positives": 4,
+      "negatives": 0,
+      "recall_at_k": 0.75,
+      "precision_at_1": 0.75,
+      "mrr": 0.75,
+      "chunk_hit": 0.75,
+      "negative_pass": null,
+      "hits": 3,
+      "precision_1_count": 3
+    },
+    "hwdef": {
+      "questions": 4,
+      "positives": 4,
+      "negatives": 0,
+      "recall_at_k": 0.75,
+      "precision_at_1": 0.0,
+      "mrr": 0.3333333333333333,
+      "chunk_hit": 0.5,
+      "negative_pass": null,
+      "hits": 3,
+      "precision_1_count": 0
+    },
+    "negative": {
+      "questions": 6,
+      "positives": 0,
+      "negatives": 6,
+      "recall_at_k": null,
+      "precision_at_1": null,
+      "mrr": null,
+      "chunk_hit": null,
+      "negative_pass": 0.5,
+      "hits": 0,
+      "precision_1_count": 0
+    },
+    "param": {
+      "questions": 8,
+      "positives": 8,
+      "negatives": 0,
+      "recall_at_k": 0.5,
+      "precision_at_1": 0.5,
+      "mrr": 0.5,
+      "chunk_hit": 0.125,
+      "negative_pass": null,
+      "hits": 4,
+      "precision_1_count": 4
+    },
+    "protocol": {
+      "questions": 6,
+      "positives": 6,
+      "negatives": 0,
+      "recall_at_k": 0.3333333333333333,
+      "precision_at_1": 0.16666666666666666,
+      "mrr": 0.25,
+      "chunk_hit": 0.3333333333333333,
+      "negative_pass": null,
+      "hits": 2,
+      "precision_1_count": 1
+    },
+    "troubleshoot": {
+      "questions": 4,
+      "positives": 4,
+      "negatives": 0,
+      "recall_at_k": 0.75,
+      "precision_at_1": 0.25,
+      "mrr": 0.425,
+      "chunk_hit": 0.75,
+      "negative_pass": null,
+      "hits": 3,
+      "precision_1_count": 1
+    },
+    "wiki": {
+      "questions": 8,
+      "positives": 8,
+      "negatives": 0,
+      "recall_at_k": 0.25,
+      "precision_at_1": 0.0,
+      "mrr": 0.0875,
+      "chunk_hit": 0.125,
+      "negative_pass": null,
+      "hits": 2,
+      "precision_1_count": 0
+    }
+  },
+  "per_lang": {
+    "mixed": {
+      "questions": 36,
+      "positives": 36,
+      "negatives": 0,
+      "recall_at_k": 0.5,
+      "precision_at_1": 0.2777777777777778,
+      "mrr": 0.3759259259259259,
+      "chunk_hit": 0.2777777777777778,
+      "negative_pass": null,
+      "hits": 18,
+      "precision_1_count": 10
+    },
+    "vi": {
+      "questions": 13,
+      "positives": 7,
+      "negatives": 6,
+      "recall_at_k": 0.42857142857142855,
+      "precision_at_1": 0.14285714285714285,
+      "mrr": 0.24285714285714285,
+      "chunk_hit": 0.42857142857142855,
+      "negative_pass": 0.5,
+      "hits": 3,
+      "precision_1_count": 1
+    }
+  },
+  "per_script": {
+    "ascii-only": {
+      "questions": 28,
+      "positives": 24,
+      "negatives": 4,
+      "recall_at_k": 0.4166666666666667,
+      "precision_at_1": 0.125,
+      "mrr": 0.24583333333333335,
+      "chunk_hit": 0.20833333333333334,
+      "negative_pass": 0.75,
+      "hits": 10,
+      "precision_1_count": 3
+    },
+    "diacritics": {
+      "questions": 21,
+      "positives": 19,
+      "negatives": 2,
+      "recall_at_k": 0.5789473684210527,
+      "precision_at_1": 0.42105263157894735,
+      "mrr": 0.4912280701754385,
+      "chunk_hit": 0.42105263157894735,
+      "negative_pass": 0.0,
+      "hits": 11,
+      "precision_1_count": 8
+    }
+  },
+  "rows": null
+}

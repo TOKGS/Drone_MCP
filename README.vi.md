@@ -13,7 +13,7 @@ nguyên văn, hoặc nói `found:false`.
 
 ```
 python -m ardupilot_research_mcp.server     # MCP stdio, 14 tool
-python -m pytest -q                         # 198 passed
+python -m pytest -q                         # 200 passed
 ```
 
 Repo: `github.com/TOKGS/Drone_MCP`. Package `ardupilot-research-mcp` v0.1.0, Python 3.10 trở lên.
@@ -448,7 +448,7 @@ Rồi hỏi: *"tra RC_OPTIONS và cho biết bit nào bật ELRS 420kbaud"*. Câ
 ## Test và cổng kiểm
 
 ```powershell
-python -m pytest -q                                     # 198 passed
+python -m pytest -q                                     # 200 passed
 python scripts\check_traceability.py                    # yêu cầu, test, kết quả, failing=0
 python scripts\fidelity_scan.py                         # 86 262 chunk, 0 mismatch, PASS
 python scripts\check_param_citations.py                 # 5 089 tham số, 0 vi phạm
@@ -465,7 +465,7 @@ python scripts\mutation_check.py                        # điểm mutation
 
 | Cổng | Kết quả |
 |---|---|
-| `pytest -q` | 198 passed, 1 skipped |
+| `pytest -q` | 200 passed, 1 skipped |
 | `fidelity_scan.py` | 86 262 chunk, 0 mismatch, PASS |
 | `check_param_citations.py` | 5 089 kiểm, 0 vi phạm |
 | `check_traceability.py` | 22 yêu cầu, failing=0 |
@@ -486,7 +486,7 @@ nên không test nào phân biệt được nó với bản gốc.
 `tests/conftest.py` reset guard tốc độ giữa các test. Guard sản phẩm vẫn giữ 60 lần gọi mỗi phút.
 
 Cả `data/index.sqlite` và `data/corpus` đều nằm trong gitignore, nên clone mới tự thích nghi thay vì
-fail: module nào cần index hoặc corpus thì tự skip. Có đủ cả hai thì bộ test chạy 198 passed và 1
+fail: module nào cần index hoặc corpus thì tự skip. Có đủ cả hai thì bộ test chạy 200 passed và 1
 skipped; test bị skip là test thoát khỏi thư mục bằng symlink trên tài khoản Windows này.
 
 ## Chất lượng đo được
@@ -657,7 +657,7 @@ Binary, ảnh, font, archive, file `.hex` và `.apj` không vào corpus, và `LI
 
 v0.1.0, lượt hoàn chỉnh đầu tiên, 2026-10-25.
 
-- 14 tool qua stdio, chỉ đọc và offline, 198 test, 86 262 chunk không lệch fidelity.
+- 14 tool qua stdio, chỉ đọc và offline, 200 test, 86 262 chunk không lệch fidelity.
 - Bảng tham số dựng lại từ metadata ghim: 230 thành 5 089 tham số, vi phạm citation 3 891 thành 0,
   default 0 thành 4 703 raw với 3 003 quy được.
 - Cổng an toàn viết lại thành dữ liệu với khớp song ngữ đã chuẩn hoá dấu: false negative từ 3 trên 11

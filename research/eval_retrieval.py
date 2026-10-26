@@ -19,6 +19,11 @@ Additive fields a set may use (all optional, old sets keep working):
   expect_none     the question is deliberately out of scope; it passes when the payload is
                   `found:false` or has no results, and it is excluded from recall / P@1 / MRR
 
+Every run also splits the aggregate by whether the question text itself carries Vietnamese
+diacritics (`script: ascii-only | diacritics`, computed from `q`, not from a declared field) and by
+`lang` (`vi | mixed | en`). Both tables report the sample size `n`, because a group with a handful
+of questions moves in large steps.
+
 A set whose SHA-256 is recorded in a `docs/*.sha256` file (the sha256sum layout, repo-relative
 path) is verified before any question runs; `--verify-sha` forces a specific file. A mismatch exits
 non-zero and prints no question text.
@@ -30,6 +35,7 @@ import argparse
 import hashlib
 import json
 import sys
+import unicodedata
 from pathlib import Path
 
 import yaml
@@ -44,6 +50,19 @@ CATEGORIES = ("param", "code", "protocol", "hwdef", "wiki", "elrs_edgetx", "trou
 LANGS = ("vi", "en", "mixed")
 MIN_SNIPPET = 12
 RECALL_FLOOR = 0.8
+SCRIPT_ASCII = "ascii-only"
+SCRIPT_DIACRITICS = "diacritics"
+
+
+def has_diacritics(text: str) -> bool:
+    """True when the text carries a Vietnamese mark (including the letter d with a stroke)."""
+    decomposed = unicodedata.normalize("NFD", text or "")
+    return any(unicodedata.combining(ch) for ch in decomposed) or any(ch in "đĐ" for ch in text)
+
+
+def question_script(question: dict) -> str:
+    """`ascii-only` or `diacritics`, read from the question text, not from a declared flag."""
+    return SCRIPT_DIACRITICS if has_diacritics(str(question.get("q") or "")) else SCRIPT_ASCII
 
 
 class HashMismatch(RuntimeError):
@@ -134,6 +153,7 @@ def score_question(question: dict, results: list[dict], k: int) -> dict:
     record = {
         "id": question.get("id"),
         "lang": question.get("lang", "en"),
+        "script": question_script(question),
         "category": question.get("category"),
         "scope": question.get("scope", "all"),
         "has_snippet": snippet is not None,
@@ -192,7 +212,7 @@ def _summarise(records: list[dict]) -> dict:
 
 
 def aggregate(records: list[dict]) -> dict:
-    """Overall plus one row per category and per language."""
+    """Overall plus one row per category, per language and per question script."""
     def group(key: str) -> dict[str, dict]:
         buckets: dict[str, list[dict]] = {}
         for record in records:
@@ -201,7 +221,7 @@ def aggregate(records: list[dict]) -> dict:
         return {name: _summarise(rows) for name, rows in sorted(buckets.items())}
 
     return {"overall": _summarise(records), "per_category": group("category"),
-            "per_lang": group("lang")}
+            "per_lang": group("lang"), "per_script": group("script")}
 
 
 # ------------------------------------------------------------------ printing
@@ -225,8 +245,8 @@ def payload_json(set_path: Path, sha: dict, k: int, records: list[dict],
                  summary: dict, aggregate_only: bool) -> dict:
     rows = []
     for record in records:
-        row = {key: record[key] for key in ("id", "lang", "category", "scope", "rank", "hit",
-                                            "chunk_hit", "negative", "negative_pass",
+        row = {key: record[key] for key in ("id", "lang", "script", "category", "scope", "rank",
+                                            "hit", "chunk_hit", "negative", "negative_pass",
                                             "top_path")}
         rows.append(row)
     return {
@@ -240,6 +260,7 @@ def payload_json(set_path: Path, sha: dict, k: int, records: list[dict],
         "overall": summary["overall"],
         "per_category": summary["per_category"],
         "per_lang": summary["per_lang"],
+        "per_script": summary["per_script"],
         "rows": rows if not aggregate_only else None,
     }
 
@@ -342,6 +363,7 @@ def main(argv: list[str] | None = None) -> int:
         print_table("per category", summary["per_category"])
     if len(summary["per_lang"]) > 1 or "-" not in summary["per_lang"]:
         print_table("per language", summary["per_lang"])
+    print_table("per script (read from the question text)", summary["per_script"])
 
     if args.verbose and not args.aggregate_only:
         print()

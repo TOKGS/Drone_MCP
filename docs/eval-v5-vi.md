@@ -88,6 +88,23 @@ Per language, default build:
 | `mixed` | 36 | 0.500 / 0.278 / 0.376 | 54 | 0.593 / 0.389 / 0.451 |
 | `vi` | 13 | 0.429 / 0.143 / 0.243 | 17 | 0.500 / 0.375 / 0.417 |
 
+Per script, default build. `research/eval_retrieval.py` derives this group from the **question text**
+(NFD combining marks, plus the letter d with a stroke), not from a declared field, and it never
+changes the scoring: it is one more table in the printout and one more key in `--json`. The numbers
+were added after the B0 baselines above were captured, so they are shown here for dev only; every
+run from V1 on prints them.
+
+| script | dev n | dev (recall / P@1 / MRR / chunk-hit) | negative-pass |
+|---|---|---|---|
+| `ascii-only` (no Vietnamese diacritics in the question) | 28 | 0.417 / 0.125 / 0.246 / 0.208 | 0.750 |
+| `diacritics` | 21 | 0.579 / 0.421 / 0.491 / 0.421 | 0.000 |
+
+The same split on `tests/eval_v4_dev.yaml` (tunable) is `ascii-only` n=34 0.867 / 0.567 / 0.687
+against `diacritics` n=19 0.778 / 0.500 / 0.578. Read the two together: v4 dev is mostly English, so
+its `ascii-only` group is easy text, while in v5 every question is Vietnamese and `ascii-only` means
+"typed without diacritics", which is the hard half (recall@5 0.417 against 0.579). The split is
+therefore about the keyboard, not about the language; `lang` remains the language axis.
+
 ## Baseline (opt-in dense rerank, `ARM_DENSE=1` on `data/exp/index.sqlite`)
 
 `ARM_DATA_DIR=data\exp`, `ARM_MODEL_DIR=data\models\multilingual-e5-small`, one run per split, raw
@@ -129,6 +146,11 @@ starting point for the Phase 3 ladder.
 
 - Written by three agents in one session, then merged by one human-driven script; there is no
   second independent author review of the questions beyond the validator's structural checks.
+- **5 of the 120 questions were rewritten by the lead** after the cross-set overlap check rejected
+  them against a v4 question. The ids are `V5-W1-024`, `V5-W2-038`, `V5-W2-049`, `V5-W3-016`,
+  `V5-W3-017`; the rewrite changed the topic or the wording (and, for two of them, the
+  `expect`/`answer_snippet`), and every rewrite was re-validated. This is one more author for 4 % of
+  the set, and it is reported so the audit can weigh it.
 - Retrieval quality of the ground truth was not checked against a human expert: a passage that
   contains the snippet is treated as the answer, and 1-3 files are allowed per question.
 - The no-diacritics share (55.8 %) and the chat-style share were counted from the `diacritics` flag
