@@ -117,16 +117,16 @@ wheel workaround (or one approved install outside the sandbox).
 ```
 set=eval_v4_heldout.yaml questions=72 k=5
 sha256: verified against eval-v4-heldout.sha256 (cf9d203505875472...)
-recall@5 = 44/65 = 0.677
+recall@5 = 45/65 = 0.692
 precision@1 = 24/65 = 0.369
-MRR = 0.485
+MRR = 0.493
 chunk-hit@5 = 0.369
 negative-pass = 0.571
 ```
 
 Dev half (`baseline/dev.txt`, tunable): recall@5 0.583, P@1 0.375, MRR 0.452, chunk-hit@5 0.312,
 negative-pass 0.200. Per-category and per-language tables are in `docs/eval-v4.md`. The gap that
-matters: held-out recall@5 is 0.452 for Vietnamese (n=33) against 0.875 for English (n=37).
+matters: held-out recall@5 is 0.452 for Vietnamese (n=33) against 0.906 for English (n=37).
 
 Phase 1 exit criteria, each with the command that shows it:
 
@@ -138,6 +138,22 @@ Phase 1 exit criteria, each with the command that shows it:
   temporary file, never by editing the real set).
 - baseline JSONs in `docs/upgrade/baseline/`, `docs/eval-v4.md` written.
 - `pytest` green, `check_readmes.py` green, `check_traceability.py` green (see the commit).
+
+## Audit Phase 1 rework (2026-10-26, after the owner's audit)
+
+- `PROGRESS.md` was 0 bytes at 84bee96: the BOM strip opened the file for writing before reading it.
+  Restored from 7d6a4c3 with the freeze hash recorded and the byte count checked (8687 bytes,
+  commit 5bbe588).
+- `validate_eval_set.py` matched `expect.path` with SQL `LIKE`, which folds ASCII case, while the
+  evaluator matches case-sensitively. It now uses `instr()` and a test rejects a case-only mismatch.
+  That bug hid one wrong path in the frozen held-out set: V4-B2-024 expected
+  `common-GPS-for-yaw.rst`, the corpus has `common-gps-for-yaw.rst`. Only that path line changed, the
+  digest was re-frozen (`cf9d2035...` to `5500cf0f...`), errata are in `docs/eval-v4.md`, and the
+  baseline was re-run: held-out recall@5 0.677 to 0.692, MRR 0.485 to 0.493.
+- New `tests/eval_v4_neg_vi.yaml`: 12 Vietnamese and mixed out-of-scope questions, frozen by
+  `docs/eval-v4-neg-vi.sha256` (`15487469...`), writer independent of the retriever. Baseline
+  negative-pass 0.750 (vi 0.800, mixed 0.500), raw in `docs/upgrade/baseline/neg_vi.txt`.
+
 
 ## Decisions
 

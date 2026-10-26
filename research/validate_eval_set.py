@@ -12,7 +12,9 @@ Checks
      `category` known when present (`--strict-v4` requires it); `expect_none` implies
      `category: negative` and no `expect`.
   2. ground truth exists: every `expect.path` matches at least one row in `documents` for that
-     `source` (needs the built index; the check is reported as skipped otherwise).
+     `source` (needs the built index; the check is reported as skipped otherwise). The match is
+     case-sensitive, exactly like `is_hit()` in the evaluator, so a path whose only difference is
+     capitalisation is an error here instead of a silent miss there.
   3. `answer_snippet` is at least 12 characters and occurs verbatim in a chunk of a matching
      document.
   4. no duplicate questions after folding case, diacritics and punctuation; no question is a
@@ -77,11 +79,12 @@ def _error(question: dict, code: str, detail: str = "") -> dict:
 
 
 def _documents_match(con, source: str, path: str) -> bool:
+    """Case-sensitive, like the evaluator: `instr()` where `LIKE` would fold ASCII case."""
     if path == ".":
         return bool(con.execute("SELECT 1 FROM documents WHERE source_id=? LIMIT 1",
                                 (source,)).fetchone())
-    return bool(con.execute("SELECT 1 FROM documents WHERE source_id=? AND path LIKE ? LIMIT 1",
-                            (source, f"%{path}%")).fetchone())
+    return bool(con.execute("SELECT 1 FROM documents WHERE source_id=? AND instr(path, ?) > 0"
+                            " LIMIT 1", (source, path)).fetchone())
 
 
 def _snippet_found(con, question: dict, snippet: str) -> bool:
@@ -91,8 +94,8 @@ def _snippet_found(con, question: dict, snippet: str) -> bool:
                " WHERE d.source_id=? AND INSTR(c.text, ?) > 0")
         args: list[object] = [target.get("source"), snippet]
         if path != ".":
-            sql += " AND d.path LIKE ?"
-            args.append(f"%{path}%")
+            sql += " AND instr(d.path, ?) > 0"
+            args.append(path)
         if con.execute(sql + " LIMIT 1", args).fetchone():
             return True
     return False

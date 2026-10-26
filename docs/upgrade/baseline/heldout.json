@@ -1,6 +1,6 @@
 {
   "set": "eval_v4_heldout.yaml",
-  "sha256": "cf9d2035058754723b67585f5e4f6286d5ddfccf64b83a35ed4c7b24a14803f4",
+  "sha256": "5500cf0fbfc887b10147dcf040d176d78b5b904516938aa15357296fcdd458ed",
   "sha_verified": true,
   "k": 5,
   "questions": 72,
@@ -10,12 +10,12 @@
     "questions": 72,
     "positives": 65,
     "negatives": 7,
-    "recall_at_k": 0.676923076923077,
+    "recall_at_k": 0.6923076923076923,
     "precision_at_1": 0.36923076923076925,
-    "mrr": 0.48538461538461536,
+    "mrr": 0.493076923076923,
     "chunk_hit": 0.36923076923076925,
     "negative_pass": 0.5714285714285714,
-    "hits": 44,
+    "hits": 45,
     "precision_1_count": 24
   },
   "per_category": {
@@ -107,12 +107,12 @@
       "questions": 13,
       "positives": 13,
       "negatives": 0,
-      "recall_at_k": 0.7692307692307693,
+      "recall_at_k": 0.8461538461538461,
       "precision_at_1": 0.6153846153846154,
-      "mrr": 0.6923076923076923,
+      "mrr": 0.7307692307692307,
       "chunk_hit": 0.6923076923076923,
       "negative_pass": null,
-      "hits": 10,
+      "hits": 11,
       "precision_1_count": 8
     }
   },
@@ -121,12 +121,12 @@
       "questions": 37,
       "positives": 32,
       "negatives": 5,
-      "recall_at_k": 0.875,
+      "recall_at_k": 0.90625,
       "precision_at_1": 0.53125,
-      "mrr": 0.6609375,
+      "mrr": 0.6765625,
       "chunk_hit": 0.40625,
       "negative_pass": 0.4,
-      "hits": 28,
+      "hits": 29,
       "precision_1_count": 17
     },
     "mixed": {

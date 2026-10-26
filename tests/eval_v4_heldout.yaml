@@ -480,7 +480,7 @@ questions:
   category: wiki
   expect:
   - source: ardupilot_wiki
-    path: common/source/docs/common-GPS-for-yaw.rst
+    path: common/source/docs/common-gps-for-yaw.rst
   answer_snippet: signal delays from each satellite as they reach two separated antennas
 - id: V4-B2-021
   lang: en
