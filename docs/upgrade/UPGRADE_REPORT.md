@@ -164,8 +164,11 @@ Two things worth reading before trusting the table:
   `index_status`: `B2_INDEX_STATUS` changed because the payload gained the `dense` object and the run
   path, `C7`, `C10`, `D1`, `E_INFO_02` and `F_SQLI` changed because a parameter declaration page moved
   up, and `C10`'s new first result `libraries/AP_SerialManager/AP_SerialManager.cpp` is exactly what
-  the frozen case expects. No case lost its answer; `E_INFO_02` went from 9 to 8 citations because the
-  24 KB response cap dropped the last wiki chunk after `Parameters.cpp` took the first slot.
+  the frozen case expects. No case lost its answer; `E_INFO_02` went from 9 to 8 citations because
+  one of the six `docs` slots now goes to `ArduCopter/Parameters.cpp` and the `code` search returns
+  two items instead of three after the simulator penalty. The 24 KB cap is not involved: it only
+  trims `search_docs` results, and this payload carries its citations under `evidence` (Phase 3
+  item A4, `DECISIONS.md`).
 - Mutation: the earlier README claim of `1.000` belonged to the pre-Rung-1 tree with 14 scored
   mutants. The gate now reports 18 scored mutants and `M15` (removing the text identifier boost)
   survives because Rung 1 added a path identifier boost that covers the same ordering for every

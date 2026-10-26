@@ -72,3 +72,24 @@ missing table, model or dependency cannot change an answer.
   on `cite_hash` (candidate order, document-group order, chunk picker). Kept: no behaviour change on
   aggregate recall, but the payload is now reproducible across processes, which a measurement
   pipeline needs. Test: `tests/test_query.py::test_the_same_query_returns_the_same_payload_in_two_processes`.
+
+## A4: the 24 KB output cap and `E_INFO_02`, 2026-10-27
+
+Audit item: `E_INFO_02` (`troubleshoot`, "what does FS_THR_ENABLE do") had 9 citations in
+`docs/blackbox/run3` and 8 in `docs/upgrade/blackbox_after`, and `UPGRADE_REPORT.md` blamed the
+24 KB response cap for dropping the last wiki chunk. Measured on the current index, that blame is
+wrong: `guard.Guard.cap` only trims `payload["results"]`, and `troubleshoot` returns its citations
+under `payload["evidence"]` with no `results` key. The re-run gives `evidence=8`, payload 10 274
+bytes against a 24 576 byte cap and no `truncated_by_guard`, so the cap never touched the payload.
+The 9 to 8 change is retrieval composition: run3 spent its six `docs` slots on six wiki pages and its
+three `code` slots on ardupilot files; now one `docs` slot goes to `ArduCopter/Parameters.cpp` and
+the `code` search returns two items instead of three after the simulator penalty pushed the
+autotest files down.
+
+Decision: **no change to `guard.py`**. `search_docs` is the only tool whose payload has a `results`
+list, and `query.search` already returns that list in document-score order, so popping from the tail
+is already "drop the least relevant item"; a relevance-aware trim would need a `score` on every item
+of every tool and would only change which item is lost, not how many. The 24 KB value and the
+three-excerpts-per-source rule are unchanged. Recorded rather than fixed: `troubleshoot` evidence is
+not byte-capped at all (only `results` is), which is why a 10 KB evidence list is possible; capping
+it would drop citations from frozen blackbox cases for no measured gain.
